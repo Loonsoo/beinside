@@ -1190,12 +1190,6 @@ footer strong{color:rgba(255,240,230,.80);}
       <div id="sp-result" class="on"></div>
     </div>
 
-    <footer>
-      <strong>BeInside</strong> — 세대를 잇는 전 생애 성장 반려 서비스<br>
-      본 정보는 의학·심리학 기반 참고 목적이며, 전문 의료 진료를 대체하지 않습니다.<br>
-      이상이 의심될 경우 소아청소년과·정신건강의학과·가정의학과 전문의와 상담하세요.
-    </footer>
-
     <!-- BIRTH & POSTPARTUM VIEW -->
     <div id="birth-view" style="display:none;">
       <div class="birth-wrap">
@@ -1209,6 +1203,13 @@ footer strong{color:rgba(255,240,230,.80);}
         <div id="birth-stages"></div>
       </div>
     </div>
+
+    <footer>
+      <strong>BeInside</strong> — 세대를 잇는 전 생애 성장 반려 서비스<br>
+      본 정보는 의학·심리학 기반 참고 목적이며, 전문 의료 진료를 대체하지 않습니다.<br>
+      이상이 의심될 경우 소아청소년과·정신건강의학과·가정의학과 전문의와 상담하세요.
+    </footer>
+
 
   </div><!-- /main-col -->
 
@@ -2593,8 +2594,8 @@ function switchView(v){
   document.getElementById('vb-normal').classList.toggle('on',v==='normal');
   document.getElementById('vb-sp').classList.toggle('on',v==='sp');
   document.getElementById('vb-birth').classList.toggle('on',v==='birth');
-  if(v==='sp'){renderSP(curSit);document.getElementById('guide-sec').scrollIntoView({behavior:'smooth',block:'start'});}
-  if(v==='birth'){document.getElementById('guide-sec').scrollIntoView({behavior:'smooth',block:'start'});}
+  if(v==='sp') renderSP(curSit);
+  setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
 }
 
 const TL=[
