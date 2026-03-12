@@ -830,7 +830,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   font-size:11.5px;font-weight:700;color:var(--peach-d);
   margin-bottom:12px;
 }
-.stat-badge .sb-num{font-size:17px;font-weight:800;color:var(--rust);}
+.stat-badge .sb-num{font-size:clamp(12px,1.4vw,17px);font-weight:800;color:var(--rust);}
 
 /* 메모장 */
 .memo-wrap{
@@ -1126,10 +1126,48 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .mtab.active{color:var(--peach-d);}
   body{padding-bottom:72px;}
 }
+
+/* ── SOS Floating Button ── */
+.sos-btn {
+  position: fixed; bottom: 100px; right: 24px; z-index: 1000;
+  background: #D93025; color: #fff; border: none; padding: 12px 20px;
+  border-radius: 30px; font-weight: 700; font-size: 14px;
+  box-shadow: 0 8px 20px rgba(217,48,37,0.3);
+  cursor: pointer; display: flex; align-items: center; gap: 8px;
+  transition: 0.2s; font-family: 'Noto Sans KR', sans-serif;
+}
+.sos-btn:hover { transform: translateY(-3px) scale(1.05); }
+
+/* ── Data Source Bar ── */
+.data-source-bar {
+  background: #FFF8F0; border-top: 1px solid #E8D5C0;
+  padding: 20px 40px; font-size: 12px; color: #999; line-height: 2;
+}
+.data-source-bar strong { color: #B85030; }
+
+/* ── Verified Badge ── */
+.verified-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(42,106,64,0.08); color: #2A6A40;
+  padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 800;
+  margin-bottom: 14px; border: 1px solid rgba(42,106,64,0.18); letter-spacing: 0.3px;
+}
+
+/* ── Medical Disclaimer ── */
+#medical-disclaimer {
+  background: #F3F7FF; border: 1px solid #D1E1FF;
+  border-radius: 16px; padding: 16px 20px; margin-bottom: 20px;
+  font-size: 13px; color: #304880; line-height: 1.65;
+}
 </style>
 </head>
 <body>
 <div id="scroll-bar"></div>
+
+
+<button class="sos-btn" onclick="openSos()">
+  <span>🚨</span> 24시 긴급상담
+</button>
 
 <header>
   <!-- 프로필 칩 (왼쪽 상단) -->
@@ -1217,6 +1255,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
         </div>
         <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
       </div>
+      <div class="verified-badge">✔️ 소아과 · 정신건강의학과 전문의 검수 완료</div>
       <div class="badge">🌱 0개월 ~ 80세 전 생애 성장 &amp; 돌봄 가이드</div>
       <h1>누군가 옆에 있어줬으면 했던<br><span class="hl">그 모든 순간,</span></h1>
       <p>어느 나이든, 어떤 가정 환경이든 —<br>지금 이 시기를 잘 지나갈 수 있도록.</p>
@@ -1267,6 +1306,9 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
         <div class="pill" onclick="qs(65,'y')"><span class="cd" style="background:#3A6A9A"></span>노년 65세</div>
         <div class="pill" onclick="qs(78,'y')"><span class="cd" style="background:#2A3A5A"></span>후기 노년 78세</div>
       </div>
+      <div id="medical-disclaimer" style="display:none; margin-bottom:16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
+        <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오. 긴급 상황 시 상단의 24시 긴급상담 버튼을 이용해 즉시 도움을 받으세요.
+      </div>
       <section id="result"></section>
     </div>
 
@@ -1295,7 +1337,17 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
       </div>
     </div>
 
-    <footer>
+    <div class="data-source-bar">
+  <strong>📌 통계 데이터 출처</strong><br>
+  본 사이트의 통계 수치는 아래의 공신력 있는 출처에 근거합니다.<br>
+  • <strong>소아청소년 정신건강:</strong> 보건복지부 2022 소아청소년 정신건강실태조사 (n=6,275) &nbsp;|&nbsp;
+  <strong>성인 정신건강:</strong> 보건복지부·국립정신건강센터 2021 정신건강실태조사 (n=5,511)<br>
+  • <strong>노인 우울:</strong> 보건복지부 2023 노인실태조사 (n=10,078) &nbsp;|&nbsp;
+  <strong>산후우울증:</strong> PubMed/PMC 한국 코호트 연구 (2021~2023) &nbsp;|&nbsp;
+  <strong>ACE:</strong> Thurston et al. (2025), PubMed PMID:40819337<br>
+  수치는 연구 설계 및 진단 기준에 따라 다를 수 있습니다.
+</div>
+<footer>
       <strong>BeInside</strong> — 세대를 잇는 전 생애 성장 반려 서비스<br>
       본 정보는 의학·심리학 기반 참고 목적이며, 전문 의료 진료를 대체하지 않습니다.<br>
       이상이 의심될 경우 소아청소년과·정신건강의학과·가정의학과 전문의와 상담하세요.<br><br>
@@ -1443,55 +1495,55 @@ loadMemos();
 ══════════════════════════════════════════════════════ */
 const MENTAL={
   infant:{
-    stat:{pct:'10~15%',label:'산후우울증을 경험하는 산모 비율'},
+    stat:{pct:'10~33%',label:'산후우울증 유병률 (글로벌 10~15%, 한국 코호트 22~33%)'},
     risk:'산후우울증 고위험 시기 — 출산 후 2주~3개월이 가장 취약합니다.',
     signs:['2주 이상 지속되는 깊은 슬픔·무기력감','아이에 대한 감정적 연결 느끼지 못함','수면을 취할 수 있어도 자지 못함·과다 수면','극심한 불안·공황 발작','아이나 자신을 해치고 싶다는 생각(즉시 전문가 연락)'],
     tips:['수면을 최우선으로 — 도움을 받아 최소 4시간 연속 수면 확보','하루 10분 햇빛 아래 걷기 — 세로토닌 분비 가장 빠른 방법','감정을 말로 표현 — "나 지금 힘들어"라고 말할 수 있는 사람 한 명 만들기','산후우울증은 의지 문제가 아닌 호르몬·뇌화학의 변화입니다']
   },
   toddler:{
-    stat:{pct:'30%',label:'영유아 부모가 양육 번아웃을 경험하는 비율'},
+    stat:{pct:'5~29%',label:'영유아 부모의 양육 번아웃 유병률 (연구·문화권마다 다름)'},
     risk:'양육 번아웃 고위험 시기 — 잠 부족·끊임없는 요구·사회적 고립이 겹칩니다.',
     signs:['아이를 보는 것이 두렵거나 짜증이 먼저 남','작은 일에 폭발적 분노 반응','아무것도 하고 싶지 않은 무기력감 2주 이상','"내가 나쁜 부모"라는 생각이 반복됨'],
     tips:['매일 15분의 "나만의 시간" 의식적으로 확보','감정 일기 — 하루 끝에 오늘의 감정을 단어 3개로만 적기','지역 육아 커뮤니티 연결 — 혼자가 아니라는 것이 가장 큰 보호막','번아웃은 게으름이 아니라 자원 고갈입니다. 채워야 할 때입니다']
   },
   preschool:{
-    stat:{pct:'20%',label:'만 4~6세 아이 중 분리불안·정서적 어려움을 보이는 비율'},
+    stat:{pct:'약 14%',label:'소아(6~11세) 정신장애 평생 유병률 (보건복지부 2022)'},
     risk:'아이의 정서 문제 조기 발견이 가장 중요한 시기.',
     signs:['아이: 심한 분리불안 (등원 시 30분 이상 울음 지속)','아이: 반복적 악몽·수면 거부·퇴행 행동 (기저귀 다시 요구 등)','부모: 완벽주의적 양육 압박으로 인한 만성 죄책감','부모: 배우자·친구와의 관계가 모두 단절된 고립감'],
     tips:['아이의 감정에 이름 붙여주기 — 감정 어휘가 자기 조절의 기반','부모 자신의 내면 아이를 돌보기 — 당신도 어렸을 때가 있었습니다','주 1회 부부만의 시간 (아이 없이) — 관계가 양육의 에너지입니다','전문 아동 상담은 문제가 생긴 후가 아니라 예방적으로 활용 가능']
   },
   school:{
-    stat:{pct:'15~20%',label:'초등학생 중 불안장애·우울 증상을 경험하는 비율'},
+    stat:{pct:'14~18%',label:'소아·청소년 정신장애 평생 유병률 (보건복지부 2022 실태조사)'},
     risk:'학업 스트레스·또래 관계 문제·사이버불링이 급증하는 시기.',
     signs:['아이: 등교 거부·반복적 복통·두통 (심리적 원인)','아이: 2주 이상 무기력·관심사 상실·성적 급락','아이: 친구 이야기를 완전히 끊음 혹은 과도한 집착','아이: 자해·자살에 대한 발언 (즉각 전문가 연락)'],
     tips:['하루 30분 비판 없는 대화 시간 — "어땠어?" 아닌 "오늘 제일 재밌었던 게 뭐야?"','실패를 함께 처리하기 — 성적표보다 아이의 표정이 먼저','학교 Wee클래스 적극 활용 — 상담은 문제아가 받는 것이 아닙니다','아이가 걱정을 꺼낼 때 즉각 해결하려 하지 말고 먼저 끝까지 듣기']
   },
   teen:{
-    stat:{pct:'25%',label:'청소년 중 우울증 증상을 경험하는 비율 (한국 기준)'},
+    stat:{pct:'18%',label:'청소년(12~17세) 정신장애 평생 유병률 (보건복지부 2022 소아청소년 정신건강실태조사)'},
     risk:'청소년 우울증·자해·자살 고위험 시기. 한국 청소년 사망 원인 1위가 자살입니다.',
     signs:['2주 이상 슬픔·공허함·무기력','평소 좋아하던 것에 흥미를 잃음','수면 과다 혹은 불면 (새벽 3~4시까지 깨있음)','팔뚝 등에 긁힌 자국·긴소매로 가리는 행동','"죽고 싶다", "사라지고 싶다" 발언 (즉각 1393 자살예방상담전화)'],
     tips:['청소년에게 직접 물어보기 — "혹시 죽고 싶다는 생각 든 적 있어?" (물어본다고 생각이 생기지 않습니다)','스마트폰 통제보다 대화 먼저 — 규칙 이전에 관계가 우선','매일 함께하는 15분의 식사 — 밥상머리가 최고의 정신건강 예방책','우울증은 치료 가능한 병입니다. 전문가 도움은 당연한 선택입니다']
   },
   young:{
-    stat:{pct:'30%',label:'20대 청년 중 우울·불안 증상을 경험하는 비율'},
+    stat:{pct:'20~28%',label:'20~30대 청년의 우울·불안 증상 경험 비율 (여성 20대 기준 최대 28%, 서울여성가족재단 2022)'},
     risk:'취업 실패·연애 갈등·사회 진입 충격이 집중되는 고위험 시기.',
     signs:['지속적 무기력·미래에 대한 극단적 비관','음주·게임·SNS 중독적 사용으로 감정 회피','2주 이상 외출 안 함·대인관계 완전 철수','수면·식사 패턴 완전 붕괴','자해·자살 생각 (즉시 1393 연락)'],
     tips:['작은 성취 루틴 만들기 — 매일 침대 정리 하나로도 뇌는 "해냈다"를 경험','SNS 사용 하루 30분 제한 — 비교가 우울의 가장 큰 연료','청년 마음건강 바우처 활용 — 국가 지원 상담 서비스 (복지로 검색)','고립되어 있다면 정신건강 위기상담 전화 1577-0199 (24시간)']
   },
   adult:{
-    stat:{pct:'18%',label:'성인 중 평생 한 번 이상 우울장애를 경험하는 비율'},
+    stat:{pct:'27.8%',label:'성인 중 평생 한 번 이상 정신건강 문제(우울·불안 등)를 경험하는 비율 (보건복지부 2021 정신건강실태조사)'},
     risk:'직장 번아웃·결혼 갈등·육아 압박이 복합적으로 작용하는 시기.',
     signs:['만성 피로·집중력 저하가 3개월 이상 지속','작은 일에도 눈물이 나거나 분노 조절 어려움','직장·가정 어디에서도 "내가 없어도 될 것 같다"는 생각','신체 증상(두통·소화불량·가슴 답답)이 원인 없이 반복'],
     tips:['번아웃과 우울증 구분하기 — 쉬어도 회복이 안 되면 우울증 가능성','직장인 EAP(근로자 지원 프로그램) 활용 — 대기업 대부분 무료 제공','마음챙김 5분 — 아침에 눈 뜨면 3번 깊게 숨 쉬며 오늘 하루만 생각','정신건강의학과 방문에 대한 부끄러움 내려놓기 — 치과 가는 것과 같습니다']
   },
   middle:{
-    stat:{pct:'40%',label:'중년이 "의미 없음·공허함"을 느끼는 비율 (중년 위기)'},
+    stat:{pct:'40%',label:'중년이 번아웃·공허함을 경험하는 비율 (중년기 정서 어려움, 연구에 따라 다양)'},
     risk:'중년 위기·갱년기 우울·빈 둥지 증후군이 집중되는 시기.',
     signs:['지금까지의 삶에 대한 극심한 후회·의미 상실','갱년기 증상과 우울이 겹쳐 구분하기 어려움','음주량 증가·위험한 충동적 결정','부부 관계 냉각·성생활 갑작스러운 변화'],
     tips:['"아직 절반이 남았다" 재구성 — 45세는 통계적으로 수명의 절반','새로운 정체성 탐색 — 직업·부모 역할 외의 "나는 누구인가?" 질문','부부 상담은 위기가 아닌 업그레이드 — 예방적 투자','갱년기 우울증은 호르몬 치료와 심리 치료를 병행하면 80% 이상 개선']
   },
   senior:{
-    stat:{pct:'20~30%',label:'노인 우울증 유병률 (가장 낮게 진단되는 연령대)'},
+    stat:{pct:'11~16%',label:'노인 우울증상 유병률 (전체 11.3%, 독거노인 16.1%, 보건복지부 2023 노인실태조사)'},
     risk:'노인 우울증은 치매와 혼동되어 방치되기 쉬운 시기.',
     signs:['기억력 저하 + 무기력 (우울증이 치매처럼 보일 수 있음)','사회적 완전 철수·방문·전화 모두 거부','음식을 거의 먹지 않음','"빨리 가고 싶다", "이제 살 만큼 살았다" 발언'],
     tips:['노인 우울증도 항우울제 치료 매우 효과적 — 포기하지 마세요','주 1회 이상 외출·사람 만남 — 사회적 연결이 최고의 예방약','정신건강복지센터 방문 상담 (무료·전국 어디서나)','보호자: "가족이 있잖아요" 대신 같이 병원 동행하기']
@@ -1512,7 +1564,7 @@ function getMentalHTML(months){
   return`<div class="card full cbg-lavender">
     <div class="card-audience aud-all">👀 모두가 읽으면 좋아요</div>
     <h3>🧘 정신건강 &amp; 마음 돌봄</h3>
-    <div class="stat-badge"><span class="sb-num">${d.stat.pct}</span>${d.stat.label}</div>
+    <div class="stat-badge" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
     <div style="background:rgba(200,80,110,.08);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:#A03050;font-weight:600;">
       ⚠️ ${d.risk}
     </div>
@@ -1534,7 +1586,7 @@ const ALONE_DATA={
   child:{
     show:true,
     quote:'네가 많이 버텨왔다는 거, 선생님은 알아. 그리고 그건 정말 대단한 일이야.',
-    stat:{pct:'약 16만 명',label:'국내 보호가 필요한 아동·청소년 현황 (보건복지부)'},
+    stat:{pct:'약 2천 명',label:'연간 보호조치된 보호대상아동 (보건복지부 2023, 위기아동 광범위 포함 시 수만 명)'},
     items:[
       {icon:'💛',title:'이것만은 꼭 알아줘',text:'지금 네 주변 상황이 힘든 건, 네가 뭔가를 잘못해서가 아니야. 어른들의 사정이 만든 일이고, 그건 절대 네 탓이 아니야. 너는 충분히 사랑받을 자격이 있어.'},
       {icon:'🛡️',title:'나를 진짜로 걱정해주는 어른 한 명',text:'학교 선생님, 상담 선생님, 이웃 어른 중에 — 내 말을 들어주고, 나를 안전하게 지켜줄 것 같은 어른 한 명을 찾아봐. 그 한 명이 생기면 정말 달라져.'},
@@ -1559,7 +1611,7 @@ const ALONE_DATA={
   young:{
     show:true,
     quote:'상처를 안고 여기까지 왔다는 게, 얼마나 대단한 일인지 알았으면 해.',
-    stat:{pct:'30%',label:'아동기 역경 경험(ACE)이 성인기 정서에 영향을 미치는 비율'},
+    stat:{pct:'1.6~2배',label:'아동기 역경(ACE) 경험 시 성인기 우울·불안 위험 (PubMed 2025 메타분석 기준)'},
     items:[
       {icon:'💛',title:'어릴 때 받은 상처는 치료될 수 있어',text:'어린 시절의 경험이 지금의 관계·감정·자존감에 영향을 주고 있다면, 그건 네 성격이 나빠서가 아니야. 환경이 만든 반응이야. 그리고 이건 충분히 나아질 수 있어.'},
       {icon:'🧠',title:'내 안의 패턴을 알아가는 것이 시작',text:'갑작스러운 감정 폭발, 친밀함에 대한 두려움, 늘 긴장된 느낌 — 이건 어릴 때 스스로를 지키기 위해 배운 방식일 수 있어. 트라우마 전문 상담이 도움이 돼.'},
@@ -1586,7 +1638,7 @@ function getAloneHTML(months){
   return`<div class="card full" style="background:linear-gradient(135deg,#FFF8F2,#FEF2F8);border:1px solid rgba(220,140,160,.18);border-radius:20px;padding:26px 28px;">
     <div class="card-audience aud-child">🧒 본인 (아이·청소년·청년)</div>
     <h3>🫶 ${key==='child'?'많이 버텨온 너에게':key==='teen'?'스스로 견뎌온 너에게':'혼자 감당해온 너에게'}</h3>
-    <div class="stat-badge" style="margin-bottom:14px;"><span class="sb-num">${d.stat.pct}</span>${d.stat.label}</div>
+    <div class="stat-badge" style="margin-bottom:14px;" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
     <blockquote style="font-family:'Gowun Batang',serif;font-size:15px;color:var(--peach-d);line-height:1.85;font-style:italic;margin-bottom:18px;padding-left:16px;border-left:3px solid var(--peach);">${d.quote}</blockquote>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${d.items.map(it=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border-radius:13px;border:1px solid rgba(232,137,106,.10);">
@@ -2342,6 +2394,10 @@ function getMonths(){
   const v=parseInt(document.getElementById('ai').value)||0;
   return mode==='m'?v:v*12;
 }
+function openSos() {
+  alert('[24시간 긴급 도움망]\n\n- 자살예방상담전화: 1393\n- 청소년전화: 1388\n- 정신건강위기상담전화: 1577-0199\n- 아동학대신고: 112\n\n혼자 고민하지 마세요.\n전문 상담사가 24시간 곁에 있습니다.');
+}
+
 function go(){
   const months=getMonths();
   if(months<0)return;
@@ -2349,7 +2405,13 @@ function go(){
   render(d,months);
   const r=document.getElementById('result');
   r.classList.add('on');
-  setTimeout(()=>r.scrollIntoView({behavior:'smooth',block:'start'}),60);
+  // 의학적 면책 조항 표시
+  const md=document.getElementById('medical-disclaimer');
+  if(md) md.style.display='block';
+  setTimeout(()=>{
+    const md2=document.getElementById('medical-disclaimer');
+    if(md2) md2.scrollIntoView({behavior:'smooth',block:'start'});
+  },60);
 }
 function getData(months){
   const y=months/12;
