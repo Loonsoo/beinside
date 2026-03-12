@@ -1048,7 +1048,7 @@ footer strong{color:rgba(255,240,230,.80);}
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" style="position:absolute;left:50%;transform:translateX(-50%);">BeInside<div class="logo-dot"></div></div>
+  <div class="logo" style="position:absolute;left:50%;transform:translateX(-50%);cursor:pointer;" onclick="goHome()" title="메인으로 돌아가기">BeInside<div class="logo-dot"></div></div>
   <nav>
     <button class="on" onclick="toS('hero')">홈</button>
     <button onclick="toS('guide-sec')">발달 가이드</button>
@@ -2596,6 +2596,17 @@ function switchView(v){
   document.getElementById('vb-birth').classList.toggle('on',v==='birth');
   if(v==='sp') renderSP(curSit);
   setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
+}
+
+
+function goHome(){
+  // 발달 가이드 탭으로 초기화
+  switchView('normal');
+  // 결과 영역 초기화
+  const r = document.getElementById('result');
+  if(r){ r.innerHTML=''; r.classList.remove('on'); }
+  // 맨 위로 스크롤
+  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 const TL=[
