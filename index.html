@@ -84,8 +84,10 @@ header{
   -webkit-backdrop-filter:blur(28px) saturate(1.4);
   border-bottom:1px solid rgba(224,123,90,.10);
   height:64px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  padding:0 28px;
   box-shadow:0 1px 0 rgba(224,123,90,.06), 0 4px 20px rgba(44,30,20,.04);
 }
 .logo{
@@ -93,10 +95,10 @@ header{
   color:var(--peach-d);
   display:flex;align-items:center;gap:5px;
   letter-spacing:-.3px;
-  position:absolute;left:50%;transform:translateX(-50%);
+  justify-content:center;
 }
 .logo-dot{width:7px;height:7px;background:var(--amber);border-radius:50%;}
-nav{display:flex;gap:4px;}
+nav{display:flex;gap:4px;justify-content:flex-end;}
 nav button{
   background:none;border:none;
   font-family:'Noto Sans KR',sans-serif;font-size:13px;
@@ -1276,14 +1278,16 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" style="position:absolute;left:50%;transform:translateX(-50%);cursor:pointer;z-index:10;display:flex;align-items:center;gap:2px;" onclick="goHome()" title="메인으로 돌아가기"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
-  <nav>
-    <button class="on" onclick="toS('hero')">홈</button>
-    <button onclick="toS('guide-sec')">성장 가이드</button>
-  </nav>
-  <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="logo" onclick="goHome()" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
+  <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+    <nav>
+      <button class="on" onclick="toS('hero')">홈</button>
+      <button onclick="toS('guide-sec')">발달 가이드</button>
+    </nav>
+    <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- ── PROFILE MODAL ── -->
@@ -1380,7 +1384,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
     <!-- VIEW TOGGLE -->
     <div class="view-toggle" id="guide-sec">
       <button class="view-btn on" id="vb-normal" onclick="switchView('normal')">
-        <span class="vb-dot" style="background:var(--sage)"></span>성장 가이드
+        <span class="vb-dot" style="background:var(--sage)"></span>발달 가이드
       </button>
       <button class="view-btn" id="vb-sp" onclick="switchView('sp')">
         <span class="vb-dot" style="background:var(--amber)"></span>한부모·가족 상황 가이드
@@ -2983,7 +2987,7 @@ function switchView(v){
 }
 
 function goHome(){
-  // 성장 가이드 탭으로 초기화
+  // 발달 가이드 탭으로 초기화
   switchView('normal');
   // 결과 영역 초기화
   const r = document.getElementById('result');
