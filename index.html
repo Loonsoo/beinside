@@ -1489,7 +1489,7 @@ body.guide-open #normal-view #medical-disclaimer {
   <div class="logo" onclick="goHome()" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
   <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;white-space:nowrap;">
     <nav>
-      <button class="on" onclick="toS('hero')">홈</button>
+      <button class="on" onclick="goHome()">홈</button>
       <button onclick="toS('guide-sec')">성장 가이드</button>
     </nav>
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
@@ -3300,13 +3300,17 @@ function switchView(v){
 }
 
 function goHome(){
+  // 가이드 페이지가 열려있으면 먼저 닫기
+  if(document.body.classList.contains('guide-open')){
+    closeGuide();
+  } else {
+    // 결과 영역 초기화
+    const r = document.getElementById('result');
+    if(r){ r.innerHTML=''; r.classList.remove('on'); }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
   // 성장 가이드 탭으로 초기화
   switchView('normal');
-  // 결과 영역 초기화
-  const r = document.getElementById('result');
-  if(r){ r.innerHTML=''; r.classList.remove('on'); }
-  // 맨 위로 스크롤
-  window.scrollTo({top:0, behavior:'smooth'});
 }
 
 const TL=[
