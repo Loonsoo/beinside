@@ -1262,6 +1262,51 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   border-left: 3px solid var(--peach-l); margin-top: 4px;
 }
 
+
+/* ── Guide TOC (목차 박스) ── */
+.guide-toc {
+  margin: 0 48px 28px;
+  background: white;
+  border: 1.5px solid rgba(224,123,90,.18);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(224,123,90,.07);
+}
+.guide-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  color: var(--peach); text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 6px;
+}
+.guide-toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.guide-toc-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: var(--cream);
+  border: 1px solid rgba(224,123,90,.12);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-m);
+  transition: all .18s;
+  line-height: 1.3;
+}
+.guide-toc-item:hover {
+  background: var(--peach-p);
+  border-color: var(--peach-l);
+  color: var(--peach-d);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(224,123,90,.15);
+}
+.guide-toc-item .toc-em { font-size: 15px; flex-shrink: 0; }
+@media(max-width:640px){
+  .guide-toc { margin: 0 18px 20px; padding: 16px; }
+  .guide-toc-grid { grid-template-columns: 1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -1589,7 +1634,54 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 </div><!-- /page-wrap -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+// ── Guide TOC 자동 생성 ──
+function buildTOC() {
+  const result = document.getElementById('result');
+  if (!result) return;
+  const old = result.querySelector('.guide-toc');
+  if (old) old.remove();
+
+  const cards = result.querySelectorAll('.card h3');
+  if (cards.length < 2) return;
+
+  const items = Array.from(cards).map((h3, i) => {
+    const id = 'toc-card-' + i;
+    h3.id = id;
+    const raw = h3.textContent.trim();
+    // 첫 단어(이모지 포함) 분리
+    const parts = raw.split(' ');
+    const em = parts[0] || '';
+    const label = parts.slice(1).join(' ') || raw;
+    return { id, em, label };
+  });
+
+  const tocItems = items.map(item =>
+    '<div class="guide-toc-item" onclick="scrollToCard(\'' + item.id + '\')">' +
+    '<span class="toc-em">' + item.em + '</span>' +
+    '<span>' + item.label + '</span>' +
+    '</div>'
+  ).join('');
+
+  const tocHTML =
+    '<div class="guide-toc">' +
+    '<div class="guide-toc-title">📋 이 가이드에 담긴 내용</div>' +
+    '<div class="guide-toc-grid">' + tocItems + '</div>' +
+    '</div>';
+
+  const grid = result.querySelector('.grid');
+  if (grid) grid.insertAdjacentHTML('beforebegin', tocHTML);
+}
+
+function scrollToCard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const card = el.closest('.card') || el;
+  const top = card.getBoundingClientRect().top + window.scrollY - 90;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+</script>
 <script>
 // ── Source Drawer ──
 function openSourceDrawer() {
@@ -2872,6 +2964,7 @@ function render(d,months){
       ${getFirstAidHTML(months)}
     </div>
     ${getMemoHTML(months)}`;
+  buildTOC();
 }
 
 /* ══════════════════════════════════════════════════════
