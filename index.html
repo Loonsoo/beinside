@@ -300,15 +300,6 @@ nav button.on{
   transform:translateY(-2px);
   box-shadow:0 5px 14px rgba(232,137,106,.18);
 }
-
-.pill.on {
-  background: var(--peach);
-  border-color: var(--peach-d);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(224,123,90,.25);
-}
-
 .cd{width:7px;height:7px;border-radius:50%;}
 
 /* ── RESULT ── */
@@ -1272,480 +1263,48 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 
 
-@media(max-width:640px){
-    }
-
-
-/* ── LEFT TOC SIDEBAR ── */
-:root { --toc-w: 168px; }
-
-.toc-sidebar {
-  width: var(--toc-w);
-  flex-shrink: 0;
-  position: sticky;
-  top: 64px;
-  height: calc(100vh - 64px);
-  overflow-y: auto;
-  padding: 28px 0 40px 0;
-  z-index: 90;
-  scrollbar-width: none;
-  display: none; /* 가이드 선택 전엔 숨김 */
-  flex-direction: column;
+/* ── Guide TOC (목차 박스) ── */
+.guide-toc {
+  margin: 0 48px 28px;
+  background: white;
+  border: 1.5px solid rgba(224,123,90,.18);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(224,123,90,.07);
 }
-.toc-sidebar::-webkit-scrollbar { display: none; }
-
-.toc-sidebar-title {
-  font-size: 9px; font-weight: 800; letter-spacing: .1em;
+.guide-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
   color: var(--peach); text-transform: uppercase;
-  padding: 0 16px 10px;
-  opacity: .7;
-}
-
-.toc-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 16px 7px 12px;
-  cursor: pointer;
-  border-left: 2px solid transparent;
-  transition: all .2s;
-  text-decoration: none;
-  position: relative;
-}
-.toc-nav-item:hover {
-  background: var(--peach-p);
-  border-left-color: var(--peach-l);
-}
-.toc-nav-item.active {
-  border-left-color: var(--peach);
-  background: var(--peach-p);
-}
-.toc-nav-item .toc-em {
-  font-size: 14px;
-  flex-shrink: 0;
-  opacity: .85;
-  line-height: 1;
-}
-.toc-nav-item .toc-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-m);
-  line-height: 1.35;
-  opacity: .65;
-  transition: opacity .2s;
-}
-.toc-nav-item.active .toc-label,
-.toc-nav-item:hover .toc-label {
-  opacity: 1;
-  color: var(--peach-d);
-}
-.toc-progress-dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--peach-l);
-  flex-shrink: 0;
-  margin-left: auto;
-  opacity: 0;
-  transition: opacity .2s;
-}
-.toc-nav-item.active .toc-progress-dot {
-  background: var(--peach);
-  opacity: 1;
-}
-
-@media(max-width:1100px) { .toc-sidebar { display: none !important; } }
-
-
-/* ════════════════════════════════════════════
-   가이드 페이지 전환 (슬라이드 인)
-════════════════════════════════════════════ */
-
-/* 가이드 열려있을 때 hero/pills 영역 숨김 */
-body.guide-open .hero,
-body.guide-open #normal-view .pills,
-body.guide-open #normal-view #medical-disclaimer {
-  display: none !important;
-}
-
-/* result 페이지 전환 모드 */
-#result {
-  padding: 0 0 80px;
-  display: none;
-  position: relative;
-}
-#result.on {
-  display: block;
-  animation: slideInRight .35s cubic-bezier(.22,.68,0,1.2) both;
-}
-#result.slide-out {
-  animation: slideOutLeft .25s cubic-bezier(.4,0,.6,1) both;
-}
-
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-@keyframes slideOutLeft {
-  from { opacity: 1; transform: translateX(0); }
-  to   { opacity: 0; transform: translateX(-30px); }
-}
-
-/* ── 가이드 상단 네비게이션 바 ── */
-.guide-nav-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 48px 12px;
-  border-bottom: 1px solid rgba(224,123,90,.1);
-  background: rgba(255,248,242,.95);
-  backdrop-filter: blur(12px);
-  position: sticky;
-  top: 56px;
-  z-index: 80;
-  margin-bottom: 0;
-}
-.guide-back-btn {
+  margin-bottom: 14px;
   display: flex; align-items: center; gap: 6px;
-  padding: 7px 14px;
-  background: var(--white);
-  border: 1.5px solid rgba(224,123,90,.2);
-  border-radius: 20px;
-  font-size: 12px; font-weight: 700;
-  color: var(--ink-m);
-  cursor: pointer;
-  transition: all .18s;
-  flex-shrink: 0;
-  font-family: 'Noto Sans KR', sans-serif;
 }
-.guide-back-btn:hover {
-  background: var(--peach-p);
-  border-color: var(--peach);
-  color: var(--peach-d);
-}
-.guide-nav-pills {
-  display: flex;
-  gap: 6px;
-  flex: 1;
-  overflow-x: auto;
-  scrollbar-width: none;
-  padding: 2px 0;
-}
-.guide-nav-pills::-webkit-scrollbar { display: none; }
-.guide-nav-pill {
-  display: flex; align-items: center; gap: 5px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 11.5px; font-weight: 600;
-  color: var(--ink-l);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all .18s;
-  flex-shrink: 0;
-  border: 1.5px solid transparent;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.guide-nav-pill:hover {
-  background: var(--peach-p);
-  color: var(--peach-d);
-}
-.guide-nav-pill.active {
-  background: var(--peach);
-  color: white;
-  border-color: var(--peach-d);
-  box-shadow: 0 2px 8px rgba(224,123,90,.25);
-}
-.guide-nav-pill .cd { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-
-/* ── result 내부 패딩 조정 ── */
-#result .grid { padding: 0 48px; }
-#result .rhead { margin: 0 48px 24px; }
-
-@media(max-width:760px) {
-  .guide-nav-bar { padding: 10px 18px; top: 52px; }
-  #result .grid { padding: 0 18px; }
-  #result .rhead { margin: 0 18px 18px; }
-  .guide-nav-pill { font-size: 11px; padding: 4px 10px; }
-}
-
-
-/* ════════════════════════════════════════════
-   가정폭력 회복 가이드 (dv-view)
-════════════════════════════════════════════ */
-.dv-wrap { padding: 16px 0 80px; }
-
-.dv-banner {
-  display: flex; align-items: flex-start; gap: 16px;
-  background: linear-gradient(135deg, #4A2A6A, #7B5EA7);
-  border-radius: 18px; padding: 22px 24px;
-  margin-bottom: 20px; color: white;
-}
-.dv-banner-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
-.dv-banner-text { flex: 1; font-size: 14px; line-height: 1.7; }
-.dv-banner-text strong { font-size: 16px; display: block; margin-bottom: 4px; }
-.dv-emergency-btn {
-  flex-shrink: 0;
-  background: white; color: #7B5EA7;
-  border: none; border-radius: 12px;
-  padding: 10px 16px; font-size: 13px; font-weight: 700;
-  cursor: pointer; text-decoration: none;
-  display: flex; align-items: center; gap: 6px;
-  transition: all .18s; white-space: nowrap;
-  font-family: 'Noto Sans KR', sans-serif;
-  align-self: center;
-}
-.dv-emergency-btn:hover { background: #F3EEFF; }
-
-/* 대상 선택 탭 */
-.dv-target-bar {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-.dv-tab {
-  padding: 8px 18px; border-radius: 24px;
-  border: 1.5px solid rgba(123,94,167,.2);
-  background: var(--white); color: var(--ink-m);
-  font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: all .18s; font-family: 'Noto Sans KR', sans-serif;
-}
-.dv-tab:hover { border-color: #7B5EA7; color: #7B5EA7; background: #F3EEFF; }
-.dv-tab.on { background: #7B5EA7; color: white; border-color: #5A3A8A; }
-
-/* 단계 선택 */
-.dv-stage-bar {
-  display: flex; gap: 6px; flex-wrap: wrap;
-  margin-bottom: 20px;
-  padding: 12px 16px;
-  background: #F8F4FF;
-  border-radius: 14px;
-  border: 1px solid rgba(123,94,167,.12);
-}
-.dv-stage {
-  padding: 7px 16px; border-radius: 20px;
-  border: 1.5px solid rgba(123,94,167,.15);
-  background: white; color: var(--ink-m);
-  font-size: 12.5px; font-weight: 600; cursor: pointer;
-  transition: all .18s; font-family: 'Noto Sans KR', sans-serif;
-  flex: 1; min-width: 140px; text-align: center;
-}
-.dv-stage:hover { border-color: #7B5EA7; color: #7B5EA7; }
-.dv-stage.on { background: #5A3A8A; color: white; border-color: #5A3A8A; box-shadow: 0 2px 8px rgba(90,58,138,.25); }
-
-/* 결과 카드 */
-.dv-card {
-  background: var(--white);
-  border-radius: 18px;
-  border: 1px solid rgba(123,94,167,.12);
-  padding: 24px 28px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 12px rgba(90,58,138,.06);
-}
-.dv-card-title {
-  font-size: 17px; font-weight: 700; color: #4A2A6A;
-  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-}
-.dv-card-tag {
-  display: inline-block; padding: 2px 10px;
-  border-radius: 12px; font-size: 11px; font-weight: 700;
-  background: #F3EEFF; color: #7B5EA7; margin-right: 6px;
-}
-.dv-card-tag.red { background: #FFEEF0; color: #C03040; }
-.dv-card-tag.green { background: #EAF5EC; color: #2A6A3A; }
-.dv-card-tag.amber { background: #FEF6EC; color: #A06020; }
-
-.dv-list { list-style: none; padding: 0; margin: 0; }
-.dv-list li {
-  padding: 8px 0 8px 24px;
-  position: relative;
-  font-size: 14px; color: var(--ink-m);
-  border-bottom: 1px solid rgba(123,94,167,.06);
-  line-height: 1.6;
-}
-.dv-list li:last-child { border-bottom: none; }
-.dv-list li::before {
-  content: '•'; position: absolute; left: 6px;
-  color: #7B5EA7; font-weight: 700;
-}
-.dv-list li strong { color: var(--ink); }
-
-.dv-highlight {
-  background: linear-gradient(135deg, #F3EEFF, #EDE0FF);
-  border-radius: 12px; padding: 14px 18px;
-  margin-top: 12px; font-size: 14px;
-  border-left: 4px solid #7B5EA7; color: var(--ink-m);
-  line-height: 1.7;
-}
-.dv-highlight strong { color: #4A2A6A; display: block; margin-bottom: 4px; }
-
-.dv-steps { counter-reset: step; padding: 0; list-style: none; margin: 0; }
-.dv-steps li {
-  counter-increment: step;
-  padding: 12px 14px 12px 52px;
-  position: relative;
-  font-size: 14px; color: var(--ink-m);
-  border-bottom: 1px solid rgba(123,94,167,.06);
-  line-height: 1.65;
-}
-.dv-steps li:last-child { border-bottom: none; }
-.dv-steps li::before {
-  content: counter(step);
-  position: absolute; left: 10px; top: 10px;
-  width: 28px; height: 28px;
-  background: #7B5EA7; color: white;
-  border-radius: 50%; font-size: 13px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-}
-.dv-steps li strong { color: #4A2A6A; display: block; margin-bottom: 2px; }
-
-.dv-quote {
-  background: #F8F4FF;
-  border-left: 4px solid #7B5EA7;
-  border-radius: 0 12px 12px 0;
-  padding: 16px 20px;
-  margin: 16px 0;
-  font-size: 15px; font-style: italic;
-  color: #5A3A8A; line-height: 1.7;
-}
-
-.dv-resource {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px;
-  background: var(--white);
-  border: 1.5px solid rgba(123,94,167,.15);
-  border-radius: 12px; margin-top: 8px;
-  text-decoration: none;
-}
-.dv-resource-num {
-  font-size: 18px; font-weight: 800; color: #7B5EA7;
-  flex-shrink: 0; min-width: 48px;
-}
-.dv-resource-info { flex: 1; }
-.dv-resource-name { font-size: 14px; font-weight: 700; color: var(--ink); }
-.dv-resource-desc { font-size: 12px; color: var(--ink-l); margin-top: 2px; }
-.dv-resource-badge {
-  padding: 3px 10px; border-radius: 10px;
-  font-size: 11px; font-weight: 700;
-  background: #7B5EA7; color: white;
-}
-
-/* 가스라이팅 체크리스트 */
-.dv-check-list { padding: 0; list-style: none; margin: 0; }
-.dv-check-list li {
-  padding: 10px 14px 10px 42px; position: relative;
-  font-size: 14px; color: var(--ink-m); line-height: 1.6;
-  border-bottom: 1px solid rgba(123,94,167,.06);
-}
-.dv-check-list li:last-child { border-bottom: none; }
-.dv-check-list li::before {
-  content: '□'; position: absolute; left: 12px;
-  color: #7B5EA7; font-size: 16px; top: 10px;
-}
-
-@media(max-width:640px){
-  .dv-banner { flex-direction: column; }
-  .dv-emergency-btn { align-self: flex-start; }
-  .dv-stage { min-width: 120px; font-size: 12px; }
-  .dv-card { padding: 18px 18px; }
-}
-
-
-/* ══════════════════════════════════════
-   새 Hero — 상황별 진입 카드
-══════════════════════════════════════ */
-.hero-subtitle {
-  font-size: 15px; color: var(--ink-l);
-  margin: 0 0 32px; line-height: 1.7;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.sit-cards {
+.guide-toc-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%; max-width: 720px;
-  margin: 0 auto;
-  animation: up .5s .25s cubic-bezier(.22,1,.36,1) both;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
 }
-.sit-card {
-  background: var(--white);
-  border: 1.5px solid rgba(224,123,90,.14);
-  border-radius: 18px;
-  padding: 20px 16px 18px;
-  cursor: pointer;
-  transition: all .22s cubic-bezier(.34,1.56,.64,1);
-  display: flex; flex-direction: column;
-  align-items: flex-start; gap: 8px;
-  box-shadow: 0 2px 10px rgba(44,30,20,.05);
-  text-align: left;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.sit-card:hover {
-  border-color: var(--color, var(--peach));
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(44,30,20,.10);
-  background: var(--color-bg, var(--peach-p));
-}
-.sit-card-em {
-  font-size: 28px; line-height: 1;
-}
-.sit-card-title {
-  font-size: 14px; font-weight: 700;
-  color: var(--ink); line-height: 1.3;
-}
-.sit-card-desc {
-  font-size: 12px; color: var(--ink-l);
-  line-height: 1.5; margin-top: 2px;
-}
-.sit-card-arrow {
-  margin-top: auto; padding-top: 8px;
-  font-size: 12px; font-weight: 700;
-  color: var(--color, var(--peach));
-  opacity: 0;
-  transition: opacity .18s;
-}
-.sit-card:hover .sit-card-arrow { opacity: 1; }
-
-/* 타임라인: 성장 가이드 탭일 때만 표시 */
-.tl-sidebar { display: none; }
-body.view-normal .tl-sidebar { display: block; }
-
-@media(max-width:760px){
-  .sit-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-}
-@media(max-width:480px){
-  .sit-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .sit-card { padding: 16px 12px 14px; }
-  .sit-card-em { font-size: 24px; }
-  .sit-card-title { font-size: 13px; }
-}
-
-
-/* ══════════════════════════════════════
-   상황별 헤더 (탭 진입 후)
-══════════════════════════════════════ */
-.sit-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 24px;
-  background: rgba(255,248,242,.96);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(224,123,90,.12);
-  position: sticky; top: 56px; z-index: 70;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.sit-back-btn {
-  background: none; border: 1.5px solid rgba(224,123,90,.25);
-  border-radius: 20px; padding: 6px 16px;
-  font-size: 13px; font-weight: 600; color: var(--peach-d);
-  cursor: pointer; transition: all .18s;
-  font-family: 'Noto Sans KR', sans-serif;
-  white-space: nowrap;
-}
-.sit-back-btn:hover { background: var(--peach-p); border-color: var(--peach); }
-.sit-header-title {
-  font-size: 15px; font-weight: 700; color: var(--ink);
+.guide-toc-item {
   display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: var(--cream);
+  border: 1px solid rgba(224,123,90,.12);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-m);
+  transition: all .18s;
+  line-height: 1.3;
 }
+.guide-toc-item:hover {
+  background: var(--peach-p);
+  border-color: var(--peach-l);
+  color: var(--peach-d);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(224,123,90,.15);
+}
+.guide-toc-item .toc-em { font-size: 15px; flex-shrink: 0; }
 @media(max-width:640px){
-  .sit-header { padding: 12px 16px; }
-  .sit-header-title { font-size: 13px; }
+  .guide-toc { margin: 0 18px 20px; padding: 16px; }
+  .guide-toc-grid { grid-template-columns: 1fr 1fr; }
 }
 
 </style>
@@ -1769,7 +1328,7 @@ body.view-normal .tl-sidebar { display: block; }
   <div class="logo" onclick="goHome()" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
   <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;white-space:nowrap;">
     <nav>
-      <button class="on" onclick="goHome()">홈</button>
+      <button class="on" onclick="toS('hero')">홈</button>
       <button onclick="toS('guide-sec')">성장 가이드</button>
     </nav>
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
@@ -1835,80 +1394,55 @@ body.view-normal .tl-sidebar { display: block; }
 
 <div class="page-wrap">
 
-  <!-- ── LEFT TOC SIDEBAR ── -->
-  <aside class="toc-sidebar" id="toc-sidebar"></aside>
-
   <!-- ── MAIN CONTENT ── -->
   <div class="main-col">
 
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
-      <div class="badge">🌱 전 생애 성장 &amp; 돌봄 가이드</div>
+      <!-- 프로필 있을 때 표시되는 배너 -->
+      <div class="hero-prof-banner" id="hero-banner">
+        <div class="hpb-avatar" id="banner-avatar"><span id="banner-avatar-em">🌱</span></div>
+        <div class="hpb-info">
+          <div class="hpb-name" id="banner-name"></div>
+          <div class="hpb-age" id="banner-age"></div>
+        </div>
+        <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
+      </div>
+      <div class="badge">🌱 0개월 ~ 80세 전 생애 성장 &amp; 돌봄 가이드</div>
       <h1>누군가 옆에 있어줬으면 했던<br><span class="hl">그 모든 순간,</span></h1>
-      <p class="hero-subtitle">지금 어떤 상황인가요?<br>당신의 상황에 맞는 가이드로 바로 안내해 드릴게요.</p>
-
-      <!-- 숨겨진 나이 입력 (내부 동작용 유지) -->
-      <input type="number" id="ai" style="display:none;" min="0">
-      <span id="au" style="display:none;">개월</span>
-
-      <div class="sit-cards">
-        <div class="sit-card" style="--color:#3A8A55;--color-bg:#EAF5EC;"
-          onclick="switchView('normal')">
-          <div class="sit-card-em">🌱</div>
-          <div class="sit-card-title">아이를 키우고 있어요</div>
-          <div class="sit-card-desc">신생아부터 청소년까지<br>연령별 발달 & 정서 가이드</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
+      <p>어느 나이든, 어떤 가정 환경이든 —<br>지금 이 시기를 잘 지나갈 수 있도록.</p>
+      <div class="sbox">
+        <div class="slabel">지금 몇 살인가요?</div>
+        <div class="srow">
+          <div class="mtoggle">
+            <button class="on" id="bm" onclick="setM('m')">개월 수<small>영유아 전용 (0~36개월)</small></button>
+            <button id="by" onclick="setM('y')">만 나이</button>
+          </div>
+          <div class="ninput">
+            <input type="number" id="ai" min="0" placeholder="0" onkeydown="if(event.key==='Enter')go()">
+            <span id="au">개월</span>
+          </div>
+          <button class="gobtn" onclick="go()">가이드 보기 →</button>
         </div>
-        <div class="sit-card" style="--color:#A07840;--color-bg:#FEF6EC;"
-          onclick="switchView('sp')">
-          <div class="sit-card-em">🏠</div>
-          <div class="sit-card-title">한부모 · 가족 상황</div>
-          <div class="sit-card-desc">혼자 육아하거나<br>가족 구조가 변한 경우</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
-        </div>
-        <div class="sit-card" style="--color:#D4849A;--color-bg:#FFF0F4;"
-          onclick="switchView('birth')">
-          <div class="sit-card-em">🤱</div>
-          <div class="sit-card-title">임신 · 출산 · 산후</div>
-          <div class="sit-card-desc">출산 전후 회복과<br>혼자 감당하는 산후 생활</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
-        </div>
-        <div class="sit-card" style="--color:#7B5EA7;--color-bg:#F3EEFF;"
-          onclick="switchView('dv')">
-          <div class="sit-card-em">🫂</div>
-          <div class="sit-card-title">가정폭력에서 벗어나고 싶어요</div>
-          <div class="sit-card-desc">아동·성인·노인 모두<br>단계별 회복 가이드</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
-        </div>
-        <div class="sit-card" style="--color:#5A7A9A;--color-bg:#EEF4FA;"
-          onclick="goToTeen()">
-          <div class="sit-card-em">💬</div>
-          <div class="sit-card-title">내 감정이 힘들어요</div>
-          <div class="sit-card-desc">청소년·청년의 정서 가이드<br>혼자 삭이지 않아도 돼요</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
-        </div>
-        <div class="sit-card" style="--color:#2A6A60;--color-bg:#E8F5F3;"
-          onclick="goToElder()">
-          <div class="sit-card-em">🌿</div>
-          <div class="sit-card-title">나이 드는 것이 걱정돼요</div>
-          <div class="sit-card-desc">중년·노년의 정서 건강<br>홀로 계신 어르신 가이드</div>
-          <div class="sit-card-arrow">가이드 보기 →</div>
-        </div>
+        <div class="hint" id="hint"><b>개월 수</b> 입력은 만 36개월(3세) 이하 영유아에게만 적용됩니다</div>
       </div>
     </section>
 
     <!-- VIEW TOGGLE -->
-    <!-- 상황별 헤더 (탭 선택 후 표시) -->
-    <div id="guide-sec" style="display:none;">
-      <div class="sit-header" id="sit-header">
-        <button class="sit-back-btn" onclick="goHome()">← 메인으로</button>
-        <div class="sit-header-title" id="sit-header-title"></div>
-        <div style="width:80px;"></div>
-      </div>
+    <div class="view-toggle" id="guide-sec">
+      <button class="view-btn on" id="vb-normal" onclick="switchView('normal')">
+        <span class="vb-dot" style="background:var(--sage)"></span>성장 가이드
+      </button>
+      <button class="view-btn" id="vb-sp" onclick="switchView('sp')">
+        <span class="vb-dot" style="background:var(--amber)"></span>한부모·가족 상황 가이드
+      </button>
+      <button class="view-btn" id="vb-birth" onclick="switchView('birth')">
+        <span class="vb-dot" style="background:#D4849A"></span>출산 & 산후 회복 가이드
+      </button>
     </div>
 
     <!-- NORMAL VIEW -->
-    <div id="normal-view" style="display:none;">
+    <div id="normal-view">
       <div class="pills">
         <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
         <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
@@ -1926,25 +1460,6 @@ body.view-normal .tl-sidebar { display: block; }
       </div>
       <div id="medical-disclaimer" style="display:none; margin-bottom:16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
         <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오. 긴급 상황 시 상단의 24시 긴급상담 버튼을 이용해 즉시 도움을 받으세요.
-      </div>
-
-      <div class="guide-nav-bar" id="guide-nav-bar" style="display:none;">
-        <button class="guide-back-btn" onclick="closeGuide()">← 목록</button>
-        <div class="guide-nav-pills" id="guide-nav-pills">
-        <div class="guide-nav-pill" id="gnp-0-m" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
-        <div class="guide-nav-pill" id="gnp-3-m" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
-        <div class="guide-nav-pill" id="gnp-6-m" onclick="qs(6,'m')"><span class="cd" style="background:#5BBF82"></span>6개월</div>
-        <div class="guide-nav-pill" id="gnp-12-m" onclick="qs(12,'m')"><span class="cd" style="background:#3A8A55"></span>12개월</div>
-        <div class="guide-nav-pill" id="gnp-24-m" onclick="qs(24,'m')"><span class="cd" style="background:#2A6A42"></span>24개월</div>
-        <div class="guide-nav-pill" id="gnp-4-y" onclick="qs(4,'y')"><span class="cd" style="background:#5C7A6B"></span>유아 4세</div>
-        <div class="guide-nav-pill" id="gnp-8-y" onclick="qs(8,'y')"><span class="cd" style="background:#C8924A"></span>학령기 8세</div>
-        <div class="guide-nav-pill" id="gnp-13-y" onclick="qs(13,'y')"><span class="cd" style="background:#A07840"></span>청소년 13세</div>
-        <div class="guide-nav-pill" id="gnp-20-y" onclick="qs(20,'y')"><span class="cd" style="background:#7A5A30"></span>청년 20세</div>
-        <div class="guide-nav-pill" id="gnp-35-y" onclick="qs(35,'y')"><span class="cd" style="background:#9E4F2A"></span>성인 35세</div>
-        <div class="guide-nav-pill" id="gnp-50-y" onclick="qs(50,'y')"><span class="cd" style="background:#6B4E7A"></span>중년 50세</div>
-        <div class="guide-nav-pill" id="gnp-65-y" onclick="qs(65,'y')"><span class="cd" style="background:#3A6A9A"></span>노년 65세</div>
-        <div class="guide-nav-pill" id="gnp-78-y" onclick="qs(78,'y')"><span class="cd" style="background:#2A3A5A"></span>후기 노년 78세</div>
-        </div>
       </div>
       <section id="result"></section>
     </div>
@@ -1971,42 +1486,6 @@ body.view-normal .tl-sidebar { display: block; }
         </div>
         <div class="birth-stage-tabs" id="birth-tabs"></div>
         <div id="birth-stages"></div>
-      </div>
-    </div>
-
-
-    <!-- DOMESTIC VIOLENCE RECOVERY VIEW -->
-    <div id="dv-view" style="display:none;">
-      <div class="dv-wrap">
-
-        <!-- 상단 안내 배너 -->
-        <div class="dv-banner">
-          <div class="dv-banner-icon">🫂</div>
-          <div class="dv-banner-text">
-            <strong>당신 잘못이 아닙니다.</strong><br>
-            어떤 폭력도, 어떤 말도 — 당신이 감당해야 할 이유가 없었어요.<br>
-            <span style="color:rgba(255,255,255,.8);font-size:12px;">이 가이드는 지금 어느 단계에 있든, 조금씩 앞으로 나아가도록 함께합니다.</span>
-          </div>
-          <a href="tel:1366" class="dv-emergency-btn">📞 1366 긴급상담</a>
-        </div>
-
-        <!-- 대상 선택 -->
-        <div class="dv-target-bar" id="dv-target-bar">
-          <button class="dv-tab on" id="dvt-0" onclick="selectDVTarget(0)">🧒 아동·청소년</button>
-          <button class="dv-tab" id="dvt-1" onclick="selectDVTarget(1)">👩 성인 여성</button>
-          <button class="dv-tab" id="dvt-2" onclick="selectDVTarget(2)">👨 성인 남성</button>
-          <button class="dv-tab" id="dvt-3" onclick="selectDVTarget(3)">👴 노인·조부모</button>
-        </div>
-
-        <!-- 단계 선택 -->
-        <div class="dv-stage-bar" id="dv-stage-bar">
-          <button class="dv-stage on" id="dvs-0" onclick="selectDVStage(0)">🌑 지금 그 안에 있어요</button>
-          <button class="dv-stage" id="dvs-1" onclick="selectDVStage(1)">🌒 막 벗어났어요</button>
-          <button class="dv-stage" id="dvs-2" onclick="selectDVStage(2)">🌓 회복 중이에요</button>
-          <button class="dv-stage" id="dvs-3" onclick="selectDVStage(3)">🌕 다시 일어서고 있어요</button>
-        </div>
-
-        <div id="dv-result"></div>
       </div>
     </div>
 
@@ -2155,7 +1634,7 @@ body.view-normal .tl-sidebar { display: block; }
 
 </div><!-- /page-wrap -->
 
-
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 // ── Source Drawer ──
 function openSourceDrawer() {
@@ -3195,13 +2674,7 @@ function setM(m){
   document.getElementById('hint').style.opacity=m==='m'?'1':'0.3';
 }
 function toS(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
-function qs(v,m){
-  setM(m);
-  document.getElementById('ai').value=v;
-  // pill 활성화 표시
-  document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('on');});
-  go();
-}
+function qs(v,m){setM(m);document.getElementById('ai').value=v;go();setTimeout(()=>document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'}),60);}
 function getMonths(){
   const v=parseInt(document.getElementById('ai').value)||0;
   return mode==='m'?v:v*12;
@@ -3210,93 +2683,20 @@ function openSos() {
   alert('[24시간 긴급 도움망]\n\n- 자살예방상담전화: 1393\n- 청소년전화: 1388\n- 정신건강위기상담전화: 1577-0199\n- 아동학대신고: 112\n\n혼자 고민하지 마세요.\n전문 상담사가 24시간 곁에 있습니다.');
 }
 
-// ── 현재 열린 가이드 정보 ──
-var _curGuideV = null;
-var _curGuideM = null;
-
-// pill 목록 (순서 중요)
-var GUIDE_PILLS = [
-  {v:'0',m:'m'},{v:'3',m:'m'},{v:'6',m:'m'},{v:'12',m:'m'},{v:'24',m:'m'},
-  {v:'4',m:'y'},{v:'8',m:'y'},{v:'13',m:'y'},{v:'20',m:'y'},
-  {v:'35',m:'y'},{v:'50',m:'y'},{v:'65',m:'y'},{v:'78',m:'y'}
-];
-
 function go(){
-  const months = getMonths();
-  if (months < 0) return;
-  const d = getData(months);
-
-  const r = document.getElementById('result');
-  const navBar = document.getElementById('guide-nav-bar');
-  const sidebar = document.getElementById('toc-sidebar');
-
-  // 슬라이드 아웃 후 교체
-  if (r.classList.contains('on')) {
-    r.classList.add('slide-out');
-    setTimeout(function() {
-      r.classList.remove('slide-out');
-      _renderAndOpen(d, months);
-    }, 220);
-  } else {
-    _renderAndOpen(d, months);
-  }
-
-  // nav bar 표시
-  if (navBar) navBar.style.display = 'flex';
-
-  // body에 가이드 열림 표시
-  document.body.classList.add('guide-open');
-
-  // 활성 pill 표시
-  var v = document.getElementById('ai').value;
-  var m = mode;
-  _curGuideV = v; _curGuideM = m;
-  document.querySelectorAll('.guide-nav-pill').forEach(function(p) {
-    p.classList.remove('active');
-  });
-  var activePill = document.getElementById('gnp-' + v + '-' + m);
-  if (activePill) {
-    activePill.classList.add('active');
-    activePill.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }
-
-  // 페이지 상단으로 스크롤
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function _renderAndOpen(d, months) {
-  render(d, months);
-  var r = document.getElementById('result');
+  const months=getMonths();
+  if(months<0)return;
+  const d=getData(months);
+  render(d,months);
+  const r=document.getElementById('result');
   r.classList.add('on');
-  buildSidebarTOC();
-}
-
-function closeGuide() {
-  var r = document.getElementById('result');
-  var navBar = document.getElementById('guide-nav-bar');
-  var sidebar = document.getElementById('toc-sidebar');
-
-  r.classList.add('slide-out');
-  setTimeout(function() {
-    r.classList.remove('on', 'slide-out');
-    r.innerHTML = '';
-  }, 250);
-
-  if (navBar) navBar.style.display = 'none';
-  if (sidebar) sidebar.style.display = 'none';
-  document.body.classList.remove('guide-open');
-
-  // 면책 조항 숨기기
-  var md = document.getElementById('medical-disclaimer');
-  if (md) md.style.display = 'none';
-
-  // 시기 pill 선택 해제
-  document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('on'); });
-  document.querySelectorAll('.guide-nav-pill').forEach(function(p) { p.classList.remove('active'); });
-  _curGuideV = null; _curGuideM = null;
-
-  // hero로 스크롤
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 의학적 면책 조항 표시
+  const md=document.getElementById('medical-disclaimer');
+  if(md) md.style.display='block';
+  setTimeout(()=>{
+    const md2=document.getElementById('medical-disclaimer');
+    if(md2) md2.scrollIntoView({behavior:'smooth',block:'start'});
+  },60);
 }
 function getData(months){
   const y=months/12;
@@ -3518,8 +2918,30 @@ function render(d,months){
     </div>
     ${getMemoHTML(months)}`;
 
-  // ── 사이드바 TOC 생성 ──
-  buildSidebarTOC();
+  // ── 목차(TOC) 인라인 생성 ──
+  (function() {
+    var result = document.getElementById('result');
+    if (!result) return;
+    var old = result.querySelector('.guide-toc');
+    if (old) old.remove();
+    var cards = result.querySelectorAll('.card h3');
+    if (cards.length < 2) return;
+    var items = Array.from(cards).map(function(h3, i) {
+      var id = 'toc-card-' + i;
+      h3.id = id;
+      var raw = h3.textContent.trim();
+      var parts = raw.split(' ');
+      var em = parts[0] || '';
+      var label = parts.slice(1).join(' ') || raw;
+      return { id: id, em: em, label: label };
+    });
+    var tocItems = items.map(function(item) {
+      return '<div class="guide-toc-item" onclick="(function(){var el=document.getElementById(\'' + item.id + '\');if(!el)return;var card=el.closest(\'.card\')||el;window.scrollTo({top:card.getBoundingClientRect().top+window.scrollY-90,behavior:\'smooth\'});})()"><span class="toc-em">' + item.em + '</span><span>' + item.label + '</span></div>';
+    }).join('');
+    var tocHTML = '<div class="guide-toc"><div class="guide-toc-title">📋 이 가이드에 담긴 내용</div><div class="guide-toc-grid">' + tocItems + '</div></div>';
+    var grid = result.querySelector('.grid');
+    if (grid) grid.insertAdjacentHTML('beforebegin', tocHTML);
+  })();
 
 }
 
@@ -3625,389 +3047,26 @@ function renderBirth(idx){
   document.querySelectorAll('.birth-stage').forEach((s,i)=>s.classList.toggle('on',i===idx));
 }
 
-// 상황별 헤더 메타데이터
-var VIEW_META = {
-  normal: { em:'🌱', label:'성장 가이드',            color:'var(--sage)' },
-  sp:     { em:'🏠', label:'한부모·가족 상황 가이드', color:'var(--amber)' },
-  birth:  { em:'🤱', label:'출산 & 산후 회복 가이드', color:'#D4849A' },
-  dv:     { em:'🫂', label:'가정폭력 회복 가이드',    color:'#7B5EA7' },
-  teen:   { em:'💬', label:'청소년·청년 감정 가이드', color:'#5A7A9A' },
-  elder:  { em:'🌿', label:'중년·노년 가이드',        color:'#2A6A60' },
-};
-
 function switchView(v){
-  curView = v;
-  // 뷰 전환
-  var views = ['normal','sp','birth','dv'];
-  views.forEach(function(id){
-    var el = document.getElementById(id+'-view');
-    if(el) el.style.display = (v===id) ? '' : 'none';
-  });
-  // 타임라인: 성장 가이드일 때만
-  document.body.classList.toggle('view-normal', v==='normal');
-  // 콘텐츠 렌더
-  if(v==='sp')    renderSP(typeof curSit!=='undefined' ? curSit : 0);
-  if(v==='birth') { if(typeof renderBirth==='function') renderBirth(); }
-  if(v==='dv')    renderDV();
-  // 헤더 제목 업데이트
-  var meta = VIEW_META[v] || VIEW_META['normal'];
-  var titleEl = document.getElementById('sit-header-title');
-  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
-  // hero 숨기고 헤더 표시
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('guide-sec').style.display = '';
-  window.scrollTo({top:0, behavior:'instant'});
+  curView=v;
+  document.getElementById('normal-view').style.display=v==='normal'?'':'none';
+  document.getElementById('sp-view').style.display=v==='sp'?'':'none';
+  document.getElementById('birth-view').style.display=v==='birth'?'':'none';
+  document.getElementById('vb-normal').classList.toggle('on',v==='normal');
+  document.getElementById('vb-sp').classList.toggle('on',v==='sp');
+  document.getElementById('vb-birth').classList.toggle('on',v==='birth');
+  if(v==='sp') renderSP(curSit);
+  setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
 }
-
-
-/* ══════════════════════════════════════════════════
-   가정폭력 회복 가이드 데이터 & 렌더
-══════════════════════════════════════════════════ */
-var _dvTarget = 0; // 0:아동청소년 1:성인여성 2:성인남성 3:노인조부모
-var _dvStage  = 0; // 0:그 안에 1:막 벗어남 2:회복중 3:다시 일어섬
-
-function selectDVTarget(i){
-  _dvTarget=i;
-  document.querySelectorAll('.dv-tab').forEach(function(b,idx){ b.classList.toggle('on',idx===i); });
-  renderDV();
-}
-function selectDVStage(i){
-  _dvStage=i;
-  document.querySelectorAll('.dv-stage').forEach(function(b,idx){ b.classList.toggle('on',idx===i); });
-  renderDV();
-}
-
-function renderDV(){
-  var el=document.getElementById('dv-result');
-  if(!el) return;
-  el.innerHTML = buildDVContent(_dvTarget, _dvStage);
-}
-
-function buildDVContent(target, stage){
-  // ── 공통 자원 ──
-  var resources = `
-    <div class="dv-card">
-      <div class="dv-card-title">📞 지금 연락할 수 있는 곳</div>
-      <a class="dv-resource" href="tel:1366">
-        <div class="dv-resource-num">1366</div>
-        <div class="dv-resource-info">
-          <div class="dv-resource-name">여성긴급전화 1366</div>
-          <div class="dv-resource-desc">24시간, 무료, 익명 가능 — 가정폭력·성폭력·스토킹 모두</div>
-        </div>
-        <span class="dv-resource-badge">24시간</span>
-      </a>
-      <a class="dv-resource" href="tel:112">
-        <div class="dv-resource-num">112</div>
-        <div class="dv-resource-info">
-          <div class="dv-resource-name">경찰 신고</div>
-          <div class="dv-resource-desc">신체적 위험이 있을 때 즉시 신고. 현장 출동 가능</div>
-        </div>
-        <span class="dv-resource-badge">긴급</span>
-      </a>
-      <a class="dv-resource" href="tel:1577-1366">
-        <div class="dv-resource-num">129</div>
-        <div class="dv-resource-info">
-          <div class="dv-resource-name">복지로 상담전화</div>
-          <div class="dv-resource-desc">쉼터 연결, 법률 지원, 생활 지원 안내</div>
-        </div>
-        <span class="dv-resource-badge">복지</span>
-      </a>
-    </div>`;
-
-  // ── 가스라이팅 인식 체크리스트 (공통) ──
-  var gaslit = `
-    <div class="dv-card">
-      <div class="dv-card-title">🔍 이런 경험, 폭력이 맞아요 <span class="dv-card-tag red">가스라이팅 인식</span></div>
-      <div class="dv-quote">"내가 너무 예민한 건가?" — 이 질문이 자주 든다면, 그건 당신이 이상한 게 아닙니다.</div>
-      <ul class="dv-check-list">
-        <li>"네가 그렇게 행동하니까 내가 이러는 거잖아"라는 말을 자주 들었다</li>
-        <li>내 기억이 틀렸다고, 그런 일이 없었다고 부정당했다</li>
-        <li>나의 감정 반응이 "과하다", "이상하다"는 말을 반복해서 들었다</li>
-        <li>상대방 눈치를 보며 내 감정·행동을 검열하게 됐다</li>
-        <li>가족·친구에게 상황을 말했더니 아무도 믿지 않았다</li>
-        <li>내가 잘못했기 때문에 이런 대우를 받는다고 느껴왔다</li>
-        <li>혼자 있을 때조차 "내가 잘못된 걸까"라는 생각이 든다</li>
-      </ul>
-      <div class="dv-highlight">
-        <strong>✓ 체크 항목이 하나라도 있다면 —</strong>
-        당신이 경험한 것은 당신의 문제가 아닙니다. 가스라이팅은 피해자가 현실 인식을 잃게 만드는 심리적 폭력입니다. 전문가와 이야기 나눠보세요.
-      </div>
-    </div>`;
-
-  // ── 대상별 + 단계별 콘텐츠 ──
-  var targets = ['아동·청소년', '성인 여성', '성인 남성', '노인·조부모'];
-  var stages  = ['그 안에 있는 지금', '막 벗어난 직후', '회복 중', '다시 일어서는 단계'];
-
-  // 단계별 핵심 메시지
-  var stageMsgs = [
-    { icon:'🌑', title:'지금 그 안에 있다면', color:'#4A2A6A', msg:'아직 상황을 바꾸기 어렵더라도, 이 가이드를 읽는 것 자체가 용기입니다. 지금 당장 모든 걸 바꾸지 않아도 돼요. 작은 한 가지부터 시작할게요.' },
-    { icon:'🌒', title:'막 벗어났다면', color:'#5A3A8A', msg:'몸은 벗어났지만 마음은 아직 그 안에 있을 수 있어요. 안도와 두려움이 동시에 드는 게 정상입니다. 지금 가장 중요한 건 안전을 지키는 것입니다.' },
-    { icon:'🌓', title:'회복 중이라면', color:'#6B4A9A', msg:'좋은 날과 나쁜 날이 반복되는 것, 정상입니다. 회복은 직선이 아니에요. 오늘 힘들다고 퇴보한 게 아닙니다.' },
-    { icon:'🌕', title:'다시 일어서고 있다면', color:'#7B5EA7', msg:'여기까지 온 것 자체가 대단한 일입니다. 이제 내 안의 힘을 다시 찾는 단계예요. 그 힘은 처음부터 당신 안에 있었습니다.' },
-  ];
-  var sm = stageMsgs[stage] || stageMsgs[0];
-  var smColor = sm.color || '#4A2A6A';
-  var stageIntro = '<div class="dv-card" style="border-left:4px solid '+smColor+'; background:linear-gradient(135deg,#FAF7FF,#F3EEFF);">'
-    + '<div class="dv-card-title" style="color:'+smColor+';">'+sm.icon+' '+sm.title+'</div>'
-    + '<div style="font-size:14px;color:var(--ink-m);line-height:1.75;">'+sm.msg+'</div>'
-    + '</div>';
-
-  // ── 대상 × 단계 조합 콘텐츠 ──
-  var combo = {
-    // 아동·청소년
-    '0-0': `
-      <div class="dv-card">
-        <div class="dv-card-title">🧒 지금 이런 상황이라면 <span class="dv-card-tag red">즉시 도움</span></div>
-        <ul class="dv-list">
-          <li><strong>학교 선생님이나 상담 선생님에게 말해주세요.</strong> 비밀을 지킬 의무가 있지만, 위험한 상황이면 도움을 요청해줘요.</li>
-          <li><strong>혼자 참을 필요 없어요.</strong> 어른에게 알리는 것은 배신이 아니에요. 당신을 보호하기 위한 일입니다.</li>
-          <li>Wee 클래스(학교 상담실)에 가면 비밀을 지켜주며 도와줍니다.</li>
-          <li>폰으로 <strong>문자 #0924</strong> 로 청소년 상담을 신청할 수 있어요.</li>
-        </ul>
-        <div class="dv-highlight"><strong>📱 청소년 전용 상담 문자:</strong> #0924 (24시간, 무료)</div>
-      </div>`,
-    '0-1': `
-      <div class="dv-card">
-        <div class="dv-card-title">🧒 안전한 곳에 나왔다면 <span class="dv-card-tag green">안전 확보</span></div>
-        <ol class="dv-steps">
-          <li><strong>지금 있는 곳이 안전한지 확인하세요.</strong> 친척, 친구 집, 학교 상담실, 청소년 쉼터 모두 가능해요.</li>
-          <li><strong>신뢰할 수 있는 어른 한 명을 찾으세요.</strong> 선생님, 친척, 이웃 — 누구든 한 명이면 충분해요.</li>
-          <li><strong>청소년 쉼터</strong>에서 먹고 자는 것을 해결해줍니다. 1388 청소년 상담 전화로 연결할 수 있어요.</li>
-          <li>경험한 것을 기억하거나 기록해두세요 — 나중에 도움이 될 수 있어요.</li>
-        </ol>
-        <a class="dv-resource" href="tel:1388">
-          <div class="dv-resource-num">1388</div>
-          <div class="dv-resource-info">
-            <div class="dv-resource-name">청소년 상담 1388</div>
-            <div class="dv-resource-desc">24시간, 무료, 청소년 전용 — 쉼터 연결 가능</div>
-          </div>
-          <span class="dv-resource-badge">24시간</span>
-        </a>
-      </div>`,
-    '0-2': `
-      <div class="dv-card">
-        <div class="dv-card-title">🧒 회복 중인 청소년에게 <span class="dv-card-tag amber">마음 돌보기</span></div>
-        <div class="dv-quote">"화가 나는 것도, 슬픈 것도, 아무 감정이 없는 것도 — 모두 자연스러운 반응이에요."</div>
-        <ul class="dv-list">
-          <li><strong>PTSD 반응은 내가 이상한 게 아닙니다.</strong> 악몽, 갑작스러운 눈물, 무감각함은 뇌가 충격에 반응하는 방식이에요.</li>
-          <li>학교 Wee 클래스나 지역 청소년 상담 센터에서 무료로 심리상담을 받을 수 있어요.</li>
-          <li><strong>나쁜 가정에서 자랐어도, 내 미래는 내가 만들 수 있어요.</strong> 많은 사람들이 그렇게 했어요.</li>
-          <li>좋아하는 것을 하나씩 찾아보세요. 그게 회복의 시작이에요.</li>
-        </ul>
-      </div>`,
-    '0-3': `
-      <div class="dv-card">
-        <div class="dv-card-title">🧒 새 출발을 위한 청소년에게 <span class="dv-card-tag green">미래 설계</span></div>
-        <ul class="dv-list">
-          <li><strong>내가 경험한 것은 내 정체성이 아닙니다.</strong> 그 안에서 살아남은 것이 내 힘입니다.</li>
-          <li>진로·학업이 걱정된다면 교육청 Wee 센터에서 집중 지원을 받을 수 있어요.</li>
-          <li>비슷한 경험을 한 또래와 이야기 나누는 집단 상담 프로그램도 있어요.</li>
-          <li><strong>건강한 관계가 어떤 건지 배우는 것</strong>이 가장 중요한 다음 단계예요.</li>
-        </ul>
-        <div class="dv-highlight"><strong>💡 핵심:</strong> 폭력적인 관계에서 자라면 그게 "정상"처럼 느껴질 수 있어요. 그렇지 않다는 걸 배우는 것, 그것이 진짜 회복의 시작입니다.</div>
-      </div>`,
-
-    // 성인 여성
-    '1-0': `
-      <div class="dv-card">
-        <div class="dv-card-title">👩 지금 안에 있는 당신에게 <span class="dv-card-tag red">즉시 도움</span></div>
-        <ol class="dv-steps">
-          <li><strong>지금 위험하다면 112에 전화하세요.</strong> 전화하기 어렵다면 문자나 카카오톡 "경찰청"으로도 신고 가능해요.</li>
-          <li><strong>안전 가방을 준비해두세요.</strong> 신분증, 통장 사본, 현금, 중요 서류 — 급히 나와야 할 때 필요해요.</li>
-          <li>가까운 가정폭력 상담소에 비밀 상담을 신청할 수 있어요. 신고 의무 없이 이야기만 나눌 수 있어요.</li>
-          <li><strong>"내가 변하면 달라질 것"이라는 생각은 폭력자가 심어준 믿음입니다.</strong> 폭력의 책임은 100% 폭력을 행사한 사람에게 있어요.</li>
-        </ol>
-        <div class="dv-highlight"><strong>⚠️ 중요:</strong> 가장 위험한 순간은 "떠나려 할 때"입니다. 혼자 결행하지 말고 전문기관(1366)과 함께 계획을 세우세요.</div>
-      </div>`,
-    '1-1': `
-      <div class="dv-card">
-        <div class="dv-card-title">👩 막 나온 당신에게 <span class="dv-card-tag green">안전 + 실질 지원</span></div>
-        <ol class="dv-steps">
-          <li><strong>가정폭력 피해자 쉼터</strong>에서 최대 6개월 무료로 지낼 수 있어요. 비밀 주소 보장.</li>
-          <li><strong>긴급 생계비 지원</strong>을 신청하세요. 주민센터 or 1366을 통해 연결 가능해요.</li>
-          <li>법원에 <strong>접근금지·피해자 보호 명령</strong>을 신청할 수 있어요. 법률구조공단(132)이 무료로 도와줍니다.</li>
-          <li>아이가 있다면 아이와 함께 쉼터에 입소할 수 있어요.</li>
-          <li>핸드폰 번호를 바꾸거나, 위치 추적 앱이 깔려 있는지 확인하세요.</li>
-        </ol>
-      </div>`,
-    '1-2': `
-      <div class="dv-card">
-        <div class="dv-card-title">👩 회복 중인 당신에게 <span class="dv-card-tag amber">마음 회복</span></div>
-        <div class="dv-quote">"다시 그 사람이 그리워지는 것은 당신이 나약해서가 아닙니다. 오랜 시간 정서적으로 연결되어 있었던 뇌의 반응이에요."</div>
-        <ul class="dv-list">
-          <li><strong>트라우마 반응</strong>: 갑자기 무너지거나, 아무 감정이 안 드는 것 — 모두 정상입니다.</li>
-          <li>가정폭력 전문 트라우마 상담을 받아보세요. 한국여성의전화, 해바라기센터에서 무료 제공해요.</li>
-          <li><strong>자존감 회복이 가장 오래 걸립니다.</strong> 서두르지 마세요. "나는 사랑받을 자격이 있다"는 말이 낯설게 느껴지는 게 당연해요.</li>
-          <li>비슷한 경험을 한 여성들과의 자조 모임이 회복에 큰 도움이 됩니다.</li>
-        </ul>
-      </div>`,
-    '1-3': `
-      <div class="dv-card">
-        <div class="dv-card-title">👩 다시 일어서는 당신에게 <span class="dv-card-tag green">독립과 성장</span></div>
-        <ul class="dv-list">
-          <li><strong>경제적 독립</strong>을 위한 지원: 여성새로일하기센터, 직업훈련 지원, 취업 연계 프로그램</li>
-          <li>건강한 관계를 다시 배우는 것이 중요해요. 새로운 관계에서 과도한 경계심이나 의존이 생길 수 있어요 — 자연스러운 과정입니다.</li>
-          <li><strong>내가 살아남은 방식</strong>이 지금은 내 강점이에요. 그 감각을 믿으세요.</li>
-          <li>법적 이혼, 재산 분리, 양육권이 필요하다면 법률구조공단(132)이 무료로 도와줍니다.</li>
-        </ul>
-        <div class="dv-highlight"><strong>💜 기억해주세요:</strong> 살아남은 것, 그 자체가 이미 용감한 일입니다.</div>
-      </div>`,
-
-    // 성인 남성
-    '2-0': `
-      <div class="dv-card">
-        <div class="dv-card-title">👨 말하기 어렵지만 <span class="dv-card-tag red">당신도 피해자입니다</span></div>
-        <div class="dv-quote">"남자가 무슨 가정폭력 피해자냐"는 말 때문에 더 오래 혼자 감당했을 거예요. 그 침묵이 얼마나 무거웠을지 압니다.</div>
-        <ul class="dv-list">
-          <li><strong>신체 폭력뿐 아니라</strong> 지속적인 언어 폭력, 경제적 통제, 감금, 협박도 가정폭력입니다.</li>
-          <li>1366은 남성 피해자도 상담 가능합니다. 익명으로 전화할 수 있어요.</li>
-          <li><strong>아이가 목격하고 있다면</strong> — 아이를 위해서라도 도움을 받아야 해요.</li>
-          <li>혼자 해결하려 하지 마세요. 전문가의 도움이 더 빨리, 더 안전하게 해결됩니다.</li>
-        </ul>
-      </div>`,
-    '2-1': `
-      <div class="dv-card">
-        <div class="dv-card-title">👨 막 벗어난 당신에게 <span class="dv-card-tag green">실질 지원</span></div>
-        <ol class="dv-steps">
-          <li><strong>증거를 확보해두세요.</strong> 메시지, 사진, 진료 기록 — 법적 절차에 필요할 수 있어요.</li>
-          <li>법원 <strong>접근금지 명령</strong>은 남성 피해자도 신청 가능합니다. 법률구조공단(132)이 무료로 도와줍니다.</li>
-          <li>아이 양육권이 걱정된다면 즉시 법률 상담을 받으세요.</li>
-          <li><strong>가까운 사람에게 상황을 알리세요.</strong> 혼자 처리하다 불리해질 수 있어요.</li>
-        </ol>
-      </div>`,
-    '2-2': `
-      <div class="dv-card">
-        <div class="dv-card-title">👨 회복 중인 당신에게 <span class="dv-card-tag amber">감정 회복</span></div>
-        <ul class="dv-list">
-          <li><strong>수치심과 싸우는 것</strong>이 남성 피해자의 회복에서 가장 어려운 부분입니다. 그 수치심은 당신 것이 아니에요.</li>
-          <li>분노, 무기력, 우울이 교차할 수 있어요. 정신건강 상담(정신건강 위기상담 전화 1577-0199)을 받아보세요.</li>
-          <li><strong>"왜 진작 나오지 못했지"</strong>라는 자책 — 폭력적 관계에서 벗어나기 어려운 것은 심리적 메커니즘 때문입니다. 당신 탓이 아니에요.</li>
-        </ul>
-      </div>`,
-    '2-3': `
-      <div class="dv-card">
-        <div class="dv-card-title">👨 다시 일어서는 당신에게 <span class="dv-card-tag green">회복과 성장</span></div>
-        <ul class="dv-list">
-          <li><strong>건강한 관계 패턴을 다시 배우는 것</strong>이 중요해요. 나도 모르게 폭력적 관계를 반복하지 않도록.</li>
-          <li>아이와의 관계 회복을 위한 부모 상담 프로그램이 있어요.</li>
-          <li>내가 경험한 것을 말할 수 있게 됐다면 — 그 자체가 이미 엄청난 회복입니다.</li>
-        </ul>
-        <div class="dv-highlight"><strong>💙 당신도 보살핌받을 자격이 있습니다.</strong> 강해야 한다는 압박이 얼마나 힘들었는지, 이제는 내려놓아도 돼요.</div>
-      </div>`,
-
-    // 노인·조부모
-    '3-0': `
-      <div class="dv-card">
-        <div class="dv-card-title">👴 말하지 못했던 당신에게 <span class="dv-card-tag red">자녀에 의한 폭력</span></div>
-        <div class="dv-quote">"자식한테 당한다고 누가 믿겠어" — 믿습니다. 그리고 이것은 분명 잘못된 일입니다.</div>
-        <ul class="dv-list">
-          <li><strong>자녀에 의한 노인 학대</strong>는 신체·언어·경제적 착취·방임 모두 포함됩니다.</li>
-          <li>노인보호전문기관(1577-1389)에 신고하면 현장 조사와 보호 조치를 받을 수 있어요.</li>
-          <li><strong>자식을 신고하는 것이 패륜이 아닙니다.</strong> 당신의 안전이 먼저예요.</li>
-          <li>경제적 통제(통장·카드 빼앗김)도 학대입니다. 사회복지사를 통해 독립적 자산 관리를 도울 수 있어요.</li>
-        </ul>
-        <a class="dv-resource" href="tel:1577-1389">
-          <div class="dv-resource-num">1389</div>
-          <div class="dv-resource-info">
-            <div class="dv-resource-name">노인보호전문기관</div>
-            <div class="dv-resource-desc">24시간 노인 학대 신고·상담. 현장 조사 파견 가능</div>
-          </div>
-          <span class="dv-resource-badge">24시간</span>
-        </a>
-      </div>`,
-    '3-1': `
-      <div class="dv-card">
-        <div class="dv-card-title">👴 안전한 곳에 나오셨다면 <span class="dv-card-tag green">보호와 지원</span></div>
-        <ol class="dv-steps">
-          <li><strong>노인 보호시설</strong>에서 임시 거처와 생활 지원을 받을 수 있어요.</li>
-          <li>국민연금, 기초연금을 본인 명의 새 계좌로 받을 수 있도록 주민센터에서 도와드려요.</li>
-          <li><strong>법원 접근금지 명령</strong>은 자녀를 상대로도 신청할 수 있어요.</li>
-          <li>손자·손녀가 같이 있는 경우라면, 아이 보호를 위한 조치도 동시에 요청할 수 있어요.</li>
-        </ol>
-      </div>`,
-    '3-2': `
-      <div class="dv-card">
-        <div class="dv-card-title">👴 회복 중이신 분께 <span class="dv-card-tag amber">마음 회복</span></div>
-        <div class="dv-quote">"다 키워놨더니" — 그 배신감과 상실감은 충분히 슬퍼할 자격이 있어요.</div>
-        <ul class="dv-list">
-          <li><strong>우울, 무력감, 수치심</strong>이 오랫동안 이어질 수 있어요. 노인 정신건강 상담 서비스를 이용해보세요.</li>
-          <li>경로당, 복지관의 노인 상담 프로그램이 회복에 도움이 됩니다.</li>
-          <li><strong>자녀와의 관계를 어떻게 할지</strong>는 천천히 결정해도 괜찮아요. 용서는 의무가 아닙니다.</li>
-          <li>몸의 건강도 함께 살펴보세요. 오랜 스트레스는 신체에도 영향을 줍니다.</li>
-        </ul>
-      </div>`,
-    '3-3': `
-      <div class="dv-card">
-        <div class="dv-card-title">👴 새로운 일상을 시작하는 분께 <span class="dv-card-tag green">독립적 삶</span></div>
-        <ul class="dv-list">
-          <li><strong>내 삶을 다시 내가 결정하는 것</strong>부터 시작해요. 오늘 뭘 먹을지, 어디 갈지 — 작은 것부터.</li>
-          <li>사회관계를 새로 만들어가세요. 복지관, 노인 대학, 종교 모임 등을 통해 연결될 수 있어요.</li>
-          <li>재정 관리를 직접 하는 것이 어렵다면 주민센터의 금융복지 상담사가 도와드려요.</li>
-          <li><strong>나이가 들었어도 행복할 권리가 있습니다.</strong> 이제는 나를 위해 살아도 됩니다.</li>
-        </ul>
-        <div class="dv-highlight"><strong>🌸 당신의 삶은 아직 계속됩니다.</strong> 오래 참아온 만큼, 이제는 편안하게 지낼 자격이 충분히 있어요.</div>
-      </div>`,
-  };
-
-  var key = target + '-' + stage;
-  var comboCard = combo[key] || '<div class="dv-card"><div class="dv-card-title">📋 가이드 준비 중</div><div style="font-size:14px;color:var(--ink-m);">이 조합의 상세 가이드는 곧 추가될 예정이에요.</div></div>';
-
-  return stageIntro + comboCard + gaslit + resources;
-}
-
 
 function goHome(){
-  if(document.body.classList.contains('guide-open')) closeGuide();
-  // result 초기화
-  var r = document.getElementById('result');
+  // 성장 가이드 탭으로 초기화
+  switchView('normal');
+  // 결과 영역 초기화
+  const r = document.getElementById('result');
   if(r){ r.innerHTML=''; r.classList.remove('on'); }
-  // 모든 뷰 숨기기
-  ['normal-view','sp-view','birth-view','dv-view'].forEach(function(id){
-    var el = document.getElementById(id); if(el) el.style.display = 'none';
-  });
-  document.body.classList.remove('view-normal');
-  // guide-sec(헤더) 숨기고 hero 복귀
-  document.getElementById('guide-sec').style.display = 'none';
-  document.getElementById('hero').style.display = '';
+  // 맨 위로 스크롤
   window.scrollTo({top:0, behavior:'smooth'});
-}
-
-
-function goToTeen(){
-  curView = 'teen';
-  // 헤더를 teen 메타로 표시
-  var meta = VIEW_META['teen'];
-  var titleEl = document.getElementById('sit-header-title');
-  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('guide-sec').style.display = '';
-  // normal-view 열고 13세 렌더
-  ['sp-view','birth-view','dv-view'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.style.display='none';
-  });
-  document.getElementById('normal-view').style.display = '';
-  document.body.classList.add('view-normal');
-  setM('y');
-  document.getElementById('ai').value = 13;
-  go();
-  window.scrollTo({top:0, behavior:'instant'});
-}
-function goToElder(){
-  curView = 'elder';
-  var meta = VIEW_META['elder'];
-  var titleEl = document.getElementById('sit-header-title');
-  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
-  document.getElementById('hero').style.display = 'none';
-  document.getElementById('guide-sec').style.display = '';
-  ['sp-view','birth-view','dv-view'].forEach(function(id){
-    var el=document.getElementById(id); if(el) el.style.display='none';
-  });
-  document.getElementById('normal-view').style.display = '';
-  document.body.classList.add('view-normal');
-  setM('y');
-  document.getElementById('ai').value = 65;
-  go();
-  window.scrollTo({top:0, behavior:'instant'});
 }
 
 const TL=[
@@ -4123,105 +3182,6 @@ function setMTab(id){
 
 
 
-
-// ══════════════════════════════════════════════
-//  사이드바 TOC — 스크롤 추적 목차
-// ══════════════════════════════════════════════
-var _tocObserver = null;
-
-function buildSidebarTOC() {
-  var result = document.getElementById('result');
-  var sidebar = document.getElementById('toc-sidebar');
-  if (!result || !sidebar) return;
-
-  // 기존 observer 해제
-  if (_tocObserver) { _tocObserver.disconnect(); _tocObserver = null; }
-
-  // h3 카드 수집
-  var cards = result.querySelectorAll('.card h3');
-  if (cards.length < 2) { sidebar.style.display = 'none'; return; }
-
-  var items = Array.from(cards).map(function(h3, i) {
-    var id = 'toc-s-' + i;
-    h3.id = id;
-    var raw = h3.textContent.trim();
-    var parts = raw.split(' ');
-    var em = parts[0] || '';
-    var label = parts.slice(1).join(' ') || raw;
-    return { id: id, em: em, label: label, card: h3.closest('.card') || h3 };
-  });
-
-  // 사이드바 렌더
-  sidebar.innerHTML =
-    '<div class="toc-sidebar-title">이 가이드</div>' +
-    items.map(function(item) {
-      return '<div class="toc-nav-item" id="toc-btn-' + item.id + '" onclick="tocScrollTo(\'' + item.id + '\')">' +
-        '<span class="toc-em">' + item.em + '</span>' +
-        '<span class="toc-label">' + item.label + '</span>' +
-        '<span class="toc-progress-dot"></span>' +
-        '</div>';
-    }).join('');
-
-  sidebar.style.display = 'flex';
-
-  // 스크롤 위치 기반 현재 섹션 계산 (카드 완전히 넘어갈 때까지 active 유지)
-  function updateActiveTOC() {
-    var scrollY = window.scrollY;
-    var offset = 120;
-    var bestIdx = 0;
-
-    for (var i = 0; i < items.length; i++) {
-      var el = document.getElementById(items[i].id);
-      if (!el) continue;
-      var card = el.closest('.card') || el;
-      var cardBottom = card.getBoundingClientRect().bottom + scrollY;
-      // 카드 하단이 offset 아래에 있으면 아직 이 섹션
-      if (card.getBoundingClientRect().top + scrollY - offset <= scrollY) {
-        bestIdx = i;
-      }
-    }
-
-    items.forEach(function(item, idx) {
-      var btn = document.getElementById('toc-btn-' + item.id);
-      if (!btn) return;
-      if (idx === bestIdx) {
-        if (!btn.classList.contains('active')) {
-          btn.classList.add('active');
-          btn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-        }
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-  }
-
-  var _tocScrollTimer = null;
-  function onTocScroll() {
-    if (_tocScrollTimer) return;
-    _tocScrollTimer = requestAnimationFrame(function() {
-      updateActiveTOC();
-      _tocScrollTimer = null;
-    });
-  }
-
-  window.addEventListener('scroll', onTocScroll, { passive: true });
-
-  _tocObserver = {
-    disconnect: function() {
-      window.removeEventListener('scroll', onTocScroll);
-    }
-  };
-
-  updateActiveTOC();
-}
-
-function tocScrollTo(id) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  var card = el.closest('.card') || el;
-  window.scrollTo({ top: card.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
-}
-
 </script>
 
 <!-- ── 모바일 하단 탭바 ── -->
@@ -4232,16 +3192,4 @@ function tocScrollTo(id) {
   <button class="mtab" id="mtab-guide" onclick="switchView('normal');setMTab('guide')">
     <span>📖</span>발달가이드
   </button>
-  <button class="mtab" id="mtab-sp" onclick="switchView('sp');setMTab('sp')">
-    <span>🫶</span>한부모가이드
-  </button>
-  <button class="mtab" id="mtab-birth" onclick="switchView('birth');setMTab('birth')">
-    <span>🌸</span>출산·산후
-  </button>
-  <button class="mtab" id="mtab-dv" onclick="switchView('dv');setMTab('dv')">
-    <span>🫂</span>회복가이드
-  </button>
-</nav>
-
-</body>
-</html>
+  <button class="mtab" id="mtab-sp" onclick="sw
