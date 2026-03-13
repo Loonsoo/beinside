@@ -1362,7 +1362,6 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 /* 가이드 열려있을 때 hero/pills 영역 숨김 */
 body.guide-open .hero,
-body.guide-open #guide-sec,
 body.guide-open #normal-view .pills,
 body.guide-open #normal-view #medical-disclaimer {
   display: none !important;
@@ -1718,6 +1717,37 @@ body.view-normal .tl-sidebar { display: block; }
   .sit-card-title { font-size: 13px; }
 }
 
+
+/* ══════════════════════════════════════
+   상황별 헤더 (탭 진입 후)
+══════════════════════════════════════ */
+.sit-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+  background: rgba(255,248,242,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(224,123,90,.12);
+  position: sticky; top: 56px; z-index: 70;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.sit-back-btn {
+  background: none; border: 1.5px solid rgba(224,123,90,.25);
+  border-radius: 20px; padding: 6px 16px;
+  font-size: 13px; font-weight: 600; color: var(--peach-d);
+  cursor: pointer; transition: all .18s;
+  font-family: 'Noto Sans KR', sans-serif;
+  white-space: nowrap;
+}
+.sit-back-btn:hover { background: var(--peach-p); border-color: var(--peach); }
+.sit-header-title {
+  font-size: 15px; font-weight: 700; color: var(--ink);
+  display: flex; align-items: center; gap: 8px;
+}
+@media(max-width:640px){
+  .sit-header { padding: 12px 16px; }
+  .sit-header-title { font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
@@ -1868,19 +1898,13 @@ body.view-normal .tl-sidebar { display: block; }
     </section>
 
     <!-- VIEW TOGGLE -->
-    <div class="view-toggle" id="guide-sec" style="display:none;">
-      <button class="view-btn on" id="vb-normal" onclick="switchView('normal')">
-        <span class="vb-dot" style="background:var(--sage)"></span>성장 가이드
-      </button>
-      <button class="view-btn" id="vb-sp" onclick="switchView('sp')">
-        <span class="vb-dot" style="background:var(--amber)"></span>한부모·가족 상황 가이드
-      </button>
-      <button class="view-btn" id="vb-birth" onclick="switchView('birth')">
-        <span class="vb-dot" style="background:#D4849A"></span>출산 & 산후 회복 가이드
-      </button>
-      <button class="view-btn" id="vb-dv" onclick="switchView('dv')">
-        <span class="vb-dot" style="background:#7B5EA7"></span>가정폭력 회복 가이드
-      </button>
+    <!-- 상황별 헤더 (탭 선택 후 표시) -->
+    <div id="guide-sec" style="display:none;">
+      <div class="sit-header" id="sit-header">
+        <button class="sit-back-btn" onclick="goHome()">← 메인으로</button>
+        <div class="sit-header-title" id="sit-header-title"></div>
+        <div style="width:80px;"></div>
+      </div>
     </div>
 
     <!-- NORMAL VIEW -->
@@ -3601,24 +3625,38 @@ function renderBirth(idx){
   document.querySelectorAll('.birth-stage').forEach((s,i)=>s.classList.toggle('on',i===idx));
 }
 
+// 상황별 헤더 메타데이터
+var VIEW_META = {
+  normal: { em:'🌱', label:'성장 가이드',            color:'var(--sage)' },
+  sp:     { em:'🏠', label:'한부모·가족 상황 가이드', color:'var(--amber)' },
+  birth:  { em:'🤱', label:'출산 & 산후 회복 가이드', color:'#D4849A' },
+  dv:     { em:'🫂', label:'가정폭력 회복 가이드',    color:'#7B5EA7' },
+  teen:   { em:'💬', label:'청소년·청년 감정 가이드', color:'#5A7A9A' },
+  elder:  { em:'🌿', label:'중년·노년 가이드',        color:'#2A6A60' },
+};
+
 function switchView(v){
-  curView=v;
-  document.getElementById('normal-view').style.display=v==='normal'?'':'none';
-  document.getElementById('sp-view').style.display=v==='sp'?'':'none';
-  document.getElementById('birth-view').style.display=v==='birth'?'':'none';
-  document.getElementById('dv-view').style.display=v==='dv'?'':'none';
-  document.getElementById('vb-normal').classList.toggle('on',v==='normal');
-  document.getElementById('vb-sp').classList.toggle('on',v==='sp');
-  document.getElementById('vb-birth').classList.toggle('on',v==='birth');
-  document.getElementById('vb-dv').classList.toggle('on',v==='dv');
-  // 타임라인: 성장 가이드일 때만 표시
+  curView = v;
+  // 뷰 전환
+  var views = ['normal','sp','birth','dv'];
+  views.forEach(function(id){
+    var el = document.getElementById(id+'-view');
+    if(el) el.style.display = (v===id) ? '' : 'none';
+  });
+  // 타임라인: 성장 가이드일 때만
   document.body.classList.toggle('view-normal', v==='normal');
-  if(v==='sp') renderSP(curSit);
-  if(v==='dv') renderDV();
-  // hero 숨기고 가이드 영역으로 스크롤
-  document.getElementById('guide-sec').style.display = '';
+  // 콘텐츠 렌더
+  if(v==='sp')    renderSP(typeof curSit!=='undefined' ? curSit : 0);
+  if(v==='birth') { if(typeof renderBirth==='function') renderBirth(); }
+  if(v==='dv')    renderDV();
+  // 헤더 제목 업데이트
+  var meta = VIEW_META[v] || VIEW_META['normal'];
+  var titleEl = document.getElementById('sit-header-title');
+  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
+  // hero 숨기고 헤더 표시
   document.getElementById('hero').style.display = 'none';
-  document.getElementById('guide-sec').scrollIntoView({behavior:'smooth', block:'start'});
+  document.getElementById('guide-sec').style.display = '';
+  window.scrollTo({top:0, behavior:'instant'});
 }
 
 
@@ -3707,13 +3745,12 @@ function buildDVContent(target, stage){
     { icon:'🌓', title:'회복 중이라면', color:'#6B4A9A', msg:'좋은 날과 나쁜 날이 반복되는 것, 정상입니다. 회복은 직선이 아니에요. 오늘 힘들다고 퇴보한 게 아닙니다.' },
     { icon:'🌕', title:'다시 일어서고 있다면', color:'#7B5EA7', msg:'여기까지 온 것 자체가 대단한 일입니다. 이제 내 안의 힘을 다시 찾는 단계예요. 그 힘은 처음부터 당신 안에 있었습니다.' },
   ];
-  var sm = stageMsgs[stage];
-
-  var stageIntro = `
-    <div class="dv-card" style="border-left:4px solid ${sm.color}; background:linear-gradient(135deg,#FAF7FF,#F3EEFF);">
-      <div class="dv-card-title" style="color:${sm.color};">${sm.icon} ${sm.title}</div>
-      <div style="font-size:14px;color:var(--ink-m);line-height:1.75;">${sm.msg}</div>
-    </div>`;
+  var sm = stageMsgs[stage] || stageMsgs[0];
+  var smColor = sm.color || '#4A2A6A';
+  var stageIntro = '<div class="dv-card" style="border-left:4px solid '+smColor+'; background:linear-gradient(135deg,#FAF7FF,#F3EEFF);">'
+    + '<div class="dv-card-title" style="color:'+smColor+';">'+sm.icon+' '+sm.title+'</div>'
+    + '<div style="font-size:14px;color:var(--ink-m);line-height:1.75;">'+sm.msg+'</div>'
+    + '</div>';
 
   // ── 대상 × 단계 조합 콘텐츠 ──
   var combo = {
@@ -3913,55 +3950,64 @@ function buildDVContent(target, stage){
   };
 
   var key = target + '-' + stage;
-  var comboCard = combo[key] || '';
+  var comboCard = combo[key] || '<div class="dv-card"><div class="dv-card-title">📋 가이드 준비 중</div><div style="font-size:14px;color:var(--ink-m);">이 조합의 상세 가이드는 곧 추가될 예정이에요.</div></div>';
 
   return stageIntro + comboCard + gaslit + resources;
 }
 
 
 function goHome(){
-  // 가이드 페이지가 열려있으면 먼저 닫기
-  if(document.body.classList.contains('guide-open')){
-    closeGuide();
-  } else {
-    const r = document.getElementById('result');
-    if(r){ r.innerHTML=''; r.classList.remove('on'); }
-  }
-  // hero 다시 표시
-  document.getElementById('hero').style.display = '';
-  // 모든 탭 숨기기 (hero만 보이는 상태)
+  if(document.body.classList.contains('guide-open')) closeGuide();
+  // result 초기화
+  var r = document.getElementById('result');
+  if(r){ r.innerHTML=''; r.classList.remove('on'); }
+  // 모든 뷰 숨기기
   ['normal-view','sp-view','birth-view','dv-view'].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.style.display = 'none';
+    var el = document.getElementById(id); if(el) el.style.display = 'none';
   });
-  ['vb-normal','vb-sp','vb-birth','vb-dv'].forEach(function(id){
-    var el = document.getElementById(id);
-    if(el) el.classList.remove('on');
-  });
-  document.getElementById('guide-sec').style.display = 'none';
   document.body.classList.remove('view-normal');
+  // guide-sec(헤더) 숨기고 hero 복귀
+  document.getElementById('guide-sec').style.display = 'none';
+  document.getElementById('hero').style.display = '';
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
 
-// 상황별 카드 특수 진입
 function goToTeen(){
-  switchView('normal');
-  setTimeout(function(){
-    // 청소년 13세로 바로 이동
-    setM('y');
-    document.getElementById('ai').value = 13;
-    go();
-  }, 100);
+  curView = 'teen';
+  // 헤더를 teen 메타로 표시
+  var meta = VIEW_META['teen'];
+  var titleEl = document.getElementById('sit-header-title');
+  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('guide-sec').style.display = '';
+  // normal-view 열고 13세 렌더
+  ['sp-view','birth-view','dv-view'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  document.getElementById('normal-view').style.display = '';
+  document.body.classList.add('view-normal');
+  setM('y');
+  document.getElementById('ai').value = 13;
+  go();
+  window.scrollTo({top:0, behavior:'instant'});
 }
 function goToElder(){
-  switchView('normal');
-  setTimeout(function(){
-    // 노년 65세로 바로 이동
-    setM('y');
-    document.getElementById('ai').value = 65;
-    go();
-  }, 100);
+  curView = 'elder';
+  var meta = VIEW_META['elder'];
+  var titleEl = document.getElementById('sit-header-title');
+  if(titleEl) titleEl.innerHTML = '<span>' + meta.em + '</span> ' + meta.label;
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('guide-sec').style.display = '';
+  ['sp-view','birth-view','dv-view'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display='none';
+  });
+  document.getElementById('normal-view').style.display = '';
+  document.body.classList.add('view-normal');
+  setM('y');
+  document.getElementById('ai').value = 65;
+  go();
+  window.scrollTo({top:0, behavior:'instant'});
 }
 
 const TL=[
@@ -4186,4 +4232,16 @@ function tocScrollTo(id) {
   <button class="mtab" id="mtab-guide" onclick="switchView('normal');setMTab('guide')">
     <span>📖</span>발달가이드
   </button>
-  <button class="mtab" id="mtab-sp" onclick="sw
+  <button class="mtab" id="mtab-sp" onclick="switchView('sp');setMTab('sp')">
+    <span>🫶</span>한부모가이드
+  </button>
+  <button class="mtab" id="mtab-birth" onclick="switchView('birth');setMTab('birth')">
+    <span>🌸</span>출산·산후
+  </button>
+  <button class="mtab" id="mtab-dv" onclick="switchView('dv');setMTab('dv')">
+    <span>🫂</span>회복가이드
+  </button>
+</nav>
+
+</body>
+</html>
