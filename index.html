@@ -84,8 +84,11 @@ header{
   -webkit-backdrop-filter:blur(28px) saturate(1.4);
   border-bottom:1px solid rgba(224,123,90,.10);
   height:64px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  padding:0 28px;
   box-shadow:0 1px 0 rgba(224,123,90,.06), 0 4px 20px rgba(44,30,20,.04);
 }
 .logo{
@@ -93,10 +96,11 @@ header{
   color:var(--peach-d);
   display:flex;align-items:center;gap:5px;
   letter-spacing:-.3px;
-  position:absolute;left:50%;transform:translateX(-50%);
+  justify-content:center;
+  white-space:nowrap;
 }
 .logo-dot{width:7px;height:7px;background:var(--amber);border-radius:50%;}
-nav{display:flex;gap:4px;}
+nav{display:flex;gap:4px;justify-content:flex-end;}
 nav button{
   background:none;border:none;
   font-family:'Noto Sans KR',sans-serif;font-size:13px;
@@ -1159,6 +1163,150 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   border-radius: 16px; padding: 16px 20px; margin-bottom: 20px;
   font-size: 13px; color: #304880; line-height: 1.65;
 }
+
+/* ── Hamburger Menu Button ── */
+.menu-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; padding: 8px; border-radius: 8px;
+  transition: background 0.2s;
+}
+.menu-btn:hover { background: rgba(224,123,90,.12); }
+.menu-btn span {
+  display: block; width: 22px; height: 2px;
+  background: var(--peach-d); border-radius: 2px;
+  transition: all 0.25s;
+}
+
+/* ── Source Drawer (출처 패널) ── */
+.source-drawer-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(44,30,20,.45);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.source-drawer-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.source-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(480px, 92vw);
+  background: #FFF8F2;
+  box-shadow: -8px 0 40px rgba(44,30,20,.18);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+  display: flex; flex-direction: column;
+  z-index: 2001; overflow: hidden;
+}
+.source-drawer.open { transform: translateX(0); }
+
+.source-drawer-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 28px 16px;
+  border-bottom: 1px solid rgba(232,137,106,.2);
+  background: #FFF2E8;
+  flex-shrink: 0;
+}
+.source-drawer-header h2 {
+  font-size: 17px; font-weight: 800; color: var(--rust);
+  font-family: 'Noto Sans KR', sans-serif; margin: 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.source-drawer-close {
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; color: var(--ink-m); padding: 4px 8px;
+  border-radius: 6px; transition: background 0.2s; line-height: 1;
+}
+.source-drawer-close:hover { background: rgba(224,123,90,.15); }
+
+.source-drawer-body {
+  flex: 1; overflow-y: auto; padding: 24px 28px 40px;
+}
+
+.source-section {
+  margin-bottom: 28px;
+}
+.source-section-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--peach);
+  margin-bottom: 12px; padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--peach-p);
+}
+.source-item {
+  display: flex; gap: 12px; margin-bottom: 14px;
+  padding: 12px 14px; background: white;
+  border-radius: 10px; border: 1px solid rgba(232,137,106,.15);
+}
+.source-item-badge {
+  flex-shrink: 0; width: 36px; height: 36px;
+  background: var(--peach-p); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.source-item-content { flex: 1; }
+.source-item-name {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  margin-bottom: 3px; line-height: 1.4;
+}
+.source-item-detail {
+  font-size: 11.5px; color: var(--ink-m); line-height: 1.6;
+}
+.source-item-year {
+  display: inline-block; font-size: 10.5px; font-weight: 700;
+  background: var(--peach-p); color: var(--peach-d);
+  padding: 1px 7px; border-radius: 20px; margin-top: 4px;
+}
+.source-note {
+  font-size: 11px; color: var(--ink-l); line-height: 1.8;
+  background: #FFF2E8; border-radius: 8px; padding: 12px 16px;
+  border-left: 3px solid var(--peach-l); margin-top: 4px;
+}
+
+
+/* ── Guide TOC (목차 박스) ── */
+.guide-toc {
+  margin: 0 48px 28px;
+  background: white;
+  border: 1.5px solid rgba(224,123,90,.18);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(224,123,90,.07);
+}
+.guide-toc-title {
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  color: var(--peach); text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 6px;
+}
+.guide-toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.guide-toc-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px;
+  background: var(--cream);
+  border: 1px solid rgba(224,123,90,.12);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12.5px; font-weight: 600; color: var(--ink-m);
+  transition: all .18s;
+  line-height: 1.3;
+}
+.guide-toc-item:hover {
+  background: var(--peach-p);
+  border-color: var(--peach-l);
+  color: var(--peach-d);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(224,123,90,.15);
+}
+.guide-toc-item .toc-em { font-size: 15px; flex-shrink: 0; }
+@media(max-width:640px){
+  .guide-toc { margin: 0 18px 20px; padding: 16px; }
+  .guide-toc-grid { grid-template-columns: 1fr 1fr; }
+}
+
 </style>
 </head>
 <body>
@@ -1177,11 +1325,16 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" style="position:absolute;left:50%;transform:translateX(-50%);cursor:pointer;z-index:10;display:flex;align-items:center;gap:2px;" onclick="goHome()" title="메인으로 돌아가기"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
-  <nav>
-    <button class="on" onclick="toS('hero')">홈</button>
-    <button onclick="toS('guide-sec')">성장 가이드</button>
-  </nav>
+  <div class="logo" onclick="goHome()" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
+  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;white-space:nowrap;">
+    <nav>
+      <button class="on" onclick="toS('hero')">홈</button>
+      <button onclick="toS('guide-sec')">성장 가이드</button>
+    </nav>
+    <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- ── PROFILE MODAL ── -->
@@ -1336,15 +1489,132 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
       </div>
     </div>
 
-    <div class="data-source-bar">
-  <strong>📌 통계 데이터 출처</strong><br>
-  본 사이트의 통계 수치는 아래의 공신력 있는 출처에 근거합니다.<br>
-  • <strong>소아청소년 정신건강:</strong> 보건복지부 2022 소아청소년 정신건강실태조사 (n=6,275) &nbsp;|&nbsp;
-  <strong>성인 정신건강:</strong> 보건복지부·국립정신건강센터 2021 정신건강실태조사 (n=5,511)<br>
-  • <strong>노인 우울:</strong> 보건복지부 2023 노인실태조사 (n=10,078) &nbsp;|&nbsp;
-  <strong>산후우울증:</strong> PubMed/PMC 한국 코호트 연구 (2021~2023) &nbsp;|&nbsp;
-  <strong>ACE:</strong> Thurston et al. (2025), PubMed PMID:40819337<br>
-  수치는 연구 설계 및 진단 기준에 따라 다를 수 있습니다.
+<!-- 출처 드로어 오버레이 -->
+<div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
+<div class="source-drawer" id="source-drawer">
+  <div class="source-drawer-header">
+    <h2>📚 통계 데이터 출처</h2>
+    <button class="source-drawer-close" onclick="closeSourceDrawer()">✕</button>
+  </div>
+  <div class="source-drawer-body">
+
+    <div class="source-section">
+      <div class="source-section-title">📊 청소년 정신건강 (최신 2024~2025)</div>
+
+      <div class="source-item">
+        <div class="source-item-badge">👧</div>
+        <div class="source-item-content">
+          <div class="source-item-name">여성가족부 2025 청소년 통계</div>
+          <div class="source-item-detail">중·고등학생 우울감 경험률 27.7%, 스트레스 인지율 42.3% (2024년 기준 데이터)<br>여학생(49.9%) · 남학생(35.2%)</div>
+          <span class="source-item-year">2025 발표 / 2024 기준</span>
+        </div>
+      </div>
+
+      <div class="source-item">
+        <div class="source-item-badge">🏫</div>
+        <div class="source-item-content">
+          <div class="source-item-name">질병관리청 제21차 청소년건강행태조사</div>
+          <div class="source-item-detail">전국 800개 표본학교 중·고등학생 약 6만 명 대상. 범불안장애 경험률 14.1% (2024년), 스마트폰 중독 급증</div>
+          <span class="source-item-year">2025 발표 / 2024 기준</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-section">
+      <div class="source-section-title">🧠 성인 · 국민 정신건강 (최신 2024)</div>
+
+      <div class="source-item">
+        <div class="source-item-badge">📋</div>
+        <div class="source-item-content">
+          <div class="source-item-name">국립정신건강센터 2024 국민 정신건강 지식 및 태도 조사</div>
+          <div class="source-item-detail">전국 15~69세 3,000명. 지난 1년간 정신건강 문제 경험률 73.6%, 심각한 스트레스 46.3%, 수일 지속 우울감 40.2%</div>
+          <span class="source-item-year">2024</span>
+        </div>
+      </div>
+
+      <div class="source-item">
+        <div class="source-item-badge">🏥</div>
+        <div class="source-item-content">
+          <div class="source-item-name">국민건강보험공단 — 2025 국정감사 자료</div>
+          <div class="source-item-detail">2024년 우울증 진료 환자 110만 6,603명 (역대 최대). 2020년 대비 32.9% 증가. 10대 우울증 환자 84% 급증</div>
+          <span class="source-item-year">2025 (2024 기준)</span>
+        </div>
+      </div>
+
+      <div class="source-item">
+        <div class="source-item-badge">📈</div>
+        <div class="source-item-content">
+          <div class="source-item-name">질병관리청 2024 지역사회건강조사</div>
+          <div class="source-item-detail">전국 만 19세 이상 성인 약 23만 명 대상. 성인 우울감 경험률 6.2% (전년 7.3% → 감소). 비만율 34.4% 증가</div>
+          <span class="source-item-year">2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-section">
+      <div class="source-section-title">👶 소아청소년 정신건강 유병률</div>
+
+      <div class="source-item">
+        <div class="source-item-badge">🔬</div>
+        <div class="source-item-content">
+          <div class="source-item-name">보건복지부 2022 소아청소년 정신건강실태조사</div>
+          <div class="source-item-detail">전국 6~17세 6,275명. 소아청소년 정신장애 평생 유병률 16.1% (소아 14.3%, 청소년 18.0%). 국내 최초 전국 단위 조사</div>
+          <span class="source-item-year">2022 (공표 2024)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-section">
+      <div class="source-section-title">🧓 성인 · 노인 정신장애 유병률 (주기 조사)</div>
+
+      <div class="source-item">
+        <div class="source-item-badge">📑</div>
+        <div class="source-item-content">
+          <div class="source-item-name">보건복지부·국립정신건강센터 2021 정신건강실태조사</div>
+          <div class="source-item-detail">전국 18~79세 5,511명. 정신장애 평생 유병률 27.8%, 1년 유병률 8.5%. 5년 주기 법정 조사 (다음 2026년 예정)</div>
+          <span class="source-item-year">2021 (5년 주기 최신)</span>
+        </div>
+      </div>
+
+      <div class="source-item">
+        <div class="source-item-badge">👴</div>
+        <div class="source-item-content">
+          <div class="source-item-name">보건복지부 2023 노인실태조사</div>
+          <div class="source-item-detail">전국 65세 이상 10,078명. 노인 우울증상 유병률 11.3% (독거노인 16.1%). 3년 주기 법정 조사 (다음 2026년 예정)</div>
+          <span class="source-item-year">2023 (3년 주기 최신)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-section">
+      <div class="source-section-title">🤱 산후우울증 · ACE</div>
+
+      <div class="source-item">
+        <div class="source-item-badge">🌸</div>
+        <div class="source-item-content">
+          <div class="source-item-name">보건복지부 2024 산후조리 실태조사</div>
+          <div class="source-item-detail">산모 68.5% 산후우울감 경험 (진단 기준 6.8%). 정서적 지지 부족이 주요 요인으로 확인</div>
+          <span class="source-item-year">2024</span>
+        </div>
+      </div>
+
+      <div class="source-item">
+        <div class="source-item-badge">🔗</div>
+        <div class="source-item-content">
+          <div class="source-item-name">Thurston et al. (2025) — PubMed 메타분석</div>
+          <div class="source-item-detail">아동기 역경(ACE) 경험 시 성인기 우울·불안 위험 1.6~2배 증가. PMID: 40819337</div>
+          <span class="source-item-year">2025 / PubMed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="source-note">
+      ⚠️ <strong>이용 안내:</strong> 본 사이트의 통계 수치는 위 공신력 있는 출처에 근거합니다.
+      성인 정신건강실태조사(5년 주기)·노인실태조사(3년 주기)는 법정 조사로 해당 주기 내 최신 공식 통계이며,
+      2026년 신규 조사 시 업데이트 예정입니다. 수치는 연구 설계 및 진단 기준에 따라 다를 수 있습니다.
+    </div>
+
+  </div>
 </div>
 <footer>
       <strong>BeInside</strong> — 세대를 잇는 전 생애 성장 반려 서비스<br>
@@ -1364,7 +1634,70 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 </div><!-- /page-wrap -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
+// ── Guide TOC 자동 생성 ──
+function buildTOC() {
+  const result = document.getElementById('result');
+  if (!result) return;
+  const old = result.querySelector('.guide-toc');
+  if (old) old.remove();
+
+  const cards = result.querySelectorAll('.card h3');
+  if (cards.length < 2) return;
+
+  const items = Array.from(cards).map((h3, i) => {
+    const id = 'toc-card-' + i;
+    h3.id = id;
+    const raw = h3.textContent.trim();
+    // 첫 단어(이모지 포함) 분리
+    const parts = raw.split(' ');
+    const em = parts[0] || '';
+    const label = parts.slice(1).join(' ') || raw;
+    return { id, em, label };
+  });
+
+  const tocItems = items.map(item =>
+    '<div class="guide-toc-item" onclick="scrollToCard(\'' + item.id + '\')">' +
+    '<span class="toc-em">' + item.em + '</span>' +
+    '<span>' + item.label + '</span>' +
+    '</div>'
+  ).join('');
+
+  const tocHTML =
+    '<div class="guide-toc">' +
+    '<div class="guide-toc-title">📋 이 가이드에 담긴 내용</div>' +
+    '<div class="guide-toc-grid">' + tocItems + '</div>' +
+    '</div>';
+
+  const grid = result.querySelector('.grid');
+  if (grid) grid.insertAdjacentHTML('beforebegin', tocHTML);
+}
+
+function scrollToCard(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const card = el.closest('.card') || el;
+  const top = card.getBoundingClientRect().top + window.scrollY - 90;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+</script>
+<script>
+// ── Source Drawer ──
+function openSourceDrawer() {
+  document.getElementById('source-overlay').classList.add('open');
+  document.getElementById('source-drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeSourceDrawer() {
+  document.getElementById('source-overlay').classList.remove('open');
+  document.getElementById('source-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSourceDrawer();
+});
+</script><script>
 /* ══════════════════════════════════════════════════════
    1. MEMO SYSTEM
 ══════════════════════════════════════════════════════ */
@@ -1494,55 +1827,55 @@ loadMemos();
 ══════════════════════════════════════════════════════ */
 const MENTAL={
   infant:{
-    stat:{pct:'10~33%',label:'산후우울증 유병률 (글로벌 10~15%, 한국 코호트 22~33%)'},
+    stat:{pct:'68.5%',label:'산모 중 산후우울감 경험 비율 (진단 기준 6.8%, 보건복지부 2024 산후조리 실태조사)'},
     risk:'산후우울증 고위험 시기 — 출산 후 2주~3개월이 가장 취약합니다.',
     signs:['2주 이상 지속되는 깊은 슬픔·무기력감','아이에 대한 감정적 연결 느끼지 못함','수면을 취할 수 있어도 자지 못함·과다 수면','극심한 불안·공황 발작','아이나 자신을 해치고 싶다는 생각(즉시 전문가 연락)'],
     tips:['수면을 최우선으로 — 도움을 받아 최소 4시간 연속 수면 확보','하루 10분 햇빛 아래 걷기 — 세로토닌 분비 가장 빠른 방법','감정을 말로 표현 — "나 지금 힘들어"라고 말할 수 있는 사람 한 명 만들기','산후우울증은 의지 문제가 아닌 호르몬·뇌화학의 변화입니다']
   },
   toddler:{
-    stat:{pct:'5~29%',label:'영유아 부모의 양육 번아웃 유병률 (연구·문화권마다 다름)'},
+    stat:{pct:'73.6%',label:'지난 1년간 정신건강 문제(스트레스·우울·중독 등)를 경험한 국민 비율 (국립정신건강센터 2024)'},
     risk:'양육 번아웃 고위험 시기 — 잠 부족·끊임없는 요구·사회적 고립이 겹칩니다.',
     signs:['아이를 보는 것이 두렵거나 짜증이 먼저 남','작은 일에 폭발적 분노 반응','아무것도 하고 싶지 않은 무기력감 2주 이상','"내가 나쁜 부모"라는 생각이 반복됨'],
     tips:['매일 15분의 "나만의 시간" 의식적으로 확보','감정 일기 — 하루 끝에 오늘의 감정을 단어 3개로만 적기','지역 육아 커뮤니티 연결 — 혼자가 아니라는 것이 가장 큰 보호막','번아웃은 게으름이 아니라 자원 고갈입니다. 채워야 할 때입니다']
   },
   preschool:{
-    stat:{pct:'약 14%',label:'소아(6~11세) 정신장애 평생 유병률 (보건복지부 2022)'},
+    stat:{pct:'약 14%',label:'소아(6~11세) 정신장애 평생 유병률 (보건복지부·국립정신건강센터, 2022 소아청소년 정신건강실태조사)'},
     risk:'아이의 정서 문제 조기 발견이 가장 중요한 시기.',
     signs:['아이: 심한 분리불안 (등원 시 30분 이상 울음 지속)','아이: 반복적 악몽·수면 거부·퇴행 행동 (기저귀 다시 요구 등)','부모: 완벽주의적 양육 압박으로 인한 만성 죄책감','부모: 배우자·친구와의 관계가 모두 단절된 고립감'],
     tips:['아이의 감정에 이름 붙여주기 — 감정 어휘가 자기 조절의 기반','부모 자신의 내면 아이를 돌보기 — 당신도 어렸을 때가 있었습니다','주 1회 부부만의 시간 (아이 없이) — 관계가 양육의 에너지입니다','전문 아동 상담은 문제가 생긴 후가 아니라 예방적으로 활용 가능']
   },
   school:{
-    stat:{pct:'14~18%',label:'소아·청소년 정신장애 평생 유병률 (보건복지부 2022 실태조사)'},
+    stat:{pct:'16.1%',label:'소아·청소년(6~17세) 정신장애 평생 유병률 — 불안장애 경험률은 2024년 14.1%로 증가 (보건복지부 2022 실태조사 / 질병관리청 2024 청소년건강행태조사)'},
     risk:'학업 스트레스·또래 관계 문제·사이버불링이 급증하는 시기.',
     signs:['아이: 등교 거부·반복적 복통·두통 (심리적 원인)','아이: 2주 이상 무기력·관심사 상실·성적 급락','아이: 친구 이야기를 완전히 끊음 혹은 과도한 집착','아이: 자해·자살에 대한 발언 (즉각 전문가 연락)'],
     tips:['하루 30분 비판 없는 대화 시간 — "어땠어?" 아닌 "오늘 제일 재밌었던 게 뭐야?"','실패를 함께 처리하기 — 성적표보다 아이의 표정이 먼저','학교 Wee클래스 적극 활용 — 상담은 문제아가 받는 것이 아닙니다','아이가 걱정을 꺼낼 때 즉각 해결하려 하지 말고 먼저 끝까지 듣기']
   },
   teen:{
-    stat:{pct:'18%',label:'청소년(12~17세) 정신장애 평생 유병률 (보건복지부 2022 소아청소년 정신건강실태조사)'},
+    stat:{pct:'27.7%',label:'중·고등학생 우울감 경험률 — 10대 우울증 환자는 2020년 대비 84% 급증 (여성가족부 2025 청소년 통계 / 국민건강보험공단 2025)'},
     risk:'청소년 우울증·자해·자살 고위험 시기. 한국 청소년 사망 원인 1위가 자살입니다.',
     signs:['2주 이상 슬픔·공허함·무기력','평소 좋아하던 것에 흥미를 잃음','수면 과다 혹은 불면 (새벽 3~4시까지 깨있음)','팔뚝 등에 긁힌 자국·긴소매로 가리는 행동','"죽고 싶다", "사라지고 싶다" 발언 (즉각 1393 자살예방상담전화)'],
     tips:['청소년에게 직접 물어보기 — "혹시 죽고 싶다는 생각 든 적 있어?" (물어본다고 생각이 생기지 않습니다)','스마트폰 통제보다 대화 먼저 — 규칙 이전에 관계가 우선','매일 함께하는 15분의 식사 — 밥상머리가 최고의 정신건강 예방책','우울증은 치료 가능한 병입니다. 전문가 도움은 당연한 선택입니다']
   },
   young:{
-    stat:{pct:'20~28%',label:'20~30대 청년의 우울·불안 증상 경험 비율 (여성 20대 기준 최대 28%, 서울여성가족재단 2022)'},
+    stat:{pct:'40.2%',label:'수일간 지속되는 우울감을 경험한 국민 비율 (국립정신건강센터 2024, 2022년 30.0%→증가)'},
     risk:'취업 실패·연애 갈등·사회 진입 충격이 집중되는 고위험 시기.',
     signs:['지속적 무기력·미래에 대한 극단적 비관','음주·게임·SNS 중독적 사용으로 감정 회피','2주 이상 외출 안 함·대인관계 완전 철수','수면·식사 패턴 완전 붕괴','자해·자살 생각 (즉시 1393 연락)'],
     tips:['작은 성취 루틴 만들기 — 매일 침대 정리 하나로도 뇌는 "해냈다"를 경험','SNS 사용 하루 30분 제한 — 비교가 우울의 가장 큰 연료','청년 마음건강 바우처 활용 — 국가 지원 상담 서비스 (복지로 검색)','고립되어 있다면 정신건강 위기상담 전화 1577-0199 (24시간)']
   },
   adult:{
-    stat:{pct:'27.8%',label:'성인 중 평생 한 번 이상 정신건강 문제(우울·불안 등)를 경험하는 비율 (보건복지부 2021 정신건강실태조사)'},
+    stat:{pct:'110만 명',label:'2024년 국내 우울증 진료 환자 수 (2020년 대비 32.9% 증가, 건강보험심사평가원 2025 국감 자료)'},
     risk:'직장 번아웃·결혼 갈등·육아 압박이 복합적으로 작용하는 시기.',
     signs:['만성 피로·집중력 저하가 3개월 이상 지속','작은 일에도 눈물이 나거나 분노 조절 어려움','직장·가정 어디에서도 "내가 없어도 될 것 같다"는 생각','신체 증상(두통·소화불량·가슴 답답)이 원인 없이 반복'],
     tips:['번아웃과 우울증 구분하기 — 쉬어도 회복이 안 되면 우울증 가능성','직장인 EAP(근로자 지원 프로그램) 활용 — 대기업 대부분 무료 제공','마음챙김 5분 — 아침에 눈 뜨면 3번 깊게 숨 쉬며 오늘 하루만 생각','정신건강의학과 방문에 대한 부끄러움 내려놓기 — 치과 가는 것과 같습니다']
   },
   middle:{
-    stat:{pct:'40%',label:'중년이 번아웃·공허함을 경험하는 비율 (중년기 정서 어려움, 연구에 따라 다양)'},
+    stat:{pct:'46.3%',label:'심각한 스트레스를 경험한 국민 비율 (2022년 36%→2024년 46.3%, 국립정신건강센터 2024)'},
     risk:'중년 위기·갱년기 우울·빈 둥지 증후군이 집중되는 시기.',
     signs:['지금까지의 삶에 대한 극심한 후회·의미 상실','갱년기 증상과 우울이 겹쳐 구분하기 어려움','음주량 증가·위험한 충동적 결정','부부 관계 냉각·성생활 갑작스러운 변화'],
     tips:['"아직 절반이 남았다" 재구성 — 45세는 통계적으로 수명의 절반','새로운 정체성 탐색 — 직업·부모 역할 외의 "나는 누구인가?" 질문','부부 상담은 위기가 아닌 업그레이드 — 예방적 투자','갱년기 우울증은 호르몬 치료와 심리 치료를 병행하면 80% 이상 개선']
   },
   senior:{
-    stat:{pct:'11~16%',label:'노인 우울증상 유병률 (전체 11.3%, 독거노인 16.1%, 보건복지부 2023 노인실태조사)'},
+    stat:{pct:'11.3%',label:'65세 이상 노인 우울증상 유병률 (독거노인 16.1%, 보건복지부 2023 노인실태조사 — 3년 주기 최신)'},
     risk:'노인 우울증은 치매와 혼동되어 방치되기 쉬운 시기.',
     signs:['기억력 저하 + 무기력 (우울증이 치매처럼 보일 수 있음)','사회적 완전 철수·방문·전화 모두 거부','음식을 거의 먹지 않음','"빨리 가고 싶다", "이제 살 만큼 살았다" 발언'],
     tips:['노인 우울증도 항우울제 치료 매우 효과적 — 포기하지 마세요','주 1회 이상 외출·사람 만남 — 사회적 연결이 최고의 예방약','정신건강복지센터 방문 상담 (무료·전국 어디서나)','보호자: "가족이 있잖아요" 대신 같이 병원 동행하기']
@@ -1585,7 +1918,7 @@ const ALONE_DATA={
   child:{
     show:true,
     quote:'네가 많이 버텨왔다는 거, 선생님은 알아. 그리고 그건 정말 대단한 일이야.',
-    stat:{pct:'약 2천 명',label:'연간 보호조치된 보호대상아동 (보건복지부 2023, 위기아동 광범위 포함 시 수만 명)'},
+    stat:{pct:'약 2천 명',label:'연간 보호조치된 보호대상아동 수 (보건복지부 2023 보호대상아동 현황 보고 — 최신)'},
     items:[
       {icon:'💛',title:'이것만은 꼭 알아줘',text:'지금 네 주변 상황이 힘든 건, 네가 뭔가를 잘못해서가 아니야. 어른들의 사정이 만든 일이고, 그건 절대 네 탓이 아니야. 너는 충분히 사랑받을 자격이 있어.'},
       {icon:'🛡️',title:'나를 진짜로 걱정해주는 어른 한 명',text:'학교 선생님, 상담 선생님, 이웃 어른 중에 — 내 말을 들어주고, 나를 안전하게 지켜줄 것 같은 어른 한 명을 찾아봐. 그 한 명이 생기면 정말 달라져.'},
@@ -1597,7 +1930,7 @@ const ALONE_DATA={
   teen:{
     show:true,
     quote:'지금 이 상황이 네 미래를 결정하지 않아. 너는 아직 쓰여지고 있는 중이야.',
-    stat:{pct:'25%',label:'어려운 가정환경으로 정서적 어려움을 겪는 청소년 비율'},
+    stat:{pct:'42.3%',label:'평상시 스트레스를 느끼는 중·고등학생 비율 (여성가족부 2025 청소년 통계, 2024년 기준)'},
     items:[
       {icon:'💛',title:'어른이 한 일은 네 탓이 아니야',text:'부모의 이혼, 폭력, 방치, 무관심 — 그 어떤 것도 네가 충분하지 않아서 생긴 일이 아니야. 어른들의 선택이 만든 일이고, 넌 그 피해를 입은 거야.'},
       {icon:'⚠️',title:'좋은 어른과 위험한 어른을 구별해',text:'진짜 좋은 어른은 너를 다른 사람들 몰래 만나려 하지 않아. 네가 불편하다고 하면 바로 멈춰. 반대로 비밀을 강요하거나, 선물·돈으로 접근하거나, 신체적으로 불편하게 하는 어른은 — 의도가 있는 거야. 112나 1388에 꼭 알려.'},
@@ -2631,6 +2964,7 @@ function render(d,months){
       ${getFirstAidHTML(months)}
     </div>
     ${getMemoHTML(months)}`;
+  buildTOC();
 }
 
 /* ══════════════════════════════════════════════════════
