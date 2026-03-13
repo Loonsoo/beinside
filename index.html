@@ -1648,6 +1648,76 @@ body.guide-open #normal-view #medical-disclaimer {
   .dv-card { padding: 18px 18px; }
 }
 
+
+/* ══════════════════════════════════════
+   새 Hero — 상황별 진입 카드
+══════════════════════════════════════ */
+.hero-subtitle {
+  font-size: 15px; color: var(--ink-l);
+  margin: 0 0 32px; line-height: 1.7;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.sit-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%; max-width: 720px;
+  margin: 0 auto;
+  animation: up .5s .25s cubic-bezier(.22,1,.36,1) both;
+}
+.sit-card {
+  background: var(--white);
+  border: 1.5px solid rgba(224,123,90,.14);
+  border-radius: 18px;
+  padding: 20px 16px 18px;
+  cursor: pointer;
+  transition: all .22s cubic-bezier(.34,1.56,.64,1);
+  display: flex; flex-direction: column;
+  align-items: flex-start; gap: 8px;
+  box-shadow: 0 2px 10px rgba(44,30,20,.05);
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.sit-card:hover {
+  border-color: var(--color, var(--peach));
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(44,30,20,.10);
+  background: var(--color-bg, var(--peach-p));
+}
+.sit-card-em {
+  font-size: 28px; line-height: 1;
+}
+.sit-card-title {
+  font-size: 14px; font-weight: 700;
+  color: var(--ink); line-height: 1.3;
+}
+.sit-card-desc {
+  font-size: 12px; color: var(--ink-l);
+  line-height: 1.5; margin-top: 2px;
+}
+.sit-card-arrow {
+  margin-top: auto; padding-top: 8px;
+  font-size: 12px; font-weight: 700;
+  color: var(--color, var(--peach));
+  opacity: 0;
+  transition: opacity .18s;
+}
+.sit-card:hover .sit-card-arrow { opacity: 1; }
+
+/* 타임라인: 성장 가이드 탭일 때만 표시 */
+.tl-sidebar { display: none; }
+body.view-normal .tl-sidebar { display: block; }
+
+@media(max-width:760px){
+  .sit-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+}
+@media(max-width:480px){
+  .sit-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sit-card { padding: 16px 12px 14px; }
+  .sit-card-em { font-size: 24px; }
+  .sit-card-title { font-size: 13px; }
+}
+
 </style>
 </head>
 <body>
@@ -1743,37 +1813,62 @@ body.guide-open #normal-view #medical-disclaimer {
 
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
-      <!-- 프로필 있을 때 표시되는 배너 -->
-      <div class="hero-prof-banner" id="hero-banner">
-        <div class="hpb-avatar" id="banner-avatar"><span id="banner-avatar-em">🌱</span></div>
-        <div class="hpb-info">
-          <div class="hpb-name" id="banner-name"></div>
-          <div class="hpb-age" id="banner-age"></div>
-        </div>
-        <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
-      </div>
-      <div class="badge">🌱 0개월 ~ 80세 전 생애 성장 &amp; 돌봄 가이드</div>
+      <div class="badge">🌱 전 생애 성장 &amp; 돌봄 가이드</div>
       <h1>누군가 옆에 있어줬으면 했던<br><span class="hl">그 모든 순간,</span></h1>
-      <p>어느 나이든, 어떤 가정 환경이든 —<br>지금 이 시기를 잘 지나갈 수 있도록.</p>
-      <div class="sbox">
-        <div class="slabel">지금 몇 살인가요?</div>
-        <div class="srow">
-          <div class="mtoggle">
-            <button class="on" id="bm" onclick="setM('m')">개월 수<small>영유아 전용 (0~36개월)</small></button>
-            <button id="by" onclick="setM('y')">만 나이</button>
-          </div>
-          <div class="ninput">
-            <input type="number" id="ai" min="0" placeholder="0" onkeydown="if(event.key==='Enter')go()">
-            <span id="au">개월</span>
-          </div>
-          <button class="gobtn" onclick="go()">가이드 보기 →</button>
+      <p class="hero-subtitle">지금 어떤 상황인가요?<br>당신의 상황에 맞는 가이드로 바로 안내해 드릴게요.</p>
+
+      <!-- 숨겨진 나이 입력 (내부 동작용 유지) -->
+      <input type="number" id="ai" style="display:none;" min="0">
+      <span id="au" style="display:none;">개월</span>
+
+      <div class="sit-cards">
+        <div class="sit-card" style="--color:#3A8A55;--color-bg:#EAF5EC;"
+          onclick="switchView('normal')">
+          <div class="sit-card-em">🌱</div>
+          <div class="sit-card-title">아이를 키우고 있어요</div>
+          <div class="sit-card-desc">신생아부터 청소년까지<br>연령별 발달 & 정서 가이드</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
         </div>
-        <div class="hint" id="hint"><b>개월 수</b> 입력은 만 36개월(3세) 이하 영유아에게만 적용됩니다</div>
+        <div class="sit-card" style="--color:#A07840;--color-bg:#FEF6EC;"
+          onclick="switchView('sp')">
+          <div class="sit-card-em">🏠</div>
+          <div class="sit-card-title">한부모 · 가족 상황</div>
+          <div class="sit-card-desc">혼자 육아하거나<br>가족 구조가 변한 경우</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
+        </div>
+        <div class="sit-card" style="--color:#D4849A;--color-bg:#FFF0F4;"
+          onclick="switchView('birth')">
+          <div class="sit-card-em">🤱</div>
+          <div class="sit-card-title">임신 · 출산 · 산후</div>
+          <div class="sit-card-desc">출산 전후 회복과<br>혼자 감당하는 산후 생활</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
+        </div>
+        <div class="sit-card" style="--color:#7B5EA7;--color-bg:#F3EEFF;"
+          onclick="switchView('dv')">
+          <div class="sit-card-em">🫂</div>
+          <div class="sit-card-title">가정폭력에서 벗어나고 싶어요</div>
+          <div class="sit-card-desc">아동·성인·노인 모두<br>단계별 회복 가이드</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
+        </div>
+        <div class="sit-card" style="--color:#5A7A9A;--color-bg:#EEF4FA;"
+          onclick="goToTeen()">
+          <div class="sit-card-em">💬</div>
+          <div class="sit-card-title">내 감정이 힘들어요</div>
+          <div class="sit-card-desc">청소년·청년의 정서 가이드<br>혼자 삭이지 않아도 돼요</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
+        </div>
+        <div class="sit-card" style="--color:#2A6A60;--color-bg:#E8F5F3;"
+          onclick="goToElder()">
+          <div class="sit-card-em">🌿</div>
+          <div class="sit-card-title">나이 드는 것이 걱정돼요</div>
+          <div class="sit-card-desc">중년·노년의 정서 건강<br>홀로 계신 어르신 가이드</div>
+          <div class="sit-card-arrow">가이드 보기 →</div>
+        </div>
       </div>
     </section>
 
     <!-- VIEW TOGGLE -->
-    <div class="view-toggle" id="guide-sec">
+    <div class="view-toggle" id="guide-sec" style="display:none;">
       <button class="view-btn on" id="vb-normal" onclick="switchView('normal')">
         <span class="vb-dot" style="background:var(--sage)"></span>성장 가이드
       </button>
@@ -1789,7 +1884,7 @@ body.guide-open #normal-view #medical-disclaimer {
     </div>
 
     <!-- NORMAL VIEW -->
-    <div id="normal-view">
+    <div id="normal-view" style="display:none;">
       <div class="pills">
         <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
         <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
@@ -3516,9 +3611,14 @@ function switchView(v){
   document.getElementById('vb-sp').classList.toggle('on',v==='sp');
   document.getElementById('vb-birth').classList.toggle('on',v==='birth');
   document.getElementById('vb-dv').classList.toggle('on',v==='dv');
+  // 타임라인: 성장 가이드일 때만 표시
+  document.body.classList.toggle('view-normal', v==='normal');
   if(v==='sp') renderSP(curSit);
   if(v==='dv') renderDV();
-  setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
+  // hero 숨기고 가이드 영역으로 스크롤
+  document.getElementById('guide-sec').style.display = '';
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('guide-sec').scrollIntoView({behavior:'smooth', block:'start'});
 }
 
 
@@ -3824,13 +3924,44 @@ function goHome(){
   if(document.body.classList.contains('guide-open')){
     closeGuide();
   } else {
-    // 결과 영역 초기화
     const r = document.getElementById('result');
     if(r){ r.innerHTML=''; r.classList.remove('on'); }
-    window.scrollTo({top:0, behavior:'smooth'});
   }
-  // 성장 가이드 탭으로 초기화
+  // hero 다시 표시
+  document.getElementById('hero').style.display = '';
+  // 모든 탭 숨기기 (hero만 보이는 상태)
+  ['normal-view','sp-view','birth-view','dv-view'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  ['vb-normal','vb-sp','vb-birth','vb-dv'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.classList.remove('on');
+  });
+  document.getElementById('guide-sec').style.display = 'none';
+  document.body.classList.remove('view-normal');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+
+// 상황별 카드 특수 진입
+function goToTeen(){
   switchView('normal');
+  setTimeout(function(){
+    // 청소년 13세로 바로 이동
+    setM('y');
+    document.getElementById('ai').value = 13;
+    go();
+  }, 100);
+}
+function goToElder(){
+  switchView('normal');
+  setTimeout(function(){
+    // 노년 65세로 바로 이동
+    setM('y');
+    document.getElementById('ai').value = 65;
+    go();
+  }, 100);
 }
 
 const TL=[
