@@ -1634,54 +1634,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 </div><!-- /page-wrap -->
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js">
-// ── Guide TOC 자동 생성 ──
-function buildTOC() {
-  const result = document.getElementById('result');
-  if (!result) return;
-  const old = result.querySelector('.guide-toc');
-  if (old) old.remove();
-
-  const cards = result.querySelectorAll('.card h3');
-  if (cards.length < 2) return;
-
-  const items = Array.from(cards).map((h3, i) => {
-    const id = 'toc-card-' + i;
-    h3.id = id;
-    const raw = h3.textContent.trim();
-    // 첫 단어(이모지 포함) 분리
-    const parts = raw.split(' ');
-    const em = parts[0] || '';
-    const label = parts.slice(1).join(' ') || raw;
-    return { id, em, label };
-  });
-
-  const tocItems = items.map(item =>
-    '<div class="guide-toc-item" onclick="scrollToCard(\'' + item.id + '\')">' +
-    '<span class="toc-em">' + item.em + '</span>' +
-    '<span>' + item.label + '</span>' +
-    '</div>'
-  ).join('');
-
-  const tocHTML =
-    '<div class="guide-toc">' +
-    '<div class="guide-toc-title">📋 이 가이드에 담긴 내용</div>' +
-    '<div class="guide-toc-grid">' + tocItems + '</div>' +
-    '</div>';
-
-  const grid = result.querySelector('.grid');
-  if (grid) grid.insertAdjacentHTML('beforebegin', tocHTML);
-}
-
-function scrollToCard(id) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const card = el.closest('.card') || el;
-  const top = card.getBoundingClientRect().top + window.scrollY - 90;
-  window.scrollTo({ top, behavior: 'smooth' });
-}
-
-</script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
 // ── Source Drawer ──
 function openSourceDrawer() {
@@ -2964,7 +2917,32 @@ function render(d,months){
       ${getFirstAidHTML(months)}
     </div>
     ${getMemoHTML(months)}`;
-  buildTOC();
+
+  // ── 목차(TOC) 인라인 생성 ──
+  (function() {
+    var result = document.getElementById('result');
+    if (!result) return;
+    var old = result.querySelector('.guide-toc');
+    if (old) old.remove();
+    var cards = result.querySelectorAll('.card h3');
+    if (cards.length < 2) return;
+    var items = Array.from(cards).map(function(h3, i) {
+      var id = 'toc-card-' + i;
+      h3.id = id;
+      var raw = h3.textContent.trim();
+      var parts = raw.split(' ');
+      var em = parts[0] || '';
+      var label = parts.slice(1).join(' ') || raw;
+      return { id: id, em: em, label: label };
+    });
+    var tocItems = items.map(function(item) {
+      return '<div class="guide-toc-item" onclick="(function(){var el=document.getElementById(\'' + item.id + '\');if(!el)return;var card=el.closest(\'.card\')||el;window.scrollTo({top:card.getBoundingClientRect().top+window.scrollY-90,behavior:\'smooth\'});})()"><span class="toc-em">' + item.em + '</span><span>' + item.label + '</span></div>';
+    }).join('');
+    var tocHTML = '<div class="guide-toc"><div class="guide-toc-title">📋 이 가이드에 담긴 내용</div><div class="guide-toc-grid">' + tocItems + '</div></div>';
+    var grid = result.querySelector('.grid');
+    if (grid) grid.insertAdjacentHTML('beforebegin', tocHTML);
+  })();
+
 }
 
 /* ══════════════════════════════════════════════════════
@@ -3201,6 +3179,8 @@ function setMTab(id){
     bar.style.width = Math.min(pct, 100) + '%';
   }, {passive:true});
 })();
+
+
 
 </script>
 
