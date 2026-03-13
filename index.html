@@ -3467,40 +3467,55 @@ function buildSidebarTOC() {
 
   sidebar.style.display = 'flex';
 
-  // IntersectionObserver로 현재 섹션 감지
-  var activeId = null;
-  _tocObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var id = entry.target.id;
-      var btn = document.getElementById('toc-btn-' + id);
+  // 스크롤 위치 기반 현재 섹션 계산 (카드 완전히 넘어갈 때까지 active 유지)
+  function updateActiveTOC() {
+    var scrollY = window.scrollY;
+    var offset = 120;
+    var bestIdx = 0;
+
+    for (var i = 0; i < items.length; i++) {
+      var el = document.getElementById(items[i].id);
+      if (!el) continue;
+      var card = el.closest('.card') || el;
+      var cardBottom = card.getBoundingClientRect().bottom + scrollY;
+      // 카드 하단이 offset 아래에 있으면 아직 이 섹션
+      if (card.getBoundingClientRect().top + scrollY - offset <= scrollY) {
+        bestIdx = i;
+      }
+    }
+
+    items.forEach(function(item, idx) {
+      var btn = document.getElementById('toc-btn-' + item.id);
       if (!btn) return;
-      if (entry.isIntersecting) {
-        // 현재 보이는 것 중 가장 위 것 활성화
-        if (!activeId || entry.boundingClientRect.top < document.getElementById(activeId).getBoundingClientRect().top) {
-          if (activeId) {
-            var old = document.getElementById('toc-btn-' + activeId);
-            if (old) old.classList.remove('active');
-          }
-          activeId = id;
+      if (idx === bestIdx) {
+        if (!btn.classList.contains('active')) {
           btn.classList.add('active');
-          // 사이드바 내에서 해당 버튼이 보이도록 스크롤
           btn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
       } else {
-        if (activeId === id) {
-          btn.classList.remove('active');
-          activeId = null;
-        }
+        btn.classList.remove('active');
       }
     });
-  }, {
-    rootMargin: '-80px 0px -60% 0px',
-    threshold: 0
-  });
+  }
 
-  items.forEach(function(item) {
-    _tocObserver.observe(document.getElementById(item.id));
-  });
+  var _tocScrollTimer = null;
+  function onTocScroll() {
+    if (_tocScrollTimer) return;
+    _tocScrollTimer = requestAnimationFrame(function() {
+      updateActiveTOC();
+      _tocScrollTimer = null;
+    });
+  }
+
+  window.addEventListener('scroll', onTocScroll, { passive: true });
+
+  _tocObserver = {
+    disconnect: function() {
+      window.removeEventListener('scroll', onTocScroll);
+    }
+  };
+
+  updateActiveTOC();
 }
 
 function tocScrollTo(id) {
