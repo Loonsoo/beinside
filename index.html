@@ -300,6 +300,15 @@ nav button.on{
   transform:translateY(-2px);
   box-shadow:0 5px 14px rgba(232,137,106,.18);
 }
+
+.pill.on {
+  background: var(--peach);
+  border-color: var(--peach-d);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(224,123,90,.25);
+}
+
 .cd{width:7px;height:7px;border-radius:50%;}
 
 /* ── RESULT ── */
@@ -1263,49 +1272,8 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 
 
-/* ── Guide TOC (목차 박스) ── */
-.guide-toc {
-  margin: 0 48px 28px;
-  background: white;
-  border: 1.5px solid rgba(224,123,90,.18);
-  border-radius: 16px;
-  padding: 20px 24px;
-  box-shadow: 0 2px 12px rgba(224,123,90,.07);
-}
-.guide-toc-title {
-  font-size: 12px; font-weight: 700; letter-spacing: .08em;
-  color: var(--peach); text-transform: uppercase;
-  margin-bottom: 14px;
-  display: flex; align-items: center; gap: 6px;
-}
-.guide-toc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 8px;
-}
-.guide-toc-item {
-  display: flex; align-items: center; gap: 8px;
-  padding: 8px 12px;
-  background: var(--cream);
-  border: 1px solid rgba(224,123,90,.12);
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 12.5px; font-weight: 600; color: var(--ink-m);
-  transition: all .18s;
-  line-height: 1.3;
-}
-.guide-toc-item:hover {
-  background: var(--peach-p);
-  border-color: var(--peach-l);
-  color: var(--peach-d);
-  transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(224,123,90,.15);
-}
-.guide-toc-item .toc-em { font-size: 15px; flex-shrink: 0; }
 @media(max-width:640px){
-  .guide-toc { margin: 0 18px 20px; padding: 16px; }
-  .guide-toc-grid { grid-template-columns: 1fr 1fr; }
-}
+    }
 
 
 /* ── LEFT TOC SIDEBAR ── */
@@ -1386,6 +1354,119 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 
 @media(max-width:1100px) { .toc-sidebar { display: none !important; } }
+
+
+/* ════════════════════════════════════════════
+   가이드 페이지 전환 (슬라이드 인)
+════════════════════════════════════════════ */
+
+/* 가이드 열려있을 때 hero/pills 영역 숨김 */
+body.guide-open .hero,
+body.guide-open #guide-sec,
+body.guide-open #normal-view .pills,
+body.guide-open #normal-view #medical-disclaimer {
+  display: none !important;
+}
+
+/* result 페이지 전환 모드 */
+#result {
+  padding: 0 0 80px;
+  display: none;
+  position: relative;
+}
+#result.on {
+  display: block;
+  animation: slideInRight .35s cubic-bezier(.22,.68,0,1.2) both;
+}
+#result.slide-out {
+  animation: slideOutLeft .25s cubic-bezier(.4,0,.6,1) both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideOutLeft {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-30px); }
+}
+
+/* ── 가이드 상단 네비게이션 바 ── */
+.guide-nav-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 48px 12px;
+  border-bottom: 1px solid rgba(224,123,90,.1);
+  background: rgba(255,248,242,.95);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 56px;
+  z-index: 80;
+  margin-bottom: 0;
+}
+.guide-back-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px;
+  background: var(--white);
+  border: 1.5px solid rgba(224,123,90,.2);
+  border-radius: 20px;
+  font-size: 12px; font-weight: 700;
+  color: var(--ink-m);
+  cursor: pointer;
+  transition: all .18s;
+  flex-shrink: 0;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.guide-back-btn:hover {
+  background: var(--peach-p);
+  border-color: var(--peach);
+  color: var(--peach-d);
+}
+.guide-nav-pills {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 2px 0;
+}
+.guide-nav-pills::-webkit-scrollbar { display: none; }
+.guide-nav-pill {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 11.5px; font-weight: 600;
+  color: var(--ink-l);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .18s;
+  flex-shrink: 0;
+  border: 1.5px solid transparent;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.guide-nav-pill:hover {
+  background: var(--peach-p);
+  color: var(--peach-d);
+}
+.guide-nav-pill.active {
+  background: var(--peach);
+  color: white;
+  border-color: var(--peach-d);
+  box-shadow: 0 2px 8px rgba(224,123,90,.25);
+}
+.guide-nav-pill .cd { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── result 내부 패딩 조정 ── */
+#result .grid { padding: 0 48px; }
+#result .rhead { margin: 0 48px 24px; }
+
+@media(max-width:760px) {
+  .guide-nav-bar { padding: 10px 18px; top: 52px; }
+  #result .grid { padding: 0 18px; }
+  #result .rhead { margin: 0 18px 18px; }
+  .guide-nav-pill { font-size: 11px; padding: 4px 10px; }
+}
 
 </style>
 </head>
@@ -1543,6 +1624,25 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
       </div>
       <div id="medical-disclaimer" style="display:none; margin-bottom:16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
         <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오. 긴급 상황 시 상단의 24시 긴급상담 버튼을 이용해 즉시 도움을 받으세요.
+      </div>
+
+      <div class="guide-nav-bar" id="guide-nav-bar" style="display:none;">
+        <button class="guide-back-btn" onclick="closeGuide()">← 목록</button>
+        <div class="guide-nav-pills" id="guide-nav-pills">
+        <div class="guide-nav-pill" id="gnp-0-m" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
+        <div class="guide-nav-pill" id="gnp-3-m" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
+        <div class="guide-nav-pill" id="gnp-6-m" onclick="qs(6,'m')"><span class="cd" style="background:#5BBF82"></span>6개월</div>
+        <div class="guide-nav-pill" id="gnp-12-m" onclick="qs(12,'m')"><span class="cd" style="background:#3A8A55"></span>12개월</div>
+        <div class="guide-nav-pill" id="gnp-24-m" onclick="qs(24,'m')"><span class="cd" style="background:#2A6A42"></span>24개월</div>
+        <div class="guide-nav-pill" id="gnp-4-y" onclick="qs(4,'y')"><span class="cd" style="background:#5C7A6B"></span>유아 4세</div>
+        <div class="guide-nav-pill" id="gnp-8-y" onclick="qs(8,'y')"><span class="cd" style="background:#C8924A"></span>학령기 8세</div>
+        <div class="guide-nav-pill" id="gnp-13-y" onclick="qs(13,'y')"><span class="cd" style="background:#A07840"></span>청소년 13세</div>
+        <div class="guide-nav-pill" id="gnp-20-y" onclick="qs(20,'y')"><span class="cd" style="background:#7A5A30"></span>청년 20세</div>
+        <div class="guide-nav-pill" id="gnp-35-y" onclick="qs(35,'y')"><span class="cd" style="background:#9E4F2A"></span>성인 35세</div>
+        <div class="guide-nav-pill" id="gnp-50-y" onclick="qs(50,'y')"><span class="cd" style="background:#6B4E7A"></span>중년 50세</div>
+        <div class="guide-nav-pill" id="gnp-65-y" onclick="qs(65,'y')"><span class="cd" style="background:#3A6A9A"></span>노년 65세</div>
+        <div class="guide-nav-pill" id="gnp-78-y" onclick="qs(78,'y')"><span class="cd" style="background:#2A3A5A"></span>후기 노년 78세</div>
+        </div>
       </div>
       <section id="result"></section>
     </div>
@@ -2757,7 +2857,13 @@ function setM(m){
   document.getElementById('hint').style.opacity=m==='m'?'1':'0.3';
 }
 function toS(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
-function qs(v,m){setM(m);document.getElementById('ai').value=v;go();setTimeout(()=>document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'}),60);}
+function qs(v,m){
+  setM(m);
+  document.getElementById('ai').value=v;
+  // pill 활성화 표시
+  document.querySelectorAll('.pill').forEach(function(p){p.classList.remove('on');});
+  go();
+}
 function getMonths(){
   const v=parseInt(document.getElementById('ai').value)||0;
   return mode==='m'?v:v*12;
@@ -2766,20 +2872,93 @@ function openSos() {
   alert('[24시간 긴급 도움망]\n\n- 자살예방상담전화: 1393\n- 청소년전화: 1388\n- 정신건강위기상담전화: 1577-0199\n- 아동학대신고: 112\n\n혼자 고민하지 마세요.\n전문 상담사가 24시간 곁에 있습니다.');
 }
 
+// ── 현재 열린 가이드 정보 ──
+var _curGuideV = null;
+var _curGuideM = null;
+
+// pill 목록 (순서 중요)
+var GUIDE_PILLS = [
+  {v:'0',m:'m'},{v:'3',m:'m'},{v:'6',m:'m'},{v:'12',m:'m'},{v:'24',m:'m'},
+  {v:'4',m:'y'},{v:'8',m:'y'},{v:'13',m:'y'},{v:'20',m:'y'},
+  {v:'35',m:'y'},{v:'50',m:'y'},{v:'65',m:'y'},{v:'78',m:'y'}
+];
+
 function go(){
-  const months=getMonths();
-  if(months<0)return;
-  const d=getData(months);
-  render(d,months);
-  const r=document.getElementById('result');
+  const months = getMonths();
+  if (months < 0) return;
+  const d = getData(months);
+
+  const r = document.getElementById('result');
+  const navBar = document.getElementById('guide-nav-bar');
+  const sidebar = document.getElementById('toc-sidebar');
+
+  // 슬라이드 아웃 후 교체
+  if (r.classList.contains('on')) {
+    r.classList.add('slide-out');
+    setTimeout(function() {
+      r.classList.remove('slide-out');
+      _renderAndOpen(d, months);
+    }, 220);
+  } else {
+    _renderAndOpen(d, months);
+  }
+
+  // nav bar 표시
+  if (navBar) navBar.style.display = 'flex';
+
+  // body에 가이드 열림 표시
+  document.body.classList.add('guide-open');
+
+  // 활성 pill 표시
+  var v = document.getElementById('ai').value;
+  var m = mode;
+  _curGuideV = v; _curGuideM = m;
+  document.querySelectorAll('.guide-nav-pill').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  var activePill = document.getElementById('gnp-' + v + '-' + m);
+  if (activePill) {
+    activePill.classList.add('active');
+    activePill.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  // 페이지 상단으로 스크롤
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function _renderAndOpen(d, months) {
+  render(d, months);
+  var r = document.getElementById('result');
   r.classList.add('on');
-  // 의학적 면책 조항 표시
-  const md=document.getElementById('medical-disclaimer');
-  if(md) md.style.display='block';
-  setTimeout(()=>{
-    const md2=document.getElementById('medical-disclaimer');
-    if(md2) md2.scrollIntoView({behavior:'smooth',block:'start'});
-  },60);
+  buildSidebarTOC();
+}
+
+function closeGuide() {
+  var r = document.getElementById('result');
+  var navBar = document.getElementById('guide-nav-bar');
+  var sidebar = document.getElementById('toc-sidebar');
+
+  r.classList.add('slide-out');
+  setTimeout(function() {
+    r.classList.remove('on', 'slide-out');
+    r.innerHTML = '';
+  }, 250);
+
+  if (navBar) navBar.style.display = 'none';
+  if (sidebar) sidebar.style.display = 'none';
+  document.body.classList.remove('guide-open');
+
+  // 면책 조항 숨기기
+  var md = document.getElementById('medical-disclaimer');
+  if (md) md.style.display = 'none';
+
+  // 시기 pill 선택 해제
+  document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('on'); });
+  document.querySelectorAll('.guide-nav-pill').forEach(function(p) { p.classList.remove('active'); });
+  _curGuideV = null; _curGuideM = null;
+
+  // hero로 스크롤
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function getData(months){
   const y=months/12;
