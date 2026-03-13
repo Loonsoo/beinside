@@ -1468,6 +1468,186 @@ body.guide-open #normal-view #medical-disclaimer {
   .guide-nav-pill { font-size: 11px; padding: 4px 10px; }
 }
 
+
+/* ════════════════════════════════════════════
+   가정폭력 회복 가이드 (dv-view)
+════════════════════════════════════════════ */
+.dv-wrap { padding: 16px 0 80px; }
+
+.dv-banner {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: linear-gradient(135deg, #4A2A6A, #7B5EA7);
+  border-radius: 18px; padding: 22px 24px;
+  margin-bottom: 20px; color: white;
+}
+.dv-banner-icon { font-size: 32px; flex-shrink: 0; margin-top: 2px; }
+.dv-banner-text { flex: 1; font-size: 14px; line-height: 1.7; }
+.dv-banner-text strong { font-size: 16px; display: block; margin-bottom: 4px; }
+.dv-emergency-btn {
+  flex-shrink: 0;
+  background: white; color: #7B5EA7;
+  border: none; border-radius: 12px;
+  padding: 10px 16px; font-size: 13px; font-weight: 700;
+  cursor: pointer; text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: all .18s; white-space: nowrap;
+  font-family: 'Noto Sans KR', sans-serif;
+  align-self: center;
+}
+.dv-emergency-btn:hover { background: #F3EEFF; }
+
+/* 대상 선택 탭 */
+.dv-target-bar {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.dv-tab {
+  padding: 8px 18px; border-radius: 24px;
+  border: 1.5px solid rgba(123,94,167,.2);
+  background: var(--white); color: var(--ink-m);
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all .18s; font-family: 'Noto Sans KR', sans-serif;
+}
+.dv-tab:hover { border-color: #7B5EA7; color: #7B5EA7; background: #F3EEFF; }
+.dv-tab.on { background: #7B5EA7; color: white; border-color: #5A3A8A; }
+
+/* 단계 선택 */
+.dv-stage-bar {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 12px 16px;
+  background: #F8F4FF;
+  border-radius: 14px;
+  border: 1px solid rgba(123,94,167,.12);
+}
+.dv-stage {
+  padding: 7px 16px; border-radius: 20px;
+  border: 1.5px solid rgba(123,94,167,.15);
+  background: white; color: var(--ink-m);
+  font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: all .18s; font-family: 'Noto Sans KR', sans-serif;
+  flex: 1; min-width: 140px; text-align: center;
+}
+.dv-stage:hover { border-color: #7B5EA7; color: #7B5EA7; }
+.dv-stage.on { background: #5A3A8A; color: white; border-color: #5A3A8A; box-shadow: 0 2px 8px rgba(90,58,138,.25); }
+
+/* 결과 카드 */
+.dv-card {
+  background: var(--white);
+  border-radius: 18px;
+  border: 1px solid rgba(123,94,167,.12);
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(90,58,138,.06);
+}
+.dv-card-title {
+  font-size: 17px; font-weight: 700; color: #4A2A6A;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.dv-card-tag {
+  display: inline-block; padding: 2px 10px;
+  border-radius: 12px; font-size: 11px; font-weight: 700;
+  background: #F3EEFF; color: #7B5EA7; margin-right: 6px;
+}
+.dv-card-tag.red { background: #FFEEF0; color: #C03040; }
+.dv-card-tag.green { background: #EAF5EC; color: #2A6A3A; }
+.dv-card-tag.amber { background: #FEF6EC; color: #A06020; }
+
+.dv-list { list-style: none; padding: 0; margin: 0; }
+.dv-list li {
+  padding: 8px 0 8px 24px;
+  position: relative;
+  font-size: 14px; color: var(--ink-m);
+  border-bottom: 1px solid rgba(123,94,167,.06);
+  line-height: 1.6;
+}
+.dv-list li:last-child { border-bottom: none; }
+.dv-list li::before {
+  content: '•'; position: absolute; left: 6px;
+  color: #7B5EA7; font-weight: 700;
+}
+.dv-list li strong { color: var(--ink); }
+
+.dv-highlight {
+  background: linear-gradient(135deg, #F3EEFF, #EDE0FF);
+  border-radius: 12px; padding: 14px 18px;
+  margin-top: 12px; font-size: 14px;
+  border-left: 4px solid #7B5EA7; color: var(--ink-m);
+  line-height: 1.7;
+}
+.dv-highlight strong { color: #4A2A6A; display: block; margin-bottom: 4px; }
+
+.dv-steps { counter-reset: step; padding: 0; list-style: none; margin: 0; }
+.dv-steps li {
+  counter-increment: step;
+  padding: 12px 14px 12px 52px;
+  position: relative;
+  font-size: 14px; color: var(--ink-m);
+  border-bottom: 1px solid rgba(123,94,167,.06);
+  line-height: 1.65;
+}
+.dv-steps li:last-child { border-bottom: none; }
+.dv-steps li::before {
+  content: counter(step);
+  position: absolute; left: 10px; top: 10px;
+  width: 28px; height: 28px;
+  background: #7B5EA7; color: white;
+  border-radius: 50%; font-size: 13px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.dv-steps li strong { color: #4A2A6A; display: block; margin-bottom: 2px; }
+
+.dv-quote {
+  background: #F8F4FF;
+  border-left: 4px solid #7B5EA7;
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px;
+  margin: 16px 0;
+  font-size: 15px; font-style: italic;
+  color: #5A3A8A; line-height: 1.7;
+}
+
+.dv-resource {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1.5px solid rgba(123,94,167,.15);
+  border-radius: 12px; margin-top: 8px;
+  text-decoration: none;
+}
+.dv-resource-num {
+  font-size: 18px; font-weight: 800; color: #7B5EA7;
+  flex-shrink: 0; min-width: 48px;
+}
+.dv-resource-info { flex: 1; }
+.dv-resource-name { font-size: 14px; font-weight: 700; color: var(--ink); }
+.dv-resource-desc { font-size: 12px; color: var(--ink-l); margin-top: 2px; }
+.dv-resource-badge {
+  padding: 3px 10px; border-radius: 10px;
+  font-size: 11px; font-weight: 700;
+  background: #7B5EA7; color: white;
+}
+
+/* 가스라이팅 체크리스트 */
+.dv-check-list { padding: 0; list-style: none; margin: 0; }
+.dv-check-list li {
+  padding: 10px 14px 10px 42px; position: relative;
+  font-size: 14px; color: var(--ink-m); line-height: 1.6;
+  border-bottom: 1px solid rgba(123,94,167,.06);
+}
+.dv-check-list li:last-child { border-bottom: none; }
+.dv-check-list li::before {
+  content: '□'; position: absolute; left: 12px;
+  color: #7B5EA7; font-size: 16px; top: 10px;
+}
+
+@media(max-width:640px){
+  .dv-banner { flex-direction: column; }
+  .dv-emergency-btn { align-self: flex-start; }
+  .dv-stage { min-width: 120px; font-size: 12px; }
+  .dv-card { padding: 18px 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -1603,6 +1783,9 @@ body.guide-open #normal-view #medical-disclaimer {
       <button class="view-btn" id="vb-birth" onclick="switchView('birth')">
         <span class="vb-dot" style="background:#D4849A"></span>출산 & 산후 회복 가이드
       </button>
+      <button class="view-btn" id="vb-dv" onclick="switchView('dv')">
+        <span class="vb-dot" style="background:#7B5EA7"></span>가정폭력 회복 가이드
+      </button>
     </div>
 
     <!-- NORMAL VIEW -->
@@ -1669,6 +1852,42 @@ body.guide-open #normal-view #medical-disclaimer {
         </div>
         <div class="birth-stage-tabs" id="birth-tabs"></div>
         <div id="birth-stages"></div>
+      </div>
+    </div>
+
+
+    <!-- DOMESTIC VIOLENCE RECOVERY VIEW -->
+    <div id="dv-view" style="display:none;">
+      <div class="dv-wrap">
+
+        <!-- 상단 안내 배너 -->
+        <div class="dv-banner">
+          <div class="dv-banner-icon">🫂</div>
+          <div class="dv-banner-text">
+            <strong>당신 잘못이 아닙니다.</strong><br>
+            어떤 폭력도, 어떤 말도 — 당신이 감당해야 할 이유가 없었어요.<br>
+            <span style="color:rgba(255,255,255,.8);font-size:12px;">이 가이드는 지금 어느 단계에 있든, 조금씩 앞으로 나아가도록 함께합니다.</span>
+          </div>
+          <a href="tel:1366" class="dv-emergency-btn">📞 1366 긴급상담</a>
+        </div>
+
+        <!-- 대상 선택 -->
+        <div class="dv-target-bar" id="dv-target-bar">
+          <button class="dv-tab on" id="dvt-0" onclick="selectDVTarget(0)">🧒 아동·청소년</button>
+          <button class="dv-tab" id="dvt-1" onclick="selectDVTarget(1)">👩 성인 여성</button>
+          <button class="dv-tab" id="dvt-2" onclick="selectDVTarget(2)">👨 성인 남성</button>
+          <button class="dv-tab" id="dvt-3" onclick="selectDVTarget(3)">👴 노인·조부모</button>
+        </div>
+
+        <!-- 단계 선택 -->
+        <div class="dv-stage-bar" id="dv-stage-bar">
+          <button class="dv-stage on" id="dvs-0" onclick="selectDVStage(0)">🌑 지금 그 안에 있어요</button>
+          <button class="dv-stage" id="dvs-1" onclick="selectDVStage(1)">🌒 막 벗어났어요</button>
+          <button class="dv-stage" id="dvs-2" onclick="selectDVStage(2)">🌓 회복 중이에요</button>
+          <button class="dv-stage" id="dvs-3" onclick="selectDVStage(3)">🌕 다시 일어서고 있어요</button>
+        </div>
+
+        <div id="dv-result"></div>
       </div>
     </div>
 
@@ -3292,12 +3511,313 @@ function switchView(v){
   document.getElementById('normal-view').style.display=v==='normal'?'':'none';
   document.getElementById('sp-view').style.display=v==='sp'?'':'none';
   document.getElementById('birth-view').style.display=v==='birth'?'':'none';
+  document.getElementById('dv-view').style.display=v==='dv'?'':'none';
   document.getElementById('vb-normal').classList.toggle('on',v==='normal');
   document.getElementById('vb-sp').classList.toggle('on',v==='sp');
   document.getElementById('vb-birth').classList.toggle('on',v==='birth');
+  document.getElementById('vb-dv').classList.toggle('on',v==='dv');
   if(v==='sp') renderSP(curSit);
+  if(v==='dv') renderDV();
   setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),50);
 }
+
+
+/* ══════════════════════════════════════════════════
+   가정폭력 회복 가이드 데이터 & 렌더
+══════════════════════════════════════════════════ */
+var _dvTarget = 0; // 0:아동청소년 1:성인여성 2:성인남성 3:노인조부모
+var _dvStage  = 0; // 0:그 안에 1:막 벗어남 2:회복중 3:다시 일어섬
+
+function selectDVTarget(i){
+  _dvTarget=i;
+  document.querySelectorAll('.dv-tab').forEach(function(b,idx){ b.classList.toggle('on',idx===i); });
+  renderDV();
+}
+function selectDVStage(i){
+  _dvStage=i;
+  document.querySelectorAll('.dv-stage').forEach(function(b,idx){ b.classList.toggle('on',idx===i); });
+  renderDV();
+}
+
+function renderDV(){
+  var el=document.getElementById('dv-result');
+  if(!el) return;
+  el.innerHTML = buildDVContent(_dvTarget, _dvStage);
+}
+
+function buildDVContent(target, stage){
+  // ── 공통 자원 ──
+  var resources = `
+    <div class="dv-card">
+      <div class="dv-card-title">📞 지금 연락할 수 있는 곳</div>
+      <a class="dv-resource" href="tel:1366">
+        <div class="dv-resource-num">1366</div>
+        <div class="dv-resource-info">
+          <div class="dv-resource-name">여성긴급전화 1366</div>
+          <div class="dv-resource-desc">24시간, 무료, 익명 가능 — 가정폭력·성폭력·스토킹 모두</div>
+        </div>
+        <span class="dv-resource-badge">24시간</span>
+      </a>
+      <a class="dv-resource" href="tel:112">
+        <div class="dv-resource-num">112</div>
+        <div class="dv-resource-info">
+          <div class="dv-resource-name">경찰 신고</div>
+          <div class="dv-resource-desc">신체적 위험이 있을 때 즉시 신고. 현장 출동 가능</div>
+        </div>
+        <span class="dv-resource-badge">긴급</span>
+      </a>
+      <a class="dv-resource" href="tel:1577-1366">
+        <div class="dv-resource-num">129</div>
+        <div class="dv-resource-info">
+          <div class="dv-resource-name">복지로 상담전화</div>
+          <div class="dv-resource-desc">쉼터 연결, 법률 지원, 생활 지원 안내</div>
+        </div>
+        <span class="dv-resource-badge">복지</span>
+      </a>
+    </div>`;
+
+  // ── 가스라이팅 인식 체크리스트 (공통) ──
+  var gaslit = `
+    <div class="dv-card">
+      <div class="dv-card-title">🔍 이런 경험, 폭력이 맞아요 <span class="dv-card-tag red">가스라이팅 인식</span></div>
+      <div class="dv-quote">"내가 너무 예민한 건가?" — 이 질문이 자주 든다면, 그건 당신이 이상한 게 아닙니다.</div>
+      <ul class="dv-check-list">
+        <li>"네가 그렇게 행동하니까 내가 이러는 거잖아"라는 말을 자주 들었다</li>
+        <li>내 기억이 틀렸다고, 그런 일이 없었다고 부정당했다</li>
+        <li>나의 감정 반응이 "과하다", "이상하다"는 말을 반복해서 들었다</li>
+        <li>상대방 눈치를 보며 내 감정·행동을 검열하게 됐다</li>
+        <li>가족·친구에게 상황을 말했더니 아무도 믿지 않았다</li>
+        <li>내가 잘못했기 때문에 이런 대우를 받는다고 느껴왔다</li>
+        <li>혼자 있을 때조차 "내가 잘못된 걸까"라는 생각이 든다</li>
+      </ul>
+      <div class="dv-highlight">
+        <strong>✓ 체크 항목이 하나라도 있다면 —</strong>
+        당신이 경험한 것은 당신의 문제가 아닙니다. 가스라이팅은 피해자가 현실 인식을 잃게 만드는 심리적 폭력입니다. 전문가와 이야기 나눠보세요.
+      </div>
+    </div>`;
+
+  // ── 대상별 + 단계별 콘텐츠 ──
+  var targets = ['아동·청소년', '성인 여성', '성인 남성', '노인·조부모'];
+  var stages  = ['그 안에 있는 지금', '막 벗어난 직후', '회복 중', '다시 일어서는 단계'];
+
+  // 단계별 핵심 메시지
+  var stageMsgs = [
+    { icon:'🌑', title:'지금 그 안에 있다면', color:'#4A2A6A', msg:'아직 상황을 바꾸기 어렵더라도, 이 가이드를 읽는 것 자체가 용기입니다. 지금 당장 모든 걸 바꾸지 않아도 돼요. 작은 한 가지부터 시작할게요.' },
+    { icon:'🌒', title:'막 벗어났다면', color:'#5A3A8A', msg:'몸은 벗어났지만 마음은 아직 그 안에 있을 수 있어요. 안도와 두려움이 동시에 드는 게 정상입니다. 지금 가장 중요한 건 안전을 지키는 것입니다.' },
+    { icon:'🌓', title:'회복 중이라면', color:'#6B4A9A', msg:'좋은 날과 나쁜 날이 반복되는 것, 정상입니다. 회복은 직선이 아니에요. 오늘 힘들다고 퇴보한 게 아닙니다.' },
+    { icon:'🌕', title:'다시 일어서고 있다면', color:'#7B5EA7', msg:'여기까지 온 것 자체가 대단한 일입니다. 이제 내 안의 힘을 다시 찾는 단계예요. 그 힘은 처음부터 당신 안에 있었습니다.' },
+  ];
+  var sm = stageMsgs[stage];
+
+  var stageIntro = `
+    <div class="dv-card" style="border-left:4px solid ${sm.color}; background:linear-gradient(135deg,#FAF7FF,#F3EEFF);">
+      <div class="dv-card-title" style="color:${sm.color};">${sm.icon} ${sm.title}</div>
+      <div style="font-size:14px;color:var(--ink-m);line-height:1.75;">${sm.msg}</div>
+    </div>`;
+
+  // ── 대상 × 단계 조합 콘텐츠 ──
+  var combo = {
+    // 아동·청소년
+    '0-0': `
+      <div class="dv-card">
+        <div class="dv-card-title">🧒 지금 이런 상황이라면 <span class="dv-card-tag red">즉시 도움</span></div>
+        <ul class="dv-list">
+          <li><strong>학교 선생님이나 상담 선생님에게 말해주세요.</strong> 비밀을 지킬 의무가 있지만, 위험한 상황이면 도움을 요청해줘요.</li>
+          <li><strong>혼자 참을 필요 없어요.</strong> 어른에게 알리는 것은 배신이 아니에요. 당신을 보호하기 위한 일입니다.</li>
+          <li>Wee 클래스(학교 상담실)에 가면 비밀을 지켜주며 도와줍니다.</li>
+          <li>폰으로 <strong>문자 #0924</strong> 로 청소년 상담을 신청할 수 있어요.</li>
+        </ul>
+        <div class="dv-highlight"><strong>📱 청소년 전용 상담 문자:</strong> #0924 (24시간, 무료)</div>
+      </div>`,
+    '0-1': `
+      <div class="dv-card">
+        <div class="dv-card-title">🧒 안전한 곳에 나왔다면 <span class="dv-card-tag green">안전 확보</span></div>
+        <ol class="dv-steps">
+          <li><strong>지금 있는 곳이 안전한지 확인하세요.</strong> 친척, 친구 집, 학교 상담실, 청소년 쉼터 모두 가능해요.</li>
+          <li><strong>신뢰할 수 있는 어른 한 명을 찾으세요.</strong> 선생님, 친척, 이웃 — 누구든 한 명이면 충분해요.</li>
+          <li><strong>청소년 쉼터</strong>에서 먹고 자는 것을 해결해줍니다. 1388 청소년 상담 전화로 연결할 수 있어요.</li>
+          <li>경험한 것을 기억하거나 기록해두세요 — 나중에 도움이 될 수 있어요.</li>
+        </ol>
+        <a class="dv-resource" href="tel:1388">
+          <div class="dv-resource-num">1388</div>
+          <div class="dv-resource-info">
+            <div class="dv-resource-name">청소년 상담 1388</div>
+            <div class="dv-resource-desc">24시간, 무료, 청소년 전용 — 쉼터 연결 가능</div>
+          </div>
+          <span class="dv-resource-badge">24시간</span>
+        </a>
+      </div>`,
+    '0-2': `
+      <div class="dv-card">
+        <div class="dv-card-title">🧒 회복 중인 청소년에게 <span class="dv-card-tag amber">마음 돌보기</span></div>
+        <div class="dv-quote">"화가 나는 것도, 슬픈 것도, 아무 감정이 없는 것도 — 모두 자연스러운 반응이에요."</div>
+        <ul class="dv-list">
+          <li><strong>PTSD 반응은 내가 이상한 게 아닙니다.</strong> 악몽, 갑작스러운 눈물, 무감각함은 뇌가 충격에 반응하는 방식이에요.</li>
+          <li>학교 Wee 클래스나 지역 청소년 상담 센터에서 무료로 심리상담을 받을 수 있어요.</li>
+          <li><strong>나쁜 가정에서 자랐어도, 내 미래는 내가 만들 수 있어요.</strong> 많은 사람들이 그렇게 했어요.</li>
+          <li>좋아하는 것을 하나씩 찾아보세요. 그게 회복의 시작이에요.</li>
+        </ul>
+      </div>`,
+    '0-3': `
+      <div class="dv-card">
+        <div class="dv-card-title">🧒 새 출발을 위한 청소년에게 <span class="dv-card-tag green">미래 설계</span></div>
+        <ul class="dv-list">
+          <li><strong>내가 경험한 것은 내 정체성이 아닙니다.</strong> 그 안에서 살아남은 것이 내 힘입니다.</li>
+          <li>진로·학업이 걱정된다면 교육청 Wee 센터에서 집중 지원을 받을 수 있어요.</li>
+          <li>비슷한 경험을 한 또래와 이야기 나누는 집단 상담 프로그램도 있어요.</li>
+          <li><strong>건강한 관계가 어떤 건지 배우는 것</strong>이 가장 중요한 다음 단계예요.</li>
+        </ul>
+        <div class="dv-highlight"><strong>💡 핵심:</strong> 폭력적인 관계에서 자라면 그게 "정상"처럼 느껴질 수 있어요. 그렇지 않다는 걸 배우는 것, 그것이 진짜 회복의 시작입니다.</div>
+      </div>`,
+
+    // 성인 여성
+    '1-0': `
+      <div class="dv-card">
+        <div class="dv-card-title">👩 지금 안에 있는 당신에게 <span class="dv-card-tag red">즉시 도움</span></div>
+        <ol class="dv-steps">
+          <li><strong>지금 위험하다면 112에 전화하세요.</strong> 전화하기 어렵다면 문자나 카카오톡 "경찰청"으로도 신고 가능해요.</li>
+          <li><strong>안전 가방을 준비해두세요.</strong> 신분증, 통장 사본, 현금, 중요 서류 — 급히 나와야 할 때 필요해요.</li>
+          <li>가까운 가정폭력 상담소에 비밀 상담을 신청할 수 있어요. 신고 의무 없이 이야기만 나눌 수 있어요.</li>
+          <li><strong>"내가 변하면 달라질 것"이라는 생각은 폭력자가 심어준 믿음입니다.</strong> 폭력의 책임은 100% 폭력을 행사한 사람에게 있어요.</li>
+        </ol>
+        <div class="dv-highlight"><strong>⚠️ 중요:</strong> 가장 위험한 순간은 "떠나려 할 때"입니다. 혼자 결행하지 말고 전문기관(1366)과 함께 계획을 세우세요.</div>
+      </div>`,
+    '1-1': `
+      <div class="dv-card">
+        <div class="dv-card-title">👩 막 나온 당신에게 <span class="dv-card-tag green">안전 + 실질 지원</span></div>
+        <ol class="dv-steps">
+          <li><strong>가정폭력 피해자 쉼터</strong>에서 최대 6개월 무료로 지낼 수 있어요. 비밀 주소 보장.</li>
+          <li><strong>긴급 생계비 지원</strong>을 신청하세요. 주민센터 or 1366을 통해 연결 가능해요.</li>
+          <li>법원에 <strong>접근금지·피해자 보호 명령</strong>을 신청할 수 있어요. 법률구조공단(132)이 무료로 도와줍니다.</li>
+          <li>아이가 있다면 아이와 함께 쉼터에 입소할 수 있어요.</li>
+          <li>핸드폰 번호를 바꾸거나, 위치 추적 앱이 깔려 있는지 확인하세요.</li>
+        </ol>
+      </div>`,
+    '1-2': `
+      <div class="dv-card">
+        <div class="dv-card-title">👩 회복 중인 당신에게 <span class="dv-card-tag amber">마음 회복</span></div>
+        <div class="dv-quote">"다시 그 사람이 그리워지는 것은 당신이 나약해서가 아닙니다. 오랜 시간 정서적으로 연결되어 있었던 뇌의 반응이에요."</div>
+        <ul class="dv-list">
+          <li><strong>트라우마 반응</strong>: 갑자기 무너지거나, 아무 감정이 안 드는 것 — 모두 정상입니다.</li>
+          <li>가정폭력 전문 트라우마 상담을 받아보세요. 한국여성의전화, 해바라기센터에서 무료 제공해요.</li>
+          <li><strong>자존감 회복이 가장 오래 걸립니다.</strong> 서두르지 마세요. "나는 사랑받을 자격이 있다"는 말이 낯설게 느껴지는 게 당연해요.</li>
+          <li>비슷한 경험을 한 여성들과의 자조 모임이 회복에 큰 도움이 됩니다.</li>
+        </ul>
+      </div>`,
+    '1-3': `
+      <div class="dv-card">
+        <div class="dv-card-title">👩 다시 일어서는 당신에게 <span class="dv-card-tag green">독립과 성장</span></div>
+        <ul class="dv-list">
+          <li><strong>경제적 독립</strong>을 위한 지원: 여성새로일하기센터, 직업훈련 지원, 취업 연계 프로그램</li>
+          <li>건강한 관계를 다시 배우는 것이 중요해요. 새로운 관계에서 과도한 경계심이나 의존이 생길 수 있어요 — 자연스러운 과정입니다.</li>
+          <li><strong>내가 살아남은 방식</strong>이 지금은 내 강점이에요. 그 감각을 믿으세요.</li>
+          <li>법적 이혼, 재산 분리, 양육권이 필요하다면 법률구조공단(132)이 무료로 도와줍니다.</li>
+        </ul>
+        <div class="dv-highlight"><strong>💜 기억해주세요:</strong> 살아남은 것, 그 자체가 이미 용감한 일입니다.</div>
+      </div>`,
+
+    // 성인 남성
+    '2-0': `
+      <div class="dv-card">
+        <div class="dv-card-title">👨 말하기 어렵지만 <span class="dv-card-tag red">당신도 피해자입니다</span></div>
+        <div class="dv-quote">"남자가 무슨 가정폭력 피해자냐"는 말 때문에 더 오래 혼자 감당했을 거예요. 그 침묵이 얼마나 무거웠을지 압니다.</div>
+        <ul class="dv-list">
+          <li><strong>신체 폭력뿐 아니라</strong> 지속적인 언어 폭력, 경제적 통제, 감금, 협박도 가정폭력입니다.</li>
+          <li>1366은 남성 피해자도 상담 가능합니다. 익명으로 전화할 수 있어요.</li>
+          <li><strong>아이가 목격하고 있다면</strong> — 아이를 위해서라도 도움을 받아야 해요.</li>
+          <li>혼자 해결하려 하지 마세요. 전문가의 도움이 더 빨리, 더 안전하게 해결됩니다.</li>
+        </ul>
+      </div>`,
+    '2-1': `
+      <div class="dv-card">
+        <div class="dv-card-title">👨 막 벗어난 당신에게 <span class="dv-card-tag green">실질 지원</span></div>
+        <ol class="dv-steps">
+          <li><strong>증거를 확보해두세요.</strong> 메시지, 사진, 진료 기록 — 법적 절차에 필요할 수 있어요.</li>
+          <li>법원 <strong>접근금지 명령</strong>은 남성 피해자도 신청 가능합니다. 법률구조공단(132)이 무료로 도와줍니다.</li>
+          <li>아이 양육권이 걱정된다면 즉시 법률 상담을 받으세요.</li>
+          <li><strong>가까운 사람에게 상황을 알리세요.</strong> 혼자 처리하다 불리해질 수 있어요.</li>
+        </ol>
+      </div>`,
+    '2-2': `
+      <div class="dv-card">
+        <div class="dv-card-title">👨 회복 중인 당신에게 <span class="dv-card-tag amber">감정 회복</span></div>
+        <ul class="dv-list">
+          <li><strong>수치심과 싸우는 것</strong>이 남성 피해자의 회복에서 가장 어려운 부분입니다. 그 수치심은 당신 것이 아니에요.</li>
+          <li>분노, 무기력, 우울이 교차할 수 있어요. 정신건강 상담(정신건강 위기상담 전화 1577-0199)을 받아보세요.</li>
+          <li><strong>"왜 진작 나오지 못했지"</strong>라는 자책 — 폭력적 관계에서 벗어나기 어려운 것은 심리적 메커니즘 때문입니다. 당신 탓이 아니에요.</li>
+        </ul>
+      </div>`,
+    '2-3': `
+      <div class="dv-card">
+        <div class="dv-card-title">👨 다시 일어서는 당신에게 <span class="dv-card-tag green">회복과 성장</span></div>
+        <ul class="dv-list">
+          <li><strong>건강한 관계 패턴을 다시 배우는 것</strong>이 중요해요. 나도 모르게 폭력적 관계를 반복하지 않도록.</li>
+          <li>아이와의 관계 회복을 위한 부모 상담 프로그램이 있어요.</li>
+          <li>내가 경험한 것을 말할 수 있게 됐다면 — 그 자체가 이미 엄청난 회복입니다.</li>
+        </ul>
+        <div class="dv-highlight"><strong>💙 당신도 보살핌받을 자격이 있습니다.</strong> 강해야 한다는 압박이 얼마나 힘들었는지, 이제는 내려놓아도 돼요.</div>
+      </div>`,
+
+    // 노인·조부모
+    '3-0': `
+      <div class="dv-card">
+        <div class="dv-card-title">👴 말하지 못했던 당신에게 <span class="dv-card-tag red">자녀에 의한 폭력</span></div>
+        <div class="dv-quote">"자식한테 당한다고 누가 믿겠어" — 믿습니다. 그리고 이것은 분명 잘못된 일입니다.</div>
+        <ul class="dv-list">
+          <li><strong>자녀에 의한 노인 학대</strong>는 신체·언어·경제적 착취·방임 모두 포함됩니다.</li>
+          <li>노인보호전문기관(1577-1389)에 신고하면 현장 조사와 보호 조치를 받을 수 있어요.</li>
+          <li><strong>자식을 신고하는 것이 패륜이 아닙니다.</strong> 당신의 안전이 먼저예요.</li>
+          <li>경제적 통제(통장·카드 빼앗김)도 학대입니다. 사회복지사를 통해 독립적 자산 관리를 도울 수 있어요.</li>
+        </ul>
+        <a class="dv-resource" href="tel:1577-1389">
+          <div class="dv-resource-num">1389</div>
+          <div class="dv-resource-info">
+            <div class="dv-resource-name">노인보호전문기관</div>
+            <div class="dv-resource-desc">24시간 노인 학대 신고·상담. 현장 조사 파견 가능</div>
+          </div>
+          <span class="dv-resource-badge">24시간</span>
+        </a>
+      </div>`,
+    '3-1': `
+      <div class="dv-card">
+        <div class="dv-card-title">👴 안전한 곳에 나오셨다면 <span class="dv-card-tag green">보호와 지원</span></div>
+        <ol class="dv-steps">
+          <li><strong>노인 보호시설</strong>에서 임시 거처와 생활 지원을 받을 수 있어요.</li>
+          <li>국민연금, 기초연금을 본인 명의 새 계좌로 받을 수 있도록 주민센터에서 도와드려요.</li>
+          <li><strong>법원 접근금지 명령</strong>은 자녀를 상대로도 신청할 수 있어요.</li>
+          <li>손자·손녀가 같이 있는 경우라면, 아이 보호를 위한 조치도 동시에 요청할 수 있어요.</li>
+        </ol>
+      </div>`,
+    '3-2': `
+      <div class="dv-card">
+        <div class="dv-card-title">👴 회복 중이신 분께 <span class="dv-card-tag amber">마음 회복</span></div>
+        <div class="dv-quote">"다 키워놨더니" — 그 배신감과 상실감은 충분히 슬퍼할 자격이 있어요.</div>
+        <ul class="dv-list">
+          <li><strong>우울, 무력감, 수치심</strong>이 오랫동안 이어질 수 있어요. 노인 정신건강 상담 서비스를 이용해보세요.</li>
+          <li>경로당, 복지관의 노인 상담 프로그램이 회복에 도움이 됩니다.</li>
+          <li><strong>자녀와의 관계를 어떻게 할지</strong>는 천천히 결정해도 괜찮아요. 용서는 의무가 아닙니다.</li>
+          <li>몸의 건강도 함께 살펴보세요. 오랜 스트레스는 신체에도 영향을 줍니다.</li>
+        </ul>
+      </div>`,
+    '3-3': `
+      <div class="dv-card">
+        <div class="dv-card-title">👴 새로운 일상을 시작하는 분께 <span class="dv-card-tag green">독립적 삶</span></div>
+        <ul class="dv-list">
+          <li><strong>내 삶을 다시 내가 결정하는 것</strong>부터 시작해요. 오늘 뭘 먹을지, 어디 갈지 — 작은 것부터.</li>
+          <li>사회관계를 새로 만들어가세요. 복지관, 노인 대학, 종교 모임 등을 통해 연결될 수 있어요.</li>
+          <li>재정 관리를 직접 하는 것이 어렵다면 주민센터의 금융복지 상담사가 도와드려요.</li>
+          <li><strong>나이가 들었어도 행복할 권리가 있습니다.</strong> 이제는 나를 위해 살아도 됩니다.</li>
+        </ul>
+        <div class="dv-highlight"><strong>🌸 당신의 삶은 아직 계속됩니다.</strong> 오래 참아온 만큼, 이제는 편안하게 지낼 자격이 충분히 있어요.</div>
+      </div>`,
+  };
+
+  var key = target + '-' + stage;
+  var comboCard = combo[key] || '';
+
+  return stageIntro + comboCard + gaslit + resources;
+}
+
 
 function goHome(){
   // 가이드 페이지가 열려있으면 먼저 닫기
