@@ -784,15 +784,15 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   :root{--tl-w:160px;}
-  .hero,#normal-view .pills,#result{padding-left:24px;padding-right:24px;}
-  .view-toggle,.sit-bar,#sp-result{padding-left:24px;padding-right:24px;}
+  .hero,#page-growth .pills,#result{padding-left:24px;padding-right:24px;}
+  .sit-bar,#sp-result{padding-left:24px;padding-right:24px;}
 }
 @media(max-width:640px){
   :root{--tl-w:0px;}
   header{padding:0 18px;}nav{display:none;}
   .hero{padding:52px 18px 32px;}
-  #normal-view .pills,#result{padding-left:18px;padding-right:18px;}
-  .view-toggle,.sit-bar,#sp-result{padding-left:18px;padding-right:18px;}
+  #page-growth .pills,#result{padding-left:18px;padding-right:18px;}
+  .sit-bar,#sp-result{padding-left:18px;padding-right:18px;}
   .grid{grid-template-columns:1fr;}.card.full{grid-column:span 1;}
   .tgrid{grid-template-columns:1fr 1fr;}.fgrid,.hgrid{grid-column:1fr;}
   .rhead{flex-direction:column;gap:12px;}.r-qt{text-align:left;}
@@ -1297,3 +1297,478 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .guide-toc-grid { grid-template-columns: 1fr 1fr; }
 }
 
+
+/* ════════════════════════════════════════════════════
+   REDESIGN 2.0 — 상황 카드 네비게이션 & 페이지 뷰
+════════════════════════════════════════════════════ */
+
+/* ── 사이드바 완전 숨김 ── */
+.tl-sidebar { display: none !important; }
+:root { --tl-w: 0px; }
+
+/* ── 히어로 보조 카피 ── */
+.hero .hero-sub {
+  font-size: 14px; color: var(--ink-m);
+  line-height: 1.72; margin-bottom: 28px;
+  animation: up .5s .12s cubic-bezier(.22,1,.36,1) both;
+  word-break: keep-all; max-width: 460px;
+}
+
+/* ── 상황 카드 그리드 ── */
+.situation-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%; max-width: 680px;
+  margin-bottom: 28px;
+  animation: up .5s .18s cubic-bezier(.22,1,.36,1) both;
+}
+.sit-card {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--white);
+  border: 1.5px solid rgba(224,123,90,.15);
+  border-radius: 18px;
+  padding: 18px 16px;
+  cursor: pointer;
+  transition: all .25s cubic-bezier(.34,1.2,.64,1);
+  box-shadow: 0 2px 8px rgba(44,30,20,.05);
+  text-align: left;
+  position: relative; overflow: hidden;
+}
+.sit-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent, rgba(224,123,90,.04));
+  opacity: 0; transition: opacity .2s;
+}
+.sit-card:hover {
+  border-color: var(--peach);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(224,123,90,.18);
+}
+.sit-card:hover::before { opacity: 1; }
+.sit-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
+.sit-card-body { flex: 1; min-width: 0; }
+.sit-title {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  line-height: 1.4; letter-spacing: -.2px;
+  margin-bottom: 3px; word-break: keep-all;
+}
+.sit-sub {
+  font-size: 11px; color: var(--ink-l);
+  line-height: 1.5; word-break: keep-all;
+}
+.sit-arrow {
+  font-size: 14px; color: var(--ink-l);
+  flex-shrink: 0; transition: all .2s;
+}
+.sit-card:hover .sit-arrow { color: var(--peach-d); transform: translateX(3px); }
+
+/* 청소년 카드 — 쿨톤 */
+.sit-card--teen {
+  background: linear-gradient(135deg, #F0F2FF, #EAF0FF);
+  border-color: rgba(80,100,200,.18);
+}
+.sit-card--teen:hover { border-color: #5B7CFA; box-shadow: 0 8px 28px rgba(80,100,200,.18); }
+
+/* 긴급 카드 — 레드 보더 */
+.sit-card--emergency {
+  border-color: rgba(200,60,60,.25);
+  background: linear-gradient(135deg, #FFF8F8, #FFF0F0);
+}
+.sit-card--emergency:hover { border-color: #E04040; box-shadow: 0 8px 28px rgba(200,60,60,.16); }
+
+/* ── 나이로 바로 찾기 (접힘형) ── */
+.age-finder {
+  width: 100%; max-width: 560px;
+  animation: up .5s .24s cubic-bezier(.22,1,.36,1) both;
+}
+.age-finder-toggle {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: 1.5px dashed rgba(224,123,90,.28);
+  border-radius: 14px; padding: 10px 22px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700;
+  color: var(--peach-d); cursor: pointer;
+  transition: all .2s; width: 100%; justify-content: center;
+}
+.age-finder-toggle:hover { background: var(--peach-p); border-color: var(--peach); }
+.af-arrow { transition: transform .2s; }
+.af-arrow.open { transform: rotate(180deg); }
+.age-finder-body {
+  display: none;
+  padding: 16px;
+  background: var(--white);
+  border: 1.5px solid rgba(224,123,90,.18);
+  border-top: none;
+  border-radius: 0 0 16px 16px;
+  animation: up .25s ease both;
+}
+.age-finder-row {
+  display: flex; gap: 8px; align-items: center;
+  flex-wrap: wrap; margin-top: 10px;
+}
+
+/* ── 페이지 뷰 (상황별 상세 페이지) ── */
+.page-view { animation: up .35s ease both; }
+.page-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 28px 14px;
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 64px; z-index: 90;
+  background: rgba(255,248,242,.92);
+  backdrop-filter: blur(20px);
+}
+.page-back {
+  background: none; border: 1.5px solid rgba(224,123,90,.22);
+  border-radius: 22px; padding: 7px 16px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12.5px; font-weight: 700;
+  color: var(--ink-m); cursor: pointer; transition: all .2s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.page-back:hover { background: var(--peach-p); border-color: var(--peach); color: var(--peach-d); }
+.page-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  margin: 0; flex: 1; word-break: keep-all;
+}
+.page-intro {
+  padding: 16px 28px 0;
+  font-size: 13.5px; color: var(--ink-m); line-height: 1.75;
+  word-break: keep-all;
+}
+
+/* ── 증상 체커 (출산 페이지) ── */
+.symptom-checker {
+  margin: 16px 28px;
+  background: linear-gradient(135deg, #FFF8F5, #FFF2EE);
+  border: 1.5px solid rgba(224,123,90,.20);
+  border-radius: 18px;
+  padding: 20px 22px;
+}
+.symptom-checker-title {
+  font-size: 14px; font-weight: 700; color: var(--ink);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 7px;
+}
+.symptom-list { display: flex; flex-direction: column; gap: 12px; }
+.symptom-item { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.symptom-q { font-size: 13px; color: var(--ink-m); font-weight: 600; flex: 1; min-width: 200px; line-height: 1.5; }
+.symptom-btns { display: flex; gap: 6px; }
+.sym-yes, .sym-no {
+  padding: 5px 16px; border-radius: 20px;
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; border: 1.5px solid transparent; transition: all .18s;
+}
+.sym-yes { background: rgba(200,60,60,.08); color: #A02020; border-color: rgba(200,60,60,.22); }
+.sym-yes:hover { background: rgba(200,60,60,.15); }
+.sym-no { background: var(--warm); color: var(--ink-m); border-color: var(--line); }
+.sym-no:hover { background: rgba(60,160,100,.08); color: #2A7A50; }
+.symptom-result {
+  width: 100%; padding: 10px 14px; border-radius: 10px;
+  font-size: 13px; font-weight: 600; line-height: 1.6;
+  background: linear-gradient(135deg, #FFF2F2, #FFECEC);
+  border: 1px solid rgba(200,60,60,.18); color: #8A2020;
+  animation: up .2s ease both;
+}
+
+/* ── 아코디언 (성장 가이드 결과 2단계 공개) ── */
+.summary-panel {
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, #FFFCF8, #FFF6EE);
+  border: 1.5px solid rgba(224,123,90,.22);
+  border-radius: 18px;
+  padding: 20px 24px;
+}
+.summary-panel-title {
+  font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--peach); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.summary-list {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+  margin-bottom: 14px;
+}
+.summary-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--ink-m); line-height: 1.65;
+}
+.summary-list li .sn {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--peach-d); color: #fff;
+  font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.summary-warn {
+  background: rgba(200,60,60,.07); border: 1px solid rgba(200,60,60,.16);
+  border-radius: 10px; padding: 10px 14px;
+  font-size: 12.5px; color: #8A2020; font-weight: 600; line-height: 1.6;
+}
+.acc-container { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.acc-section {
+  background: var(--white);
+  border: 1px solid rgba(224,123,90,.12);
+  border-radius: 14px; overflow: hidden;
+  transition: box-shadow .2s;
+}
+.acc-section:hover { box-shadow: 0 3px 14px rgba(224,123,90,.10); }
+.acc-header {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  background: none; border: none; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: left; transition: background .18s;
+}
+.acc-header:hover { background: var(--peach-p); }
+.acc-header.open { background: var(--peach-p); border-bottom: 1px solid rgba(224,123,90,.12); }
+.acc-h-icon { font-size: 17px; flex-shrink: 0; }
+.acc-h-title {
+  flex: 1; font-size: 13.5px; font-weight: 700; color: var(--ink);
+  letter-spacing: -.2px;
+}
+.acc-h-sub { font-size: 11px; color: var(--ink-l); white-space: nowrap; }
+.acc-arrow { font-size: 12px; color: var(--ink-l); transition: transform .2s; flex-shrink: 0; }
+.acc-header.open .acc-arrow { transform: rotate(180deg); }
+.acc-body {
+  display: none; padding: 16px 20px 18px;
+  animation: up .2s ease both;
+}
+.acc-body.open { display: block; }
+/* 아코디언 안의 카드 스타일 재활용 */
+.acc-body .card { animation: none; border-radius: 12px; }
+.acc-body .grid { gap: 10px; }
+
+/* ── 마음 돌봄 페이지 탭 ── */
+.mental-stage-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  padding: 16px 28px 0;
+}
+.mental-tab {
+  padding: 7px 16px; border-radius: 24px;
+  border: 1.5px solid var(--line); background: var(--white);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
+  color: var(--ink-m); cursor: pointer; transition: all .2s;
+}
+.mental-tab:hover { border-color: var(--peach); color: var(--peach-d); background: var(--peach-p); }
+.mental-tab.on { border-color: var(--peach-d); color: var(--peach-d); background: var(--peach-p); }
+#mental-content { padding: 16px 28px 60px; }
+.mental-full-card {
+  background: var(--white);
+  border: 1px solid rgba(224,123,90,.12);
+  border-radius: 18px; padding: 24px 26px;
+  margin-bottom: 14px;
+}
+.mental-full-card h3 {
+  font-size: 15px; font-weight: 800; color: var(--ink);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.mental-risk-box {
+  background: rgba(200,60,60,.07); border: 1px solid rgba(200,60,60,.18);
+  border-radius: 10px; padding: 11px 14px;
+  font-size: 13px; color: #8A2020; font-weight: 600; line-height: 1.6;
+  margin-bottom: 14px;
+}
+.mental-section-label {
+  font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: #6A3A90; margin-bottom: 8px;
+}
+.mental-full-card ul { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+.mental-full-card ul li {
+  font-size: 13px; color: var(--ink-m); line-height: 1.65;
+  padding-left: 16px; position: relative;
+}
+.mental-full-card ul li::before {
+  content: '·'; position: absolute; left: 3px;
+  color: #8A5AB4; font-size: 20px; line-height: 1.28; font-weight: 700;
+}
+.mental-hotline {
+  background: rgba(130,90,180,.06); border: 1px solid rgba(130,90,180,.16);
+  border-radius: 12px; padding: 13px 16px; margin-top: 4px;
+  font-size: 13px; color: var(--ink-m); line-height: 1.8;
+}
+.mental-hotline strong { color: #6A3A90; }
+
+/* ── 청소년·청년 페이지 ── */
+.page-view--teen {
+  background: linear-gradient(180deg, #1A1F3A 0%, #12172E 100%);
+  min-height: 100vh;
+}
+.teen-page-header {
+  background: rgba(26,31,58,.92) !important;
+  border-bottom-color: rgba(100,120,200,.2) !important;
+}
+.teen-back { border-color: rgba(100,120,200,.35) !important; color: #A0AACC !important; }
+.teen-back:hover { background: rgba(100,120,200,.15) !important; border-color: #5B7CFA !important; color: #B0C0FF !important; }
+.teen-title { color: #C0CAFF !important; }
+.teen-intro {
+  padding: 28px 28px 8px;
+  font-family: 'Gowun Batang', serif;
+}
+.teen-intro p {
+  font-size: 17px; color: #B0BAEE; line-height: 1.85;
+  margin-bottom: 6px; font-weight: 400;
+}
+.teen-age-select { padding: 20px 28px; }
+.teen-age-label { font-size: 15px; color: #9AA2CC; margin-bottom: 10px; font-weight: 500; }
+.teen-age-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.teen-age-btn {
+  padding: 9px 22px; border-radius: 24px;
+  background: rgba(80,100,180,.15);
+  border: 1.5px solid rgba(80,100,180,.30);
+  font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 700;
+  color: #9AA8D8; cursor: pointer; transition: all .2s;
+}
+.teen-age-btn:hover { background: rgba(91,124,250,.25); border-color: #5B7CFA; color: #C0CAFF; }
+.teen-age-btn.on { background: rgba(91,124,250,.30); border-color: #5B7CFA; color: #D0D8FF; }
+#teen-content { padding: 8px 28px 24px; }
+.teen-content-card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(100,120,200,.18);
+  border-radius: 16px; padding: 20px 22px; margin-bottom: 12px;
+}
+.teen-content-card h4 {
+  font-size: 14px; font-weight: 700; color: #A0B0F0;
+  margin-bottom: 10px;
+}
+.teen-quote {
+  font-family: 'Gowun Batang', serif;
+  font-size: 15px; color: #8A9AE0; line-height: 1.9;
+  font-style: italic; padding-left: 14px;
+  border-left: 3px solid rgba(91,124,250,.4);
+  margin-bottom: 16px;
+}
+.teen-stat-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(91,124,250,.15); border: 1px solid rgba(91,124,250,.28);
+  border-radius: 20px; padding: 4px 13px 4px 10px;
+  font-size: 12px; font-weight: 700; color: #8A9AE0;
+  margin-bottom: 14px;
+}
+.teen-stat-badge .tsn { font-size: 15px; font-weight: 800; color: #7A8AEE; }
+.teen-content-card ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.teen-content-card ul li {
+  font-size: 13px; color: #8090C0; line-height: 1.75;
+  padding-left: 16px; position: relative;
+}
+.teen-content-card ul li::before {
+  content: '·'; position: absolute; left: 3px;
+  color: #5B7CFA; font-size: 20px; line-height: 1.28;
+}
+.teen-safe-section {
+  background: rgba(200,60,60,.08); border: 1px solid rgba(200,60,60,.20);
+  border-radius: 14px; padding: 18px 20px; margin-bottom: 12px;
+}
+.teen-safe-title { font-size: 13.5px; font-weight: 700; color: #E06060; margin-bottom: 10px; }
+.teen-safe-section ul li::before { color: #E06060; }
+.teen-safe-section ul li { color: #C09090; }
+.teen-sos {
+  margin: 16px 28px 40px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(100,120,200,.18);
+  border-radius: 18px; padding: 20px 22px;
+}
+.teen-sos-title {
+  font-size: 13px; font-weight: 700; color: #9AA8D8;
+  margin-bottom: 12px;
+}
+.teen-sos-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 14px;
+  background: rgba(80,100,180,.12);
+  border: 1.5px solid rgba(80,100,180,.25);
+  text-decoration: none; margin-bottom: 8px;
+  transition: all .2s; cursor: pointer;
+}
+.teen-sos-btn:hover { background: rgba(91,124,250,.22); border-color: #5B7CFA; }
+.teen-sos-num {
+  font-family: 'Gowun Batang', serif;
+  font-size: 22px; font-weight: 700; color: #A0B0F0;
+  flex-shrink: 0; min-width: 80px;
+}
+.teen-sos-desc { font-size: 12px; color: #7080B0; line-height: 1.6; }
+
+/* ── 긴급 허브 페이지 ── */
+.page-view--emergency { background: #FAFAFA; }
+.emergency-sub {
+  padding: 14px 28px 0;
+  font-size: 14px; color: var(--ink-m); line-height: 1.72;
+  word-break: keep-all;
+}
+.emergency-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; padding: 20px 28px;
+}
+.emer-btn {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; padding: 24px 12px;
+  border-radius: 18px; text-decoration: none;
+  transition: all .22s cubic-bezier(.34,1.2,.64,1);
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  min-height: 100px;
+}
+.emer-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.16); }
+.emer-num {
+  font-family: 'Gowun Batang', serif;
+  font-size: 26px; font-weight: 700; line-height: 1;
+}
+.emer-label { font-size: 12px; font-weight: 700; opacity: .85; letter-spacing: -.1px; }
+.emer-red { background: linear-gradient(135deg, #E84040, #C82020); color: #fff; }
+.emer-purple { background: linear-gradient(135deg, #7A40C8, #5A28A0); color: #fff; }
+.emer-green { background: linear-gradient(135deg, #2A9060, #1A7050); color: #fff; }
+.emer-blue { background: linear-gradient(135deg, #2060B8, #1848A0); color: #fff; }
+.emer-notes {
+  margin: 0 28px 20px;
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 16px; padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.emer-note-item { font-size: 13px; color: var(--ink-m); line-height: 1.65; }
+.emer-note-item strong { color: var(--ink); font-weight: 700; }
+.emer-firstaid-wrap { padding: 0 28px 60px; }
+.emer-firstaid-title {
+  font-size: 15px; font-weight: 700; color: var(--ink);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+
+/* ── birth-wrap 내 패딩 조정 (page-view 안에 있으므로) ── */
+#page-birth .birth-wrap { padding: 16px 28px 60px; }
+
+/* ── sp-result padding 조정 ── */
+#page-sp #sp-result { padding: 16px 28px 60px; }
+
+/* ── result padding 조정 ── */
+#page-growth #result { padding: 0 48px 60px; }
+
+/* ── 반응형 ── */
+@media(max-width:640px){
+  .situation-grid { grid-template-columns: 1fr; }
+  .sit-card { padding: 14px; }
+  .sit-icon { font-size: 24px; }
+  .sit-title { font-size: 13px; }
+  .page-header { padding: 14px 18px 12px; }
+  .page-title { font-size: 16px; }
+  .summary-panel { margin-bottom: 14px; }
+  .acc-container { margin: 0; }
+  .emergency-grid { grid-template-columns: 1fr 1fr; padding: 16px 18px; gap: 10px; }
+  .emer-btn { padding: 18px 8px; min-height: 80px; }
+  .emer-num { font-size: 20px; }
+  .emer-notes { margin: 0 18px 16px; }
+  .emer-firstaid-wrap { padding: 0 18px 80px; }
+  .symptom-checker { margin: 12px 18px; }
+  .mental-stage-tabs { padding: 12px 18px 0; }
+  #mental-content { padding: 12px 18px 80px; }
+  .teen-intro { padding: 20px 18px 8px; }
+  .teen-age-select { padding: 14px 18px; }
+  #teen-content { padding: 8px 18px 20px; }
+  .teen-sos { margin: 12px 18px 60px; }
+  #page-birth .birth-wrap { padding: 14px 18px 80px; }
+  #page-sp #sp-result { padding: 12px 18px 80px; }
+  #page-growth .pills { padding: 14px 18px 16px; }
+  #page-growth #result { padding: 0 18px 80px; }
+  #page-growth #medical-disclaimer { margin: 0 18px 14px; }
+}
+@media(max-width:900px){
+  .situation-grid { max-width: 100%; }
+  .acc-container { margin: 0 24px; }
+  .summary-panel { margin: 0 24px 14px; }
+}

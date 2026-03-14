@@ -430,14 +430,41 @@ function getData(months){
 }
 
 
-/* ── 결과 렌더링 ── */
+/* ── 아코디언 토글 ── */
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  if (!body) return;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+}
+
+/* ── HTML 태그 제거 (요약용) ── */
+function stripTags(html) {
+  return html ? html.replace(/<[^>]+>/g, '') : '';
+}
+
+/* ── 아코디언 섹션 빌더 ── */
+function accSection(icon, title, sub, bodyHTML, openByDefault) {
+  const openClass = openByDefault ? ' open' : '';
+  const bodyStyle = openByDefault ? ' open' : '';
+  return `<div class="acc-section">
+    <button class="acc-header${openClass}" onclick="toggleAcc(this)">
+      <span class="acc-h-icon">${icon}</span>
+      <span class="acc-h-title">${title}</span>
+      ${sub ? `<span class="acc-h-sub">${sub}</span>` : ''}
+      <span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body${bodyStyle}">${bodyHTML}</div>
+  </div>`;
+}
+
+/* ── 결과 렌더링 (2단계 정보 공개) ── */
 function render(d,months){
   const y=months/12;
   let numStr,unitStr;
-  // 대상 뱃지
   const isAdult=y>=19;
   const isTeen=y>=13&&y<19;
-  const isChild=months<(13*12);
   const audKnow=isAdult
     ?'<div class="card-audience aud-self">🙋 본인 (성인)</div>'
     :isTeen
@@ -459,38 +486,136 @@ function render(d,months){
 
   let famHTML='';
   if(isFamily&&d.fam){
-    famHTML=`<div class="card full cbg-p"><h3>🫂 가족·보호자의 역할과 마음가짐</h3><div class="fgrid">${d.fam.map(f=>`<div class="fitem"><div class="ftitle">${f.title}</div><p>${f.text}</p></div>`).join('')}</div></div>`;
+    famHTML=`<div class="card full cbg-p" style="animation:none"><h3>🫂 가족·보호자의 역할과 마음가짐</h3><div class="fgrid">${d.fam.map(f=>`<div class="fitem"><div class="ftitle">${f.title}</div><p>${f.text}</p></div>`).join('')}</div></div>`;
   }
   let healthHTML='';
   if(isFamily&&d.health){
-    healthHTML=`<div class="card full cbg-sky"><h3>💪 건강한 신체를 위한 실천 가이드</h3><div class="hgrid">${d.health.map(h=>`<div class="hitem"><div class="htitle">${h.title}</div><p>${h.text}</p></div>`).join('')}</div></div>`;
+    healthHTML=`<div class="card full cbg-sky" style="animation:none"><h3>💪 건강한 신체를 위한 실천 가이드</h3><div class="hgrid">${d.health.map(h=>`<div class="hitem"><div class="htitle">${h.title}</div><p>${h.text}</p></div>`).join('')}</div></div>`;
   }
   let parentHTML='';
   if(!isFamily&&d.parent){
     const audLabel=months/12<=18?'👨‍👩‍👧 부모·보호자':'🙋 본인 (성인)';
     const audClass=months/12<=18?'aud-parent':'aud-self';
-    parentHTML=`<div class="card full cbg-s"><div class="card-audience ${audClass}">${audLabel}</div><h3>👨‍👩‍👧 ${d.role}의 역할과 마음가짐</h3><div class="tgrid">${d.parent.map(p=>`<div class="tip"><span class="te">${p.e}</span><p>${p.t}</p></div>`).join('')}</div></div>`;
+    parentHTML=`<div class="card full cbg-s" style="animation:none"><div class="card-audience ${audClass}">${audLabel}</div><h3>👨‍👩‍👧 ${d.role}의 역할과 마음가짐</h3><div class="tgrid">${d.parent.map(p=>`<div class="tip"><span class="te">${p.e}</span><p>${p.t}</p></div>`).join('')}</div></div>`;
   }
 
-  document.getElementById('result').innerHTML=`
-    <div class="rhead" style="background:linear-gradient(135deg,${d.g[0]} 0%,${d.g[1]} 100%)">
+  // ── 핵심 요약 (항상 보임) ──
+  const sum1 = stripTags(d.brain[0] || '');
+  const sum2 = stripTags(d.body[0] || '');
+  const sum3 = stripTags(d.emo[0] || '');
+  const warnFirst = stripTags(d.warn[0] || '');
+  const summaryHTML = `
+    <div class="summary-panel">
+      <div class="summary-panel-title">✨ 이 시기 핵심 3가지</div>
+      <ol class="summary-list">
+        <li><span class="sn">1</span><span>🧠 ${sum1}</span></li>
+        <li><span class="sn">2</span><span>🌱 ${sum2}</span></li>
+        <li><span class="sn">3</span><span>💚 ${sum3}</span></li>
+      </ol>
+      ${warnFirst ? `<div class="summary-warn">⚠️ 꼭 주의: ${warnFirst}</div>` : ''}
+    </div>`;
+
+  // ── 아코디언 섹션들 ──
+  const brainBody = `<div class="card" style="animation:none">${audKnow}<h3>🧠 뇌 &amp; 인지 발달</h3><ul>${d.brain.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const emoBody   = `<div class="card" style="animation:none">${audParent}<h3>💚 정서 &amp; 사회성 발달</h3><ul>${d.emo.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const bodyBody  = `<div class="card" style="animation:none">${audParent}<h3>🌱 신체 발달 &amp; 의학 체크</h3><ul>${d.body.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const warnBody  = `<div class="card cbg-a" style="animation:none">${audParent}<h3>⚠️ 이것만은 주의하세요</h3><ul>${d.warn.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const playBody  = `<div class="card full" style="animation:none">${audParent}<h3>🎯 추천 활동 &amp; 실천</h3><div class="plist">${d.play.map(p=>`<div class="pitem"><span class="ptag">${p.t}</span><p>${p.d}</p></div>`).join('')}</div></div>`;
+  const parentBody= (parentHTML || famHTML || healthHTML) ? `<div class="grid">${parentHTML}${famHTML}${healthHTML}</div>` : '';
+  const checkBody = `<div class="card full cbg-s" style="animation:none">${audCheck}<h3>✅ 체크포인트</h3>${d.mile.map(m=>`<div class="stone"><span class="ck">${m.ck}</span><p><strong>${m.tt}</strong> ${m.dc}</p></div>`).join('')}</div>`;
+  const mentalBody= getMentalHTML(months);
+  const aloneBody = getAloneHTML(months);
+  const firstAid  = getFirstAidHTML(months);
+
+  const accHTML = `<div class="acc-container">
+    ${accSection('🧠','뇌 &amp; 인지 발달', d.brain.length+'가지', brainBody, true)}
+    ${accSection('💚','정서 &amp; 사회성 발달', d.emo.length+'가지', emoBody, false)}
+    ${accSection('🌱','신체 발달 &amp; 의학 체크', d.body.length+'가지', bodyBody, false)}
+    ${accSection('⚠️','주의사항', d.warn.length+'가지', warnBody, false)}
+    ${accSection('🎯','추천 활동 &amp; 실천', d.play.length+'가지', playBody, false)}
+    ${parentBody ? accSection('🫂','역할 &amp; 마음가짐', '', parentBody, false) : ''}
+    ${accSection('✅','체크포인트', '', checkBody, false)}
+    ${mentalBody ? accSection('🧘','정신건강 &amp; 마음 돌봄', '', mentalBody, false) : ''}
+    ${aloneBody  ? accSection('🫶','혼자 자라는 아이에게', '', aloneBody, false) : ''}
+    ${firstAid   ? accSection('🩺','응급처치 가이드', '', firstAid, false) : ''}
+    ${accSection('📝','메모장', '', getMemoHTML(months), false)}
+  </div>`;
+
+  document.getElementById('result').innerHTML =
+    `<div class="rhead" style="background:linear-gradient(135deg,${d.g[0]} 0%,${d.g[1]} 100%);margin-bottom:14px;">
       <div><div class="r-age">${numStr}<sub>${unitStr}</sub></div><div class="r-stg">${d.em}&nbsp;${d.stg}</div></div>
       <div class="r-qt">"${d.qt}"</div>
     </div>
-    <div class="grid">
-      <div class="card">${audKnow}<h3>🧠 뇌 &amp; 인지 발달</h3><ul>${d.brain.map(i=>`<li>${i}</li>`).join('')}</ul></div>
-      <div class="card">${audParent}<h3>💚 정서 &amp; 사회성 발달</h3><ul>${d.emo.map(i=>`<li>${i}</li>`).join('')}</ul></div>
-      <div class="card">${audParent}<h3>🌱 신체 발달 &amp; 의학 체크</h3><ul>${d.body.map(i=>`<li>${i}</li>`).join('')}</ul></div>
-      <div class="card cbg-a">${audParent}<h3>⚠️ 이것만은 주의하세요</h3><ul>${d.warn.map(i=>`<li>${i}</li>`).join('')}</ul></div>
-      <div class="card full">${audParent}<h3>🎯 추천 활동 &amp; 실천</h3><div class="plist">${d.play.map(p=>`<div class="pitem"><span class="ptag">${p.t}</span><p>${p.d}</p></div>`).join('')}</div></div>
-      ${parentHTML}${famHTML}${healthHTML}
-      <div class="card full cbg-s">${audCheck}<h3>✅ 체크포인트</h3>${d.mile.map(m=>`<div class="stone"><span class="ck">${m.ck}</span><p><strong>${m.tt}</strong> ${m.dc}</p></div>`).join('')}</div>
-      ${getMentalHTML(months)}
-      ${getAloneHTML(months)}
-      ${getFirstAidHTML(months)}
-    </div>
-    ${getMemoHTML(months)}`;
-  buildTOC();
+    ${summaryHTML}
+    ${accHTML}`;
+}
+
+
+/* ── 마음 돌봄 페이지 렌더링 ── */
+function renderMentalPageContent(key) {
+  const d = MENTAL[key];
+  const el = document.getElementById('mental-content');
+  if (!d || !el) return;
+
+  const hotlineMap = {
+    infant:    '1393 (자살예방·산후우울 상담, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
+    toddler:   '1393 (정신건강 위기상담, 무료·24시간) / 1577-0199 (정신건강복지센터)',
+    preschool: '1393 / Wee센터 (학교 아동상담, 무료) / 아동상담치료센터',
+    school:    '1388 (청소년전화) / Wee클래스 (학교 내 무료 상담) / 1393',
+    teen:      '1393 (자살예방, 무료·24시간) / 1388 (청소년전화) / 청소년 마음이음 상담센터',
+    young:     '1577-0199 (정신건강 위기상담) / 청년 마음건강 바우처 (복지로 검색) / 1393',
+    adult:     '1577-0199 / 직장인 EAP(근로자지원프로그램, 회사별 무료 제공) / 정신건강복지센터',
+    middle:    '1577-0199 / 정신건강복지센터 (전국, 무료) / 갱년기 클리닉',
+    senior:    '1577-0199 / 정신건강복지센터 (무료) / 노인맞춤돌봄서비스 (주민센터)',
+  };
+
+  el.innerHTML = `
+    <div class="mental-full-card">
+      <div class="stat-badge"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:.6;margin-left:4px;">📎</span></div>
+      <div class="mental-risk-box">⚠️ ${d.risk}</div>
+      <div class="mental-section-label">이상 징후 체크</div>
+      <ul>${d.signs.map(s=>`<li>${s}</li>`).join('')}</ul>
+      <div class="mental-section-label">마음 훈련 &amp; 대처법</div>
+      <ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
+      <div class="mental-hotline">📞 <strong>전문 도움 연결</strong><br>${hotlineMap[key]||'1393 (무료·24시간)'}<br><span style="font-size:11px;color:var(--ink-l);">※ 전화하면 상담사가 이야기 들어줍니다. 비밀보장·기록 정책은 전화 시 확인해 주세요.</span></div>
+    </div>`;
+}
+
+
+/* ── 청소년·청년 페이지 렌더링 ── */
+function renderTeenPage(key, btn) {
+  // 버튼 활성화
+  if (btn) {
+    document.querySelectorAll('.teen-age-btn').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+  }
+
+  const d = ALONE_DATA[key];
+  const el = document.getElementById('teen-content');
+  if (!d || !el) return;
+
+  const toneTitle = key==='child' ? '많이 버텨온 너에게' : key==='teen' ? '혼자 견뎌온 너에게' : '혼자 감당해온 너에게';
+
+  // 위험한 어른 구별법 섹션
+  const dangerHTML = d.danger ? `
+    <div class="teen-safe-section">
+      <div class="teen-safe-title">⚠️ 위험한 어른을 조심해</div>
+      <ul>${d.danger.map(item=>`<li>${item.em ? `<strong>${item.t}</strong> — ${item.d}` : item}</li>`).join('')}</ul>
+    </div>` : '';
+
+  const itemsHTML = d.items ? d.items.map(item => `
+    <div class="teen-content-card">
+      <h4>${item.icon||'💬'} ${item.title||item.t||''}</h4>
+      ${item.points
+        ? `<ul>${item.points.map(p=>`<li>${p}</li>`).join('')}</ul>`
+        : `<p style="font-size:13px;color:#8090C0;line-height:1.75;">${item.text||''}</p>`
+      }
+    </div>`).join('') : '';
+
+  el.innerHTML = `
+    <div class="teen-quote">"${d.quote}"</div>
+    <div class="teen-stat-badge"><span class="tsn">${d.stat.pct}</span>${d.stat.label}</div>
+    ${itemsHTML}`;
 }
 
 

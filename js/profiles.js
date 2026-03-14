@@ -59,8 +59,13 @@ function goWithProfile() {
     setM('y');
     document.getElementById('ai').value = Math.floor(age.months / 12);
   }
+  showPage('growth');
+  setMTab('growth');
   go();
-  setTimeout(() => document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+  setTimeout(() => {
+    const r = document.getElementById('result');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
 }
 
 /* ── 모달 ── */
