@@ -2,17 +2,49 @@
    BeInside — 앱 메인 로직 & 네비게이션
 ═══════════════════════════════════════════════════════════ */
 
-/* ── 상황 선택 ── */
+/* ── 현재 페이지 상태 ── */
 let curSit  = 0;
-let curView = 'normal';
+let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-function selectSit(n) {
-  curSit = n;
-  [0, 1, 2, 3].forEach(i => {
-    const b = document.getElementById('sit' + i);
-    if (b) b.classList.toggle('on', i === n);
-  });
-  renderSP(n);
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency'];
+
+/* ── 페이지 전환 ── */
+function showPage(id) {
+  curPage = id;
+  const hero = document.getElementById('hero');
+
+  if (id === 'home') {
+    if (hero) hero.style.display = '';
+    ALL_PAGES.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if (el) el.style.display = 'none';
+    });
+  } else {
+    if (hero) hero.style.display = 'none';
+    ALL_PAGES.forEach(p => {
+      const el = document.getElementById('page-' + p);
+      if (el) el.style.display = (p === id) ? '' : 'none';
+    });
+    // 페이지 특수 초기화
+    if (id === 'sp' && curSit >= 0) renderSP(curSit);
+    if (id === 'mental') initMentalPage();
+    if (id === 'teen') initTeenPage();
+    if (id === 'emergency') initEmergencyFirstAid();
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── 홈으로 ── */
+function goHome() {
+  showPage('home');
+  setMTab('home');
+}
+
+/* ── 뷰 전환 (하위 호환 — 탭바·카드에서 호출될 수 있음) ── */
+function switchView(v) {
+  const map = { normal: 'growth', sp: 'sp', birth: 'birth' };
+  showPage(map[v] || 'home');
 }
 
 /* ── 입력 모드 전환 (개월/세) ── */
@@ -20,11 +52,16 @@ let mode = 'm';
 
 function setM(m) {
   mode = m;
-  document.getElementById('bm').classList.toggle('on', m === 'm');
-  document.getElementById('by').classList.toggle('on', m === 'y');
-  document.getElementById('au').textContent  = m === 'm' ? '개월' : '세';
-  document.getElementById('ai').max          = m === 'm' ? '36'   : '80';
-  document.getElementById('hint').style.opacity = m === 'm' ? '1' : '0.3';
+  const bm = document.getElementById('bm');
+  const by = document.getElementById('by');
+  const au = document.getElementById('au');
+  const ai = document.getElementById('ai');
+  const hint = document.getElementById('hint');
+  if (bm) bm.classList.toggle('on', m === 'm');
+  if (by) by.classList.toggle('on', m === 'y');
+  if (au) au.textContent = m === 'm' ? '개월' : '세';
+  if (ai) ai.max = m === 'm' ? '36' : '80';
+  if (hint) hint.style.opacity = m === 'm' ? '1' : '0.3';
 }
 
 function getMonths() {
@@ -34,18 +71,22 @@ function getMonths() {
 
 /* ── 가이드 조회 ── */
 function go() {
+  // 성장 가이드 페이지로 이동 (아직 안 가있으면)
+  if (curPage !== 'growth') {
+    showPage('growth');
+  }
   const months = getMonths();
   if (months < 0) return;
   const d = getData(months);
   render(d, months);
   const r = document.getElementById('result');
-  r.classList.add('on');
+  if (r) r.classList.add('on');
   const md = document.getElementById('medical-disclaimer');
   if (md) md.style.display = 'block';
   setTimeout(() => {
     const md2 = document.getElementById('medical-disclaimer');
     if (md2) md2.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 60);
+  }, 80);
 }
 
 /* ── 빠른 이동 ── */
@@ -53,39 +94,100 @@ function qs(v, m) {
   setM(m);
   document.getElementById('ai').value = v;
   go();
-  setTimeout(() => document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+  setTimeout(() => {
+    const r = document.getElementById('result');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
 }
 
-/* ── 홈으로 ── */
-function goHome() {
-  switchView('normal');
-  const r = document.getElementById('result');
-  if (r) { r.innerHTML = ''; r.classList.remove('on'); }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+/* ── 나이 찾기 토글 ── */
+function toggleAgeFinder(btn) {
+  const body = document.getElementById('age-finder-body');
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : '';
+  const arrow = btn.querySelector('.af-arrow');
+  if (arrow) arrow.classList.toggle('open', !isOpen);
 }
 
-/* ── 뷰 전환 ── */
-function switchView(v) {
-  curView = v;
-  document.getElementById('normal-view').style.display = v === 'normal' ? '' : 'none';
-  document.getElementById('sp-view').style.display     = v === 'sp'     ? '' : 'none';
-  document.getElementById('birth-view').style.display  = v === 'birth'  ? '' : 'none';
-  document.getElementById('vb-normal').classList.toggle('on', v === 'normal');
-  document.getElementById('vb-sp').classList.toggle('on',     v === 'sp');
-  document.getElementById('vb-birth').classList.toggle('on',  v === 'birth');
-  if (v === 'sp') renderSP(curSit);
-  setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+/* ── 상황 선택 (한부모) ── */
+function selectSit(n) {
+  curSit = n;
+  [0, 1, 2, 3].forEach(i => {
+    const b = document.getElementById('sit' + i);
+    if (b) b.classList.toggle('on', i === n);
+  });
+  renderSP(n);
 }
 
-/* ── 섹션 스크롤 ── */
+/* ── 섹션 스크롤 (하위 호환) ── */
 function toS(id) {
+  if (id === 'hero') { goHome(); return; }
+  if (id === 'guide-sec') { showPage('growth'); setMTab('growth'); return; }
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-/* ── SOS 긴급 상담 ── */
-function openSos() {
-  alert('[24시간 긴급 도움망]\n\n- 자살예방상담전화: 1393\n- 청소년전화: 1388\n- 정신건강위기상담전화: 1577-0199\n- 아동학대신고: 112\n\n혼자 고민하지 마세요.\n전문 상담사가 24시간 곁에 있습니다.');
+/* ── 증상 체크 버튼 (출산 페이지) ── */
+function showSymRes(btn, msg) {
+  const item = btn.closest('.symptom-item');
+  if (!item) return;
+  const res = item.querySelector('.symptom-result');
+  if (!res) return;
+  res.textContent = msg;
+  res.style.display = 'block';
+}
+function hideSymRes(btn) {
+  const item = btn.closest('.symptom-item');
+  if (!item) return;
+  const res = item.querySelector('.symptom-result');
+  if (res) res.style.display = 'none';
+}
+
+/* ── 마음 돌봄 페이지 초기화 ── */
+function initMentalPage() {
+  const tabsEl = document.getElementById('mental-tabs');
+  if (!tabsEl || tabsEl.dataset.init) return;
+  tabsEl.dataset.init = '1';
+
+  const MENTAL_TABS = [
+    { key: 'infant',    label: '영아기 산모' },
+    { key: 'toddler',   label: '유아기 부모' },
+    { key: 'preschool', label: '학령전기 부모' },
+    { key: 'school',    label: '학령기 부모' },
+    { key: 'teen',      label: '청소년' },
+    { key: 'young',     label: '청년' },
+    { key: 'adult',     label: '성인' },
+    { key: 'middle',    label: '중년' },
+    { key: 'senior',    label: '노년' },
+  ];
+
+  MENTAL_TABS.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'mental-tab' + (i === 0 ? ' on' : '');
+    btn.textContent = t.label;
+    btn.onclick = () => {
+      tabsEl.querySelectorAll('.mental-tab').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      renderMentalPageContent(t.key);
+    };
+    tabsEl.appendChild(btn);
+  });
+
+  renderMentalPageContent('infant');
+}
+
+/* ── 청소년 페이지 초기화 ── */
+function initTeenPage() {
+  renderTeenPage('child', document.querySelector('.teen-age-btn.on') || document.querySelector('.teen-age-btn'));
+}
+
+/* ── 긴급 응급처치 초기화 ── */
+function initEmergencyFirstAid() {
+  const el = document.getElementById('emer-firstaid-content');
+  if (!el || el.dataset.init) return;
+  el.dataset.init = '1';
+  el.innerHTML = getFirstAidHTML(0); // 영유아 기준 응급처치 전체
 }
 
 /* ── 모바일 탭 활성화 ── */
@@ -94,26 +196,6 @@ function setMTab(id) {
   const t = document.getElementById('mtab-' + id);
   if (t) t.classList.add('active');
 }
-
-/* ── 타임라인 초기화 ── */
-(function initTimeline() {
-  const tnc = document.getElementById('tln');
-  if (!tnc) return;
-  TL.forEach(s => {
-    const nd = document.createElement('div');
-    nd.className = 'tnode';
-    nd.innerHTML = `<div class="tdot"></div><div class="tlbl">${s.l}<span class="sub">${s.s}</span></div>`;
-    nd.onclick = () => {
-      document.querySelectorAll('.tnode').forEach(n => n.classList.remove('on'));
-      nd.classList.add('on');
-      if (s.isM) { setM('m'); document.getElementById('ai').value = s.m; }
-      else        { setM('y'); document.getElementById('ai').value = Math.floor(s.m / 12); }
-      go();
-      setTimeout(() => document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
-    };
-    tnc.appendChild(nd);
-  });
-})();
 
 /* ── SP 패널 초기화 ── */
 renderSP(0);

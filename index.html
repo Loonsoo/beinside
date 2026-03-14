@@ -12,25 +12,19 @@
 <body>
 <div id="scroll-bar"></div>
 
-
-<button class="sos-btn" onclick="openSos()">
+<button class="sos-btn" onclick="showPage('emergency');setMTab('emergency')">
   <span>💬</span> 24시 긴급상담
 </button>
 
 <header>
-  <!-- 프로필 칩 (왼쪽 상단) -->
   <div id="prof-chip" class="prof-chip" onclick="openModal()" title="프로필 관리">
     <div class="prof-avatar" id="hdr-avatar"><span id="hdr-avatar-em">🌱</span></div>
     <div class="prof-info" id="hdr-info">
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" onclick="goHome()" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
-  <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;white-space:nowrap;">
-    <nav>
-      <button class="on" onclick="toS('hero')">홈</button>
-      <button onclick="toS('guide-sec')">성장 가이드</button>
-    </nav>
+  <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
+  <div style="display:flex;align-items:center;justify-content:flex-end;">
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
       <span></span><span></span><span></span>
     </button>
@@ -41,20 +35,14 @@
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-
-    <!-- profile list view -->
     <div id="modal-list-view">
       <h2>나의 프로필</h2>
       <p class="modal-sub">여러 명의 프로필을 저장하고 빠르게 전환할 수 있어요</p>
       <div class="prof-list" id="prof-list"></div>
       <button class="add-prof-btn" onclick="showEditForm(null)">＋ 새 프로필 추가</button>
     </div>
-
-    <!-- edit / add form -->
     <div class="edit-form" id="edit-form">
       <button class="form-back" onclick="showListView()">← 목록으로</button>
-
-      <!-- avatar -->
       <div class="avatar-section">
         <div class="avatar-preview-wrap">
           <div class="avatar-preview" id="edit-avatar-preview"><span id="edit-avatar-em">🌱</span></div>
@@ -65,14 +53,10 @@
         </div>
         <div class="emoji-grid" id="emoji-grid"></div>
       </div>
-
-      <!-- 이름 -->
       <div class="form-field">
         <label class="form-label">이름 / 닉네임</label>
         <input class="form-input" id="edit-name" type="text" placeholder="예: 우리 아이, 준서, 나 자신" maxlength="20">
       </div>
-
-      <!-- 유형 -->
       <div class="form-field">
         <label class="form-label">대상</label>
         <div class="type-toggle">
@@ -80,26 +64,23 @@
           <button class="type-btn" id="type-self" onclick="setType('self')">🙋 나 자신</button>
         </div>
       </div>
-
-      <!-- 생년월일 -->
       <div class="form-field">
         <label class="form-label" id="dob-label">생년월일</label>
         <input class="form-input" id="edit-dob" type="date" max="">
       </div>
-
       <button class="form-save-btn" onclick="saveProfile()">저장하기</button>
     </div>
   </div>
 </div>
 
 <div class="page-wrap">
-
-  <!-- ── MAIN CONTENT ── -->
   <div class="main-col">
 
+    <!-- ══════════════ HOME / HERO ══════════════ -->
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
-      <!-- 프로필 있을 때 표시되는 배너 -->
+
+      <!-- 프로필 배너 -->
       <div class="hero-prof-banner" id="hero-banner">
         <div class="hpb-avatar" id="banner-avatar"><span id="banner-avatar-em">🌱</span></div>
         <div class="hpb-info">
@@ -108,41 +89,92 @@
         </div>
         <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
       </div>
+
       <div class="badge">🌱 0개월 ~ 80세 전 생애 성장 &amp; 돌봄 가이드</div>
-      <h1>누군가 옆에 있어줬으면 했던<br><span class="hl">그 모든 순간,</span></h1>
-      <p>어느 나이든, 어떤 가정 환경이든 —<br>지금 이 시기를 잘 지나갈 수 있도록.</p>
-      <div class="sbox">
-        <div class="slabel">지금 몇 살인가요?</div>
-        <div class="srow">
+      <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
+      <p class="hero-sub">혼자 감당하고 있는 그 순간,<br>여기서부터 시작해 보세요.</p>
+
+      <!-- 6가지 상황 카드 -->
+      <div class="situation-grid">
+        <div class="sit-card" onclick="showPage('growth');setMTab('growth')">
+          <div class="sit-icon">👶</div>
+          <div class="sit-card-body">
+            <div class="sit-title">아이가 잘 자라고 있는지 불안해요</div>
+            <div class="sit-sub">연령별 발달 기준과 체크리스트</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+        <div class="sit-card" onclick="showPage('sp')">
+          <div class="sit-icon">👩‍👦</div>
+          <div class="sit-card-body">
+            <div class="sit-title">혼자 아이를 키우고 있어요</div>
+            <div class="sit-sub">한부모·홀로 양육하는 분들을 위한 가이드</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+        <div class="sit-card" onclick="showPage('birth')">
+          <div class="sit-icon">🤱</div>
+          <div class="sit-card-body">
+            <div class="sit-title">출산 후 혼자 회복 중이에요</div>
+            <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+        <div class="sit-card" onclick="showPage('mental');setMTab('mind')">
+          <div class="sit-icon">😔</div>
+          <div class="sit-card-body">
+            <div class="sit-title">내 감정을 어떻게 해야 할지 모르겠어요</div>
+            <div class="sit-sub">지금 느끼는 감정, 비정상이 아닙니다</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+        <div class="sit-card sit-card--teen" onclick="showPage('teen');setMTab('mind')">
+          <div class="sit-icon">🧒</div>
+          <div class="sit-card-body">
+            <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
+            <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+        <div class="sit-card sit-card--emergency" onclick="showPage('emergency');setMTab('emergency')">
+          <div class="sit-icon">🚨</div>
+          <div class="sit-card-body">
+            <div class="sit-title">지금 당장 도움이 필요해요</div>
+            <div class="sit-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
+          </div>
+          <div class="sit-arrow">→</div>
+        </div>
+      </div>
+
+      <!-- 나이로 바로 찾기 (접힌 상태) -->
+      <div class="age-finder">
+        <button class="age-finder-toggle" onclick="toggleAgeFinder(this)">
+          🔍 나이로 바로 찾기 <span class="af-arrow">▾</span>
+        </button>
+        <div class="age-finder-body" id="age-finder-body">
           <div class="mtoggle">
             <button class="on" id="bm" onclick="setM('m')">개월 수<small>영유아 전용 (0~36개월)</small></button>
             <button id="by" onclick="setM('y')">만 나이</button>
           </div>
-          <div class="ninput">
-            <input type="number" id="ai" min="0" placeholder="0" onkeydown="if(event.key==='Enter')go()">
-            <span id="au">개월</span>
+          <div class="age-finder-row">
+            <div class="ninput">
+              <input type="number" id="ai" min="0" placeholder="0" onkeydown="if(event.key==='Enter'){go();setMTab('growth');}">
+              <span id="au">개월</span>
+            </div>
+            <button class="gobtn" onclick="go();setMTab('growth')">가이드 보기 →</button>
           </div>
-          <button class="gobtn" onclick="go()">가이드 보기 →</button>
+          <div class="hint" id="hint"><b>개월 수</b> 입력은 만 36개월(3세) 이하 영유아에게만 적용됩니다</div>
         </div>
-        <div class="hint" id="hint"><b>개월 수</b> 입력은 만 36개월(3세) 이하 영유아에게만 적용됩니다</div>
       </div>
     </section>
 
-    <!-- VIEW TOGGLE -->
-    <div class="view-toggle" id="guide-sec">
-      <button class="view-btn on" id="vb-normal" onclick="switchView('normal')">
-        <span class="vb-dot" style="background:var(--sage)"></span>성장 가이드
-      </button>
-      <button class="view-btn" id="vb-sp" onclick="switchView('sp')">
-        <span class="vb-dot" style="background:var(--amber)"></span>한부모·가족 상황 가이드
-      </button>
-      <button class="view-btn" id="vb-birth" onclick="switchView('birth')">
-        <span class="vb-dot" style="background:#D4849A"></span>출산 & 산후 회복 가이드
-      </button>
-    </div>
+    <!-- ══════════════ PAGE: 성장 가이드 ══════════════ -->
+    <div class="page-view" id="page-growth" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title">👶 성장 가이드</h2>
+      </div>
 
-    <!-- NORMAL VIEW -->
-    <div id="normal-view">
       <div class="pills">
         <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
         <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
@@ -158,14 +190,19 @@
         <div class="pill" onclick="qs(65,'y')"><span class="cd" style="background:#3A6A9A"></span>노년 65세</div>
         <div class="pill" onclick="qs(78,'y')"><span class="cd" style="background:#2A3A5A"></span>후기 노년 78세</div>
       </div>
-      <div id="medical-disclaimer" style="display:none; margin-bottom:16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
-        <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오. 긴급 상황 시 상단의 24시 긴급상담 버튼을 이용해 즉시 도움을 받으세요.
+
+      <div id="medical-disclaimer" style="display:none; margin:0 48px 16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
+        <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오.
       </div>
       <section id="result"></section>
     </div>
 
-    <!-- SINGLE PARENT VIEW -->
-    <div id="sp-view" style="display:none;">
+    <!-- ══════════════ PAGE: 한부모·가족 상황 ══════════════ -->
+    <div class="page-view" id="page-sp" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title">👩‍👦 한부모·가족 상황 가이드</h2>
+      </div>
       <div class="sit-bar">
         <button class="sit-btn s0 on" id="sit0" onclick="selectSit(0)">👩 엄마 부재 (아빠 홀로)</button>
         <button class="sit-btn s1" id="sit1" onclick="selectSit(1)">👨 아빠 부재 (엄마 홀로)</button>
@@ -175,148 +212,268 @@
       <div id="sp-result" class="on"></div>
     </div>
 
-    <!-- BIRTH & POSTPARTUM VIEW -->
-    <div id="birth-view" style="display:none;">
-      <div class="birth-wrap">
-        <div style="padding-top:20px;margin-bottom:4px;">
-          <div style="font-size:13px;color:var(--ink-l);margin-bottom:8px;">혼자 감당하는 출산과 산후 회복을 위한 현실적인 가이드</div>
-          <div style="background:linear-gradient(135deg,rgba(232,137,106,.10),rgba(212,160,84,.08));border:1px solid rgba(232,137,106,.20);border-radius:14px;padding:13px 18px;font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:16px;">
-            🫶 <strong style="color:var(--peach-d);">이 가이드는 당신을 위해 만들어졌어요.</strong> 도움받을 가족이 없거나, 혼자 산후 조리를 감당해야 하는 분들을 위한 현실적인 정보와 따뜻한 조언을 담았습니다.
+    <!-- ══════════════ PAGE: 출산 & 산후 회복 ══════════════ -->
+    <div class="page-view" id="page-birth" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title">🤱 출산 &amp; 산후 회복 가이드</h2>
+      </div>
+
+      <!-- 빠른 증상 체크 -->
+      <div class="symptom-checker">
+        <div class="symptom-checker-title">🩺 지금 이 증상, 정상인가요?</div>
+        <div class="symptom-list">
+          <div class="symptom-item">
+            <span class="symptom-q">체온 38°C 이상인가요?</span>
+            <div class="symptom-btns">
+              <button class="sym-yes" onclick="showSymRes(this,'🚨 즉시 응급실을 방문하세요. 산후 38°C 이상 발열은 감염 신호일 수 있어요.')">예</button>
+              <button class="sym-no" onclick="hideSymRes(this)">아니요</button>
+            </div>
+            <div class="symptom-result" style="display:none"></div>
           </div>
+          <div class="symptom-item">
+            <span class="symptom-q">출혈이 매우 심한가요? (생리대를 1시간마다 교체)</span>
+            <div class="symptom-btns">
+              <button class="sym-yes" onclick="showSymRes(this,'🚨 즉시 119에 전화하세요. 과다 출혈은 응급 상황이에요.')">예</button>
+              <button class="sym-no" onclick="hideSymRes(this)">아니요</button>
+            </div>
+            <div class="symptom-result" style="display:none"></div>
+          </div>
+          <div class="symptom-item">
+            <span class="symptom-q">2주 이상 깊은 슬픔·무기력이 지속되나요?</span>
+            <div class="symptom-btns">
+              <button class="sym-yes" onclick="showSymRes(this,'💜 산후우울증 가능성이 있어요. 혼자 감당하지 않아도 돼요. 1393(무료·24시간)으로 연락해 보세요.')">예</button>
+              <button class="sym-no" onclick="hideSymRes(this)">아니요</button>
+            </div>
+            <div class="symptom-result" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="birth-wrap">
+        <div style="font-size:13px;color:var(--ink-l);margin-bottom:8px;">혼자 감당하는 출산과 산후 회복을 위한 현실적인 가이드</div>
+        <div style="background:linear-gradient(135deg,rgba(232,137,106,.10),rgba(212,160,84,.08));border:1px solid rgba(232,137,106,.20);border-radius:14px;padding:13px 18px;font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:16px;">
+          🫶 <strong style="color:var(--peach-d);">이 가이드는 당신을 위해 만들어졌어요.</strong> 도움받을 가족이 없거나, 혼자 산후 조리를 감당해야 하는 분들을 위한 현실적인 정보와 따뜻한 조언을 담았습니다.
         </div>
         <div class="birth-stage-tabs" id="birth-tabs"></div>
         <div id="birth-stages"></div>
       </div>
     </div>
 
-<!-- 출처 드로어 오버레이 -->
-<div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
-<div class="source-drawer" id="source-drawer">
-  <div class="source-drawer-header">
-    <h2>📚 통계 데이터 출처</h2>
-    <button class="source-drawer-close" onclick="closeSourceDrawer()">✕</button>
-  </div>
-  <div class="source-drawer-body">
+    <!-- ══════════════ PAGE: 마음 돌봄 ══════════════ -->
+    <div class="page-view" id="page-mental" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title">😔 마음 돌봄 가이드</h2>
+      </div>
+      <p class="page-intro">지금 느끼는 감정, 비정상이 아니에요.<br>내 시기에 맞는 마음 돌봄 방법을 알아보세요.</p>
+      <div class="mental-stage-tabs" id="mental-tabs"></div>
+      <div id="mental-content"></div>
+    </div>
 
-    <div class="source-section">
-      <div class="source-section-title">📊 청소년 정신건강 (최신 2024~2025)</div>
+    <!-- ══════════════ PAGE: 청소년·청년 ══════════════ -->
+    <div class="page-view page-view--teen" id="page-teen" style="display:none">
+      <div class="page-header teen-page-header">
+        <button class="page-back teen-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title teen-title">🧒 나 혼자 버텨왔어</h2>
+      </div>
 
-      <div class="source-item">
-        <div class="source-item-badge">👧</div>
-        <div class="source-item-content">
-          <div class="source-item-name">여성가족부 2025 청소년 통계</div>
-          <div class="source-item-detail">중·고등학생 우울감 경험률 27.7%, 스트레스 인지율 42.3% (2024년 기준 데이터)<br>여학생(49.9%) · 남학생(35.2%)</div>
-          <span class="source-item-year">2025 발표 / 2024 기준</span>
+      <div class="teen-intro">
+        <p>판단 없이, 네 편에서 이야기할게.</p>
+        <p>네가 겪어온 게 얼마나 힘든 건지, 여기선 다 알아.</p>
+      </div>
+
+      <div class="teen-age-select">
+        <p class="teen-age-label">나는...</p>
+        <div class="teen-age-btns">
+          <button class="teen-age-btn on" onclick="renderTeenPage('child',this)">초등학생쯤</button>
+          <button class="teen-age-btn" onclick="renderTeenPage('teen',this)">중·고등학생</button>
+          <button class="teen-age-btn" onclick="renderTeenPage('young',this)">이제 성인</button>
         </div>
       </div>
 
-      <div class="source-item">
-        <div class="source-item-badge">🏫</div>
-        <div class="source-item-content">
-          <div class="source-item-name">질병관리청 제21차 청소년건강행태조사</div>
-          <div class="source-item-detail">전국 800개 표본학교 중·고등학생 약 6만 명 대상. 범불안장애 경험률 14.1% (2024년), 스마트폰 중독 급증</div>
-          <span class="source-item-year">2025 발표 / 2024 기준</span>
+      <div id="teen-content"></div>
+
+      <div class="teen-sos">
+        <div class="teen-sos-title">📞 언제든 전화해도 돼</div>
+        <a href="tel:1388" class="teen-sos-btn">
+          <span class="teen-sos-num">1388</span>
+          <span class="teen-sos-desc">청소년 전화 — 무료, 24시간<br>전화하면 상담사가 이야기 들어줘</span>
+        </a>
+        <a href="tel:1393" class="teen-sos-btn">
+          <span class="teen-sos-num">1393</span>
+          <span class="teen-sos-desc">자살예방 전화 — 무료, 24시간<br>부담 없이 전화해도 돼</span>
+        </a>
+        <a href="tel:15770199" class="teen-sos-btn">
+          <span class="teen-sos-num">1577-0199</span>
+          <span class="teen-sos-desc">정신건강 위기상담 — 무료, 24시간<br>비밀보장·기록 정책은 전화 시 확인</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ══════════════ PAGE: 긴급 허브 ══════════════ -->
+    <div class="page-view page-view--emergency" id="page-emergency" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="showPage('home');setMTab('home')">← 홈으로</button>
+        <h2 class="page-title">🚨 지금 당장 도움이 필요해요</h2>
+      </div>
+      <p class="emergency-sub">가장 가까운 도움을 바로 연결해 드려요.<br>버튼을 누르면 바로 전화가 연결됩니다.</p>
+
+      <div class="emergency-grid">
+        <a href="tel:119" class="emer-btn emer-red">
+          <span class="emer-num">119</span>
+          <span class="emer-label">응급 · 구조</span>
+        </a>
+        <a href="tel:112" class="emer-btn emer-red">
+          <span class="emer-num">112</span>
+          <span class="emer-label">학대 · 범죄</span>
+        </a>
+        <a href="tel:1393" class="emer-btn emer-purple">
+          <span class="emer-num">1393</span>
+          <span class="emer-label">자살예방 상담</span>
+        </a>
+        <a href="tel:1388" class="emer-btn emer-green">
+          <span class="emer-num">1388</span>
+          <span class="emer-label">청소년 전화</span>
+        </a>
+        <a href="tel:15770199" class="emer-btn emer-blue">
+          <span class="emer-num">1577-0199</span>
+          <span class="emer-label">정신건강 위기상담</span>
+        </a>
+      </div>
+
+      <div class="emer-notes">
+        <div class="emer-note-item">🔴 <strong>119</strong> — 신체 응급상황, 구급차 요청. 24시간</div>
+        <div class="emer-note-item">🔴 <strong>112</strong> — 아동학대·가정폭력·범죄 신고. 24시간</div>
+        <div class="emer-note-item">💜 <strong>1393</strong> — 자살예방 전화. 무료, 24시간. 비밀보장 범위는 전화 시 확인</div>
+        <div class="emer-note-item">💚 <strong>1388</strong> — 청소년 전화. 무료, 24시간. 전화하면 상담사가 이야기 들어줘요</div>
+        <div class="emer-note-item">💙 <strong>1577-0199</strong> — 정신건강 위기상담. 무료, 24시간</div>
+      </div>
+
+      <div class="emer-firstaid-wrap">
+        <div class="emer-firstaid-title">🩺 영유아 응급처치 가이드</div>
+        <div id="emer-firstaid-content"></div>
+      </div>
+    </div>
+
+    <!-- 출처 드로어 -->
+    <div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
+    <div class="source-drawer" id="source-drawer">
+      <div class="source-drawer-header">
+        <h2>📚 통계 데이터 출처</h2>
+        <button class="source-drawer-close" onclick="closeSourceDrawer()">✕</button>
+      </div>
+      <div class="source-drawer-body">
+
+        <div class="source-section">
+          <div class="source-section-title">📊 청소년 정신건강 (최신 2024~2025)</div>
+          <div class="source-item">
+            <div class="source-item-badge">👧</div>
+            <div class="source-item-content">
+              <div class="source-item-name">여성가족부 2025 청소년 통계</div>
+              <div class="source-item-detail">중·고등학생 우울감 경험률 27.7%, 스트레스 인지율 42.3% (2024년 기준 데이터)<br>여학생(49.9%) · 남학생(35.2%)</div>
+              <span class="source-item-year">2025 발표 / 2024 기준</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-item-badge">🏫</div>
+            <div class="source-item-content">
+              <div class="source-item-name">질병관리청 제21차 청소년건강행태조사</div>
+              <div class="source-item-detail">전국 800개 표본학교 중·고등학생 약 6만 명 대상. 범불안장애 경험률 14.1% (2024년), 스마트폰 중독 급증</div>
+              <span class="source-item-year">2025 발표 / 2024 기준</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-section">
+          <div class="source-section-title">🧠 성인 · 국민 정신건강 (최신 2024)</div>
+          <div class="source-item">
+            <div class="source-item-badge">📋</div>
+            <div class="source-item-content">
+              <div class="source-item-name">국립정신건강센터 2024 국민 정신건강 지식 및 태도 조사</div>
+              <div class="source-item-detail">전국 15~69세 3,000명. 지난 1년간 정신건강 문제 경험률 73.6%, 심각한 스트레스 46.3%, 수일 지속 우울감 40.2%</div>
+              <span class="source-item-year">2024</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-item-badge">🏥</div>
+            <div class="source-item-content">
+              <div class="source-item-name">국민건강보험공단 — 2025 국정감사 자료</div>
+              <div class="source-item-detail">2024년 우울증 진료 환자 110만 6,603명 (역대 최대). 2020년 대비 32.9% 증가. 10대 우울증 환자 84% 급증</div>
+              <span class="source-item-year">2025 (2024 기준)</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-item-badge">📈</div>
+            <div class="source-item-content">
+              <div class="source-item-name">질병관리청 2024 지역사회건강조사</div>
+              <div class="source-item-detail">전국 만 19세 이상 성인 약 23만 명 대상. 성인 우울감 경험률 6.2% (전년 7.3% → 감소). 비만율 34.4% 증가</div>
+              <span class="source-item-year">2024</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-section">
+          <div class="source-section-title">👶 소아청소년 정신건강 유병률</div>
+          <div class="source-item">
+            <div class="source-item-badge">🔬</div>
+            <div class="source-item-content">
+              <div class="source-item-name">보건복지부 2022 소아청소년 정신건강실태조사</div>
+              <div class="source-item-detail">전국 6~17세 6,275명. 소아청소년 정신장애 평생 유병률 16.1% (소아 14.3%, 청소년 18.0%). 국내 최초 전국 단위 조사</div>
+              <span class="source-item-year">2022 (공표 2024)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-section">
+          <div class="source-section-title">🧓 성인 · 노인 정신장애 유병률 (주기 조사)</div>
+          <div class="source-item">
+            <div class="source-item-badge">📑</div>
+            <div class="source-item-content">
+              <div class="source-item-name">보건복지부·국립정신건강센터 2021 정신건강실태조사</div>
+              <div class="source-item-detail">전국 18~79세 5,511명. 정신장애 평생 유병률 27.8%, 1년 유병률 8.5%. 5년 주기 법정 조사 (다음 2026년 예정)</div>
+              <span class="source-item-year">2021 (5년 주기 최신)</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-item-badge">👴</div>
+            <div class="source-item-content">
+              <div class="source-item-name">보건복지부 2023 노인실태조사</div>
+              <div class="source-item-detail">전국 65세 이상 10,078명. 노인 우울증상 유병률 11.3% (독거노인 16.1%). 3년 주기 법정 조사 (다음 2026년 예정)</div>
+              <span class="source-item-year">2023 (3년 주기 최신)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-section">
+          <div class="source-section-title">🤱 산후우울증 · ACE</div>
+          <div class="source-item">
+            <div class="source-item-badge">🌸</div>
+            <div class="source-item-content">
+              <div class="source-item-name">보건복지부 2024 산후조리 실태조사</div>
+              <div class="source-item-detail">산모 68.5% 산후우울감 경험 (진단 기준 6.8%). 정서적 지지 부족이 주요 요인으로 확인</div>
+              <span class="source-item-year">2024</span>
+            </div>
+          </div>
+          <div class="source-item">
+            <div class="source-item-badge">🔗</div>
+            <div class="source-item-content">
+              <div class="source-item-name">Thurston et al. (2025) — PubMed 메타분석</div>
+              <div class="source-item-detail">아동기 역경(ACE) 경험 시 성인기 우울·불안 위험 1.6~2배 증가. PMID: 40819337</div>
+              <span class="source-item-year">2025 / PubMed</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="source-note">
+          ⚠️ <strong>이용 안내:</strong> 본 사이트의 통계 수치는 위 공신력 있는 출처에 근거합니다.
+          성인 정신건강실태조사(5년 주기)·노인실태조사(3년 주기)는 법정 조사로 해당 주기 내 최신 공식 통계이며,
+          2026년 신규 조사 시 업데이트 예정입니다.
         </div>
       </div>
     </div>
 
-    <div class="source-section">
-      <div class="source-section-title">🧠 성인 · 국민 정신건강 (최신 2024)</div>
-
-      <div class="source-item">
-        <div class="source-item-badge">📋</div>
-        <div class="source-item-content">
-          <div class="source-item-name">국립정신건강센터 2024 국민 정신건강 지식 및 태도 조사</div>
-          <div class="source-item-detail">전국 15~69세 3,000명. 지난 1년간 정신건강 문제 경험률 73.6%, 심각한 스트레스 46.3%, 수일 지속 우울감 40.2%</div>
-          <span class="source-item-year">2024</span>
-        </div>
-      </div>
-
-      <div class="source-item">
-        <div class="source-item-badge">🏥</div>
-        <div class="source-item-content">
-          <div class="source-item-name">국민건강보험공단 — 2025 국정감사 자료</div>
-          <div class="source-item-detail">2024년 우울증 진료 환자 110만 6,603명 (역대 최대). 2020년 대비 32.9% 증가. 10대 우울증 환자 84% 급증</div>
-          <span class="source-item-year">2025 (2024 기준)</span>
-        </div>
-      </div>
-
-      <div class="source-item">
-        <div class="source-item-badge">📈</div>
-        <div class="source-item-content">
-          <div class="source-item-name">질병관리청 2024 지역사회건강조사</div>
-          <div class="source-item-detail">전국 만 19세 이상 성인 약 23만 명 대상. 성인 우울감 경험률 6.2% (전년 7.3% → 감소). 비만율 34.4% 증가</div>
-          <span class="source-item-year">2024</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="source-section">
-      <div class="source-section-title">👶 소아청소년 정신건강 유병률</div>
-
-      <div class="source-item">
-        <div class="source-item-badge">🔬</div>
-        <div class="source-item-content">
-          <div class="source-item-name">보건복지부 2022 소아청소년 정신건강실태조사</div>
-          <div class="source-item-detail">전국 6~17세 6,275명. 소아청소년 정신장애 평생 유병률 16.1% (소아 14.3%, 청소년 18.0%). 국내 최초 전국 단위 조사</div>
-          <span class="source-item-year">2022 (공표 2024)</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="source-section">
-      <div class="source-section-title">🧓 성인 · 노인 정신장애 유병률 (주기 조사)</div>
-
-      <div class="source-item">
-        <div class="source-item-badge">📑</div>
-        <div class="source-item-content">
-          <div class="source-item-name">보건복지부·국립정신건강센터 2021 정신건강실태조사</div>
-          <div class="source-item-detail">전국 18~79세 5,511명. 정신장애 평생 유병률 27.8%, 1년 유병률 8.5%. 5년 주기 법정 조사 (다음 2026년 예정)</div>
-          <span class="source-item-year">2021 (5년 주기 최신)</span>
-        </div>
-      </div>
-
-      <div class="source-item">
-        <div class="source-item-badge">👴</div>
-        <div class="source-item-content">
-          <div class="source-item-name">보건복지부 2023 노인실태조사</div>
-          <div class="source-item-detail">전국 65세 이상 10,078명. 노인 우울증상 유병률 11.3% (독거노인 16.1%). 3년 주기 법정 조사 (다음 2026년 예정)</div>
-          <span class="source-item-year">2023 (3년 주기 최신)</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="source-section">
-      <div class="source-section-title">🤱 산후우울증 · ACE</div>
-
-      <div class="source-item">
-        <div class="source-item-badge">🌸</div>
-        <div class="source-item-content">
-          <div class="source-item-name">보건복지부 2024 산후조리 실태조사</div>
-          <div class="source-item-detail">산모 68.5% 산후우울감 경험 (진단 기준 6.8%). 정서적 지지 부족이 주요 요인으로 확인</div>
-          <span class="source-item-year">2024</span>
-        </div>
-      </div>
-
-      <div class="source-item">
-        <div class="source-item-badge">🔗</div>
-        <div class="source-item-content">
-          <div class="source-item-name">Thurston et al. (2025) — PubMed 메타분석</div>
-          <div class="source-item-detail">아동기 역경(ACE) 경험 시 성인기 우울·불안 위험 1.6~2배 증가. PMID: 40819337</div>
-          <span class="source-item-year">2025 / PubMed</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="source-note">
-      ⚠️ <strong>이용 안내:</strong> 본 사이트의 통계 수치는 위 공신력 있는 출처에 근거합니다.
-      성인 정신건강실태조사(5년 주기)·노인실태조사(3년 주기)는 법정 조사로 해당 주기 내 최신 공식 통계이며,
-      2026년 신규 조사 시 업데이트 예정입니다. 수치는 연구 설계 및 진단 기준에 따라 다를 수 있습니다.
-    </div>
-
-  </div>
-</div>
-<footer>
+    <footer>
       <strong>BeInside</strong> — 세대를 잇는 전 생애 성장 반려 서비스<br>
       본 정보는 의학·심리학 기반 참고 목적이며, 전문 의료 진료를 대체하지 않습니다.<br>
       이상이 의심될 경우 소아청소년과·정신건강의학과·가정의학과 전문의와 상담하세요.<br><br>
@@ -325,33 +482,24 @@
     </footer>
 
   </div><!-- /main-col -->
-
-  <!-- ── RIGHT TIMELINE SIDEBAR ── -->
-  <aside class="tl-sidebar">
-    <div class="tl-title">전 생애 타임라인</div>
-    <div class="tl-track" id="tln"></div>
-  </aside>
-
 </div><!-- /page-wrap -->
 
-
-<!-- ── 모바일 하단 탭바 ── -->
+<!-- ── 모바일 하단 탭바 (4탭) ── -->
 <nav class="mobile-tabbar" id="mobile-tabbar">
-  <button class="mtab active" id="mtab-home" onclick="goHome();setMTab('home')">
+  <button class="mtab active" id="mtab-home" onclick="showPage('home');setMTab('home')">
     <span>🏠</span>홈
   </button>
-  <button class="mtab" id="mtab-guide" onclick="switchView('normal');setMTab('guide')">
-    <span>📖</span>성장가이드
+  <button class="mtab" id="mtab-growth" onclick="showPage('growth');setMTab('growth')">
+    <span>👶</span>성장
   </button>
-  <button class="mtab" id="mtab-sp" onclick="switchView('sp');setMTab('sp')">
-    <span>🫂</span>가족상황
+  <button class="mtab" id="mtab-mind" onclick="showPage('mental');setMTab('mind')">
+    <span>💬</span>마음
   </button>
-  <button class="mtab" id="mtab-birth" onclick="switchView('birth');setMTab('birth')">
-    <span>🌸</span>출산가이드
+  <button class="mtab" id="mtab-emergency" onclick="showPage('emergency');setMTab('emergency')">
+    <span>🆘</span>긴급
   </button>
 </nav>
 
-<!-- ── JS 모듈 로드 순서: 데이터 → 유틸 → 저장소 → 기능 → 앱 ── -->
 <script src="js/data.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/storage.js"></script>
