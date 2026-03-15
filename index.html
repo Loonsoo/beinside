@@ -90,7 +90,6 @@
         <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
       </div>
 
-      <div class="badge">🌱 0개월 ~ 80세 전 생애 성장 &amp; 돌봄 가이드</div>
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <p class="hero-sub">혼자 감당하고 있는 그 순간,<br>여기서부터 시작해 보세요.</p>
 
@@ -146,26 +145,6 @@
         </div>
       </div>
 
-      <!-- 나이로 바로 찾기 (접힌 상태) -->
-      <div class="age-finder">
-        <button class="age-finder-toggle" onclick="toggleAgeFinder(this)">
-          🔍 나이로 바로 찾기 <span class="af-arrow">▾</span>
-        </button>
-        <div class="age-finder-body" id="age-finder-body">
-          <div class="mtoggle">
-            <button class="on" id="bm" onclick="setM('m')">개월 수<small>영유아 전용 (0~36개월)</small></button>
-            <button id="by" onclick="setM('y')">만 나이</button>
-          </div>
-          <div class="age-finder-row">
-            <div class="ninput">
-              <input type="number" id="ai" min="0" placeholder="0" onkeydown="if(event.key==='Enter'){go();setMTab('growth');}">
-              <span id="au">개월</span>
-            </div>
-            <button class="gobtn" onclick="go();setMTab('growth')">가이드 보기 →</button>
-          </div>
-          <div class="hint" id="hint"><b>개월 수</b> 입력은 만 36개월(3세) 이하 영유아에게만 적용됩니다</div>
-        </div>
-      </div>
     </section>
 
     <!-- ══════════════ PAGE: 성장 가이드 ══════════════ -->
