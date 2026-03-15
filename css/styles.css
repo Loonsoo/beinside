@@ -1132,7 +1132,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 .sos-btn:hover { transform: translateY(-3px) scale(1.05); }
 @media(max-width:640px){
-  .sos-btn { display: none; }
+  .sos-btn { display: none !important; }
 }
 
 /* ── Data Source Bar ── */
