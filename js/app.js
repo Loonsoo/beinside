@@ -86,15 +86,10 @@ function toggleToolkit(id) {
   const panel = document.getElementById(id);
   if (!panel) return;
   const isOpen = panel.classList.contains('on');
-  // 다른 패널 닫기
-  document.querySelectorAll('.toolkit-panel').forEach(p => {
-    p.classList.remove('on');
-    p.style.display = 'none';
-  });
+  document.querySelectorAll('.toolkit-panel').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.toolkit-btn').forEach(b => b.classList.remove('on'));
   if (!isOpen) {
     panel.classList.add('on');
-    panel.style.display = 'block';
     const btn = document.querySelector(`.toolkit-btn[onclick*="${id}"]`);
     if (btn) btn.classList.add('on');
     setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
