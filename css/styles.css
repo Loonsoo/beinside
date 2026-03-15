@@ -1131,6 +1131,9 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   transition: 0.2s; font-family: 'Noto Sans KR', sans-serif;
 }
 .sos-btn:hover { transform: translateY(-3px) scale(1.05); }
+@media(max-width:640px){
+  .sos-btn { padding: 6px 10px; font-size: 11px; gap: 4px; bottom: 80px; right: 16px; }
+}
 
 /* ── Data Source Bar ── */
 .data-source-bar {
