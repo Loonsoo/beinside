@@ -1,0 +1,53 @@
+/* ═══════════════════════════════════════════════
+   BEINSIDE — CSS 변수 전체 (css/styles.css :root 추출)
+   이 파일을 수정하면 css/styles.css의 :root도 동기화하세요.
+═══════════════════════════════════════════════ */
+:root {
+  /* ── 배경 & 서피스 ── */
+  --cream: #FFF8F2;
+  --warm: #FFF2E8;
+  --white: #FFFCFA;
+  --section-alt: #F9F3EE;
+
+  /* ── Primary: 살구/피치 ── */
+  --peach: #E07B5A;
+  --peach-l: #EE9E7C;
+  --peach-p: #FEEDE6;
+  --peach-d: #B85030;
+  --peach-glow: rgba(224, 123, 90, .18);
+
+  /* ── Alias ── */
+  --sage: var(--peach);
+
+  /* ── Accent ── */
+  --amber: #C89040;
+  --rust: #A05030;
+
+  /* ── Blush ── */
+  --plum: #C87890;
+  --plum-p: #FEF0F4;
+
+  /* ── Sky ── */
+  --sky: #7A9AB8;
+
+  /* ── 텍스트 ── */
+  --ink: #2C1E14;
+  --ink-m: #6A4C3C;
+  --ink-l: #B09080;
+
+  /* ── 라인 ── */
+  --line: rgba(232, 137, 106, .15);
+
+  /* ── 레이아웃 ── */
+  --tl-w: 200px;
+}
+
+/* 900px: 타임라인 축소 */
+@media (max-width: 900px) {
+  :root { --tl-w: 160px; }
+}
+
+/* 640px: 타임라인 숨김 */
+@media (max-width: 640px) {
+  :root { --tl-w: 0px; }
+}
