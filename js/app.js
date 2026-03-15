@@ -69,6 +69,97 @@ function getMonths() {
   return mode === 'm' ? v : v * 12;
 }
 
+/* ── 가이드 탭 전환 ── */
+function switchGuideTab(tab) {
+  const childResult = document.getElementById('result');
+  const dadResult   = document.getElementById('dad-result');
+  document.querySelectorAll('.guide-tab').forEach(btn => {
+    btn.classList.toggle('on', btn.dataset.tab === tab);
+  });
+  if (childResult) childResult.style.display = tab === 'child' ? '' : 'none';
+  if (dadResult)   dadResult.style.display   = tab === 'dad'   ? '' : 'none';
+  if (tab === 'dad') renderDadGuide();
+}
+
+/* ── 미니 툴킷 토글 ── */
+function toggleToolkit(id) {
+  const panel = document.getElementById(id);
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  // 다른 패널 닫기
+  document.querySelectorAll('.toolkit-panel').forEach(p => { p.style.display = 'none'; });
+  document.querySelectorAll('.toolkit-btn').forEach(b => b.classList.remove('on'));
+  if (!isOpen) {
+    panel.style.display = '';
+    const btn = document.querySelector(`.toolkit-btn[onclick*="${id}"]`);
+    if (btn) btn.classList.add('on');
+    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  }
+}
+
+/* ── 산후우울증 체커 ── */
+const _ppdAnswers = [null, null, null, null, null];
+function ppdAnswer(qIdx, val) {
+  _ppdAnswers[qIdx] = val;
+  const items = document.querySelectorAll(`[data-q="${qIdx}"] .ppd-btn`);
+  items.forEach((b, i) => b.classList.toggle('on', i === val));
+  const answered = _ppdAnswers.filter(v => v !== null).length;
+  if (answered === 5) {
+    const score = _ppdAnswers.reduce((a, b) => a + b, 0);
+    const res = document.getElementById('ppd-result');
+    if (!res) return;
+    res.style.display = 'block';
+    let cls, msg, action;
+    if (score >= 10) {
+      cls = 'res-critical';
+      msg = '😔 지금 많이 힘드시겠어요. 전문가의 도움이 필요한 수준이에요.';
+      action = '지금 바로 <a href="tel:1393" style="color:inherit;font-weight:700">1393</a>(무료·24시간)에 전화하거나, 가까운 정신건강복지센터·산부인과를 방문해 주세요.';
+    } else if (score >= 7) {
+      cls = 'res-high';
+      msg = '💜 산후우울 증상이 상당히 나타나고 있어요.';
+      action = '보건소·산부인과에서 에든버러 산후우울증 척도(EPDS) 무료 검사를 받아보세요. 1393으로 상담 연결도 가능해요.';
+    } else if (score >= 4) {
+      cls = 'res-mid';
+      msg = '🌿 약간의 어려움이 있는 것 같아요.';
+      action = '일주일 후에 다시 체크해 보세요. 증상이 지속되면 보건소에 상담을 요청하세요.';
+    } else {
+      cls = 'res-ok';
+      msg = '🌸 지금은 비교적 안정적인 상태예요.';
+      action = '하지만 감정 변화가 생기면 언제든 다시 확인해 보세요. 당신의 마음도 소중해요.';
+    }
+    res.className = 'ppd-result ' + cls;
+    res.innerHTML = `<div style="font-size:14px;font-weight:600;margin-bottom:8px;">${msg}</div><div style="font-size:13px;line-height:1.7;">${action}</div><div class="ppd-disclaimer">이 결과는 의학적 진단이 아닌 참고용이에요. 정확한 진단은 전문의와 상담하세요.</div>`;
+  }
+}
+
+/* ── 청소년 감정 선택 ── */
+const EMO_DATA = {
+  angry:  { msg: '화가 많이 났구나 😡', sub: '그 화, 충분히 이해해. 화는 정상 감정이야.', action: '지금 잠깐 밖으로 나가거나, 베개에 소리 질러봐. 그리고 뭐 때문에 화가 났는지 적어봐.', color: '#E05A3A' },
+  sad:    { msg: '많이 슬프구나 😢', sub: '울어도 돼. 슬픔을 꺼내는 게 용감한 거야.', action: '좋아하는 음악 틀어놓고 그냥 울어봐. 감정을 꺼내야 가벼워져.', color: '#5A7AC8' },
+  scared: { msg: '불안하고 무섭구나 😰', sub: '그 느낌, 진짜 힘들지. 네가 약한 게 아니야.', action: '손을 주먹 쥐었다가 천천히 펴봐. 4초 들이쉬고 6초 내쉬기 — 불안이 조금 가라앉아.', color: '#7A5AC8' },
+  lonely: { msg: '외롭구나 🥺', sub: '혼자 감당해왔다는 거, 정말 힘들었을 거야.', action: '지금 1388에 문자 보내봐. 전화 아니어도 돼. 그냥 "힘들어요"라고만 해도 돼.', color: '#C8874A' },
+  empty:  { msg: '뭔지 모르겠구나 😶', sub: '감정이 뭔지 모를 때도 있어. 그것도 괜찮아.', action: '지금 눈 감고 1분만 있어봐. 몸에 느껴지는 게 있어? 무겁거나, 답답하거나? 그게 감정이야.', color: '#8A8A8A' },
+  tired:  { msg: '많이 지쳤구나 😞', sub: '오래 버텨온 거야. 지친 게 당연해.', action: '오늘 하루는 아무것도 안 해도 돼. 그냥 쉬어. 쉬는 것도 용기야.', color: '#5A9A7A' },
+};
+
+function showEmoResult(key) {
+  const d = EMO_DATA[key];
+  if (!d) return;
+  document.querySelectorAll('.emo-btn').forEach(b => b.classList.remove('on'));
+  const btn = document.querySelector(`.emo-btn[onclick*="${key}"]`);
+  if (btn) btn.classList.add('on');
+  const res = document.getElementById('emo-result');
+  if (!res) return;
+  res.classList.add('on');
+  res.style.display = 'block';
+  res.innerHTML =
+    `<div class="emo-result-msg" style="color:${d.color}">${d.msg}</div>
+     <div style="font-size:13px;color:var(--ink-m);margin:6px 0 10px;">${d.sub}</div>
+     <div class="emo-result-action">${d.action}</div>
+     <a href="tel:1388" class="emo-result-link">📞 지금 바로 1388에 연락하기</a>`;
+  setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+}
+
 /* ── 가이드 조회 ── */
 function go() {
   // 성장 가이드 페이지로 이동 (아직 안 가있으면)
@@ -81,6 +172,12 @@ function go() {
   render(d, months);
   const r = document.getElementById('result');
   if (r) r.classList.add('on');
+  // 가이드 탭바 표시 (아빠 가이드 연동)
+  const tabBar = document.getElementById('guide-tab-bar');
+  if (tabBar) tabBar.style.display = '';
+  // 현재 탭이 dad면 아빠 가이드도 업데이트
+  const dadTab = document.querySelector('.guide-tab[data-tab="dad"].on');
+  if (dadTab) renderDadGuide();
   const md = document.getElementById('medical-disclaimer');
   if (md) md.style.display = 'block';
   setTimeout(() => {

@@ -551,6 +551,61 @@ function render(d,months){
 }
 
 
+/* ── 아빠 가이드 렌더링 ── */
+function getDadKey(months) {
+  if (months >= 156) return 'teen';
+  if (months >= 84)  return 'school';
+  if (months >= 48)  return 'preschool';
+  if (months >= 12)  return 'toddler';
+  return 'infant';
+}
+
+function renderDadGuide() {
+  const el = document.getElementById('dad-result');
+  if (!el) return;
+  const months = getMonths ? getMonths() : 0;
+  const key = getDadKey(months);
+  renderDadContent(key);
+  document.querySelectorAll('.guide-tab[data-dad]').forEach(btn => {
+    btn.classList.toggle('on', btn.dataset.dad === key);
+  });
+}
+
+function renderDadContent(key) {
+  const d = DAD_DATA[key];
+  const el = document.getElementById('dad-result');
+  if (!d || !el) return;
+
+  const actionsHTML = d.actions.map(a =>
+    `<div class="dad-toolkit-step">
+      <span class="dad-toolkit-step-num">${a.icon}</span>
+      <div><strong>${a.title}</strong><br><span style="font-size:12.5px;color:var(--ink-m)">${a.text}</span></div>
+    </div>`
+  ).join('');
+
+  const toolkitsHTML = d.toolkits.map(tk =>
+    `<div class="dad-toolkit-block">
+      <div class="dad-toolkit-title">⚡ ${tk.title}</div>
+      ${tk.steps.map((s,i)=>`<div class="dad-toolkit-step"><span class="dad-toolkit-step-num">${i+1}</span><span>${s}</span></div>`).join('')}
+    </div>`
+  ).join('');
+
+  el.innerHTML =
+    `<div class="summary-panel" style="margin-bottom:16px;">
+      <div class="summary-panel-title">👨 아빠 역할 핵심 3가지 — ${d.label} (${d.sub})</div>
+      <ol class="summary-list">
+        ${d.summary.map((s,i)=>`<li><span class="sn">${i+1}</span><span>${s}</span></li>`).join('')}
+      </ol>
+      <div class="summary-warn">⚠️ ${d.warn}</div>
+    </div>
+    <div class="acc-container">
+      ${accSection('🎯','실천 액션 4가지','',`<div class="dad-toolkit-block">${actionsHTML}</div>`,true)}
+      ${accSection('🧠','아빠 마음 돌봄','',`<div style="font-size:13.5px;color:var(--ink-m);line-height:1.8;padding:14px;background:rgba(232,137,106,.06);border-radius:12px;">${d.mental}</div>`,false)}
+      ${toolkitsHTML ? accSection('⚡','지금 급한 상황','',toolkitsHTML,false) : ''}
+    </div>`;
+}
+
+
 /* ── 마음 돌봄 페이지 렌더링 ── */
 function renderMentalPageContent(key) {
   const d = MENTAL[key];
