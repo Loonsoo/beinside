@@ -41,7 +41,7 @@ function updateHeroBanner() {
   if (avatarEl) avatarEl.innerHTML = avatarHTML(p, 44);
   if (nameEl)   nameEl.textContent = p.name;
   if (ageEl)    ageEl.textContent  = age.months >= 0
-    ? `${age.label} · 지금 이 시기 가이드 바로 보기`
+    ? `${age.label} · 지금 이 시기 가이드`
     : age.label;
   banner.classList.toggle('on', age.months >= 0);
 }
@@ -62,10 +62,6 @@ function goWithProfile() {
   showPage('growth');
   setMTab('growth');
   go();
-  setTimeout(() => {
-    const r = document.getElementById('result');
-    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 80);
 }
 
 /* ── 모달 ── */
@@ -180,14 +176,13 @@ function refreshAvatarPreview() {
 function buildEmojiGrid() {
   const grid = document.getElementById('emoji-grid');
   if (!grid) return;
-  grid.innerHTML = EMOJIS.map(em => {
+  grid.innerHTML = EMOJIS.map((em, i) => {
     const isOn = em === editAvatarEm && !editAvatarImg;
-    const btn  = document.createElement('button');
-    btn.className   = 'emoji-opt' + (isOn ? ' on' : '');
-    btn.textContent = em;
-    btn.onclick     = () => pickEmoji(em);
-    return btn.outerHTML;
+    return `<button type="button" class="emoji-opt${isOn ? ' on' : ''}" data-idx="${i}" aria-label="${em}">${em}</button>`;
   }).join('');
+  grid.querySelectorAll('.emoji-opt').forEach((btn, i) => {
+    btn.onclick = () => pickEmoji(EMOJIS[i]);
+  });
 }
 
 function pickEmoji(em) {
@@ -233,7 +228,7 @@ function saveProfile() {
   saveProfiles();
   updateHeaderChip();
   updateHeroBanner();
-  showListView();
+  closeModal();
 }
 
 /* ── 초기화 ── */

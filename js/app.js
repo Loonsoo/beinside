@@ -180,8 +180,8 @@ function go() {
   const md = document.getElementById('medical-disclaimer');
   if (md) md.style.display = 'block';
   setTimeout(() => {
-    const md2 = document.getElementById('medical-disclaimer');
-    if (md2) md2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const r = document.getElementById('result');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 80);
 }
 

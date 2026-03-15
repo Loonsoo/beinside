@@ -44,31 +44,29 @@
     <div class="edit-form" id="edit-form">
       <button class="form-back" onclick="showListView()">← 목록으로</button>
       <div class="avatar-section">
-        <div class="avatar-preview-wrap">
+        <div class="avatar-top-row">
           <div class="avatar-preview" id="edit-avatar-preview"><span id="edit-avatar-em">🌱</span></div>
-          <div class="avatar-upload-btn">
-            <label><input type="file" id="avatar-file-input" accept="image/*" onchange="handleAvatarFile(event)">📷 사진 업로드</label>
-            <small>또는 아래에서 이모지 선택</small>
-          </div>
+          <label class="avatar-upload-btn"><input type="file" id="avatar-file-input" accept="image/*" onchange="handleAvatarFile(event)">📷 사진</label>
         </div>
         <div class="emoji-grid" id="emoji-grid"></div>
       </div>
-      <div class="form-field">
-        <label class="form-label">이름 / 닉네임</label>
-        <input class="form-input" id="edit-name" type="text" placeholder="예: 우리 아이, 준서, 나 자신" maxlength="20">
+      <div class="form-row-two">
+        <div class="form-field">
+          <label class="form-label">이름</label>
+          <input class="form-input" id="edit-name" type="text" placeholder="준서, 나 자신…" maxlength="20">
+        </div>
+        <div class="form-field">
+          <label class="form-label" id="dob-label">생년월일</label>
+          <input class="form-input" id="edit-dob" type="date" max="">
+        </div>
       </div>
       <div class="form-field">
-        <label class="form-label">대상</label>
         <div class="type-toggle">
           <button class="type-btn on" id="type-child" onclick="setType('child')">👶 자녀</button>
           <button class="type-btn" id="type-self" onclick="setType('self')">🙋 나 자신</button>
         </div>
       </div>
-      <div class="form-field">
-        <label class="form-label" id="dob-label">생년월일</label>
-        <input class="form-input" id="edit-dob" type="date" max="">
-      </div>
-      <button class="form-save-btn" onclick="saveProfile()">저장하기</button>
+      <button class="form-save-btn" onclick="saveProfile()">저장</button>
     </div>
   </div>
 </div>
