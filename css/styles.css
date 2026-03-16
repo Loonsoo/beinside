@@ -1,80 +1,81 @@
 /* ═══════════════════════════════════════════════
-   BEINSIDE 3.0 — INDIGO FROST / LIQUID GLASS
+   BEINSIDE 3.1 — ULIVO · 이탈리아 남부 올리브
+   "조용한 올리브 그늘, 석회암 벽, 아드리아해 빛"
 ═══════════════════════════════════════════════ */
 :root{
   /* ── 배경 & 서피스 ── */
-  --cream:#EEF2FF;           /* 앱 배경 (연인디고) */
-  --warm:#EDE9F8;            /* 교차 영역 배경 */
-  --white:#FFFFFF;
-  --section-alt:#F0EDF8;
+  --cream:#F3EDE0;           /* 피에트라 칼카레아 - 석회암 벽 */
+  --warm:#EDE5D0;            /* 테라 - 더 깊은 돌빛 */
+  --white:#FAF7EF;           /* 리넨 - 바람에 바랜 린넨 */
+  --section-alt:#EBE4D4;
 
-  /* ── Primary: Indigo ── */
-  --peach:#6366F1;           /* 메인 액센트 */
-  --peach-l:#818CF8;
-  --peach-p:rgba(99,102,241,.10);
-  --peach-d:#4338CA;
-  --peach-glow:rgba(99,102,241,.18);
+  /* ── Primary: Oliva (올리브) ── */
+  --peach:#7C8F5A;           /* 올리바 마투라 - 잘 익은 올리브 */
+  --peach-l:#9EAF78;         /* 조바네 올리보 - 어린 올리브 잎 */
+  --peach-p:#EDF0E4;         /* 포글리아 팔리다 - 연한 올리브 잎 */
+  --peach-d:#52612D;         /* 올리바 스쿠라 - 깊은 그늘 올리브 */
+  --peach-glow:rgba(124,143,90,.18);
 
   /* ── Alias ── */
   --sage:var(--peach);
-  --primary:#6366F1;
-  --primary-d:#4338CA;
-  --primary-p:rgba(99,102,241,.10);
+  --primary:#7C8F5A;
+  --primary-d:#52612D;
+  --primary-p:#EDF0E4;
 
   /* ── Accent ── */
-  --amber:#8B5CF6;           /* 바이올렛 액센트 */
-  --rust:#4338CA;
+  --amber:#B89050;           /* 리모네 시칠리아나 - 시칠리아 레몬 */
+  --rust:#8B6B3A;            /* 피코 세코 - 말린 무화과 */
 
   /* ── Blush ── */
-  --plum:#A78BFA;
-  --plum-p:#F5F3FF;
+  --plum:#9A7B5A;            /* 피코 마투로 - 잘 익은 무화과 */
+  --plum-p:#F0E8DC;
 
   /* ── Sky ── */
-  --sky:#60A5FA;
+  --sky:#7A98A8;             /* 치엘로 아드리아티코 - 아드리아해 하늘 */
 
   /* ── 텍스트 ── */
-  --ink:#1E1B4B;
-  --ink-m:#4B5563;
-  --ink-l:#9CA3AF;
+  --ink:#28241A;             /* 옴브라 - 깊은 그늘 */
+  --ink-m:#5C5440;           /* 피에트라 - 돌빛 */
+  --ink-l:#9E9278;           /* 사비아 - 모래빛 */
 
   /* ── 라인 ── */
-  --line:rgba(99,102,241,.14);
+  --line:rgba(124,143,90,.14);
 
-  /* ── 리퀴드 글라스 ── */
-  --glass-bg:rgba(255,255,255,0.62);
-  --glass-border:rgba(255,255,255,0.55);
-  --glass-shadow:0 4px 24px rgba(99,102,241,.08), inset 0 1px 0 rgba(255,255,255,0.80);
+  /* ── 리퀴드 글라스 (올리브 웜톤) ── */
+  --glass-bg:rgba(252,249,242,0.65);
+  --glass-border:rgba(255,253,248,0.58);
+  --glass-shadow:0 4px 24px rgba(82,97,45,.07), inset 0 1px 0 rgba(255,253,248,0.82);
 
   /* 타임라인 너비 */
   --tl-w:200px;
 
-  /* ── 나 자신 영역 (라벤더) ── */
-  --lavender:#7C3AED;
-  --lavender-d:#5B21B6;
-  --lavender-p:#EDE9FE;
-  --lavender-bg:#F5F3FF;
+  /* ── 나 자신 영역 (세이지 그린 → 올리브와 조화) ── */
+  --lavender:#6B7A4E;
+  --lavender-d:#4A5630;
+  --lavender-p:#E8EDE0;
+  --lavender-bg:#EFF2E8;
 
-  /* ── 번아웃 (앰버) ── */
-  --burnout:#D97706;
-  --burnout-d:#92400E;
-  --burnout-p:#FEF3C7;
+  /* ── 번아웃 (앰버 계열) ── */
+  --burnout:#C0892A;
+  --burnout-d:#8A6018;
+  --burnout-p:#FBF0D8;
 
-  /* ── 관계 (로즈) ── */
-  --relation:#DB2777;
-  --relation-d:#9D174D;
-  --relation-p:#FCE7F3;
+  /* ── 관계 (로즈 테라코타 - 이탈리아식) ── */
+  --relation:#B85C42;
+  --relation-d:#8A3E28;
+  --relation-p:#F5E4DC;
 
-  /* ── 전환기 (틸) ── */
-  --transition-c:#0D9488;
-  --transition-d:#0F766E;
-  --transition-p:#CCFBF1;
+  /* ── 전환기 (아드리아해 틸) ── */
+  --transition-c:#4A8888;
+  --transition-d:#2E6060;
+  --transition-p:#DFF0EE;
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'Noto Sans KR',sans-serif;
-  background:linear-gradient(145deg,#EEF2FF 0%,#F5F0FF 100%) fixed;
+  background:linear-gradient(155deg,#F3EDE0 0%,#EAE2CE 55%,#E6DEC8 100%) fixed;
   min-height:100vh;
   color:var(--ink);
   line-height:1.72;
@@ -97,17 +98,17 @@ body::after{
 /* ── HEADER ── */
 header{
   position:sticky;top:0;z-index:200;
-  background:rgba(238,242,255,0.75);
-  backdrop-filter:blur(32px) saturate(1.8);
-  -webkit-backdrop-filter:blur(32px) saturate(1.8);
-  border-bottom:1px solid rgba(255,255,255,0.60);
+  background:rgba(243,237,224,0.78);
+  backdrop-filter:blur(32px) saturate(1.6);
+  -webkit-backdrop-filter:blur(32px) saturate(1.6);
+  border-bottom:1px solid rgba(255,253,248,0.65);
   height:64px;
   display:grid;
   grid-template-columns:auto 1fr auto;
   align-items:center;
   gap:12px;
   padding:0 28px;
-  box-shadow:0 1px 0 rgba(99,102,241,.06), 0 4px 20px rgba(99,102,241,.04), inset 0 1px 0 rgba(255,255,255,0.70);
+  box-shadow:0 1px 0 rgba(82,97,45,.05), 0 4px 20px rgba(82,97,45,.04), inset 0 1px 0 rgba(255,253,248,0.72);
 }
 .logo{
   font-family:'Gowun Batang',serif;font-size:20px;font-weight:700;
@@ -603,7 +604,7 @@ nav button.on{
 /* ── PROFILE MODAL ── */
 .modal-overlay{
   position:fixed;inset:0;z-index:900;
-  background:rgba(30,27,75,.35);
+  background:rgba(40,36,26,.35);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   display:none;align-items:center;justify-content:center;
@@ -621,8 +622,8 @@ nav button.on{
   width:min(400px,94vw);
   max-height:90vh;
   overflow-y:auto;
-  box-shadow:0 24px 60px rgba(99,102,241,.15),
-             0 6px 18px rgba(99,102,241,.07),
+  box-shadow:0 24px 60px rgba(124,143,90,.15),
+             0 6px 18px rgba(124,143,90,.07),
              inset 0 1px 0 rgba(255,255,255,0.90);
   animation:slideUp .28s cubic-bezier(.34,1.2,.64,1) both;
   position:relative;
@@ -764,7 +765,7 @@ nav button.on{
 /* ── PROFILE PANEL (Bottom Sheet) ── */
 .prof-panel-overlay{
   position:fixed;inset:0;z-index:850;
-  background:rgba(30,27,75,.30);
+  background:rgba(40,36,26,.30);
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   display:none;
@@ -782,7 +783,7 @@ nav button.on{
   border-radius:24px 24px 0 0;
   padding:0 20px 20px;
   padding-bottom:calc(20px + env(safe-area-inset-bottom));
-  box-shadow:0 -8px 40px rgba(99,102,241,.12), inset 0 1px 0 rgba(255,255,255,0.90);
+  box-shadow:0 -8px 40px rgba(124,143,90,.12), inset 0 1px 0 rgba(255,255,255,0.90);
   transition:bottom .3s cubic-bezier(.34,1.1,.64,1);
   max-height:85vh;overflow-y:auto;
 }
@@ -790,7 +791,7 @@ nav button.on{
 
 .prof-panel-handle{
   width:36px;height:4px;border-radius:2px;
-  background:rgba(99,102,241,.20);
+  background:rgba(124,143,90,.20);
   margin:12px auto 16px;
 }
 
@@ -798,8 +799,8 @@ nav button.on{
 .pp-active-row{
   display:flex;align-items:center;gap:12px;
   padding:14px 16px;
-  background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(139,92,246,.06));
-  border:1px solid rgba(99,102,241,.14);
+  background:linear-gradient(135deg,rgba(124,143,90,.08),rgba(184,144,80,.06));
+  border:1px solid rgba(124,143,90,.14);
   border-radius:16px;
   margin-bottom:12px;
 }
@@ -808,7 +809,7 @@ nav button.on{
   background:var(--peach-p);
   display:flex;align-items:center;justify-content:center;
   font-size:26px;flex-shrink:0;
-  border:2px solid rgba(99,102,241,.20);overflow:hidden;
+  border:2px solid rgba(124,143,90,.20);overflow:hidden;
 }
 .pp-active-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
 .pp-active-info{flex:1;}
@@ -821,12 +822,12 @@ nav button.on{
   background:linear-gradient(135deg,var(--primary-d),var(--primary));
   font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;
   color:#fff;cursor:pointer;transition:all .2s;white-space:nowrap;
-  box-shadow:0 2px 10px rgba(99,102,241,.28);
+  box-shadow:0 2px 10px rgba(124,143,90,.28);
 }
-.pp-goto-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(99,102,241,.35);}
+.pp-goto-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(124,143,90,.35);}
 .pp-edit-btn{
   padding:7px 14px;border-radius:12px;
-  border:1px solid rgba(99,102,241,.20);
+  border:1px solid rgba(124,143,90,.20);
   background:rgba(255,255,255,.70);
   font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:600;
   color:var(--ink-m);cursor:pointer;transition:all .2s;white-space:nowrap;
@@ -843,11 +844,11 @@ nav button.on{
   display:flex;align-items:center;gap:10px;
   padding:10px 12px;border-radius:14px;
   background:rgba(255,255,255,.50);
-  border:1px solid rgba(99,102,241,.10);
+  border:1px solid rgba(124,143,90,.10);
   cursor:pointer;transition:all .2s;
   margin-bottom:6px;
 }
-.pp-list-item:hover{background:var(--peach-p);border-color:rgba(99,102,241,.25);}
+.pp-list-item:hover{background:var(--peach-p);border-color:rgba(124,143,90,.25);}
 .pp-list-avatar{
   width:36px;height:36px;border-radius:50%;
   background:var(--peach-p);
@@ -863,12 +864,12 @@ nav button.on{
 /* 패널 하단 액션 */
 .prof-panel-actions{
   margin-top:12px;padding-top:12px;
-  border-top:1px solid rgba(99,102,241,.10);
+  border-top:1px solid rgba(124,143,90,.10);
 }
 .pp-action-btn{
   width:100%;padding:12px;border-radius:14px;
-  border:1.5px dashed rgba(99,102,241,.25);
-  background:rgba(99,102,241,.04);
+  border:1.5px dashed rgba(124,143,90,.25);
+  background:rgba(124,143,90,.04);
   font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
   color:var(--primary);cursor:pointer;transition:all .2s;
 }
@@ -1459,13 +1460,13 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 .sit-card::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,.15), rgba(99,102,241,.05));
+  background: linear-gradient(135deg, rgba(255,255,255,.15), rgba(124,143,90,.05));
   opacity: 0; transition: opacity .2s;
 }
 .sit-card:hover {
-  border-color: rgba(99,102,241,.35);
+  border-color: rgba(124,143,90,.35);
   transform: translateY(-3px);
-  box-shadow: 0 10px 32px rgba(99,102,241,.14), inset 0 1px 0 rgba(255,255,255,0.90);
+  box-shadow: 0 10px 32px rgba(124,143,90,.14), inset 0 1px 0 rgba(255,255,255,0.90);
 }
 .sit-card:hover::before { opacity: 1; }
 .sit-icon { font-size: 28px; flex-shrink: 0; line-height: 1; }
