@@ -91,56 +91,115 @@
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <p class="hero-sub">혼자 감당하고 있는 그 순간,<br>여기서부터 시작해 보세요.</p>
 
-      <!-- 6가지 상황 카드 -->
-      <div class="situation-grid">
-        <div class="sit-card" onclick="showPage('growth');setMTab('growth')">
-          <div class="sit-icon">👶</div>
-          <div class="sit-card-body">
-            <div class="sit-title">아이가 잘 자라고 있는지 불안해요</div>
-            <div class="sit-sub">연령별 발달 기준과 체크리스트</div>
-          </div>
-          <div class="sit-arrow">→</div>
+      <!-- 영역 1: 돌봄 & 양육 -->
+      <div class="section-care">
+        <div class="section-header">
+          <h2 class="section-title">아이와 가족을 돌보고 있다면</h2>
+          <p class="section-sub">연령별 발달 기준, 한부모·출산 가이드, 아빠 가이드</p>
         </div>
-        <div class="sit-card" onclick="showPage('sp')">
-          <div class="sit-icon">👩‍👦</div>
-          <div class="sit-card-body">
-            <div class="sit-title">혼자 아이를 키우고 있어요</div>
-            <div class="sit-sub">한부모·홀로 양육하는 분들을 위한 가이드</div>
+        <div class="situation-grid">
+          <div class="sit-card" onclick="showPage('growth');setMTab('growth')">
+            <div class="sit-icon">👶</div>
+            <div class="sit-card-body">
+              <div class="sit-title">아이 성장이 불안해요</div>
+              <div class="sit-sub">연령별 발달 기준과 체크리스트</div>
+            </div>
+            <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-arrow">→</div>
-        </div>
-        <div class="sit-card" onclick="showPage('birth')">
-          <div class="sit-icon">🤱</div>
-          <div class="sit-card-body">
-            <div class="sit-title">출산 후 혼자 회복 중이에요</div>
-            <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
+          <div class="sit-card" onclick="showPage('sp')">
+            <div class="sit-icon">👩‍👦</div>
+            <div class="sit-card-body">
+              <div class="sit-title">혼자 아이를 키워요</div>
+              <div class="sit-sub">한부모·홀로 양육하는 분들을 위한 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-arrow">→</div>
-        </div>
-        <div class="sit-card" onclick="showPage('mental');setMTab('mind')">
-          <div class="sit-icon">😔</div>
-          <div class="sit-card-body">
-            <div class="sit-title">내 감정을 어떻게 해야 할지 모르겠어요</div>
-            <div class="sit-sub">지금 느끼는 감정, 비정상이 아닙니다</div>
+          <div class="sit-card" onclick="showPage('birth')">
+            <div class="sit-icon">🤱</div>
+            <div class="sit-card-body">
+              <div class="sit-title">출산 후 혼자 회복 중이에요</div>
+              <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
+            </div>
+            <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-arrow">→</div>
-        </div>
-        <div class="sit-card sit-card--teen" onclick="showPage('teen');setMTab('mind')">
-          <div class="sit-icon">🧒</div>
-          <div class="sit-card-body">
-            <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
-            <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
+          <div class="sit-card" onclick="showPage('dad');setMTab('growth')">
+            <div class="sit-icon">👨</div>
+            <div class="sit-card-body">
+              <div class="sit-title">아빠로서 어떻게 해야 할지 모르겠어요</div>
+              <div class="sit-sub">아빠 전용 육아 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-arrow">→</div>
         </div>
-        <div class="sit-card sit-card--emergency" onclick="showPage('emergency');setMTab('emergency')">
-          <div class="sit-icon">🚨</div>
-          <div class="sit-card-body">
-            <div class="sit-title">지금 당장 도움이 필요해요</div>
-            <div class="sit-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
+      </div>
+
+      <!-- 영역 2: 나 자신을 돌보고 있다면 -->
+      <div class="section-self">
+        <div class="section-header">
+          <h2 class="section-title">지금 나 자신이 힘들다면</h2>
+          <p class="section-sub">감정, 번아웃, 관계, 인생 전환기 가이드</p>
+        </div>
+        <div class="situation-grid">
+          <div class="sit-card self-area" onclick="showPage('emotion');setMTab('mind')">
+            <div class="sit-icon">😔</div>
+            <div class="sit-card-body">
+              <div class="sit-title">감정을 어떻게 해야 할지 모르겠어요</div>
+              <div class="sit-sub">지금 느끼는 감정, 비정상이 아닙니다</div>
+            </div>
+            <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-arrow">→</div>
+          <div class="sit-card self-area" onclick="showPage('burnout');setMTab('mind')">
+            <div class="sit-icon">🫠</div>
+            <div class="sit-card-body">
+              <div class="sit-title">번아웃인 것 같아요</div>
+              <div class="sit-sub">에너지가 바닥났을 때, 여기서부터</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area" onclick="showPage('relation');setMTab('mind')">
+            <div class="sit-icon">💔</div>
+            <div class="sit-card-body">
+              <div class="sit-title">관계가 무너졌어요</div>
+              <div class="sit-sub">이혼·가족 단절·고립감을 겪고 있을 때</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area" onclick="showPage('transition');setMTab('mind')">
+            <div class="sit-icon">🌀</div>
+            <div class="sit-card-body">
+              <div class="sit-title">삶의 방향을 잃었어요</div>
+              <div class="sit-sub">실직·전환기·새 환경 적응 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card sit-card--teen self-area" onclick="showPage('teen');setMTab('mind')">
+            <div class="sit-icon">🧒</div>
+            <div class="sit-card-body">
+              <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
+              <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card sit-card--emergency self-area" onclick="showPage('emergency');setMTab('emergency')">
+            <div class="sit-icon">🚨</div>
+            <div class="sit-card-body">
+              <div class="sit-title">지금 당장 도움이 필요해요</div>
+              <div class="sit-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
         </div>
+      </div>
+
+      <!-- 감정 기록 섹션 -->
+      <div class="mood-section" id="mood-section">
+        <div class="mood-label">오늘 기분이 어때요?</div>
+        <div class="mood-btns">
+          <button class="mood-btn" onclick="selectMood('okay')">🙂<span>괜찮아요</span></button>
+          <button class="mood-btn" onclick="selectMood('holding')">😐<span>버티는 중</span></button>
+          <button class="mood-btn" onclick="selectMood('hard')">😢<span>많이 힘들어요</span></button>
+        </div>
+        <div class="mood-result" id="mood-result" style="display:none"></div>
       </div>
 
     </section>
@@ -523,6 +582,47 @@
       </div>
     </div>
 
+    <!-- ══════════════ PAGE: 감정 가이드 ══════════════ -->
+    <div class="page-view" id="page-emotion" style="display:none">
+      <div id="emotion-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 번아웃 가이드 ══════════════ -->
+    <div class="page-view" id="page-burnout" style="display:none">
+      <div id="burnout-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 관계 붕괴 가이드 ══════════════ -->
+    <div class="page-view" id="page-relation" style="display:none">
+      <div id="relation-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 인생 전환기 가이드 ══════════════ -->
+    <div class="page-view" id="page-transition" style="display:none">
+      <div id="transition-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 아빠 가이드 (메인 진입) ══════════════ -->
+    <div class="page-view" id="page-dad" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="goHome()">← 홈으로</button>
+        <h2 class="page-title">👨 아빠 가이드</h2>
+      </div>
+      <div style="padding:0 48px 80px;" id="dad-page-content">
+        <p style="padding:20px 0;color:var(--ink-m);font-size:14px;">아이 나이를 입력하면 아빠 맞춤 가이드를 보여줘요.</p>
+        <button class="page-back" style="background:var(--peach-p);border:1px solid var(--line);border-radius:12px;padding:12px 20px;color:var(--peach-d);font-weight:700;" onclick="showPage('growth');setMTab('growth')">👶 성장 가이드에서 아빠 탭 보기 →</button>
+      </div>
+    </div>
+
+    <!-- ══════════════ PAGE: 기록 ══════════════ -->
+    <div class="page-view" id="page-journal" style="display:none">
+      <div class="page-header">
+        <button class="page-back" onclick="goHome()">← 홈으로</button>
+        <h2 class="page-title">📝 기록</h2>
+      </div>
+      <div id="journal-content" style="padding:0 48px 80px;"></div>
+    </div>
+
     <!-- 출처 드로어 -->
     <div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
     <div class="source-drawer" id="source-drawer">
@@ -651,7 +751,7 @@
   </div><!-- /main-col -->
 </div><!-- /page-wrap -->
 
-<!-- ── 모바일 하단 탭바 (4탭) ── -->
+<!-- ── 모바일 하단 탭바 (5탭) ── -->
 <nav class="mobile-tabbar" id="mobile-tabbar">
   <button class="mtab active" id="mtab-home" onclick="showPage('home');setMTab('home')">
     <span>🏠</span>홈
@@ -659,8 +759,11 @@
   <button class="mtab" id="mtab-growth" onclick="showPage('growth');setMTab('growth')">
     <span>👶</span>성장
   </button>
-  <button class="mtab" id="mtab-mind" onclick="showPage('mental');setMTab('mind')">
-    <span>💬</span>마음
+  <button class="mtab" id="mtab-mind" onclick="showPage('emotion');setMTab('mind')">
+    <span>💜</span>마음
+  </button>
+  <button class="mtab" id="mtab-journal" onclick="showPage('journal');setMTab('journal')">
+    <span>📝</span>기록
   </button>
   <button class="mtab" id="mtab-emergency" onclick="showPage('emergency');setMTab('emergency')">
     <span>🆘</span>긴급
@@ -673,6 +776,9 @@
 <script src="js/memo.js"></script>
 <script src="js/profiles.js"></script>
 <script src="js/render.js"></script>
+<script src="js/features.js"></script>
+<script src="js/emotion-page.js"></script>
+<script src="js/self-pages.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
