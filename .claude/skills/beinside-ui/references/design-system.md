@@ -5,114 +5,150 @@
 
 ---
 
-## CSS 변수 전체 목록
+## 디자인 철학
 
-> **현재 테마: ULIVO 3.1 — 이탈리아 남부 올리브**
-> "조용한 올리브 그늘, 석회암 벽, 아드리아해 빛"
+> **"편안하고 따뜻한, 판단받지 않는 공간"**
+> Calm · Warm · Safe · Minimal · Human
 
-### 배경 & 서피스
+사용자는 정서적으로 취약한 상태일 수 있다. 화면은 조용히 옆에 앉아 필요한 것을 건네는 느낌이어야 한다.
+강한 색 대비는 피하고, 눈의 피로를 줄이는 색 조합을 사용한다.
 
-| 변수명 | 값 | 용도 |
-|--------|----|------|
-| `--cream` | `#F3EDE0` | 기본 배경 (석회암 벽) |
-| `--warm` | `#EDE5D0` | 따뜻한 배경 (깊은 돌빛) |
-| `--white` | `#FAF7EF` | 카드 배경 (바람에 바랜 린넨) |
-| `--section-alt` | `#EBE4D4` | 교차 섹션 배경 |
+> **not clinical / not corporate / not social media**
+> instead: quiet · supportive · human · soft
 
-### Primary: Oliva (올리브)
+---
 
-| 변수명 | 값 | 용도 |
-|--------|----|------|
-| `--peach` | `#7C8F5A` | 주 브랜드색 (올리바 마투라 - 잘 익은 올리브) |
-| `--peach-l` | `#9EAF78` | 밝은 올리브 (조바네 올리보) |
-| `--peach-p` | `#EDF0E4` | 올리브 파스텔 (포글리아 팔리다) |
-| `--peach-d` | `#52612D` | 어두운 올리브 (올리바 스쿠라) |
-| `--peach-glow` | `rgba(124,143,90,.18)` | focus 글로우 링 |
-| `--sage` | `var(--peach)` | 피치의 alias |
-| `--primary` | `#7C8F5A` | 메인 액센트 |
-| `--primary-d` | `#52612D` | 다크 액센트 |
-| `--primary-p` | `#EDF0E4` | 연한 액센트 배경 |
+## 현재 테마: Calm 4.0
 
-### Accent
+### CSS 변수 전체 목록
+
+#### 배경 & 서피스
 
 | 변수명 | 값 | 용도 |
 |--------|----|------|
-| `--amber` | `#B89050` | 시칠리아 레몬 (리모네 시칠리아나) |
-| `--rust` | `#8B6B3A` | 말린 무화과 (피코 세코) |
+| `--cream` | `#F7F3EE` | 기본 배경 (Warm Neutral Beige) |
+| `--warm` | `#EEE9E3` | 약간 깊은 베이지 |
+| `--white` | `#FFFFFF` | 카드·콘텐츠 박스 (Soft White) |
+| `--section-alt` | `#F2EEE8` | 교차 섹션 배경 |
 
-### Blush
-
-| 변수명 | 값 | 용도 |
-|--------|----|------|
-| `--plum` | `#9A7B5A` | 잘 익은 무화과 (피코 마투로) |
-| `--plum-p` | `#F0E8DC` | 무화과 파스텔 배경 |
-
-### Sky
+#### Primary: Soft Calm Blue
 
 | 변수명 | 값 | 용도 |
 |--------|----|------|
-| `--sky` | `#7A98A8` | 아드리아해 하늘 (치엘로 아드리아티코) |
+| `--peach` | `#7BAECB` | 인터랙티브 블루 (링크, 보더) |
+| `--peach-l` | `#A8CADF` | 밝은 블루 (hover) |
+| `--peach-p` | `#DCEBFF` | 페일 블루 (버튼 bg, 하이라이트) |
+| `--peach-d` | `#4A8CAA` | 다크 블루 (텍스트 강조) |
+| `--peach-glow` | `rgba(123,174,203,.18)` | focus 글로우 링 |
+| `--sage` | `var(--peach)` | alias |
+| `--primary` | `#7BAECB` | 메인 액센트 |
+| `--primary-d` | `#4A8CAA` | 다크 액센트 |
+| `--primary-p` | `#DCEBFF` | 연한 액센트 배경 |
 
-### 텍스트
-
-| 변수명 | 값 | 용도 |
-|--------|----|------|
-| `--ink` | `#28241A` | 기본 텍스트 (옴브라 - 깊은 그늘) |
-| `--ink-m` | `#5C5440` | 보조 텍스트 (피에트라 - 돌빛) |
-| `--ink-l` | `#9E9278` | 힌트·서브 텍스트 (사비아 - 모래빛) |
-
-### 라인
-
-| 변수명 | 값 | 용도 |
-|--------|----|------|
-| `--line` | `rgba(124,143,90,.14)` | 구분선·보더 |
-
-### 리퀴드 글라스
+#### Accent: Healing Green
 
 | 변수명 | 값 | 용도 |
 |--------|----|------|
-| `--glass-bg` | `rgba(252,249,242,0.65)` | 카드/헤더 유리 배경 (웜 린넨) |
-| `--glass-border` | `rgba(255,253,248,0.58)` | 유리 테두리 |
-| `--glass-shadow` | `0 4px 24px rgba(82,97,45,.07), inset 0 1px 0 rgba(255,253,248,0.82)` | 글라스 그림자 |
+| `--amber` | `#6BA885` | Soft Healing Green (긍정·회복) |
+| `--rust` | `#3D7A5C` | 다크 힐링 그린 |
 
-### 레이아웃
+#### Muted Tertiary
+
+| 변수명 | 값 | 용도 |
+|--------|----|------|
+| `--plum` | `#8A7A6A` | 중립 브라운 |
+| `--plum-p` | `#EFE8E0` | 연한 브라운 배경 |
+| `--sky` | `#6CA0C8` | 스카이 블루 |
+
+#### 텍스트
+
+| 변수명 | 값 | 용도 |
+|--------|----|------|
+| `--ink` | `#3A3A3A` | Primary Text |
+| `--ink-m` | `#6B6B6B` | Secondary Text |
+| `--ink-l` | `#9A9A9A` | Muted Text |
+
+#### 라인
+
+| 변수명 | 값 | 용도 |
+|--------|----|------|
+| `--line` | `rgba(123,174,203,.15)` | 구분선·보더 |
+
+#### 서피스 (클린 화이트 기반)
+
+| 변수명 | 값 | 용도 |
+|--------|----|------|
+| `--glass-bg` | `rgba(255,255,255,0.95)` | 패널/모달 배경 |
+| `--glass-border` | `rgba(0,0,0,0.06)` | 패널/모달 보더 |
+| `--glass-shadow` | `0 2px 6px rgba(0,0,0,.05)` | 카드 그림자 |
+
+#### 레이아웃
 
 | 변수명 | 값 | 용도 |
 |--------|----|------|
 | `--tl-w` | `200px` | 타임라인 너비 (데스크톱) |
 
-### 콘텐츠 영역별 색상
+#### 콘텐츠 영역별 색상
 
 | 변수명 | 값 | 용도 |
 |--------|----|------|
-| `--lavender` | `#6B7A4E` | 나 자신 영역 (세이지 그린) |
-| `--lavender-d` | `#4A5630` | 세이지 다크 |
-| `--lavender-p` | `#E8EDE0` | 세이지 파스텔 |
-| `--lavender-bg` | `#EFF2E8` | 세이지 배경 |
-| `--burnout` | `#C0892A` | 번아웃 (앰버) |
+| `--lavender` | `#6BA885` | 나 자신 영역 (Healing Green) |
+| `--lavender-d` | `#3D7A5C` | 힐링 그린 다크 |
+| `--lavender-p` | `#DFF3E9` | Soft Healing Green 페일 |
+| `--lavender-bg` | `#EBF7F0` | 힐링 그린 배경 (self 섹션) |
+| `--burnout` | `#C0892A` | 번아웃 (앰버 경고) |
 | `--burnout-d` | `#8A6018` | 번아웃 다크 |
 | `--burnout-p` | `#FBF0D8` | 번아웃 파스텔 |
-| `--relation` | `#B85C42` | 관계 (테라코타) |
+| `--relation` | `#B05A42` | 관계 (Soft Terracotta) |
 | `--relation-d` | `#8A3E28` | 관계 다크 |
 | `--relation-p` | `#F5E4DC` | 관계 파스텔 |
-| `--transition-c` | `#4A8888` | 전환기 (아드리아 틸) |
+| `--transition-c` | `#4A8888` | 전환기 (Soft Teal) |
 | `--transition-d` | `#2E6060` | 전환기 다크 |
 | `--transition-p` | `#DFF0EE` | 전환기 파스텔 |
 
 ---
 
+## 카드 컴포넌트
+
+```css
+background: #FFFFFF;
+border-radius: 16px;
+padding: 22px 24px;
+box-shadow: 0 2px 6px rgba(0,0,0,.05);
+border: 1px solid rgba(0,0,0,.06);
+```
+
 ## 카드 색상 변형 (cbg-*)
 
-| 클래스 | 그라데이션 | 보더 색상 | 용도 |
-|--------|-----------|-----------|------|
-| `.cbg-a` | 올리브 톤 | `var(--peach-d)` | 기본 강조 카드 |
-| `.cbg-s` | 세이지 그린 계열 | 그린 | 성장·자연 |
-| `.cbg-p` | 무화과/앰버 계열 | 앰버 | 감정·정신 |
-| `.cbg-sky` | 아드리아 블루 | 블루 | 정보·안내 |
-| `.cbg-lavender` | 세이지 그린 | 세이지 | 차분한 내용 |
-| `.cbg-mint` | 민트 | 민트 | 건강·긍정 |
-| `.cbg-rose` | 테라코타 | 테라코타 | 사랑·가족 |
-| `.cbg-teal` | 아드리아 틸 | 틸 | 전문·신뢰 |
+| 클래스 | 배경 | 용도 |
+|--------|------|------|
+| `.cbg-a` | 황금/앰버 톤 | 기본 강조 |
+| `.cbg-s` | 힐링 그린 `#DFF3E9` | 성장·자연 |
+| `.cbg-p` | 캄 블루 `#DCEBFF` | 정보·안내 |
+| `.cbg-sky` | 스카이 블루 | 정보 |
+| `.cbg-lavender` | 힐링 그린 | 차분한 내용 |
+| `.cbg-mint` | 민트 그린 | 건강·긍정 |
+| `.cbg-rose` | 소프트 테라코타 | 관계·가족 |
+| `.cbg-teal` | 소프트 틸 | 전문·신뢰 |
+
+---
+
+## 버튼 디자인
+
+**Primary Button**
+```css
+background: var(--peach-p);   /* #DCEBFF */
+color: var(--ink);             /* #3A3A3A */
+border-radius: 14px;
+padding: 12px 20px;
+```
+
+**Secondary Button**
+```css
+background: #F1F1F1;
+color: var(--ink);
+border-radius: 14px;
+```
 
 ---
 
@@ -127,7 +163,7 @@ font-family: 'Gowun Batang', serif;        /* 감성·인용 */
 
 ```css
 /* 기본 카드 */
-box-shadow: 0 2px 12px rgba(0,0,0,.06);
+box-shadow: 0 2px 6px rgba(0,0,0,.05);
 /* 카드 hover */
 box-shadow: 0 8px 24px rgba(0,0,0,.10);
 /* 플로팅 버튼 */
