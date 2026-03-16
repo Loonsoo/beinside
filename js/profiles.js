@@ -25,26 +25,8 @@ function updateHeaderChip() {
   if (infoEl) infoEl.innerHTML = `<span class="prof-name">${esc(p.name)}</span><span class="prof-age">${esc(age.label)}</span>`;
 }
 
-/* ── 히어로 배너 업데이트 ── */
-function updateHeroBanner() {
-  const banner = document.getElementById('hero-banner');
-  if (!banner) return;
-  if (activeIdx < 0 || !profiles[activeIdx]) {
-    banner.classList.remove('on');
-    return;
-  }
-  const p   = profiles[activeIdx];
-  const age = calcAge(p.dob);
-  const avatarEl = document.getElementById('banner-avatar');
-  const nameEl   = document.getElementById('banner-name');
-  const ageEl    = document.getElementById('banner-age');
-  if (avatarEl) avatarEl.innerHTML = avatarHTML(p, 44);
-  if (nameEl)   nameEl.textContent = p.name;
-  if (ageEl)    ageEl.textContent  = age.months >= 0
-    ? `${age.label} · 지금 이 시기 가이드`
-    : age.label;
-  banner.classList.toggle('on', age.months >= 0);
-}
+/* ── 히어로 배너 업데이트 (제거됨, 호환성 유지) ── */
+function updateHeroBanner() {}
 
 /* ── 프로필로 바로 가기 ── */
 function goWithProfile() {
@@ -64,7 +46,101 @@ function goWithProfile() {
   go();
 }
 
-/* ── 모달 ── */
+/* ── 프로필 패널 (Bottom Sheet) ── */
+function openProfPanel() {
+  renderProfPanel();
+  document.getElementById('prof-panel-overlay').classList.add('on');
+  document.getElementById('prof-panel').classList.add('on');
+}
+function closeProfPanel() {
+  document.getElementById('prof-panel-overlay').classList.remove('on');
+  document.getElementById('prof-panel').classList.remove('on');
+}
+
+function renderProfPanel() {
+  const activeEl = document.getElementById('prof-panel-active');
+  const listEl   = document.getElementById('prof-panel-list');
+  if (!activeEl || !listEl) return;
+
+  if (profiles.length === 0) {
+    activeEl.innerHTML = `<p class="pp-empty">아직 프로필이 없어요<br><small>아래 버튼으로 추가해보세요</small></p>`;
+    listEl.innerHTML = '';
+    return;
+  }
+
+  // 활성 프로필 영역
+  const ap  = profiles[activeIdx] || profiles[0];
+  const age = calcAge(ap.dob);
+  const hasAge = age.months >= 0;
+  activeEl.innerHTML = `
+    <div class="pp-active-row">
+      <div class="pp-active-avatar">${avatarHTML(ap, 52)}</div>
+      <div class="pp-active-info">
+        <div class="pp-active-name">${esc(ap.name)}</div>
+        <div class="pp-active-age">${esc(age.label)} · ${ap.type === 'child' ? '자녀' : '나 자신'}</div>
+      </div>
+      <div class="pp-active-btns">
+        ${hasAge ? `<button class="pp-goto-btn" onclick="closeProfPanel();goWithProfile()">→ 바로가기</button>` : ''}
+        <button class="pp-edit-btn" onclick="openEditModal(${activeIdx})">✏️ 편집</button>
+      </div>
+    </div>`;
+
+  // 다른 프로필 목록
+  const others = profiles.filter((_, i) => i !== activeIdx);
+  if (others.length === 0) {
+    listEl.innerHTML = '';
+    return;
+  }
+  listEl.innerHTML = `<div class="pp-list-label">다른 프로필</div>` +
+    profiles.map((p, i) => {
+      if (i === activeIdx) return '';
+      const a = calcAge(p.dob);
+      return `<div class="pp-list-item" onclick="setProfActive(${i})">
+        <div class="pp-list-avatar">${avatarHTML(p, 36)}</div>
+        <div class="pp-list-info">
+          <span class="pp-list-name">${esc(p.name)}</span>
+          <span class="pp-list-age">${esc(a.label)}</span>
+        </div>
+        <div class="pp-list-actions" onclick="event.stopPropagation()">
+          <button class="pi-btn" onclick="openEditModal(${i})" title="편집">✏️</button>
+          <button class="pi-btn del" onclick="deleteProfFromPanel(${i})" title="삭제">🗑</button>
+        </div>
+      </div>`;
+    }).join('');
+}
+
+function setProfActive(i) {
+  if (i < 0 || i >= profiles.length) return;
+  activeIdx = i;
+  saveProfiles();
+  updateHeaderChip();
+  closeProfPanel();
+}
+
+function deleteProfFromPanel(i) {
+  if (i < 0 || i >= profiles.length) return;
+  if (!confirm(`"${profiles[i].name}" 프로필을 삭제할까요?`)) return;
+  profiles.splice(i, 1);
+  if (activeIdx === i) activeIdx = profiles.length > 0 ? 0 : -1;
+  else if (activeIdx > i) activeIdx--;
+  saveProfiles();
+  updateHeaderChip();
+  renderProfPanel();
+}
+
+/* 편집 모달 열기 (패널에서 호출) */
+function openEditModal(idx) {
+  closeProfPanel();
+  showListView();
+  if (idx !== null && idx !== undefined) {
+    showEditForm(idx);
+  } else {
+    showEditForm(null);
+  }
+  document.getElementById('modal-overlay').classList.add('on');
+}
+
+/* ── 모달 (편집 전용) ── */
 function openModal() {
   showListView();
   document.getElementById('modal-overlay').classList.add('on');
@@ -111,7 +187,6 @@ function setActive(i) {
   activeIdx = i;
   saveProfiles();
   updateHeaderChip();
-  updateHeroBanner();
   renderProfList();
   closeModal();
 }
@@ -124,7 +199,6 @@ function deleteProfile(i) {
   else if (activeIdx > i) activeIdx--;
   saveProfiles();
   updateHeaderChip();
-  updateHeroBanner();
   renderProfList();
 }
 
