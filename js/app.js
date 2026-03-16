@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'dad', 'journal'];
 
 /* ── 페이지 전환 ── */
 function showPage(id) {
@@ -30,6 +30,11 @@ function showPage(id) {
     if (id === 'mental') initMentalPage();
     if (id === 'teen') initTeenPage();
     if (id === 'emergency') initEmergencyFirstAid();
+    if (id === 'emotion') initEmotionPage();
+    if (id === 'burnout') initBurnoutPage();
+    if (id === 'relation') initRelationPage();
+    if (id === 'transition') initTransitionPage();
+    if (id === 'journal') initJournalPage();
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -43,7 +48,7 @@ function goHome() {
 
 /* ── 뷰 전환 (하위 호환 — 탭바·카드에서 호출될 수 있음) ── */
 function switchView(v) {
-  const map = { normal: 'growth', sp: 'sp', birth: 'birth' };
+  const map = { normal: 'growth', sp: 'sp', birth: 'birth', growth: 'growth', mind: 'mind', journal: 'journal', emergency: 'emergency' };
   showPage(map[v] || 'home');
 }
 
@@ -317,3 +322,97 @@ document.addEventListener('keydown', e => {
     closeModal();
   }
 });
+
+/* ── 감정 체크인 (메인 화면) ── */
+function selectMood(mood) {
+  // 저장
+  const entry = {
+    date: new Date().toISOString().split('T')[0],
+    mood: mood,
+    memo: '',
+    timestamp: Date.now()
+  };
+  const MOOD_KEY = 'beinside_mood_v1';
+  const all = JSON.parse(localStorage.getItem(MOOD_KEY) || '[]');
+  // 오늘 날짜 중복 제거
+  const filtered = all.filter(e => e.date !== entry.date);
+  filtered.push(entry);
+  // 90일 초과분 삭제
+  const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+  const trimmed = filtered.filter(e => e.timestamp > cutoff);
+  localStorage.setItem(MOOD_KEY, JSON.stringify(trimmed));
+
+  // 버튼 표시
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  const btn = document.querySelector(`.mood-btn[onclick*="${mood}"]`);
+  if (btn) btn.classList.add('selected');
+
+  // 결과 메시지
+  const res = document.getElementById('mood-result');
+  if (!res) return;
+  const msgs = {
+    okay:    { text: '오늘도 잘 버텨냈어요. 🌿', sub: '' },
+    holding: { text: '버티는 것도 대단한 거예요.', sub: '잠깐 쉬어도 돼요. 깊게 숨 한번 쉬어보세요.' },
+    hard:    { text: '혼자 감당하지 않아도 돼요.', sub: '지금 바로 <a href="tel:1393" style="color:var(--peach-d);font-weight:700">1393</a> (자살예방상담, 무료·24시간)에 전화하거나, 아래 마음 가이드를 확인해 보세요.' }
+  };
+  const m = msgs[mood];
+  res.style.display = 'block';
+  res.innerHTML = `<strong>${m.text}</strong>${m.sub ? '<br><span style="font-weight:400;font-size:13px;">' + m.sub + '</span>' : ''}`;
+}
+
+/* ── 신규 페이지 초기화 스텁 (각 파일에서 구현) ── */
+function initEmotionPage() {
+  const el = document.getElementById('emotion-content');
+  if (el && typeof renderEmotionPage === 'function') renderEmotionPage(el);
+}
+function initBurnoutPage() {
+  const el = document.getElementById('burnout-content');
+  if (el && typeof renderBurnoutPage === 'function') renderBurnoutPage(el);
+}
+function initRelationPage() {
+  const el = document.getElementById('relation-content');
+  if (el && typeof renderRelationPage === 'function') renderRelationPage(el);
+}
+function initTransitionPage() {
+  const el = document.getElementById('transition-content');
+  if (el && typeof renderTransitionPage === 'function') renderTransitionPage(el);
+}
+function initJournalPage() {
+  if (typeof renderJournalPage === 'function') renderJournalPage();
+}
+
+/* ── 체크 아이템 토글 ── */
+function toggleCheckItem(el) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  if (box) box.textContent = el.classList.contains('checked') ? '✓' : '';
+}
+
+/* ── 액션 아이템 토글 ── */
+function toggleAction(el) {
+  el.classList.toggle('done');
+  const check = el.querySelector('.action-check');
+  if (check) check.textContent = el.classList.contains('done') ? '✓' : '';
+}
+
+/* ── 아코디언 토글 ── */
+function toggleAccordion(el) {
+  const item = el.closest('.accordion-item');
+  if (!item) return;
+  const body = item.querySelector('.accordion-body');
+  const isOpen = item.classList.contains('open');
+  // 같은 그룹 내 모두 닫기
+  const group = item.closest('.accordion-group');
+  if (group) {
+    group.querySelectorAll('.accordion-item.open').forEach(i => {
+      i.classList.remove('open');
+      const b = i.querySelector('.accordion-body');
+      if (b) b.style.maxHeight = '0';
+    });
+  }
+  if (!isOpen) {
+    item.classList.add('open');
+    const inner = body.querySelector('.accordion-body-inner');
+    body.style.maxHeight = (inner ? inner.scrollHeight + 32 : 400) + 'px';
+  }
+}
