@@ -17,7 +17,7 @@
 </button>
 
 <header>
-  <div id="prof-chip" class="prof-chip" onclick="openModal()" title="프로필 관리">
+  <div id="prof-chip" class="prof-chip" onclick="openProfPanel()" title="프로필" aria-label="프로필 패널 열기">
     <div class="prof-avatar" id="hdr-avatar"><span id="hdr-avatar-em">🌱</span></div>
     <div class="prof-info" id="hdr-info">
       <span class="prof-add">프로필 추가</span>
@@ -71,22 +71,27 @@
   </div>
 </div>
 
+<!-- ── PROFILE PANEL (Bottom Sheet) ── -->
+<div class="prof-panel-overlay" id="prof-panel-overlay" onclick="closeProfPanel()"></div>
+<div class="prof-panel" id="prof-panel" role="dialog" aria-label="프로필 패널">
+  <div class="prof-panel-handle"></div>
+  <div class="prof-panel-active" id="prof-panel-active">
+    <!-- JS로 렌더링 -->
+  </div>
+  <div class="prof-panel-list" id="prof-panel-list">
+    <!-- JS로 렌더링 -->
+  </div>
+  <div class="prof-panel-actions">
+    <button class="pp-action-btn pp-add" onclick="openEditModal(null)">＋ 새 프로필</button>
+  </div>
+</div>
+
 <div class="page-wrap">
   <div class="main-col">
 
     <!-- ══════════════ HOME / HERO ══════════════ -->
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
-
-      <!-- 프로필 배너 -->
-      <div class="hero-prof-banner" id="hero-banner">
-        <div class="hpb-avatar" id="banner-avatar"><span id="banner-avatar-em">🌱</span></div>
-        <div class="hpb-info">
-          <div class="hpb-name" id="banner-name"></div>
-          <div class="hpb-age" id="banner-age"></div>
-        </div>
-        <button class="hpb-go" onclick="goWithProfile()">바로 보기 →</button>
-      </div>
 
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <p class="hero-sub">혼자 감당하고 있는 그 순간,<br>여기서부터 시작해 보세요.</p>
