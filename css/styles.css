@@ -4,10 +4,10 @@
 ═══════════════════════════════════════════════ */
 :root{
   /* ── 배경 & 서피스 ── */
-  --cream:#F3EDE0;           /* 피에트라 칼카레아 - 석회암 벽 */
-  --warm:#EDE5D0;            /* 테라 - 더 깊은 돌빛 */
-  --white:#FAF7EF;           /* 리넨 - 바람에 바랜 린넨 */
-  --section-alt:#EBE4D4;
+  --cream:#EFF0E5;           /* 올리브 그늘 아래 석회암 — olive-stone */
+  --warm:#E5E9DA;            /* 올리브 과수원 땅 — olive-earth */
+  --white:#F6F8F1;           /* 올리브 빛 린넨 — olive-linen */
+  --section-alt:#E4E8D7;
 
   /* ── Primary: Oliva (올리브) ── */
   --peach:#7C8F5A;           /* 올리바 마투라 - 잘 익은 올리브 */
@@ -41,10 +41,10 @@
   /* ── 라인 ── */
   --line:rgba(124,143,90,.14);
 
-  /* ── 리퀴드 글라스 (올리브 웜톤) ── */
-  --glass-bg:rgba(252,249,242,0.65);
-  --glass-border:rgba(255,253,248,0.58);
-  --glass-shadow:0 4px 24px rgba(82,97,45,.07), inset 0 1px 0 rgba(255,253,248,0.82);
+  /* ── 리퀴드 글라스 (올리브 린넨 톤) ── */
+  --glass-bg:rgba(246,248,241,0.68);
+  --glass-border:rgba(248,250,244,0.60);
+  --glass-shadow:0 4px 24px rgba(82,97,45,.08), inset 0 1px 0 rgba(248,250,244,0.85);
 
   /* 타임라인 너비 */
   --tl-w:200px;
@@ -52,8 +52,8 @@
   /* ── 나 자신 영역 (세이지 그린 → 올리브와 조화) ── */
   --lavender:#6B7A4E;
   --lavender-d:#4A5630;
-  --lavender-p:#E8EDE0;
-  --lavender-bg:#EFF2E8;
+  --lavender-p:#E4EAD9;
+  --lavender-bg:#E2E7D5;
 
   /* ── 번아웃 (앰버 계열) ── */
   --burnout:#C0892A;
@@ -75,7 +75,7 @@
 html{scroll-behavior:smooth;}
 body{
   font-family:'Noto Sans KR',sans-serif;
-  background:linear-gradient(155deg,#F3EDE0 0%,#EAE2CE 55%,#E6DEC8 100%) fixed;
+  background:linear-gradient(155deg,#EEF0E4 0%,#E5E8D8 50%,#D9DDD0 100%) fixed;
   min-height:100vh;
   color:var(--ink);
   line-height:1.72;
@@ -98,7 +98,7 @@ body::after{
 /* ── HEADER ── */
 header{
   position:sticky;top:0;z-index:200;
-  background:rgba(243,237,224,0.78);
+  background:rgba(237,240,229,0.82);
   backdrop-filter:blur(32px) saturate(1.6);
   -webkit-backdrop-filter:blur(32px) saturate(1.6);
   border-bottom:1px solid rgba(255,253,248,0.65);
