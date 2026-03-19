@@ -3315,3 +3315,252 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   transform:translateX(-50%);
   border-bottom-color:var(--ink);
 }
+
+/* ═══════════════════════════════════════════════
+   온보딩 오버레이
+═══════════════════════════════════════════════ */
+.onboard-overlay{
+  position:fixed; inset:0; z-index:10000;
+  display:none;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  justify-content:center; align-items:center;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+.onboard-overlay.on{
+  display:flex;
+  opacity:1;
+}
+.onboard-overlay.out{
+  opacity:0;
+}
+.onboard-card{
+  background:var(--white);
+  border-radius:24px;
+  padding:36px 28px 28px;
+  max-width:380px;
+  width:calc(100vw - 40px);
+  max-height:calc(100vh - 60px);
+  overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.18);
+  text-align:center;
+  animation:onboard-pop .35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes onboard-pop{
+  from{ opacity:0; transform:scale(.92) translateY(16px); }
+  to{ opacity:1; transform:scale(1) translateY(0); }
+}
+.onboard-overlay.out .onboard-card{
+  animation:onboard-out .25s ease forwards;
+}
+@keyframes onboard-out{
+  to{ opacity:0; transform:scale(.95) translateY(10px); }
+}
+.onboard-logo{
+  font-size:40px;
+  margin-bottom:8px;
+}
+.onboard-title{
+  font-family:'Gowun Batang',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 6px;
+}
+.onboard-sub{
+  font-size:13px;
+  color:var(--ink-m);
+  margin:0 0 24px;
+  line-height:1.6;
+}
+.onboard-step-label{
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.onboard-options{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.onboard-opt{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 18px;
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  background:var(--white);
+  cursor:pointer;
+  transition:transform .2s, border-color .2s, box-shadow .2s;
+  text-align:left;
+}
+.onboard-opt:hover,
+.onboard-opt:active{
+  border-color:var(--peach);
+  transform:translateY(-2px);
+  box-shadow:0 4px 16px rgba(123,174,203,.15);
+}
+.onboard-opt-icon{
+  font-size:24px;
+  flex-shrink:0;
+}
+.onboard-opt--sm .onboard-opt-icon{
+  font-size:20px;
+}
+.onboard-opt-text{
+  font-size:14px;
+  font-weight:500;
+  color:var(--ink);
+  line-height:1.5;
+}
+.onboard-opt--sm .onboard-opt-text{
+  font-size:13px;
+}
+.onboard-skip{
+  display:block;
+  margin:20px auto 0;
+  padding:10px 20px;
+  border:none;
+  background:none;
+  color:var(--ink-l);
+  font-size:13px;
+  cursor:pointer;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.onboard-skip:hover{ color:var(--ink-m); }
+.onboard-back{
+  display:block;
+  margin:16px auto 0;
+  padding:8px 16px;
+  border:none;
+  background:none;
+  color:var(--ink-l);
+  font-size:13px;
+  cursor:pointer;
+}
+.onboard-back:hover{ color:var(--ink-m); }
+.onboard-fade-in{
+  animation:onboard-fadein .25s ease;
+}
+@keyframes onboard-fadein{
+  from{ opacity:0; transform:translateX(12px); }
+  to{ opacity:1; transform:translateX(0); }
+}
+
+/* ═══════════════════════════════════════════════
+   공유 FAB & 메뉴
+═══════════════════════════════════════════════ */
+.share-fab{
+  position:fixed;
+  bottom:160px; right:16px;
+  width:48px; height:48px;
+  border-radius:50%;
+  border:none;
+  background:var(--peach);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  z-index:999;
+  transition:transform .22s, background .22s;
+  display:flex; align-items:center; justify-content:center;
+}
+.share-fab:hover{ transform:scale(1.08); }
+.share-fab.on{
+  background:var(--peach-d);
+  transform:rotate(45deg);
+}
+.share-fab-icon{
+  font-style:normal;
+  line-height:1;
+}
+.share-menu{
+  position:fixed;
+  bottom:218px; right:16px;
+  background:var(--white);
+  border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.14);
+  padding:8px;
+  z-index:999;
+  opacity:0;
+  transform:translateY(10px) scale(.95);
+  pointer-events:none;
+  transition:opacity .22s, transform .22s;
+}
+.share-menu.on{
+  opacity:1;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+.share-menu-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 16px;
+  border:none;
+  background:none;
+  width:100%;
+  cursor:pointer;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink);
+  transition:background .15s;
+  white-space:nowrap;
+}
+.share-menu-item:hover{
+  background:var(--cream);
+}
+.share-item-icon{
+  width:28px; height:28px;
+  border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px;
+  font-weight:800;
+  flex-shrink:0;
+}
+
+/* ── 공유 토스트 ── */
+.share-toast{
+  position:fixed;
+  bottom:100px; left:50%;
+  transform:translateX(-50%) translateY(10px);
+  padding:10px 22px;
+  background:var(--ink);
+  color:#fff;
+  font-size:13px;
+  font-weight:500;
+  border-radius:24px;
+  z-index:10001;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s, transform .25s;
+}
+.share-toast.on{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+/* ── 반응형: SOS 버튼과 공유 FAB 충돌 방지 ── */
+@media(max-width:640px){
+  .share-fab{
+    bottom:76px;
+    right:12px;
+    width:44px; height:44px;
+    font-size:18px;
+  }
+  .share-menu{
+    bottom:130px;
+    right:12px;
+  }
+}
+/* SOS 버튼이 데스크톱에서만 보이므로 데스크톱에서 FAB 위치 조정 */
+@media(min-width:641px){
+  .share-fab{ bottom:160px; }
+  .share-menu{ bottom:218px; }
+}

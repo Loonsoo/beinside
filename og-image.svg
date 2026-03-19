@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#F7F3EE"/>
+  <rect x="0" y="0" width="1200" height="630" fill="url(#bg)" opacity="0.5"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#DCEBFF" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#DFF3E9" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <text x="600" y="240" text-anchor="middle" font-family="sans-serif" font-size="72" fill="#3A3A3A">🌻 BeInside</text>
+  <text x="600" y="330" text-anchor="middle" font-family="sans-serif" font-size="32" fill="#6B6B6B">혼자라고 느낄 때, 가장 먼저 닿는 곳</text>
+  <text x="600" y="400" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#9A9A9A">육아 · 정신건강 · 감정 돌봄 · 한부모 가이드 · 청소년 상담</text>
+  <rect x="430" y="460" width="340" height="52" rx="26" fill="#7BAECB"/>
+  <text x="600" y="494" text-anchor="middle" font-family="sans-serif" font-size="18" fill="white" font-weight="600">beinside.kr 바로가기</text>
+</svg>

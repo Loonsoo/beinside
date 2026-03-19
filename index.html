@@ -4,7 +4,30 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOWVtJyBmb250LXNpemU9JzkwJz7wn4y7PC90ZXh0Pjwvc3ZnPg==">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeInside - 너와 함께</title>
+  <title>BeInside - 혼자라고 느낄 때, 가장 먼저 닿는 곳</title>
+  <meta name="description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다. 24시간 긴급상담 연결.">
+  <meta name="keywords" content="육아 가이드, 아이 발달, 산후우울증, 정신건강, 번아웃, 한부모, 청소년 상담, 감정 돌봄, 긴급상담, BeInside">
+  <meta name="author" content="BeInside">
+  <meta name="theme-color" content="#7BAECB">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BeInside — 혼자라고 느낄 때, 가장 먼저 닿는 곳">
+  <meta property="og:description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다.">
+  <meta property="og:url" content="https://beinside.kr">
+  <meta property="og:image" content="https://beinside.kr/og-image.svg">
+  <meta property="og:site_name" content="BeInside">
+  <meta property="og:locale" content="ko_KR">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BeInside — 혼자라고 느낄 때, 가장 먼저 닿는 곳">
+  <meta name="twitter:description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드 — 판단 없이, 당신 편에서 안내합니다.">
+  <meta name="twitter:image" content="https://beinside.kr/og-image.svg">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://beinside.kr">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
@@ -798,6 +821,108 @@
   </button>
 </nav>
 
+<!-- ── 온보딩 오버레이 (첫 방문) ── -->
+<div class="onboard-overlay" id="onboard-overlay">
+  <div class="onboard-card">
+    <div class="onboard-logo">🌻</div>
+    <h2 class="onboard-title">어떤 상황이세요?</h2>
+    <p class="onboard-sub">가장 가까운 도움을 바로 안내해 드릴게요</p>
+
+    <!-- Step 1: 큰 분류 -->
+    <div class="onboard-step" id="onboard-step-1">
+      <div class="onboard-options">
+        <button class="onboard-opt" onclick="onboardSelect('care')">
+          <span class="onboard-opt-icon">👶</span>
+          <span class="onboard-opt-text">아이·가족을 돌보고 있어요</span>
+        </button>
+        <button class="onboard-opt" onclick="onboardSelect('self')">
+          <span class="onboard-opt-icon">💜</span>
+          <span class="onboard-opt-text">지금 내가 힘들어요</span>
+        </button>
+        <button class="onboard-opt" onclick="onboardSelect('emergency')">
+          <span class="onboard-opt-icon">🚨</span>
+          <span class="onboard-opt-text">지금 당장 도움이 필요해요</span>
+        </button>
+      </div>
+      <button class="onboard-skip" onclick="onboardDismiss()">괜찮아요, 둘러볼게요</button>
+    </div>
+
+    <!-- Step 2a: 돌봄 세부 -->
+    <div class="onboard-step" id="onboard-step-care" style="display:none">
+      <div class="onboard-step-label">어떤 부분이 가장 궁금하세요?</div>
+      <div class="onboard-options">
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('growth')">
+          <span class="onboard-opt-icon">📊</span>
+          <span class="onboard-opt-text">아이 성장·발달이 궁금해요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('sp')">
+          <span class="onboard-opt-icon">👩‍👦</span>
+          <span class="onboard-opt-text">혼자 아이를 키우고 있어요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('birth')">
+          <span class="onboard-opt-icon">🤱</span>
+          <span class="onboard-opt-text">출산 후 회복 중이에요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('dad')">
+          <span class="onboard-opt-icon">👨</span>
+          <span class="onboard-opt-text">아빠로서 어떻게 해야 할지 모르겠어요</span>
+        </button>
+      </div>
+      <button class="onboard-back" onclick="onboardBack()">← 이전으로</button>
+    </div>
+
+    <!-- Step 2b: 나 자신 세부 -->
+    <div class="onboard-step" id="onboard-step-self" style="display:none">
+      <div class="onboard-step-label">어떤 상황에 가까우세요?</div>
+      <div class="onboard-options">
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('emotion')">
+          <span class="onboard-opt-icon">😔</span>
+          <span class="onboard-opt-text">감정을 다루기 어려워요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('burnout')">
+          <span class="onboard-opt-icon">🫠</span>
+          <span class="onboard-opt-text">번아웃인 것 같아요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('relation')">
+          <span class="onboard-opt-icon">💔</span>
+          <span class="onboard-opt-text">관계가 무너졌어요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('teen')">
+          <span class="onboard-opt-icon">🧒</span>
+          <span class="onboard-opt-text">청소년·청년이에요</span>
+        </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('workplace')">
+          <span class="onboard-opt-icon">🏢</span>
+          <span class="onboard-opt-text">직장에서 힘든 사람이 있어요</span>
+        </button>
+      </div>
+      <button class="onboard-back" onclick="onboardBack()">← 이전으로</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 공유 플로팅 버튼 ── -->
+<button class="share-fab" id="share-fab" onclick="toggleShareMenu()" aria-label="공유하기">
+  <span class="share-fab-icon">↗</span>
+</button>
+<div class="share-menu" id="share-menu">
+  <button class="share-menu-item" onclick="shareKakao()">
+    <span class="share-item-icon" style="background:#FEE500;color:#3C1E1E;">K</span>
+    <span>카카오톡</span>
+  </button>
+  <button class="share-menu-item" onclick="shareURL()">
+    <span class="share-item-icon" style="background:var(--peach-p);color:var(--peach-d);">🔗</span>
+    <span>링크 복사</span>
+  </button>
+  <button class="share-menu-item" onclick="shareNative()">
+    <span class="share-item-icon" style="background:var(--warm);color:var(--ink);">📤</span>
+    <span>더보기</span>
+  </button>
+</div>
+
+<!-- Kakao SDK -->
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
+
 <script src="js/data.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/storage.js"></script>
@@ -808,5 +933,25 @@
 <script src="js/emotion-page.js"></script>
 <script src="js/self-pages.js"></script>
 <script src="js/app.js"></script>
+<script src="js/onboard.js"></script>
+<script src="js/share.js"></script>
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "BeInside",
+  "alternateName": "비인사이드",
+  "url": "https://beinside.kr",
+  "description": "혼자라고 느낄 때, 가장 먼저 닿는 곳. 육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담.",
+  "inLanguage": "ko",
+  "publisher": {
+    "@type": "Organization",
+    "name": "BeInside",
+    "url": "https://beinside.kr"
+  }
+}
+</script>
 </body>
 </html>
