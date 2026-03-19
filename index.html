@@ -104,7 +104,7 @@
           <p class="section-sub">연령별 발달 기준, 한부모·출산 가이드, 아빠 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card" onclick="showPage('growth');setMTab('growth')">
+          <div class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')">
             <div class="sit-icon">👶</div>
             <div class="sit-card-body">
               <div class="sit-title">아이 성장이 불안해요</div>
@@ -112,7 +112,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" onclick="showPage('sp')">
+          <div class="sit-card" data-card-id="sp" onclick="showPage('sp')">
             <div class="sit-icon">👩‍👦</div>
             <div class="sit-card-body">
               <div class="sit-title">혼자 아이를 키워요</div>
@@ -120,7 +120,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" onclick="showPage('birth')">
+          <div class="sit-card" data-card-id="birth" onclick="showPage('birth')">
             <div class="sit-icon">🤱</div>
             <div class="sit-card-body">
               <div class="sit-title">출산 후 혼자 회복 중이에요</div>
@@ -128,7 +128,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" onclick="showPage('dad');setMTab('growth')">
+          <div class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')">
             <div class="sit-icon">👨</div>
             <div class="sit-card-body">
               <div class="sit-title">아빠로서 어떻게 해야 할지 모르겠어요</div>
@@ -146,7 +146,7 @@
           <p class="section-sub">감정, 번아웃, 관계, 인생 전환기 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card self-area" onclick="showPage('emotion');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')">
             <div class="sit-icon">😔</div>
             <div class="sit-card-body">
               <div class="sit-title">감정을 어떻게 해야 할지 모르겠어요</div>
@@ -154,7 +154,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" onclick="showPage('burnout');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')">
             <div class="sit-icon">🫠</div>
             <div class="sit-card-body">
               <div class="sit-title">번아웃인 것 같아요</div>
@@ -162,7 +162,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" onclick="showPage('relation');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')">
             <div class="sit-icon">💔</div>
             <div class="sit-card-body">
               <div class="sit-title">관계가 무너졌어요</div>
@@ -170,7 +170,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" onclick="showPage('transition');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="transition" onclick="showPage('transition');setMTab('mind')">
             <div class="sit-icon">🌀</div>
             <div class="sit-card-body">
               <div class="sit-title">삶의 방향을 잃었어요</div>
@@ -178,7 +178,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card sit-card--teen self-area" onclick="showPage('teen');setMTab('mind')">
+          <div class="sit-card sit-card--teen self-area" data-card-id="teen" onclick="showPage('teen');setMTab('mind')">
             <div class="sit-icon">🧒</div>
             <div class="sit-card-body">
               <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
@@ -186,7 +186,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" onclick="showPage('workplace');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')">
             <div class="sit-icon">🏢</div>
             <div class="sit-card-body">
               <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
@@ -220,6 +220,12 @@
       </div>
 
     </section>
+
+    <!-- 카드 편집 모드 완료 버튼 -->
+    <div class="card-edit-bar" id="card-edit-bar">
+      <span class="card-edit-hint">카드를 길게 눌러 드래그하세요</span>
+      <button class="card-edit-done" onclick="exitCardEdit()">완료</button>
+    </div>
 
     <!-- ══════════════ PAGE: 성장 가이드 ══════════════ -->
     <div class="page-view" id="page-growth" style="display:none">

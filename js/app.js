@@ -448,6 +448,191 @@ document.addEventListener('keydown', e => {
   window.addEventListener('resize', closePopup);
 })();
 
+/* ══════════════════════════════════════════════════════
+   카드 편집 모드 — 아이폰 스타일 드래그 재배치
+══════════════════════════════════════════════════════ */
+(function initCardEdit() {
+  const ORDER_KEY = 'beinside_card_order_v1';
+  let editMode = false;
+  let longPressTimer = null;
+  let drag = null;
+
+  /* ── 순서 저장/복원 ── */
+  function saveOrder() {
+    const care = [...document.querySelectorAll('.section-care .sit-card[data-card-id]')].map(c => c.dataset.cardId);
+    const self = [...document.querySelectorAll('.section-self .sit-card[data-card-id]')].map(c => c.dataset.cardId);
+    localStorage.setItem(ORDER_KEY, JSON.stringify({ care, self }));
+  }
+
+  function loadOrder() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(ORDER_KEY));
+      if (!saved) return;
+      applyOrder('.section-care .situation-grid', saved.care);
+      applyOrder('.section-self .situation-grid', saved.self);
+    } catch (e) { /* ignore */ }
+  }
+
+  function applyOrder(sel, order) {
+    const grid = document.querySelector(sel);
+    if (!grid || !order) return;
+    order.forEach(id => {
+      const card = grid.querySelector('[data-card-id="' + id + '"]');
+      if (card) grid.appendChild(card);
+    });
+  }
+
+  /* ── 편집 모드 진입/종료 ── */
+  window.enterCardEdit = function() {
+    if (editMode) return;
+    editMode = true;
+    document.body.classList.add('card-edit-mode');
+    // 햅틱 피드백 (지원 시)
+    if (navigator.vibrate) navigator.vibrate(30);
+  };
+
+  window.exitCardEdit = function() {
+    if (!editMode) return;
+    editMode = false;
+    document.body.classList.remove('card-edit-mode');
+    saveOrder();
+  };
+
+  /* ── 롱프레스 감지 ── */
+  function onPointerDown(e) {
+    if (editMode) return;
+    const card = e.target.closest('.sit-card[data-card-id]');
+    if (!card) return;
+    const startX = e.clientX || (e.touches && e.touches[0].clientX);
+    const startY = e.clientY || (e.touches && e.touches[0].clientY);
+    longPressTimer = setTimeout(() => { enterCardEdit(); }, 600);
+    // 움직이면 취소
+    const cancel = (ev) => {
+      const cx = ev.clientX || (ev.touches && ev.touches[0] && ev.touches[0].clientX) || 0;
+      const cy = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || 0;
+      if (Math.abs(cx - startX) > 8 || Math.abs(cy - startY) > 8) {
+        clearTimeout(longPressTimer);
+        document.removeEventListener('touchmove', cancel);
+        document.removeEventListener('mousemove', cancel);
+      }
+    };
+    document.addEventListener('touchmove', cancel, { passive: true });
+    document.addEventListener('mousemove', cancel);
+    const up = () => {
+      clearTimeout(longPressTimer);
+      document.removeEventListener('touchmove', cancel);
+      document.removeEventListener('mousemove', cancel);
+      document.removeEventListener('touchend', up);
+      document.removeEventListener('mouseup', up);
+    };
+    document.addEventListener('touchend', up, { once: true });
+    document.addEventListener('mouseup', up, { once: true });
+  }
+
+  /* ── 드래그 시작 ── */
+  function onDragStart(e) {
+    if (!editMode) return;
+    const card = e.target.closest('.sit-card[data-card-id]');
+    if (!card) return;
+
+    const touch = e.touches ? e.touches[0] : e;
+    const rect = card.getBoundingClientRect();
+    const grid = card.closest('.situation-grid');
+
+    drag = {
+      card, grid,
+      clone: null,
+      offsetX: touch.clientX - rect.left,
+      offsetY: touch.clientY - rect.top,
+      startX: touch.clientX,
+      startY: touch.clientY,
+      moved: false
+    };
+
+    // 편집 모드에서 카드 클릭 차단
+    e.preventDefault();
+  }
+
+  /* ── 드래그 이동 ── */
+  function onDragMove(e) {
+    if (!drag) return;
+    const touch = e.touches ? e.touches[0] : e;
+    const dx = Math.abs(touch.clientX - drag.startX);
+    const dy = Math.abs(touch.clientY - drag.startY);
+
+    if (!drag.moved) {
+      if (dx < 4 && dy < 4) return;
+      drag.moved = true;
+      // 고스트 생성
+      const rect = drag.card.getBoundingClientRect();
+      drag.clone = drag.card.cloneNode(true);
+      drag.clone.className = 'sit-card drag-ghost';
+      drag.clone.style.width = rect.width + 'px';
+      drag.clone.style.height = rect.height + 'px';
+      drag.clone.style.left = rect.left + 'px';
+      drag.clone.style.top = rect.top + 'px';
+      document.body.appendChild(drag.clone);
+      drag.card.classList.add('dragging');
+    }
+
+    e.preventDefault();
+    drag.clone.style.left = (touch.clientX - drag.offsetX) + 'px';
+    drag.clone.style.top = (touch.clientY - drag.offsetY) + 'px';
+
+    // 삽입 위치 계산
+    const siblings = [...drag.grid.querySelectorAll('.sit-card[data-card-id]:not(.dragging)')];
+    let inserted = false;
+    for (const sib of siblings) {
+      const r = sib.getBoundingClientRect();
+      if (touch.clientY < r.top + r.height / 2) {
+        drag.grid.insertBefore(drag.card, sib);
+        inserted = true;
+        break;
+      }
+    }
+    if (!inserted && siblings.length > 0) {
+      siblings[siblings.length - 1].after(drag.card);
+    }
+  }
+
+  /* ── 드래그 종료 ── */
+  function onDragEnd() {
+    if (!drag) return;
+    if (drag.clone) drag.clone.remove();
+    drag.card.classList.remove('dragging');
+    drag = null;
+    saveOrder();
+  }
+
+  /* ── 이벤트 바인딩 ── */
+  // 롱프레스
+  document.addEventListener('touchstart', onPointerDown, { passive: true });
+  document.addEventListener('mousedown', onPointerDown);
+
+  // 드래그 (편집 모드 전용)
+  document.addEventListener('touchstart', function(e) {
+    if (editMode) onDragStart(e);
+  }, { passive: false });
+  document.addEventListener('touchmove', onDragMove, { passive: false });
+  document.addEventListener('touchend', onDragEnd);
+  document.addEventListener('mousedown', function(e) {
+    if (editMode) onDragStart(e);
+  });
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mouseup', onDragEnd);
+
+  // 편집 모드에서 카드 onclick 차단
+  document.addEventListener('click', function(e) {
+    if (editMode && e.target.closest('.sit-card[data-card-id]')) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, true);
+
+  /* ── 초기 로드 ── */
+  loadOrder();
+})();
+
 /* ── 감정 체크인 (메인 화면) ── */
 function selectMood(mood) {
   // 저장

@@ -3146,6 +3146,75 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 /* ══════════════════════════════════════════
    TERM TOOLTIP — 전문 용어 설명 팝업
 ══════════════════════════════════════════ */
+/* ══════════════════════════════════════════
+   CARD EDIT MODE — 아이폰 스타일 카드 재배치
+══════════════════════════════════════════ */
+@keyframes wiggle{
+  0%,100%{transform:rotate(0deg)}
+  25%{transform:rotate(-1.2deg)}
+  75%{transform:rotate(1.2deg)}
+}
+.card-edit-mode .sit-card{
+  animation:wiggle .28s ease-in-out infinite;
+  cursor:grab;
+  user-select:none;
+}
+.card-edit-mode .sit-card:nth-child(even){animation-delay:.14s;}
+.card-edit-mode .sit-card:nth-child(3n){animation-direction:reverse;}
+.card-edit-mode .sit-card:hover{transform:none;box-shadow:0 2px 6px rgba(0,0,0,.05);}
+.card-edit-mode .sit-card .sit-arrow{display:none;}
+.card-edit-mode .sit-card::after{
+  content:'⋮⋮';
+  position:absolute;
+  top:8px;right:10px;
+  font-size:14px;color:var(--ink-l);
+  letter-spacing:2px;
+  opacity:.6;
+}
+.sit-card.dragging{
+  opacity:.25;
+  animation:none !important;
+}
+.drag-ghost{
+  position:fixed;
+  z-index:9990;
+  pointer-events:none;
+  opacity:.9;
+  transform:scale(1.04) rotate(2deg);
+  box-shadow:0 16px 48px rgba(0,0,0,.22);
+  border-radius:16px;
+  transition:transform .1s;
+}
+/* 편집 바 */
+.card-edit-bar{
+  display:none;
+  position:fixed;
+  bottom:70px;left:50%;transform:translateX(-50%);
+  z-index:9980;
+  background:var(--ink);
+  color:#F7F3EE;
+  border-radius:20px;
+  padding:10px 14px 10px 20px;
+  align-items:center;gap:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,.28);
+  font-size:13px;
+  animation:up .25s ease both;
+}
+.card-edit-mode .card-edit-bar{display:flex;}
+.card-edit-hint{opacity:.7;font-size:12px;white-space:nowrap;}
+.card-edit-done{
+  background:var(--peach);color:#fff;
+  border:none;border-radius:12px;
+  padding:8px 20px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;font-weight:700;
+  cursor:pointer;
+  transition:background .15s;
+}
+.card-edit-done:hover{background:var(--peach-d);}
+/* 편집 모드에서 카드 클릭 차단 */
+.card-edit-mode .sit-card{pointer-events:auto;}
+
 .term{
   position:relative;
   display:inline;
