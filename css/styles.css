@@ -3226,6 +3226,18 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .card-edit-hint{font-size:10px;}
   .card-edit-done{padding:5px 12px;font-size:11px;border-radius:8px;}
 }
+/* 편집 안내 힌트 (기본 화면) */
+.card-edit-tip{
+  text-align:center;
+  font-size:11px;
+  color:var(--ink-l);
+  opacity:.45;
+  margin:12px 0 4px;
+  letter-spacing:-.1px;
+}
+.card-edit-mode .card-edit-tip{display:none;}
+/* 긴급 배너 → 감정 섹션 간격 */
+.emergency-banner{margin-bottom:20px;}
 /* 편집 모드에서 카드 클릭 차단 */
 .card-edit-mode .sit-card{pointer-events:auto;}
 
