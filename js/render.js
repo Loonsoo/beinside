@@ -74,16 +74,16 @@ function getMentalHTML(months){
     <div class="card-audience aud-all">👀 모두가 읽으면 좋아요</div>
     <h3>🧘 정신건강 &amp; 마음 돌봄</h3>
     <div class="stat-badge" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
-    <div style="background:rgba(200,80,110,.08);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:#A03050;font-weight:600;">
+    <div style="background:var(--mental-risk-bg);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:var(--mental-risk-ink);font-weight:600;">
       ⚠️ ${d.risk}
     </div>
     <div style="margin-bottom:14px;">
-      <div style="font-size:11.5px;font-weight:700;color:#6A3A90;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">이상 징후 체크</div>
-      <ul>${d.signs.map(s=>`<li style="font-size:12.5px;color:var(--ink-m);line-height:1.65;padding-left:14px;position:relative;margin-bottom:5px;"><span style="position:absolute;left:0;color:#8A5AB4;font-size:16px;line-height:1.3;">·</span>${s}</li>`).join('')}</ul>
+      <div style="font-size:11.5px;font-weight:700;color:var(--mental-label);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">이상 징후 체크</div>
+      <ul>${d.signs.map(s=>`<li style="font-size:12.5px;color:var(--ink-m);line-height:1.65;padding-left:14px;position:relative;margin-bottom:5px;"><span style="position:absolute;left:0;color:var(--mental-bullet);font-size:16px;line-height:1.3;">·</span>${s}</li>`).join('')}</ul>
     </div>
     <div>
-      <div style="font-size:11.5px;font-weight:700;color:#6A3A90;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">마음 훈련 &amp; 대처법</div>
-      <ul>${d.tips.map(t=>`<li style="font-size:12.5px;color:var(--ink-m);line-height:1.65;padding-left:14px;position:relative;margin-bottom:5px;"><span style="position:absolute;left:0;color:#3A9A60;font-size:16px;line-height:1.3;">·</span>${t}</li>`).join('')}</ul>
+      <div style="font-size:11.5px;font-weight:700;color:var(--mental-label);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">마음 훈련 &amp; 대처법</div>
+      <ul>${d.tips.map(t=>`<li style="font-size:12.5px;color:var(--ink-m);line-height:1.65;padding-left:14px;position:relative;margin-bottom:5px;"><span style="position:absolute;left:0;color:var(--mental-tip);font-size:16px;line-height:1.3;">·</span>${t}</li>`).join('')}</ul>
     </div>
   </div>`;
 }
@@ -117,7 +117,7 @@ function getFirstAidHTML(months){
   return`<div class="card full" style="background:linear-gradient(135deg,#FFF5F2,#FFF0EE);border:1px solid rgba(220,80,60,.15);border-radius:20px;padding:26px 28px;">
     <div class="card-audience aud-parent">👨‍👩‍👧 부모·보호자 필독</div>
     <h3>🚨 영유아 응급처치 가이드</h3>
-    <div style="background:rgba(200,60,60,.08);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:#A02020;font-weight:600;">
+    <div style="background:var(--fa-risk-bg);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:var(--fa-risk-ink);font-weight:600;">
       📞 응급상황 즉시 <strong>119</strong> 신고 — 전화 연결 유지하며 지시에 따르세요
     </div>
     <div class="firstaid-grid">
@@ -205,7 +205,7 @@ function getFirstAidHTML(months){
         </ul>
       </div>
     </div>
-    <div style="background:rgba(60,140,90,.07);border-radius:10px;padding:11px 15px;margin-top:14px;font-size:12px;color:#2A6A40;line-height:1.65;">
+    <div style="background:var(--fa-tip-bg);border-radius:10px;padding:11px 15px;margin-top:14px;font-size:12px;color:var(--fa-tip-ink);line-height:1.65;">
       💡 <strong>예방이 최선</strong> — 영아 흔들기 절대 금지 / 수면 시 반드시 등 대고 재우기 / 소형 물건(동전·단추·장난감 부품) 손 닿는 곳에 두지 않기 / 욕조 목욕 시 절대 자리 비우지 않기
     </div>
   </div>`;
@@ -663,7 +663,7 @@ function renderTeenPage(key, btn) {
       <h4>${item.icon||'💬'} ${item.title||item.t||''}</h4>
       ${item.points
         ? `<ul>${item.points.map(p=>`<li>${p}</li>`).join('')}</ul>`
-        : `<p style="font-size:13px;color:#8090C0;line-height:1.75;">${item.text||''}</p>`
+        : `<p style="font-size:13px;color:var(--teen-text);line-height:1.75;">${item.text||''}</p>`
       }
     </div>`).join('') : '';
 

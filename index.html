@@ -35,7 +35,7 @@
 <body>
 <div id="scroll-bar"></div>
 
-<button class="sos-btn" onclick="showPage('emergency');setMTab('emergency')">
+<button class="sos-btn" onclick="showPage('emergency');setMTab('emergency')" aria-label="24시간 긴급상담 연결">
   <span>💬</span> 24시 긴급상담
 </button>
 
@@ -46,7 +46,7 @@
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</div>
+  <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" tabindex="0" role="button" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</div>
   <div class="hdr-right">
     <button class="card-edit-badge" onclick="enterCardEdit()" title="카드 순서 편집" aria-label="카드 순서 편집">✏️</button>
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
@@ -57,8 +57,8 @@
 
 <!-- ── PROFILE MODAL ── -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+  <div class="modal" id="modal" role="dialog" aria-label="프로필 관리">
+    <button class="modal-close" onclick="closeModal()" aria-label="닫기">✕</button>
     <div id="modal-list-view">
       <h2>나의 프로필</h2>
       <p class="modal-sub">여러 명의 프로필을 저장하고 빠르게 전환할 수 있어요</p>
@@ -110,7 +110,7 @@
   </div>
 </div>
 
-<div class="page-wrap">
+<main class="page-wrap">
   <div class="main-col">
 
     <!-- ══════════════ HOME / HERO ══════════════ -->
@@ -126,40 +126,40 @@
           <p class="section-sub">연령별 발달 기준, 한부모·출산 가이드, 아빠 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')">
-            <div class="sit-icon">👶</div>
+          <div class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')" tabindex="0" role="button">
+            <div class="sit-icon">🌱</div>
             <div class="sit-card-body">
               <div class="sit-title">아이 성장이 불안해요</div>
               <div class="sit-sub">연령별 발달 기준과 체크리스트</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="sp" onclick="showPage('sp')">
-            <div class="sit-icon">👩‍👦</div>
+          <div class="sit-card" data-card-id="sp" onclick="showPage('sp')" tabindex="0" role="button">
+            <div class="sit-icon">🫂</div>
             <div class="sit-card-body">
               <div class="sit-title">혼자 아이를 키워요</div>
               <div class="sit-sub">한부모·홀로 양육하는 분들을 위한 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="birth" onclick="showPage('birth')">
-            <div class="sit-icon">🤱</div>
+          <div class="sit-card" data-card-id="birth" onclick="showPage('birth')" tabindex="0" role="button">
+            <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
               <div class="sit-title">출산 후 혼자 회복 중이에요</div>
               <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')">
-            <div class="sit-icon">👨</div>
+          <div class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')" tabindex="0" role="button">
+            <div class="sit-icon">🧸</div>
             <div class="sit-card-body">
               <div class="sit-title">아빠로서 어떻게 해야 할지 모르겠어요</div>
               <div class="sit-sub">아빠 전용 육아 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="elder" onclick="showPage('elder');setMTab('home')">
-            <div class="sit-icon">🧓</div>
+          <div class="sit-card" data-card-id="elder" onclick="showPage('elder');setMTab('home')" tabindex="0" role="button">
+            <div class="sit-icon">🍵</div>
             <div class="sit-card-body">
               <div class="sit-title">부모님 돌봄이 힘들어요</div>
               <div class="sit-sub">간병 번아웃, 치매 돌봄, 복지 연결 가이드</div>
@@ -176,15 +176,15 @@
           <p class="section-sub">감정, 번아웃, 관계, 인생 전환기 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')">
-            <div class="sit-icon">😔</div>
+          <div class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')" tabindex="0" role="button">
+            <div class="sit-icon">🌊</div>
             <div class="sit-card-body">
               <div class="sit-title">감정을 어떻게 해야 할지 모르겠어요</div>
               <div class="sit-sub">감정을 알아차리고, 다루는 방법을 안내해요</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')" tabindex="0" role="button">
             <div class="sit-icon">🫠</div>
             <div class="sit-card-body">
               <div class="sit-title">번아웃인 것 같아요</div>
@@ -192,7 +192,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')" tabindex="0" role="button">
             <div class="sit-icon">💔</div>
             <div class="sit-card-body">
               <div class="sit-title">관계가 무너졌어요</div>
@@ -200,7 +200,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="transition" onclick="showPage('transition');setMTab('mind')">
+          <div class="sit-card self-area" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" tabindex="0" role="button">
             <div class="sit-icon">🌀</div>
             <div class="sit-card-body">
               <div class="sit-title">삶의 방향을 잃었어요</div>
@@ -208,16 +208,16 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card sit-card--teen self-area" data-card-id="teen" onclick="showPage('teen');setMTab('mind')">
-            <div class="sit-icon">🧒</div>
+          <div class="sit-card sit-card--teen self-area" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" tabindex="0" role="button">
+            <div class="sit-icon">🌙</div>
             <div class="sit-card-body">
               <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
               <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')">
-            <div class="sit-icon">🏢</div>
+          <div class="sit-card self-area" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" tabindex="0" role="button">
+            <div class="sit-icon">🛡️</div>
             <div class="sit-card-body">
               <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
               <div class="sit-sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
@@ -229,7 +229,7 @@
       </div><!-- /hero-sections -->
 
       <!-- 긴급 도움 배너 -->
-      <div class="emergency-banner" onclick="showPage('emergency');setMTab('emergency')">
+      <div class="emergency-banner" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
         <span class="emergency-banner-icon">🚨</span>
         <div class="emergency-banner-body">
           <div class="emergency-banner-title">지금 당장 도움이 필요해요</div>
@@ -362,19 +362,19 @@
 
       <input type="hidden" id="ai" value="0">
       <div class="pills">
-        <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:var(--age-newborn)"></span>신생아</div>
-        <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:var(--age-3m)"></span>3개월</div>
-        <div class="pill" onclick="qs(6,'m')"><span class="cd" style="background:var(--age-6m)"></span>6개월</div>
-        <div class="pill" onclick="qs(12,'m')"><span class="cd" style="background:var(--age-12m)"></span>12개월</div>
-        <div class="pill" onclick="qs(24,'m')"><span class="cd" style="background:var(--age-24m)"></span>24개월</div>
-        <div class="pill" onclick="qs(4,'y')"><span class="cd" style="background:var(--age-preschool)"></span>유아 4세</div>
-        <div class="pill" onclick="qs(8,'y')"><span class="cd" style="background:var(--age-school)"></span>학령기 8세</div>
-        <div class="pill" onclick="qs(13,'y')"><span class="cd" style="background:var(--age-teen)"></span>청소년 13세</div>
-        <div class="pill" onclick="qs(20,'y')"><span class="cd" style="background:var(--age-young)"></span>청년 20세</div>
-        <div class="pill" onclick="qs(35,'y')"><span class="cd" style="background:var(--age-adult)"></span>성인 35세</div>
-        <div class="pill" onclick="qs(50,'y')"><span class="cd" style="background:var(--age-middle)"></span>중년 50세</div>
-        <div class="pill" onclick="qs(65,'y')"><span class="cd" style="background:var(--age-senior)"></span>노년 65세</div>
-        <div class="pill" onclick="qs(78,'y')"><span class="cd" style="background:var(--age-late-senior)"></span>후기 노년 78세</div>
+        <div class="pill" onclick="qs(0,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-newborn)"></span>신생아</div>
+        <div class="pill" onclick="qs(3,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-3m)"></span>3개월</div>
+        <div class="pill" onclick="qs(6,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-6m)"></span>6개월</div>
+        <div class="pill" onclick="qs(12,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-12m)"></span>12개월</div>
+        <div class="pill" onclick="qs(24,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-24m)"></span>24개월</div>
+        <div class="pill" onclick="qs(4,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-preschool)"></span>유아 4세</div>
+        <div class="pill" onclick="qs(8,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-school)"></span>학령기 8세</div>
+        <div class="pill" onclick="qs(13,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-teen)"></span>청소년 13세</div>
+        <div class="pill" onclick="qs(20,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-young)"></span>청년 20세</div>
+        <div class="pill" onclick="qs(35,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-adult)"></span>성인 35세</div>
+        <div class="pill" onclick="qs(50,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-middle)"></span>중년 50세</div>
+        <div class="pill" onclick="qs(65,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-senior)"></span>노년 65세</div>
+        <div class="pill" onclick="qs(78,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-late-senior)"></span>후기 노년 78세</div>
       </div>
 
       <div id="medical-disclaimer" class="medical-disclaimer" style="display:none">
@@ -689,10 +689,10 @@
 
     <!-- 출처 드로어 -->
     <div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
-    <div class="source-drawer" id="source-drawer">
+    <div class="source-drawer" id="source-drawer" role="dialog" aria-label="통계 데이터 출처">
       <div class="source-drawer-header">
         <h2>📚 통계 데이터 출처</h2>
-        <button class="source-drawer-close" onclick="closeSourceDrawer()">✕</button>
+        <button class="source-drawer-close" onclick="closeSourceDrawer()" aria-label="출처 닫기">✕</button>
       </div>
       <div class="source-drawer-body">
 
@@ -813,30 +813,30 @@
     </footer>
 
   </div><!-- /main-col -->
-</div><!-- /page-wrap -->
+</main><!-- /page-wrap -->
 
 <!-- ── 모바일 하단 탭바 (5탭) ── -->
 <nav class="mobile-tabbar" id="mobile-tabbar">
-  <button class="mtab active" id="mtab-home" onclick="showPage('home');setMTab('home')">
+  <button class="mtab active" id="mtab-home" onclick="showPage('home');setMTab('home')" aria-label="홈">
     <span>🏠</span>홈
   </button>
-  <button class="mtab" id="mtab-growth" onclick="showPage('growth');setMTab('growth')">
+  <button class="mtab" id="mtab-growth" onclick="showPage('growth');setMTab('growth')" aria-label="성장 가이드">
     <span>👶</span>성장
   </button>
-  <button class="mtab" id="mtab-mind" onclick="showPage('emotion');setMTab('mind')">
+  <button class="mtab" id="mtab-mind" onclick="showPage('emotion');setMTab('mind')" aria-label="마음 돌봄">
     <span>💜</span>마음
   </button>
-  <button class="mtab" id="mtab-journal" onclick="showPage('journal');setMTab('journal')">
+  <button class="mtab" id="mtab-journal" onclick="showPage('journal');setMTab('journal')" aria-label="기록">
     <span>📝</span>기록
   </button>
-  <button class="mtab" id="mtab-emergency" onclick="showPage('emergency');setMTab('emergency')">
+  <button class="mtab" id="mtab-emergency" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움">
     <span>🆘</span>긴급
   </button>
 </nav>
 
 <!-- ── 온보딩 오버레이 (첫 방문) ── -->
 <div class="onboard-overlay" id="onboard-overlay">
-  <div class="onboard-card">
+  <div class="onboard-card" role="dialog" aria-label="BeInside 시작하기">
     <div class="onboard-logo">🌻</div>
     <h2 class="onboard-title">어떤 상황이세요?</h2>
     <p class="onboard-sub">가장 가까운 도움을 바로 안내해 드릴게요</p>
@@ -970,6 +970,15 @@
     "url": "https://beinside.kr"
   }
 }
+</script>
+
+<script>
+/* 키보드 접근성: role=button 요소에 Enter/Space 활성화 */
+document.addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===' ')&&e.target.getAttribute('role')==='button'){
+    e.preventDefault();e.target.click();
+  }
+});
 </script>
 </body>
 </html>

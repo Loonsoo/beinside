@@ -7,6 +7,28 @@ let editType     = 'child';
 let editAvatarImg = null; // base64 또는 null
 let editAvatarEm  = '🌱';
 
+/* ── 포커스 트랩 유틸 ── */
+let _lastFocused = null;
+function trapFocus(container) {
+  _lastFocused = document.activeElement;
+  const focusable = container.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  if (focusable.length === 0) return;
+  focusable[0].focus();
+  container.addEventListener('keydown', function handler(e) {
+    if (e.key !== 'Tab') return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+}
+function restoreFocus() {
+  if (_lastFocused && _lastFocused.focus) _lastFocused.focus();
+  _lastFocused = null;
+}
+
 /* ── 헤더 칩 업데이트 ── */
 function updateHeaderChip() {
   const chip   = document.getElementById('prof-chip');
@@ -50,11 +72,14 @@ function goWithProfile() {
 function openProfPanel() {
   renderProfPanel();
   document.getElementById('prof-panel-overlay').classList.add('on');
-  document.getElementById('prof-panel').classList.add('on');
+  const panel = document.getElementById('prof-panel');
+  panel.classList.add('on');
+  trapFocus(panel);
 }
 function closeProfPanel() {
   document.getElementById('prof-panel-overlay').classList.remove('on');
   document.getElementById('prof-panel').classList.remove('on');
+  restoreFocus();
 }
 
 function renderProfPanel() {

@@ -94,7 +94,7 @@ function renderBurnoutPage(container) {
       <div class="step-label">③ 이번 주 + 장기 가이드</div>
       <div class="accordion-group">
         <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0">
+          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
             <span>📅 이번 주에 시도해볼 것</span><span class="accordion-arrow">▼</span>
           </div>
           <div class="accordion-body"><div class="accordion-body-inner">
@@ -102,7 +102,7 @@ function renderBurnoutPage(container) {
           </div></div>
         </div>
         <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0">
+          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
             <span>🔄 번아웃에서 빠져나오기 위해</span><span class="accordion-arrow">▼</span>
           </div>
           <div class="accordion-body"><div class="accordion-body-inner">
@@ -110,7 +110,7 @@ function renderBurnoutPage(container) {
           </div></div>
         </div>
         <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0">
+          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
             <span>${esc(d.distinction.title)}</span><span class="accordion-arrow">▼</span>
           </div>
           <div class="accordion-body"><div class="accordion-body-inner">

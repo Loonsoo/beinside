@@ -1,0 +1,161 @@
+{
+  "_comment": "BeInside 콘텐츠 템플릿. 새 콘텐츠 추가 시 이 구조를 복사하여 사용하세요.",
+
+  "getData_item": {
+    "_description": "성장 가이드 단계 하나 (js/render.js getData 함수 내부에 추가)",
+    "stg": "",
+    "em": "",
+    "qt": "",
+    "g": ["#000000", "#000000"],
+    "role": "부모",
+    "brain": [
+      "<strong>핵심 발달</strong> — 설명"
+    ],
+    "emo": [
+      "<strong>핵심 정서</strong> — 설명"
+    ],
+    "body": [
+      "신체 발달 항목"
+    ],
+    "play": [
+      { "t": "활동 제목", "d": "활동 설명 — 발달 효과" }
+    ],
+    "parent": [
+      { "e": "🤲", "t": "행동 가이드 제목\n상세 설명" }
+    ],
+    "warn": [
+      "<strong>주의 사항</strong> — 구체적 위험과 대안"
+    ],
+    "mile": [
+      { "ck": "✓", "tt": "N개월 체크", "dc": "발달 이정표 나열" }
+    ]
+  },
+
+  "burnout_data_item": {
+    "_description": "번아웃/자기돌봄 가이드 (js/self-pages.js 패턴)",
+    "intro": {
+      "title": "",
+      "sub": "",
+      "stat": { "pct": "", "label": "" }
+    },
+    "check": {
+      "id": "ct_",
+      "title": "지금 내 상태는?",
+      "questions": [],
+      "results": {
+        "high": { "label": "", "threshold": 0, "action": "" },
+        "mid":  { "label": "", "threshold": 0 },
+        "low":  { "label": "", "threshold": 0 }
+      }
+    },
+    "actions": {
+      "immediate": [
+        { "icon": "", "text": "" }
+      ],
+      "week": [
+        { "icon": "", "text": "" }
+      ],
+      "longterm": [
+        { "icon": "", "text": "" }
+      ]
+    },
+    "help": [
+      { "number": "", "name": "", "desc": "" }
+    ]
+  },
+
+  "four_step_framework": {
+    "_description": "4단계 프레임워크 콘텐츠 구조. 모든 가이드 페이지에 적용.",
+    "step1_recognition": {
+      "_label": "① 상황 인식",
+      "_description": "공감 + 정상화 + 통계",
+      "hero": {
+        "icon": "",
+        "title": "",
+        "subtitle": ""
+      },
+      "stat": {
+        "pct": "",
+        "label": ""
+      }
+    },
+    "step2_assessment": {
+      "_label": "② 상황 판단",
+      "_description": "자가 체크 도구",
+      "check": {
+        "id": "ct_",
+        "title": "지금 내 상태는?",
+        "questions": [],
+        "emergencyIndex": null,
+        "emergencyMsg": "",
+        "results": {
+          "high": { "label": "", "threshold": 0, "action": "" },
+          "mid":  { "label": "", "threshold": 0 },
+          "low":  { "label": "", "threshold": 0 }
+        }
+      }
+    },
+    "step3_action": {
+      "_label": "③ 행동 가이드",
+      "_description": "구체적 행동 체크리스트",
+      "actions": [
+        { "icon": "", "text": "" }
+      ]
+    },
+    "step4_connection": {
+      "_label": "④ 도움 연결",
+      "_description": "전화번호 카드 (tel: 링크 + 한 줄 설명)",
+      "help": [
+        { "number": "", "name": "", "desc": "" }
+      ]
+    }
+  },
+
+  "relationship_situation_item": {
+    "_description": "관계 붕괴/인생 전환기 상황별 항목 (RELATIONSHIP_DATA, TRANSITION_DATA 패턴)",
+    "recognition": "",
+    "check": {
+      "id": "ct_",
+      "title": "지금 내 상태는?",
+      "questions": [],
+      "emergencyIndex": null,
+      "emergencyMsg": "",
+      "results": {
+        "high": { "label": "", "threshold": 0, "action": "" },
+        "mid":  { "label": "", "threshold": 0 },
+        "low":  { "label": "", "threshold": 0 }
+      }
+    },
+    "actions": [
+      { "icon": "", "text": "" }
+    ],
+    "help": [
+      { "number": "", "name": "", "desc": "" }
+    ]
+  },
+
+  "mental_stage_item": {
+    "_description": "정신건강 단계별 항목 (MENTAL 객체 패턴)",
+    "stat": { "pct": "", "label": "" },
+    "risk": "",
+    "signs": [],
+    "tips": []
+  },
+
+  "sp_data_stage_item": {
+    "_description": "특수 상황 단계별 항목 (SP_DATA[situationIndex][stage] 패턴)",
+    "need": [
+      {
+        "cls": "",
+        "tag": "",
+        "tagText": "",
+        "title": "",
+        "items": []
+      }
+    ],
+    "scripts": [
+      { "tag": "", "text": "" }
+    ],
+    "warns": []
+  }
+}

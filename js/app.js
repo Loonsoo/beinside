@@ -712,6 +712,8 @@ function initJournalPage() {
 /* ── 체크 아이템 토글 ── */
 function toggleCheckItem(el) {
   el.classList.toggle('checked');
+  el.style.transform = 'scale(1.02)';
+  setTimeout(() => { el.style.transform = ''; }, 150);
   const box = el.querySelector('.check-box');
   if (box) box.textContent = el.classList.contains('checked') ? '✓' : '';
 }
@@ -719,6 +721,8 @@ function toggleCheckItem(el) {
 /* ── 액션 아이템 토글 ── */
 function toggleAction(el) {
   el.classList.toggle('done');
+  el.style.transform = 'scale(1.02)';
+  setTimeout(() => { el.style.transform = ''; }, 150);
   const check = el.querySelector('.action-check');
   if (check) check.textContent = el.classList.contains('done') ? '✓' : '';
 }
@@ -727,6 +731,7 @@ function toggleAction(el) {
 function toggleAccordion(el) {
   const item = el.closest('.accordion-item');
   if (!item) return;
+  const header = item.querySelector('.accordion-header');
   const body = item.querySelector('.accordion-body');
   const isOpen = item.classList.contains('open');
   // 같은 그룹 내 모두 닫기
@@ -734,13 +739,30 @@ function toggleAccordion(el) {
   if (group) {
     group.querySelectorAll('.accordion-item.open').forEach(i => {
       i.classList.remove('open');
+      const h = i.querySelector('.accordion-header');
+      if (h) h.setAttribute('aria-expanded', 'false');
       const b = i.querySelector('.accordion-body');
       if (b) b.style.maxHeight = '0';
     });
   }
   if (!isOpen) {
     item.classList.add('open');
+    if (header) header.setAttribute('aria-expanded', 'true');
     const inner = body.querySelector('.accordion-body-inner');
     body.style.maxHeight = (inner ? inner.scrollHeight + 32 : 400) + 'px';
+    setTimeout(() => {
+      item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 200);
   }
 }
+
+/* ── 아코디언 키보드 지원 ── */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const el = e.target;
+    if (el.classList && el.classList.contains('accordion-header')) {
+      e.preventDefault();
+      toggleAccordion(el);
+    }
+  }
+});

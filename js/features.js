@@ -92,7 +92,7 @@ function showCheckResult(resultEl, cls, html, isEmergency) {
   resultEl.style.display = 'block';
   resultEl.className = 'check-result ' + cls;
   resultEl.innerHTML = html + '<div class="check-disclaimer">이 결과는 의학적·심리학적 진단이 아닌 참고용이에요. 정확한 진단은 전문가와 상담하세요. 자세한 내용(비밀보장 범위 등)은 전화 시 확인해 주세요.</div>';
-  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
 }
 
 /* ══════════════════════════════════════════════════════
@@ -100,12 +100,17 @@ function showCheckResult(resultEl, cls, html, isEmergency) {
 ══════════════════════════════════════════════════════ */
 
 function loadMoods() {
-  try { return JSON.parse(localStorage.getItem(MOOD_KEY) || '[]'); } catch { return []; }
+  try {
+    const store = (curPage === 'teen') ? sessionStorage : localStorage;
+    return JSON.parse(store.getItem(MOOD_KEY) || '[]');
+  } catch { return []; }
 }
 
 function saveMoods(arr) {
   const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
-  localStorage.setItem(MOOD_KEY, JSON.stringify(arr.filter(e => e.timestamp > cutoff)));
+  const trimmed = JSON.stringify(arr.filter(e => e.timestamp > cutoff));
+  const store = (typeof curPage !== 'undefined' && curPage === 'teen') ? sessionStorage : localStorage;
+  store.setItem(MOOD_KEY, trimmed);
 }
 
 function getMoodEmoji(mood) {
@@ -170,6 +175,8 @@ function saveMoodEntry(mood, btnEl) {
   // 버튼 강조
   btnEl.closest('.mood-btns').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
   btnEl.classList.add('selected');
+  btnEl.style.transform = 'scale(1.15)';
+  setTimeout(() => { btnEl.style.transform = ''; }, 200);
   document.getElementById('mood-memo-wrap').style.display = 'block';
 }
 
@@ -188,11 +195,15 @@ function saveMoodMemo() {
 ══════════════════════════════════════════════════════ */
 
 function loadJournal() {
-  try { return JSON.parse(localStorage.getItem(JOURNAL_KEY) || '[]'); } catch { return []; }
+  try {
+    const store = (typeof curPage !== 'undefined' && curPage === 'teen') ? sessionStorage : localStorage;
+    return JSON.parse(store.getItem(JOURNAL_KEY) || '[]');
+  } catch { return []; }
 }
 
 function saveJournal(arr) {
-  localStorage.setItem(JOURNAL_KEY, JSON.stringify(arr));
+  const store = (typeof curPage !== 'undefined' && curPage === 'teen') ? sessionStorage : localStorage;
+  store.setItem(JOURNAL_KEY, JSON.stringify(arr));
 }
 
 const JOURNAL_TAGS = {

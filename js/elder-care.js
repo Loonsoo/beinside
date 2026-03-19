@@ -332,7 +332,7 @@ function _renderPracticalGuide(guides) {
 
     return `
       <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
           <span>${g.icon} ${esc(g.title)}</span><span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body"><div class="accordion-body-inner">
@@ -354,7 +354,7 @@ function renderElderPage(container) {
 
   const welfareHTML = d.welfare.items.map(w => `
     <div class="accordion-item">
-      <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0">
+      <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
         <span>${w.icon} ${esc(w.name)}</span><span class="accordion-arrow">▼</span>
       </div>
       <div class="accordion-body"><div class="accordion-body-inner">
@@ -379,7 +379,7 @@ function renderElderPage(container) {
       <div class="accordion-group">
         ${d.situations.map(s => `
           <div class="accordion-item" data-sit-id="${s.id}">
-            <div class="accordion-header" onclick="toggleElderSituation(this)" tabindex="0">
+            <div class="accordion-header" onclick="toggleElderSituation(this)" tabindex="0" aria-expanded="false">
               <span>${s.icon} ${esc(s.label)}</span><span class="accordion-arrow">▼</span>
             </div>
             <div class="accordion-body"><div class="accordion-body-inner">

@@ -1,0 +1,328 @@
+<!--
+  BeInside Good Card Example
+  Demonstrates: card with accordion, aria attributes, hover/focus styles,
+  proper use of CSS variables, and accessibility.
+
+  This is a standalone example. In production, styles come from css/styles.css.
+-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeInside Card Example</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* === Design Tokens (from :root) === */
+    :root {
+      --cream: #F7F3EE;
+      --warm: #EEE9E3;
+      --white: #FFFFFF;
+      --peach: #7BAECB;
+      --peach-l: #A8CADF;
+      --peach-p: #DCEBFF;
+      --peach-d: #4A8CAA;
+      --peach-glow: rgba(123,174,203,.18);
+      --amber: #6BA885;
+      --rust: #3D7A5C;
+      --ink: #3A3A3A;
+      --ink-m: #6B6B6B;
+      --ink-l: #9A9A9A;
+      --line: rgba(123,174,203,.15);
+    }
+
+    /* === Reset === */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.72;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* === Entry Animation === */
+    @keyframes up {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === Card Grid === */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .card.full { grid-column: span 1; }
+    }
+
+    /* === Base Card === */
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 22px 24px;
+      border: 1px solid rgba(0,0,0,.06);
+      border-top: 3px solid transparent;
+      box-shadow: 0 2px 6px rgba(0,0,0,.05);
+      transition: transform .28s cubic-bezier(.34,1.56,.64,1),
+                  box-shadow .28s cubic-bezier(.34,1.56,.64,1);
+      animation: up .35s ease both;
+      position: relative;
+    }
+    .card:nth-child(1) { animation-delay: .04s; }
+    .card:nth-child(2) { animation-delay: .08s; }
+    .card:nth-child(3) { animation-delay: .12s; }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.10);
+      border-top-color: var(--peach);
+    }
+    .card:focus-within {
+      outline: 2px solid var(--peach);
+      outline-offset: 2px;
+    }
+    .card.full { grid-column: span 2; }
+
+    /* === Card Color Variant: Green === */
+    .card.cbg-s {
+      background: linear-gradient(145deg, #EDFAF4, #DFF3E9);
+      border-color: rgba(107,168,133,.15);
+    }
+    .card.cbg-s:hover { border-top-color: var(--amber); }
+    .card.cbg-s ul li::before { color: var(--amber); }
+
+    /* === Card Color Variant: Blue === */
+    .card.cbg-p {
+      background: linear-gradient(145deg, #EEF5FB, #DCEBFF);
+      border-color: rgba(123,174,203,.15);
+    }
+    .card.cbg-p:hover { border-top-color: var(--peach); }
+
+    /* === Card Typography === */
+    .card h3 {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: var(--peach-d);
+      margin-bottom: 13px;
+      letter-spacing: -.3px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      line-height: 1.3;
+    }
+    .card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .card ul li {
+      font-size: 13.5px;
+      color: var(--ink-m);
+      line-height: 1.7;
+      padding-left: 16px;
+      position: relative;
+      letter-spacing: -.15px;
+      word-break: keep-all;
+    }
+    .card ul li::before {
+      content: '\B7'; /* middle dot */
+      position: absolute;
+      left: 3px;
+      color: var(--peach);
+      font-size: 20px;
+      line-height: 1.28;
+      font-weight: 700;
+    }
+    .card ul li strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* === Accordion inside card === */
+    .accordion-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      background: var(--white);
+      transition: background .18s;
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .accordion-header:hover { background: var(--warm); }
+    .accordion-header:focus-visible {
+      outline: 2px solid var(--peach);
+      outline-offset: -2px;
+    }
+    .accordion-arrow {
+      font-size: 12px;
+      transition: transform .3s ease;
+      color: var(--ink-l);
+    }
+    .accordion-item.open .accordion-arrow {
+      transform: rotate(180deg);
+    }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease;
+      background: var(--white);
+    }
+    .accordion-body-inner {
+      padding: 0 18px 16px;
+      font-size: 13.5px;
+      color: var(--ink-m);
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    /* === Reduced Motion === */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+
+    <!-- Card 1: Basic card with list -->
+    <div class="card cbg-p">
+      <h3>🧒 사회성 발달</h3>
+      <ul>
+        <li><strong>또래 관심 시작</strong> 다른 아이 옆에서 놀기 (병행 놀이)</li>
+        <li><strong>감정 표현 확장</strong> 좋아/싫어를 몸으로 표현해요</li>
+        <li>어른의 반응을 보고 자기 행동을 조절하기 시작해요</li>
+      </ul>
+    </div>
+
+    <!-- Card 2: Green variant -->
+    <div class="card cbg-s">
+      <h3>🌿 오늘 할 수 있는 것</h3>
+      <ul>
+        <li><strong>5분 산책</strong> 밖의 공기만 마셔도 괜찮아요</li>
+        <li>물 한 잔 마시고 깊은 숨 3번 쉬어 보세요</li>
+        <li><strong>1577-0199</strong>에 전화해서 이야기를 나눠 보세요</li>
+      </ul>
+    </div>
+
+    <!-- Card 3: Full-width card with accordion -->
+    <div class="card full">
+      <h3>📋 자가 점검 가이드</h3>
+
+      <div class="accordion-item">
+        <button
+          class="accordion-header"
+          onclick="toggleAccordion(this)"
+          aria-expanded="false"
+          aria-controls="acc-body-1"
+          tabindex="0"
+        >
+          <span>😴 수면 상태 점검</span>
+          <span class="accordion-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="accordion-body" id="acc-body-1" role="region">
+          <div class="accordion-body-inner">
+            <ul style="list-style:none;display:flex;flex-direction:column;gap:7px;">
+              <li style="font-size:13.5px;color:var(--ink-m);line-height:1.7;padding-left:16px;position:relative;word-break:keep-all;">
+                <span style="position:absolute;left:3px;color:var(--peach);font-size:20px;line-height:1.28;font-weight:700;">&middot;</span>
+                <strong style="color:var(--ink);font-weight:700;">밤에 4시간 이상 연속 수면</strong>이 가능한가요?
+              </li>
+              <li style="font-size:13.5px;color:var(--ink-m);line-height:1.7;padding-left:16px;position:relative;word-break:keep-all;">
+                <span style="position:absolute;left:3px;color:var(--peach);font-size:20px;line-height:1.28;font-weight:700;">&middot;</span>
+                낮에 <strong style="color:var(--ink);font-weight:700;">졸림이 일상에 지장</strong>을 주고 있나요?
+              </li>
+              <li style="font-size:13.5px;color:var(--ink-m);line-height:1.7;padding-left:16px;position:relative;word-break:keep-all;">
+                <span style="position:absolute;left:3px;color:var(--peach);font-size:20px;line-height:1.28;font-weight:700;">&middot;</span>
+                잠들기까지 30분 이상 걸리는 날이 주 3회 이상인가요?
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button
+          class="accordion-header"
+          onclick="toggleAccordion(this)"
+          aria-expanded="false"
+          aria-controls="acc-body-2"
+          tabindex="0"
+        >
+          <span>🍽️ 식사 & 영양 점검</span>
+          <span class="accordion-arrow" aria-hidden="true">▼</span>
+        </button>
+        <div class="accordion-body" id="acc-body-2" role="region">
+          <div class="accordion-body-inner">
+            하루 세 끼 중 최소 한 끼는 제대로 된 식사를 하고 있나요?
+            식욕이 급격히 줄었거나 과식이 반복된다면 스트레스 신호일 수 있어요.
+            무리하지 않아도 괜찮아요 -- 작은 것부터 하나씩 해보세요.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleAccordion(el) {
+      const item = el.closest('.accordion-item');
+      if (!item) return;
+      const body = item.querySelector('.accordion-body');
+      const isOpen = item.classList.contains('open');
+
+      // Update aria-expanded
+      el.setAttribute('aria-expanded', String(!isOpen));
+
+      // Close siblings in same parent
+      const parent = item.parentElement;
+      if (parent) {
+        parent.querySelectorAll('.accordion-item.open').forEach(function(i) {
+          i.classList.remove('open');
+          var b = i.querySelector('.accordion-body');
+          if (b) b.style.maxHeight = '0';
+          var h = i.querySelector('.accordion-header');
+          if (h) h.setAttribute('aria-expanded', 'false');
+        });
+      }
+
+      if (!isOpen) {
+        item.classList.add('open');
+        var inner = body.querySelector('.accordion-body-inner');
+        body.style.maxHeight = (inner ? inner.scrollHeight + 32 : 400) + 'px';
+      }
+    }
+
+    // Keyboard support: Enter/Space to toggle
+    document.addEventListener('keydown', function(e) {
+      if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('accordion-header')) {
+        e.preventDefault();
+        toggleAccordion(e.target);
+      }
+    });
+  </script>
+</body>
+</html>
