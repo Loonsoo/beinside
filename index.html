@@ -236,16 +236,16 @@
           </div>
           <div class="toolkit-content-box tk-tip">💡 20분 이상 지속되거나 숨 참기·구토 시 소아과에 문의하세요</div>
           <div class="timer-btn-wrap">
-            <button class="timer-btn" onclick="(function(b){let t=120,iv;b.disabled=true;iv=setInterval(()=>{t--;b.textContent='⏱️ '+t+'초 후 확인';if(t<=0){clearInterval(iv);b.textContent='⏱️ 2분 타이머';b.disabled=false;}},1000);})(this)">⏱️ 2분 타이머</button>
+            <button class="timer-btn" onclick="startTimer(this, 120)">⏱️ 2분 타이머</button>
           </div>
         </div>
 
         <!-- 툴킷 1-2: 수면 -->
         <div class="toolkit-panel" id="toolkit-sleep">
           <div class="age-pill-btns">
-            <button class="age-pill on" onclick="(function(btn,id){document.querySelectorAll('#toolkit-sleep .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-sleep .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'sleep-infant')">0~12개월</button>
-            <button class="age-pill" onclick="(function(btn,id){document.querySelectorAll('#toolkit-sleep .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-sleep .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'sleep-toddler')">1~3세</button>
-            <button class="age-pill" onclick="(function(btn,id){document.querySelectorAll('#toolkit-sleep .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-sleep .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'sleep-preschool')">4~6세</button>
+            <button class="age-pill on" onclick="switchAgePill(this,'toolkit-sleep','sleep-infant')">0~12개월</button>
+            <button class="age-pill" onclick="switchAgePill(this,'toolkit-sleep','sleep-toddler')">1~3세</button>
+            <button class="age-pill" onclick="switchAgePill(this,'toolkit-sleep','sleep-preschool')">4~6세</button>
           </div>
           <div id="sleep-infant" class="age-content">
             <div class="toolkit-steps">
@@ -276,9 +276,9 @@
         <!-- 툴킷 1-3: 언어 발달 -->
         <div class="toolkit-panel" id="toolkit-speech">
           <div class="age-pill-btns">
-            <button class="age-pill on" onclick="(function(btn,id){document.querySelectorAll('#toolkit-speech .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-speech .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'speech-12m')">~12개월</button>
-            <button class="age-pill" onclick="(function(btn,id){document.querySelectorAll('#toolkit-speech .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-speech .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'speech-24m')">~24개월</button>
-            <button class="age-pill" onclick="(function(btn,id){document.querySelectorAll('#toolkit-speech .age-pill').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('#toolkit-speech .age-content').forEach(el=>el.style.display='none');document.getElementById(id).style.display='';})(this,'speech-36m')">~36개월</button>
+            <button class="age-pill on" onclick="switchAgePill(this,'toolkit-speech','speech-12m')">~12개월</button>
+            <button class="age-pill" onclick="switchAgePill(this,'toolkit-speech','speech-24m')">~24개월</button>
+            <button class="age-pill" onclick="switchAgePill(this,'toolkit-speech','speech-36m')">~36개월</button>
           </div>
           <div id="speech-12m" class="age-content">
             <div class="toolkit-content-box tk-normal"><strong>12개월 기준</strong>: 옹알이 있고, 간단한 제스처(바이바이, 짝짜꿍), 한 단어 이상 말하면 정상 범위예요</div>
@@ -314,22 +314,22 @@
 
       <input type="hidden" id="ai" value="0">
       <div class="pills">
-        <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:#A8D5BA"></span>신생아</div>
-        <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:#7FC49A"></span>3개월</div>
-        <div class="pill" onclick="qs(6,'m')"><span class="cd" style="background:#5BBF82"></span>6개월</div>
-        <div class="pill" onclick="qs(12,'m')"><span class="cd" style="background:#3A8A55"></span>12개월</div>
-        <div class="pill" onclick="qs(24,'m')"><span class="cd" style="background:#2A6A42"></span>24개월</div>
-        <div class="pill" onclick="qs(4,'y')"><span class="cd" style="background:#5C7A6B"></span>유아 4세</div>
-        <div class="pill" onclick="qs(8,'y')"><span class="cd" style="background:#C8924A"></span>학령기 8세</div>
-        <div class="pill" onclick="qs(13,'y')"><span class="cd" style="background:#A07840"></span>청소년 13세</div>
-        <div class="pill" onclick="qs(20,'y')"><span class="cd" style="background:#7A5A30"></span>청년 20세</div>
-        <div class="pill" onclick="qs(35,'y')"><span class="cd" style="background:#9E4F2A"></span>성인 35세</div>
-        <div class="pill" onclick="qs(50,'y')"><span class="cd" style="background:#6B4E7A"></span>중년 50세</div>
-        <div class="pill" onclick="qs(65,'y')"><span class="cd" style="background:#3A6A9A"></span>노년 65세</div>
-        <div class="pill" onclick="qs(78,'y')"><span class="cd" style="background:#2A3A5A"></span>후기 노년 78세</div>
+        <div class="pill" onclick="qs(0,'m')"><span class="cd" style="background:var(--age-newborn)"></span>신생아</div>
+        <div class="pill" onclick="qs(3,'m')"><span class="cd" style="background:var(--age-3m)"></span>3개월</div>
+        <div class="pill" onclick="qs(6,'m')"><span class="cd" style="background:var(--age-6m)"></span>6개월</div>
+        <div class="pill" onclick="qs(12,'m')"><span class="cd" style="background:var(--age-12m)"></span>12개월</div>
+        <div class="pill" onclick="qs(24,'m')"><span class="cd" style="background:var(--age-24m)"></span>24개월</div>
+        <div class="pill" onclick="qs(4,'y')"><span class="cd" style="background:var(--age-preschool)"></span>유아 4세</div>
+        <div class="pill" onclick="qs(8,'y')"><span class="cd" style="background:var(--age-school)"></span>학령기 8세</div>
+        <div class="pill" onclick="qs(13,'y')"><span class="cd" style="background:var(--age-teen)"></span>청소년 13세</div>
+        <div class="pill" onclick="qs(20,'y')"><span class="cd" style="background:var(--age-young)"></span>청년 20세</div>
+        <div class="pill" onclick="qs(35,'y')"><span class="cd" style="background:var(--age-adult)"></span>성인 35세</div>
+        <div class="pill" onclick="qs(50,'y')"><span class="cd" style="background:var(--age-middle)"></span>중년 50세</div>
+        <div class="pill" onclick="qs(65,'y')"><span class="cd" style="background:var(--age-senior)"></span>노년 65세</div>
+        <div class="pill" onclick="qs(78,'y')"><span class="cd" style="background:var(--age-late-senior)"></span>후기 노년 78세</div>
       </div>
 
-      <div id="medical-disclaimer" style="display:none; margin:0 48px 16px; background:#F3F7FF; border:1px solid #D1E1FF; border-radius:16px; padding:16px 20px; font-size:13px; color:#304880; line-height:1.65;">
+      <div id="medical-disclaimer" class="medical-disclaimer" style="display:none">
         <strong>의학적 면책 조항:</strong> 본 가이드는 보건복지부·소아과 학회 등 공신력 있는 출처를 기반으로 한 <em>참고용</em> 정보입니다. 아이의 발달 속도는 개인차가 크며, 특정 우려 사항은 반드시 전문의와 상담하십시오.
       </div>
       <section id="result"></section>
@@ -532,7 +532,7 @@
       <p class="emergency-sub">가장 가까운 도움을 바로 연결해 드려요.<br>버튼을 누르면 바로 전화가 연결됩니다.</p>
 
       <div class="emergency-grid">
-        <a href="tel:119" class="emergency-btn-full" style="--ebf-color:#C8302A">
+        <a href="tel:119" class="emergency-btn-full" style="--ebf-color:var(--emer-119)">
           <span class="ebf-icon">🚑</span>
           <div class="ebf-content">
             <span class="ebf-number">119</span>
@@ -540,7 +540,7 @@
             <span class="ebf-desc">신체 응급·구급차 요청. 무료, 24시간</span>
           </div>
         </a>
-        <a href="tel:112" class="emergency-btn-full" style="--ebf-color:#A02020">
+        <a href="tel:112" class="emergency-btn-full" style="--ebf-color:var(--emer-112)">
           <span class="ebf-icon">🚨</span>
           <div class="ebf-content">
             <span class="ebf-number">112</span>
@@ -548,7 +548,7 @@
             <span class="ebf-desc">아동학대·가정폭력·범죄 신고. 24시간</span>
           </div>
         </a>
-        <a href="tel:1393" class="emergency-btn-full" style="--ebf-color:#6A3A9A">
+        <a href="tel:1393" class="emergency-btn-full" style="--ebf-color:var(--emer-1393)">
           <span class="ebf-icon">💜</span>
           <div class="ebf-content">
             <span class="ebf-number">1393</span>
@@ -556,7 +556,7 @@
             <span class="ebf-desc">무료, 24시간. 전화하면 상담사가 이야기 들어줘요</span>
           </div>
         </a>
-        <a href="tel:1388" class="emergency-btn-full" style="--ebf-color:#2A7A4A">
+        <a href="tel:1388" class="emergency-btn-full" style="--ebf-color:var(--emer-1388)">
           <span class="ebf-icon">💚</span>
           <div class="ebf-content">
             <span class="ebf-number">1388</span>
@@ -564,7 +564,7 @@
             <span class="ebf-desc">무료, 24시간. 청소년이라면 부담 없이 전화해요</span>
           </div>
         </a>
-        <a href="tel:1366" class="emergency-btn-full" style="--ebf-color:#C84A8A">
+        <a href="tel:1366" class="emergency-btn-full" style="--ebf-color:var(--emer-1366)">
           <span class="ebf-icon">🌸</span>
           <div class="ebf-content">
             <span class="ebf-number">1366</span>
@@ -572,7 +572,7 @@
             <span class="ebf-desc">가정폭력·성폭력·성매매 피해 지원. 무료, 24시간</span>
           </div>
         </a>
-        <a href="tel:15770199" class="emergency-btn-full" style="--ebf-color:#2A5A9A">
+        <a href="tel:15770199" class="emergency-btn-full" style="--ebf-color:var(--emer-1577)">
           <span class="ebf-icon">💙</span>
           <div class="ebf-content">
             <span class="ebf-number">1577-0199</span>

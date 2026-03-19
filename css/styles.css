@@ -69,13 +69,41 @@
   --transition-c:#4A8888;
   --transition-d:#2E6060;
   --transition-p:#DFF0EE;
+
+  /* ── 연령 단계 색상 (pill color dots) ── */
+  --age-newborn:#A8D5BA;
+  --age-3m:#7FC49A;
+  --age-6m:#5BBF82;
+  --age-12m:#3A8A55;
+  --age-24m:#2A6A42;
+  --age-preschool:#5C7A6B;
+  --age-school:#C8924A;
+  --age-teen:#A07840;
+  --age-young:#7A5A30;
+  --age-adult:#9E4F2A;
+  --age-middle:#6B4E7A;
+  --age-senior:#3A6A9A;
+  --age-late-senior:#2A3A5A;
+
+  /* ── 긴급 버튼 색상 ── */
+  --emer-119:#C8302A;
+  --emer-112:#A02020;
+  --emer-1393:#6A3A9A;
+  --emer-1388:#2A7A4A;
+  --emer-1366:#C84A8A;
+  --emer-1577:#2A5A9A;
+
+  /* ── 의학적 면책 ── */
+  --disclaimer-bg:#F3F7FF;
+  --disclaimer-border:#D1E1FF;
+  --disclaimer-ink:#304880;
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'Noto Sans KR',sans-serif;
-  background:#F7F3EE;
+  background:var(--cream);
   min-height:100vh;
   color:var(--ink);
   line-height:1.72;
@@ -315,6 +343,18 @@ nav button.on{
   box-shadow:0 5px 14px rgba(123,174,203,.18);
 }
 .cd{width:7px;height:7px;border-radius:50%;}
+
+/* ── 의학적 면책 조항 ── */
+.medical-disclaimer{
+  margin:0 48px 16px;
+  background:var(--disclaimer-bg);
+  border:1px solid var(--disclaimer-border);
+  border-radius:16px;
+  padding:16px 20px;
+  font-size:13px;
+  color:var(--disclaimer-ink);
+  line-height:1.65;
+}
 
 /* ── RESULT ── */
 #result{padding:0 48px 60px;display:none;}

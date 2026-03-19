@@ -86,6 +86,32 @@ function switchGuideTab(tab) {
   if (tab === 'dad') renderDadGuide();
 }
 
+/* ── 연령 필(age-pill) 탭 전환 ── */
+function switchAgePill(btn, panelId, contentId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  panel.querySelectorAll('.age-pill').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  panel.querySelectorAll('.age-content').forEach(el => el.style.display = 'none');
+  const target = document.getElementById(contentId);
+  if (target) target.style.display = '';
+}
+
+/* ── 타이머 (떼쓰기 진정용) ── */
+function startTimer(btn, seconds) {
+  let t = seconds;
+  btn.disabled = true;
+  const iv = setInterval(() => {
+    t--;
+    btn.textContent = '\u23F1\uFE0F ' + t + '\uCD08 \uD6C4 \uD655\uC778';
+    if (t <= 0) {
+      clearInterval(iv);
+      btn.textContent = '\u23F1\uFE0F ' + Math.floor(seconds / 60) + '\uBD84 \uD0C0\uC774\uBA38';
+      btn.disabled = false;
+    }
+  }, 1000);
+}
+
 /* ── 미니 툴킷 토글 ── */
 function toggleToolkit(id) {
   const panel = document.getElementById(id);
