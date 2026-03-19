@@ -267,36 +267,23 @@ const ELDER_CARE_DATA = {
   }
 };
 
-/* ── 렌더 함수 (관계·전환기 패턴 동일) ── */
-function buildElderDetail(container, id) {
+/* ── 상황별 아코디언 내부 콘텐츠 렌더 ── */
+function _renderSituationContent(id) {
   const d = ELDER_CARE_DATA[id];
-  const meta = ELDER_CARE_DATA.situations.find(s => s.id === id);
-  if (!d || !meta) return;
+  if (!d) return '';
 
-  container.innerHTML = `
-    <button class="page-back" onclick="renderElderPage(document.getElementById('elder-content'))">← 노인 돌봄 가이드로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#5A6A5A,#7A8A6A)">
-      <span class="content-hero-icon">${meta.icon}</span>
-      <h1>${esc(meta.label)}</h1>
-      <p>${esc(meta.sub)}</p>
-    </div>
+  return `
+    <div style="padding-top:4px;">
+      <div style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;margin-bottom:16px;">${esc(d.recognition)}</div>
 
-    <div class="step-section">
-      <div class="step-label">① 상황 인식</div>
-      <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(d.recognition)}</p>
-    </div>
+      <div id="elder-check-${id}" style="margin-bottom:16px;">
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">📋 상황 판단</div>
+      </div>
 
-    <div class="step-section" id="elder-check-${id}">
-      <div class="step-label">② 상황 판단</div>
-    </div>
+      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">✅ 행동 가이드</div>
+      <div class="action-checklist" style="margin-bottom:16px;">${_actionItems(d.actions)}</div>
 
-    <div class="step-section">
-      <div class="step-label">③ 행동 가이드</div>
-      <div class="action-checklist">${_actionItems(d.actions)}</div>
-    </div>
-
-    <div class="step-section">
-      <div class="step-label">④ 도움 연결</div>
+      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">📞 도움 연결</div>
       <div class="help-cards">
         ${d.help.map(h => `
           <a href="tel:${h.number.replace(/-/g,'')}" class="help-card" aria-label="${h.name} ${h.number}">
@@ -309,9 +296,28 @@ function buildElderDetail(container, id) {
       </div>
     </div>
   `;
+}
 
-  const checkWrap = container.querySelector(`#elder-check-${id}`);
-  if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
+/* ── 상황 아코디언 열릴 때 체크도구 초기화 ── */
+function _initElderCheck(id) {
+  const wrap = document.getElementById('elder-check-' + id);
+  if (!wrap || wrap.dataset.init) return;
+  wrap.dataset.init = '1';
+  const d = ELDER_CARE_DATA[id];
+  if (d && d.check && typeof renderCheckTool === 'function') {
+    renderCheckTool(wrap, d.check);
+  }
+}
+
+/* ── 상황 아코디언 토글 (체크도구 lazy init) ── */
+function toggleElderSituation(header) {
+  const item = header.closest('.accordion-item');
+  if (!item) return;
+  const id = item.dataset.sitId;
+  toggleAccordion(header);
+  if (id && item.classList.contains('open')) {
+    _initElderCheck(id);
+  }
 }
 
 /* ── 실전 돌봄 가이드 렌더 ── */
@@ -369,15 +375,17 @@ function renderElderPage(container) {
 
     <div class="step-section">
       <div class="step-label">어떤 상황이에요?</div>
-      <div class="emotion-grid">
+      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 자가진단과 행동 가이드를 바로 확인할 수 있어요.</p>
+      <div class="accordion-group">
         ${d.situations.map(s => `
-          <button class="emotion-btn" onclick="buildElderDetail(document.getElementById('elder-content'),'${s.id}')" aria-label="${s.label}">
-            <span class="emotion-btn-icon">${s.icon}</span>
-            <div>
-              <div style="font-size:13.5px;font-weight:600;">${esc(s.label)}</div>
-              <div style="font-size:11.5px;color:var(--ink-l);">${esc(s.sub)}</div>
+          <div class="accordion-item" data-sit-id="${s.id}">
+            <div class="accordion-header" onclick="toggleElderSituation(this)" tabindex="0">
+              <span>${s.icon} ${esc(s.label)}</span><span class="accordion-arrow">▼</span>
             </div>
-          </button>`).join('')}
+            <div class="accordion-body"><div class="accordion-body-inner">
+              ${_renderSituationContent(s.id)}
+            </div></div>
+          </div>`).join('')}
       </div>
     </div>
 
