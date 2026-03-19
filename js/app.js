@@ -621,11 +621,20 @@ document.addEventListener('keydown', e => {
   document.addEventListener('mousemove', onDragMove);
   document.addEventListener('mouseup', onDragEnd);
 
-  // 편집 모드에서 카드 onclick 차단
+  // 편집 모드: 카드 클릭 차단 + 카드 외 영역 클릭 시 종료
   document.addEventListener('click', function(e) {
-    if (editMode && e.target.closest('.sit-card[data-card-id]')) {
+    if (!editMode) return;
+    // 완료 버튼은 onclick으로 처리되므로 통과
+    if (e.target.closest('.card-edit-done')) return;
+    // 카드 위 클릭 → 차단 (드래그용)
+    if (e.target.closest('.sit-card[data-card-id]')) {
       e.preventDefault();
       e.stopPropagation();
+      return;
+    }
+    // 카드·편집바 외 영역 클릭 → 편집 종료
+    if (!e.target.closest('.card-edit-bar')) {
+      exitCardEdit();
     }
   }, true);
 
