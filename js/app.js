@@ -424,21 +424,24 @@ document.addEventListener('keydown', e => {
     showPopup(term);
   });
 
-  // 데스크톱 호버
-  document.addEventListener('mouseover', e => {
-    const term = e.target.closest('.term');
-    if (!term || activeTerm) return; // 탭 활성 중이면 호버 무시
-    showPopup(term);
-  });
-  document.addEventListener('mouseout', e => {
-    const term = e.target.closest('.term');
-    if (!term || !activeTerm) return;
-    // 클릭으로 열린 건 마우스아웃으로 닫지 않음
-    if (term.classList.contains('active') && activeTerm === term) {
-      // 호버로 연 경우만 닫기 (클릭 구분: pointer 체크)
-    }
-    closePopup();
-  });
+  // 데스크톱 전용 호버 (터치 기기 제외)
+  const isTouch = matchMedia('(hover: none)').matches;
+  if (!isTouch) {
+    let hoverTerm = null;
+    document.addEventListener('mouseover', e => {
+      const term = e.target.closest('.term');
+      if (!term || activeTerm) return;
+      hoverTerm = term;
+      showPopup(term);
+    });
+    document.addEventListener('mouseout', e => {
+      const term = e.target.closest('.term');
+      if (term && term === hoverTerm) {
+        hoverTerm = null;
+        closePopup();
+      }
+    });
+  }
 
   // 스크롤·리사이즈 시 닫기
   window.addEventListener('scroll', closePopup, { passive: true });
