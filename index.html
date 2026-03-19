@@ -24,7 +24,8 @@
     </div>
   </div>
   <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;"><span style="font-size:20px;line-height:1;">🌻</span>BeInside<div class="logo-dot"></div></div>
-  <div style="display:flex;align-items:center;justify-content:flex-end;">
+  <div class="hdr-right">
+    <button class="card-edit-badge" onclick="enterCardEdit()" title="카드 순서 편집" aria-label="카드 순서 편집">✏️</button>
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
       <span></span><span></span><span></span>
     </button>
@@ -99,7 +100,7 @@
       <!-- 영역 1: 돌봄 & 양육 -->
       <div class="section-care">
         <div class="section-header">
-          <h2 class="section-title">아이와 가족을 돌보고 있다면 <span class="card-edit-badge" onclick="enterCardEdit()">✏️ 편집</span></h2>
+          <h2 class="section-title">아이와 가족을 돌보고 있다면</h2>
           <p class="section-sub">연령별 발달 기준, 한부모·출산 가이드, 아빠 가이드</p>
         </div>
         <div class="situation-grid">
