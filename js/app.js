@@ -350,6 +350,20 @@ document.addEventListener('keydown', e => {
   }
 });
 
+/* ── 용어 툴팁 — 모바일 탭 토글 ── */
+document.addEventListener('click', e => {
+  const term = e.target.closest('.term');
+  // 다른 곳 클릭 시 모든 툴팁 닫기
+  document.querySelectorAll('.term.active').forEach(t => {
+    if (t !== term) t.classList.remove('active');
+  });
+  // 용어 탭 시 토글
+  if (term) {
+    e.preventDefault();
+    term.classList.toggle('active');
+  }
+});
+
 /* ── 감정 체크인 (메인 화면) ── */
 function selectMood(mood) {
   // 저장

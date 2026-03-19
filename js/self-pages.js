@@ -493,6 +493,48 @@ function renderTransitionPage(container) {
    Part B-5: 직장 내 어려운 사람 가이드 (정신분석학 관점)
 ══════════════════════════════════════════════════════ */
 
+/** 전문 용어 사전 — term() 함수로 자동 툴팁 생성 */
+const TERM_GLOSSARY = {
+  '그레이 록(Gray Rock)': '나르시시스트에게 감정적 반응을 보이지 않는 기법이에요. 회색 바위처럼 무미건조하고 지루한 존재가 되면, 상대가 흥미를 잃고 다른 타겟을 찾게 돼요.',
+  '나르시시즘': '자기 자신에 대한 과도한 집착과 타인의 인정에 대한 강한 욕구를 특징으로 하는 성격 패턴이에요. 겉으로는 자신감이 넘쳐 보이지만, 내면에는 깊은 불안정감이 있어요.',
+  '자기 대상(self-object)': '코헛이 제안한 개념으로, 자신의 자존감을 유지하기 위해 필요로 하는 타인을 뜻해요. 나르시시스트는 주변 사람을 자기 가치를 확인하는 거울처럼 사용해요.',
+  '하인즈 코헛(Kohut)': '자기 심리학(Self Psychology)의 창시자인 오스트리아계 미국 정신분석학자예요. 나르시시즘을 병리가 아닌 자기 발달의 미성숙으로 이해하는 혁신적 관점을 제시했어요.',
+  '투사(projection)': '자신의 불안·결함·욕망을 인정하지 못하고, 마치 상대방의 것인 양 돌리는 무의식적 방어 기제예요. 예: 자신이 거짓말을 하면서 상대를 거짓말쟁이라고 비난하는 것.',
+  '거짓 자기(false self)': '위니컷이 제안한 개념으로, 진짜 감정과 욕구를 숨기고 사회적 기대에 맞춘 가면을 쓴 상태예요. 가스라이터는 이 가면으로 현실을 조작해요.',
+  '위니컷(Winnicott)': '영국의 소아과 의사이자 정신분석학자예요. "충분히 좋은 엄마(good enough mother)", "참 자기/거짓 자기", "전이적 대상" 등의 개념으로 유명해요.',
+  '멜라니 클라인(Klein)': '대상관계이론의 선구자인 오스트리아계 영국 정신분석학자예요. 인간의 내면에서 "좋은 대상"과 "나쁜 대상"을 분리하는 심리 과정을 연구했어요.',
+  '수동 공격': '분노나 불만을 직접 표현하지 않고, 비협조·지연·빈정거림 등 간접적인 방식으로 표출하는 행동 패턴이에요. 겉으로는 순종적이지만 속으로는 저항해요.',
+  '기생적 동일시': '대상관계이론 용어로, 타인의 성과·정체성·가치를 자기 것처럼 내면화하는 원시적 방어 기제예요. 자신의 공허함을 남의 것으로 채우려 해요.',
+  '대상관계이론': '인간의 심리 발달과 성격 형성이 초기 대인관계(특히 양육자와의 관계)에 의해 결정된다는 정신분석학 이론이에요. 클라인, 위니컷, 페어베언 등이 주요 학자예요.',
+  '투사(Projection)': '자신의 불안·결함·욕망을 인정하지 못하고, 마치 상대방의 것인 양 돌리는 무의식적 방어 기제예요. 예: 자신이 거짓말을 하면서 상대를 거짓말쟁이라고 비난하는 것.',
+  '전이(Transference)': '과거 중요한 관계(부모, 형제 등)에서 느꼈던 감정과 기대를 현재 관계 상대에게 무의식적으로 옮기는 현상이에요. 예: 권위적인 상사에게 아버지에 대한 분노를 느끼는 것.',
+  '역전이(Countertransference)': '상대의 행동이 내 안에 불러일으키는 강렬한 감정 반응이에요. 원래는 치료자의 반응을 뜻했지만, 일상에서도 상대가 유발하는 감정을 관찰하면 관계 역학을 이해할 수 있어요.',
+  '경계(Boundaries)': '나와 타인 사이의 심리적 구분선이에요. 건강한 경계는 자신의 감정·시간·에너지를 보호하면서도 타인과 연결될 수 있게 해 줘요. 경계가 없으면 소진되고, 너무 단단하면 고립돼요.',
+  '방어 기제': '불안이나 고통스러운 감정으로부터 자아를 보호하기 위해 무의식적으로 작동하는 심리적 전략이에요. 투사, 합리화, 부정, 억압 등이 대표적이에요.',
+  '충분히 좋은 환경': '위니컷의 개념으로, 완벽하지 않아도 안전하고 지지적인 환경이면 건강한 발달이 가능하다는 뜻이에요. 직장에서도 최소한의 심리적 안전이 필요해요.',
+};
+
+/**
+ * 텍스트 내 전문 용어를 툴팁 HTML로 변환
+ * @param {string} text - 원본 텍스트 (이미 esc() 처리된)
+ * @returns {string} 툴팁이 적용된 HTML
+ */
+function termify(text) {
+  let result = text;
+  // 긴 용어부터 매칭 (부분 매칭 방지)
+  const sorted = Object.keys(TERM_GLOSSARY).sort((a, b) => b.length - a.length);
+  for (const term of sorted) {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'g');
+    if (regex.test(result) && !result.includes('class="term">' + term)) {
+      result = result.replace(regex,
+        '<span class="term">' + term + '<span class="term-tip">' + TERM_GLOSSARY[term] + '</span></span>'
+      );
+    }
+  }
+  return result;
+}
+
 const WORKPLACE_TYPES = [
   {
     icon: '🎭', name: '나르시시스트 (자기애성 성격)',
@@ -575,7 +617,7 @@ function renderWorkplacePage(container) {
         </ul>
         <div style="background:var(--lavender-p);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
           <div style="font-size:11px;font-weight:700;color:var(--lavender-d);letter-spacing:.05em;margin-bottom:6px;">🧠 정신분석학적 이해</div>
-          <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${esc(t.analysis)}</p>
+          <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${termify(t.analysis)}</p>
         </div>
         <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">대처 방법</div>
         <div class="action-checklist">
@@ -583,15 +625,15 @@ function renderWorkplacePage(container) {
             <div class="action-item" onclick="toggleAction(this)">
               <span class="action-check"></span>
               <span class="action-icon">${c.icon}</span>
-              <span class="action-text">${esc(c.text)}</span>
+              <span class="action-text">${termify(c.text)}</span>
             </div>`).join('')}
         </div>
       </div></div>
     </div>`).join('');
   const mindsetHTML = WORKPLACE_MINDSET.map((m, i) => `
     <div style="background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px;">
-      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:5px;">${i + 1}. ${esc(m.name)}</div>
-      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${esc(m.desc)}</p>
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:5px;">${i + 1}. ${termify(m.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${termify(m.desc)}</p>
     </div>`).join('');
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
