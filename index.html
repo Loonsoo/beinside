@@ -158,6 +158,14 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
+          <div class="sit-card" data-card-id="elder" onclick="showPage('elder');setMTab('home')">
+            <div class="sit-icon">🧓</div>
+            <div class="sit-card-body">
+              <div class="sit-title">부모님 돌봄이 힘들어요</div>
+              <div class="sit-sub">간병 번아웃, 치매 돌봄, 복지 연결 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
         </div>
       </div>
 
@@ -665,6 +673,11 @@
       </div>
     </div>
 
+    <!-- ══════════════ PAGE: 노인 돌봄 가이드 ══════════════ -->
+    <div class="page-view" id="page-elder" style="display:none">
+      <div id="elder-content"></div>
+    </div>
+
     <!-- ══════════════ PAGE: 기록 ══════════════ -->
     <div class="page-view" id="page-journal" style="display:none">
       <div class="page-header">
@@ -867,6 +880,10 @@
           <span class="onboard-opt-icon">👨</span>
           <span class="onboard-opt-text">아빠로서 어떻게 해야 할지 모르겠어요</span>
         </button>
+        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('elder')">
+          <span class="onboard-opt-icon">🧓</span>
+          <span class="onboard-opt-text">부모님 돌봄이 힘들어요</span>
+        </button>
       </div>
       <button class="onboard-back" onclick="onboardBack()">← 이전으로</button>
     </div>
@@ -932,6 +949,7 @@
 <script src="js/features.js"></script>
 <script src="js/emotion-page.js"></script>
 <script src="js/self-pages.js"></script>
+<script src="js/elder-care.js"></script>
 <script src="js/app.js"></script>
 <script src="js/onboard.js"></script>
 <script src="js/share.js"></script>

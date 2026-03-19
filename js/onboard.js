@@ -39,7 +39,7 @@
     onboardDismiss();
     showPage(page);
     const tabMap = {
-      growth: 'growth', sp: 'home', birth: 'home', dad: 'growth',
+      growth: 'growth', sp: 'home', birth: 'home', dad: 'growth', elder: 'home',
       emotion: 'mind', burnout: 'mind', relation: 'mind',
       teen: 'mind', workplace: 'mind'
     };
