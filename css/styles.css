@@ -2320,10 +2320,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   border-color:var(--lavender);
   box-shadow:0 8px 28px rgba(107,168,133,.16);
 }
-@media(max-width:640px){
-  .section-care,
-  .section-self{ padding:22px 18px 28px; }
-}
+/* 모바일 section 패딩은 MOBILE COMPACT 섹션에서 통합 관리 */
 
 /* ══════════════════════════════════════════
    MOOD SECTION — 오늘 기분 기록
@@ -2437,70 +2434,51 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 .hero-sections{width:100%;}
 
 /* ══════════════════════════════════════════
-   DESKTOP 2-COLUMN LAYOUT (960px+)
+   DESKTOP LAYOUT (960px+)
+   히어로 풀와이드 → 섹션 2컬럼 나란히
 ══════════════════════════════════════════ */
 @media(min-width:960px){
   .hero{
-    display:grid;
-    grid-template-columns:320px 1fr;
-    grid-template-areas:
-      "title    sections"
-      "subtitle sections"
-      "mood     sections"
-      "banner   banner";
-    column-gap:48px;
-    row-gap:0;
-    text-align:left;
-    align-items:start;
-    padding:48px 60px 28px;
+    padding:48px 60px 32px;
     max-width:1120px;
     margin:0 auto;
   }
   .hero h1{
-    grid-area:title;
-    text-align:left;
-    margin-bottom:8px;
+    font-size:clamp(24px,2.5vw,32px);
   }
-  .hero .hero-sub{
-    grid-area:subtitle;
-    text-align:left;
-    max-width:360px;
-    margin-bottom:28px;
-  }
-  .hero-sections{
-    grid-area:sections;
-  }
-  .emergency-banner{
-    grid-area:banner;
-    margin-top:8px;
-  }
-  #mood-section{
-    grid-area:mood;
-    align-self:start;
-    position:sticky;
-    top:80px;
-  }
-
-  /* 섹션 카드 영역 — 데스크톱 조정 */
-  .section-care,
-  .section-self{
-    padding:24px 28px 28px;
-    border-radius:20px;
-    margin-bottom:16px;
-  }
-  .situation-grid{
-    max-width:100%;
-  }
-
-  /* 감정 체크인 — 데스크톱에서 좌측 정렬 */
+  /* 감정 체크인: 섹션 위, 가로 정렬 */
   .mood-section{
     border:1px solid var(--line);
     border-radius:20px;
     background:var(--white);
+    border-top:none;
+    margin-bottom:28px;
+  }
+  .mood-btns{ gap:16px; }
+  /* 섹션 2컬럼 나란히 */
+  .hero-sections{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .section-care,
+  .section-self{
+    padding:24px 24px 28px;
+    border-radius:20px;
+    margin-bottom:0;
+  }
+  .situation-grid{
+    grid-template-columns:1fr;
+    max-width:100%;
+    gap:10px;
+    margin-bottom:0;
+  }
+  .emergency-banner{
+    margin-top:20px;
   }
 }
 
-/* 태블릿 (641–959px) — 단일 컬럼, 약간 넓은 여백 */
+/* 태블릿 (641–959px) */
 @media(min-width:641px) and (max-width:959px){
   .hero{
     padding:36px 36px 24px;
@@ -2514,6 +2492,31 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
     border-radius:16px;
     margin-bottom:12px;
   }
+}
+
+/* ══════════════════════════════════════════
+   MOBILE COMPACT (≤640px)
+══════════════════════════════════════════ */
+@media(max-width:640px){
+  .hero{ padding:20px 16px 16px; }
+  .hero h1{ font-size:18px; margin-bottom:4px; }
+  .hero .hero-sub{ font-size:13px; margin-bottom:14px; }
+  .section-care,
+  .section-self{ padding:16px 16px 20px; }
+  .section-header{ margin-bottom:12px; }
+  .section-title{ font-size:15px; }
+  .situation-grid{ gap:8px; margin-bottom:0; }
+  .sit-card{ padding:12px; gap:10px; }
+  .sit-icon{ width:36px; height:36px; font-size:20px; border-radius:10px; }
+  .sit-title{ font-size:12.5px; }
+  .sit-sub{ font-size:10.5px; }
+  .mood-section{ padding:16px 16px 20px; }
+  .mood-label{ font-size:14px; margin-bottom:10px; }
+  .mood-btn{ min-width:76px; min-height:64px; padding:10px 12px; font-size:20px; }
+  .mood-btn span{ font-size:11px; }
+  .emergency-banner{ padding:14px 16px; gap:12px; }
+  .emergency-banner-icon{ width:42px; height:42px; font-size:22px; }
+  .emergency-banner-title{ font-size:13.5px; }
 }
 
 /* ══════════════════════════════════════════

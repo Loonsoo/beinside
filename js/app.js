@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'dad', 'journal'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'journal'];
 
 /* ── 페이지 전환 ── */
 function showPage(id) {
@@ -34,6 +34,7 @@ function showPage(id) {
     if (id === 'burnout') initBurnoutPage();
     if (id === 'relation') initRelationPage();
     if (id === 'transition') initTransitionPage();
+    if (id === 'workplace') initWorkplacePage();
     if (id === 'journal') initJournalPage();
   }
 
@@ -402,6 +403,10 @@ function initRelationPage() {
 function initTransitionPage() {
   const el = document.getElementById('transition-content');
   if (el && typeof renderTransitionPage === 'function') renderTransitionPage(el);
+}
+function initWorkplacePage() {
+  const el = document.getElementById('workplace-content');
+  if (el && typeof renderWorkplacePage === 'function') renderWorkplacePage(el);
 }
 function initJournalPage() {
   if (typeof renderJournalPage === 'function') renderJournalPage();

@@ -488,3 +488,158 @@ function renderTransitionPage(container) {
     </div>
   `;
 }
+
+/* ══════════════════════════════════════════════════════
+   Part B-5: 직장 내 어려운 사람 가이드 (정신분석학 관점)
+══════════════════════════════════════════════════════ */
+
+const WORKPLACE_TYPES = [
+  {
+    icon: '🎭', name: '나르시시스트 (자기애성 성격)',
+    traits: ['자신의 업적은 과장하고, 타인의 성과는 깎아내려요','공감 능력이 부족해요 — 상대의 감정에 무관심해요','비판에 극도로 예민하게 반응해요 (분노 또는 보복)','주변 사람을 통제하려는 욕구가 강해요'],
+    analysis: '정신분석학적으로 나르시시즘은 깊은 자기 불안정감의 방어 기제예요. 하인즈 코헛(Kohut)은 이를 "자기 대상(self-object)" 욕구의 미성숙으로 설명했어요. 이들은 당신의 인정을 통해 자신의 존재를 확인하려 해요.',
+    coping: [
+      { icon: '🪨', text: '그레이 록(Gray Rock) 기법을 사용해 보세요. 감정적 반응을 최소화하면 관심을 잃어요. 무미건조하게, 사무적으로만 대응하세요.' },
+      { icon: '🚧', text: '"그 부분은 제 업무 범위가 아닙니다"라고 명확히 경계를 설정하세요. 짧고 단호하게.' },
+      { icon: '📋', text: '부당한 지시, 모욕적 발언을 날짜·시간·장소와 함께 기록해 두세요.' },
+      { icon: '💎', text: '"이 사람의 평가가 나의 가치를 결정하지 않는다"를 매일 스스로에게 말해 보세요.' }
+    ]
+  },
+  {
+    icon: '🌫️', name: '가스라이터 (현실 왜곡자)',
+    traits: ['"내가 언제 그랬어?" — 실제 일어난 일을 부정해요','"너무 예민하게 구는 거 아니야?" — 감정을 무효화해요','다른 동료 앞에서 당신의 판단력을 의심하게 만들어요','정보를 선택적으로 공유하여 혼란을 유발해요'],
+    analysis: '가스라이팅은 투사(projection)의 극단적 형태예요. 자신의 불안과 결함을 상대에게 전가하여 심리적 우위를 차지하려 해요. 위니컷(Winnicott)의 관점에서, 이들은 "거짓 자기(false self)"로 세상을 조작해요.',
+    coping: [
+      { icon: '📝', text: '대화 후 바로 메모하세요. "3/19 11시 회의에서 A가 B라고 말함" — 구체적 기록이 현실 감각을 지켜줘요.' },
+      { icon: '👥', text: '신뢰할 수 있는 동료에게 "이 상황 어떻게 보여?"라고 확인해 보세요. 제3자 시각이 중요해요.' },
+      { icon: '🧭', text: '"내 감정이 이상한 게 아니라, 상황이 이상한 것"이라고 기억하세요. 감정과 사실을 분리하세요.' },
+      { icon: '💬', text: '가능하면 이메일이나 메신저로 소통하세요. 기록이 남는 채널이 당신을 보호해요.' }
+    ]
+  },
+  {
+    icon: '😤', name: '수동 공격형 (뒤에서 칼)',
+    traits: ['표면적으로 동의하면서 실제로는 비협조해요','간접적 비난: "다들 잘하던데, 특이하게 하시네요"','의도적 업무 지연, "깜빡했어요" 반복','뒤에서 험담하면서 앞에서는 웃어요'],
+    analysis: '수동 공격은 직접적 갈등을 두려워하는 사람의 방어 기제예요. 멜라니 클라인(Klein)의 이론에서 이들은 "나쁜 대상"에 대한 분노를 직접 표현하지 못하고 우회적으로 발산해요.',
+    coping: [
+      { icon: '📌', text: '"언제까지 해주실 수 있나요?"처럼 명확한 기한을 정하세요. 모호함이 이들의 무기예요.' },
+      { icon: '🛡️', text: '이면의 메시지에 반응하지 마세요. 표면적 말만 문자 그대로 받아들이세요.' },
+      { icon: '✉️', text: '업무 요청과 합의 사항을 이메일로 확인하세요. "방금 말씀하신 내용 정리해서 보내드려요."' },
+      { icon: '😌', text: '감정적 반응을 자제하세요. 이들은 당신의 좌절감에서 만족을 얻어요.' }
+    ]
+  },
+  {
+    icon: '🔍', name: '마이크로매니저 (통제 집착형)',
+    traits: ['모든 세부 사항을 직접 확인하고 승인하려 해요','자율성을 주지 않고 끊임없이 보고를 요구해요','사소한 실수에 과도하게 반응해요','위임을 못 해서 팀 전체의 속도가 느려져요'],
+    analysis: '정신분석적으로 통제 욕구는 불안의 방어예요. 통제를 통해 예측 불가능한 세상에서 안전감을 확보하려 해요. 이들의 불신은 당신의 능력이 아니라 자신의 불안에서 비롯돼요.',
+    coping: [
+      { icon: '📊', text: '물어보기 전에 먼저 진행 상황을 공유하세요. 선제적 보고가 이들의 불안을 줄여줘요.' },
+      { icon: '✅', text: '작은 약속을 정확히 지켜서 점진적으로 신뢰를 쌓고 자율성을 확보하세요.' },
+      { icon: '🧘', text: '"이 사람의 불안이 나의 문제는 아니다"를 기억하세요. 감정을 분리하세요.' },
+      { icon: '📅', text: '"이 방법으로 진행하되, 결과는 금요일에 공유하겠습니다." 한계를 부드럽게 설정하세요.' }
+    ]
+  },
+  {
+    icon: '🦊', name: '성과 탈취형 (공 빼기 전문가)',
+    traits: ['팀의 성과를 자신의 것처럼 보고해요','아이디어를 가져간 후 "원래 내 생각이었어"라고 해요','실패 시에만 팀원을 언급해요','윗사람에게는 완전히 다른 모습을 보여요'],
+    analysis: '이들은 자기 가치의 취약성을 타인의 성과로 보상해요. 대상관계이론에서 말하는 "기생적 동일시" — 타인의 것을 자기 것으로 내면화하는 원시적 방어예요.',
+    coping: [
+      { icon: '📧', text: '중요한 작업은 이메일 CC로 여러 사람에게 공유하세요. 가시성이 보호막이에요.' },
+      { icon: '🗣️', text: '"제가 분석한 자료를 기반으로..."처럼 자연스럽게 기여를 밝히세요.' },
+      { icon: '🎤', text: '아이디어는 1:1이 아닌 회의에서 공개적으로 발표하세요.' },
+      { icon: '📓', text: '작업 일지를 꾸준히 남기세요. 필요 시 증거가 돼요.' }
+    ]
+  }
+];
+
+const WORKPLACE_MINDSET = [
+  { name: '투사(Projection)를 인식하세요', desc: '상대가 당신에게 던지는 비난 중 상당수는 자신의 내면을 투사한 것이에요. "이건 내 문제인가, 저 사람의 문제인가?"를 구분하는 연습을 해 보세요.' },
+  { name: '전이(Transference)에 말려들지 마세요', desc: '직장 관계에서 과거의 관계 패턴이 반복될 수 있어요. "이 감정이 정말 지금 상황에 맞는 크기인가?"를 점검해 보세요. 과거의 상처가 현재를 왜곡하고 있을 수 있어요.' },
+  { name: '역전이(Countertransference)를 관찰하세요', desc: '상대에 대한 나의 강렬한 감정 반응은 중요한 정보예요. 분노, 무력감, 수치심 — 이 감정들이 상대가 유발한 것인지 살펴보세요. 그 감정은 상대의 문제를 반영할 수 있어요.' },
+  { name: '경계(Boundaries)는 나를 위한 것이에요', desc: '경계를 세우는 것은 이기적인 게 아니에요. 위니컷은 "충분히 좋은 환경"이 성장에 필수적이라 했어요. 당신도 안전한 심리적 공간을 가질 자격이 있어요.' },
+  { name: '"치료할 필요 없는 사람"을 구분하세요', desc: '모든 관계를 고치려 하지 마세요. 당신은 상대의 치료사가 아니에요. 변화시킬 수 있는 것(나의 반응)과 없는 것(상대의 성격)을 구분하세요. 에너지를 지켜야 해요.' }
+];
+
+function renderWorkplacePage(container) {
+  if (!container) return;
+  const typesHTML = WORKPLACE_TYPES.map(t => `
+    <div class="accordion-item">
+      <div class="accordion-head" onclick="toggleAccordion(this)">
+        <span style="font-size:20px">${t.icon}</span>
+        <span style="font-weight:700;font-size:14px;">${esc(t.name)}</span>
+        <span class="accordion-arrow">▾</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-body-inner">
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">이런 특징이 보여요</div>
+        <ul style="font-size:13px;color:var(--ink-m);line-height:1.8;padding-left:18px;margin-bottom:14px;">
+          ${t.traits.map(tr => '<li>' + esc(tr) + '</li>').join('')}
+        </ul>
+        <div style="background:var(--lavender-p);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+          <div style="font-size:11px;font-weight:700;color:var(--lavender-d);letter-spacing:.05em;margin-bottom:6px;">🧠 정신분석학적 이해</div>
+          <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${esc(t.analysis)}</p>
+        </div>
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">대처 방법</div>
+        <div class="action-checklist">
+          ${t.coping.map(c => `
+            <div class="action-item" onclick="toggleAction(this)">
+              <span class="action-check"></span>
+              <span class="action-icon">${c.icon}</span>
+              <span class="action-text">${esc(c.text)}</span>
+            </div>`).join('')}
+        </div>
+      </div></div>
+    </div>`).join('');
+  const mindsetHTML = WORKPLACE_MINDSET.map((m, i) => `
+    <div style="background:var(--white);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:5px;">${i + 1}. ${esc(m.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;">${esc(m.desc)}</p>
+    </div>`).join('');
+  container.innerHTML = `
+    <button class="page-back" onclick="goHome()">← 홈으로</button>
+    <div class="content-hero" style="background:linear-gradient(135deg,#4A6A8A,#5A7A9A)">
+      <span class="content-hero-icon">🏢</span>
+      <h1>직장에서 어려운 사람 대처 가이드</h1>
+      <p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>
+    </div>
+    <div class="step-section">
+      <div class="step-label">① 상황 인식</div>
+      <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">
+        직장에서 특정 사람 때문에 지속적으로 힘들다면, 그건 당신이 예민한 게 아니에요.
+        어떤 사람들은 구조적으로 관계를 어렵게 만들어요. 유형을 알면 대응할 수 있어요.
+      </p>
+      <div style="background:linear-gradient(135deg,rgba(123,174,203,.08),rgba(107,168,133,.06));border:1px solid rgba(123,174,203,.15);border-radius:14px;padding:14px 18px;margin-top:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">📊 통계</div>
+        <div style="font-size:13px;color:var(--ink-m);line-height:1.7;">직장인의 <strong>73.6%</strong>가 지난 1년간 정신건강 문제(스트레스·우울 등)를 경험했어요. (국립정신건강센터, 2024)</div>
+      </div>
+    </div>
+    <div class="step-section">
+      <div class="step-label">② 유형 파악 — 어떤 사람인가요?</div>
+      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 유형을 눌러보세요. 특징과 대처법을 알려드려요.</p>
+      <div class="accordion-group">${typesHTML}</div>
+    </div>
+    <div class="step-section">
+      <div class="step-label">③ 나의 중심을 지키는 마음가짐</div>
+      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">정신분석학의 핵심 개념으로 나를 보호하는 방법이에요.</p>
+      ${mindsetHTML}
+    </div>
+    <div class="step-section">
+      <div class="step-label">④ 지금 바로 할 수 있는 것</div>
+      <div class="action-checklist">
+        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📝</span><span class="action-text">오늘부터 "감정 일기"를 시작해 보세요. 직장에서 느낀 불편한 감정과 상황을 3줄로 기록하세요.</span></div>
+        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🧘</span><span class="action-text">퇴근 후 "심리적 탈의" 의식을 만들어 보세요. 샤워하며 직장의 감정을 물과 함께 흘려보내는 상상을 해 보세요.</span></div>
+        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🗣️</span><span class="action-text">신뢰할 수 있는 사람 1명에게 "나 요즘 직장에서 힘들어"라고 말해 보세요. 말하는 것만으로 달라져요.</span></div>
+        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📚</span><span class="action-text">추천 도서: 「나는 왜 네가 힘든 걸까」(김혜남), 「경계의 기술」(헨리 클라우드)</span></div>
+      </div>
+    </div>
+    <div class="step-section">
+      <div class="step-label">⑤ 도움 연결</div>
+      <div class="help-cards">
+        <a href="tel:1393" class="help-card"><div class="help-card-num">📞 1393</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>
+        <a href="tel:1350" class="help-card"><div class="help-card-num">📞 1350</div><div class="help-card-info"><div class="help-card-name">고용노동부 상담센터</div><div class="help-card-desc">직장 내 괴롭힘·부당 대우 신고 및 상담</div></div></a>
+        <a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">무료, 24시간. 전문 심리 상담 연결</div></div></a>
+      </div>
+      <div style="margin-top:14px;padding:12px 16px;background:var(--warm);border-radius:12px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">
+        💼 <strong>EAP(근로자 지원 프로그램)</strong>가 회사에 있다면 무료로 전문 상담을 받을 수 있어요. 인사팀에 문의하거나, 사내 복지 페이지를 확인해 보세요.
+      </div>
+    </div>
+  `;
+}
