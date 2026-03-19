@@ -53,6 +53,13 @@ const BURNOUT_DATA = {
     depression: ['삶 전체에 영향', '쉬어도 나아지지 않음', '"살아서 뭐하지?"', '모든 영역에서 에너지 없음'],
     note: '구분이 어렵다면 전문가 상담이 가장 정확해요. 번아웃이 방치되면 우울증으로 발전할 수 있어요.'
   },
+  psychology: '번아웃은 WHO가 2019년 공식 인정한 "직업적 현상"이에요. 만성적 직무 스트레스가 관리되지 않을 때 발생해요. 뇌과학적으로 장기 스트레스는 코르티솔 과잉→고갈 순환을 만들고, 전전두엽 기능이 저하되어 결정·집중·감정 조절이 어려워져요.',
+  techniques: [
+    { name: '에너지 감사(Energy Audit)', desc: '하루 활동을 적고, 각 활동 옆에 +/- 표시하세요. 에너지를 빼앗는 것(-)을 줄이고, 채워주는 것(+)을 늘리는 것이 회복의 구조예요.' },
+    { name: '경계 설정(Boundary Setting)', desc: '"아니요"라고 말하는 것은 이기적인 게 아니에요. "지금은 어렵습니다"라는 한 문장이 번아웃 예방의 가장 강력한 도구예요.' },
+    { name: '마이크로 회복(Micro-Recovery)', desc: '1시간마다 2분, 눈 감고 깊게 숨 3번. 점심에 10분 산책. 퇴근 후 30분 디지털 디톡스. 작은 회복이 쌓이면 큰 붕괴를 막아요.' },
+    { name: '인지행동치료(CBT) 자가 적용', desc: '"완벽하게 못 하면 실패야"라는 생각을 발견하면, "충분히 했다"로 바꿔보세요. 전부-아니면-전무 사고가 번아웃을 악화시켜요.' }
+  ],
   help: [
     { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 번아웃이 심해졌을 때 언제든. 자세한 내용은 전화 시 확인해 주세요.' },
     { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
@@ -72,6 +79,13 @@ function renderBurnoutPage(container) {
   if (!container) return;
   const d = BURNOUT_DATA;
 
+  const techHTML = d.techniques ? d.techniques.map(t =>
+    `<div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    </div>`
+  ).join('') : '';
+
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
     <div class="content-hero" style="background:linear-gradient(135deg,var(--burnout-d),var(--burnout))">
@@ -81,66 +95,98 @@ function renderBurnoutPage(container) {
     </div>
     <div class="stat-badge"><strong>${d.intro.stat.pct}</strong>&nbsp;${esc(d.intro.stat.label)}</div>
 
-    <div class="step-section" id="burnout-check-wrap">
-      <div class="step-label">① 상황 판단</div>
-    </div>
+    <div class="accordion-group">
+      ${d.psychology ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 번아웃, 뇌에서 무슨 일이 일어나고 있는 걸까?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+        </div></div>
+      </div>` : ''}
 
-    <div class="step-section">
-      <div class="step-label">② 오늘 당장 할 수 있는 것</div>
-      <div class="action-checklist">${_actionItems(d.actions.immediate)}</div>
-    </div>
+      ${techHTML ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💡 정신의학적 자기 회복법</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${techHTML}
+        </div></div>
+      </div>` : ''}
 
-    <div class="step-section">
-      <div class="step-label">③ 이번 주 + 장기 가이드</div>
-      <div class="accordion-group">
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
-            <span>📅 이번 주에 시도해볼 것</span><span class="accordion-arrow">▼</span>
-          </div>
-          <div class="accordion-body"><div class="accordion-body-inner">
-            <div class="action-checklist">${_actionItems(d.actions.week)}</div>
-          </div></div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단</span><span class="accordion-arrow">▼</span>
         </div>
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
-            <span>🔄 번아웃에서 빠져나오기 위해</span><span class="accordion-arrow">▼</span>
-          </div>
-          <div class="accordion-body"><div class="accordion-body-inner">
-            <div class="action-checklist">${_actionItems(d.actions.longterm)}</div>
-          </div></div>
-        </div>
-        <div class="accordion-item">
-          <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
-            <span>${esc(d.distinction.title)}</span><span class="accordion-arrow">▼</span>
-          </div>
-          <div class="accordion-body"><div class="accordion-body-inner">
-            <div class="distinction-grid">
-              <div class="distinction-col burnout">
-                <div class="distinction-col-title">번아웃</div>
-                <ul>${d.distinction.burnout.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
-              </div>
-              <div class="distinction-col depression">
-                <div class="distinction-col-title">우울증</div>
-                <ul>${d.distinction.depression.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
-              </div>
-            </div>
-            <p class="distinction-note">${esc(d.distinction.note)}</p>
-          </div></div>
-        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="burnout-check-wrap"></div>
+        </div></div>
       </div>
-    </div>
 
-    <div class="step-section">
-      <div class="step-label">④ 도움 연결</div>
-      <div class="help-cards">
-        ${d.help.map(h => `
-          <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
-            <div class="help-card-num">📞 ${h.number}</div>
-            <div class="help-card-info">
-              <div class="help-card-name">${esc(h.name)}</div>
-              <div class="help-card-desc">${esc(h.desc)}</div>
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>⏸️ 오늘 당장 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.immediate)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📅 이번 주에 시도해볼 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.week)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔄 번아웃에서 빠져나오기 위해</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.longterm)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>${esc(d.distinction.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="distinction-grid">
+            <div class="distinction-col burnout">
+              <div class="distinction-col-title">번아웃</div>
+              <ul>${d.distinction.burnout.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
             </div>
-          </a>`).join('')}
+            <div class="distinction-col depression">
+              <div class="distinction-col-title">우울증</div>
+              <ul>${d.distinction.depression.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+            </div>
+          </div>
+          <p class="distinction-note">${esc(d.distinction.note)}</p>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
       </div>
     </div>
   `;
@@ -162,6 +208,12 @@ const RELATIONSHIP_DATA = {
   ],
   divorce: {
     recognition: '이혼은 실패가 아니에요. 더 나은 삶을 위한 결정이었어요. 지금 느끼는 혼란은 완전히 정상이에요.',
+    psychology: '이혼은 뇌에서 실제 물리적 통증과 같은 영역을 활성화해요. 애착 대상을 잃는 것은 존 볼비(Bowlby)의 애착이론에서 말하는 "분리 고통"이에요. 분노→흥정→우울→수용의 단계를 거치는 건 정상적인 애도(grief) 과정이에요.',
+    techniques: [
+      { name: '애도의 단계 이해', desc: '분노, 흥정, 우울이 번갈아 올 수 있어요. 이건 "약해서"가 아니라 뇌가 새로운 현실을 처리하는 과정이에요. 자연스러운 순서를 믿어보세요.' },
+      { name: '자기 서사 재구성', desc: '"실패한 결혼"이 아니라 "그 시기에 최선이었던 선택"으로 이야기를 다시 써보세요. 서사가 바뀌면 감정도 바뀌어요.' },
+      { name: '루틴 재설계', desc: '함께했던 일상이 사라지면 공허함이 커져요. 새로운 아침 루틴, 주말 계획을 의식적으로 만들어 보세요. 구조가 안정감을 줘요.' }
+    ],
     check: {
       id: 'ct_divorce', title: '지금 내 상태는?',
       questions: ['감정 기복이 심하고 집중이 안 된다','일상(식사, 수면, 업무)이 어렵다','아이(자녀)가 있어 걱정이 크다','나를 해치고 싶다는 생각이 든다'],
@@ -187,6 +239,12 @@ const RELATIONSHIP_DATA = {
   },
   family: {
     recognition: '가족과의 단절은 사회적으로 잘 이야기되지 않아 더 외롭게 느껴져요. 하지만 자신을 지키기 위한 선택이 필요할 때도 있어요.',
+    psychology: '가족 단절은 "관계적 트라우마"의 한 형태예요. 어릴 때 형성된 애착 패턴이 성인기 관계에 그대로 영향을 미쳐요. 가족과의 건강한 거리두기는 자기 보호이지 이기심이 아니에요.',
+    techniques: [
+      { name: '내면 아이 작업(Inner Child Work)', desc: '가족 관계에서 받은 상처는 "어린 시절의 나"가 안고 있는 경우가 많아요. "그때의 나에게 뭐라고 말해주고 싶어?"라고 물어보세요.' },
+      { name: '선택한 가족(Chosen Family)', desc: '혈연만이 가족이 아니에요. 나를 존중하고 지지하는 사람들이 진짜 가족이 될 수 있어요. 의식적으로 연결을 만들어 보세요.' },
+      { name: '경계 연습', desc: '"가족이니까 참아야지"는 건강하지 않아요. "이 대화는 나에게 해로워요"라고 말할 수 있는 것이 성숙한 경계예요.' }
+    ],
     check: {
       id: 'ct_family', title: '지금 내 상태는?',
       questions: ['가족 이야기가 나올 때마다 불안하거나 슬프다','주변에 가족 대신 의지할 사람이 없다','과거 가족 관계로 인한 상처가 일상에 영향을 준다'],
@@ -208,6 +266,12 @@ const RELATIONSHIP_DATA = {
   },
   friend: {
     recognition: '어른이 될수록 새 친구를 사귀기 어려워요. 그건 내가 이상한 게 아니에요. 삶의 구조가 바뀌면 관계도 바뀌는 게 자연스러워요.',
+    psychology: '사회적 고립은 하루 담배 15개비만큼 건강에 해로워요 (Holt-Lunstad, 2015). 외로움이 만성화되면 뇌의 위협 감지 시스템이 과민해져서, 새로운 관계를 시도하는 것 자체가 "위험"으로 느껴져요.',
+    techniques: [
+      { name: '사회적 근육 훈련', desc: '친구 사귀기도 근육이에요. 편의점 직원에게 인사→카페 단골 되기→동호회 참석. 작은 것부터 "사회적 근육"을 키워보세요.' },
+      { name: '취약성의 힘', desc: '브레네 브라운 교수의 연구에 따르면, 진정한 연결은 완벽함이 아니라 "취약함"에서 시작돼요. "나도 외로워"라고 먼저 말하는 용기가 연결의 시작이에요.' },
+      { name: '관계 질 vs 양', desc: '100명의 지인보다 1명의 진짜 친구가 정신건강에 더 큰 영향을 미쳐요. 숫자가 아닌 깊이에 집중해 보세요.' }
+    ],
     check: {
       id: 'ct_friend', title: '지금 내 상태는?',
       questions: ['연락할 수 있는 친구가 없다','외로움이 2주 이상 지속됐다','사람들과 있어도 외롭다 (만성적 고립감)'],
@@ -229,6 +293,12 @@ const RELATIONSHIP_DATA = {
   },
   breakup: {
     recognition: '이별은 뇌에서 실제 통증으로 처리돼요. 아픈 게 당연해요. 일상이 멈춘 것 같은 느낌도 정상적인 반응이에요.',
+    psychology: '이별은 뇌의 보상 회로(도파민 시스템)가 갑자기 끊기는 것과 같아요. 연인과의 관계에서 분비되던 옥시토신·도파민이 사라지면서 뇌는 "금단 증상"과 유사한 반응을 보여요. 이것이 "못 잊겠다"의 신경과학적 이유예요.',
+    techniques: [
+      { name: '무접촉(No Contact) 원칙', desc: 'SNS 차단, 연락 끊기가 잔인한 게 아니에요. 뇌의 도파민 회로를 끊어야 새로운 보상 체계가 형성돼요. 최소 30일을 권해요.' },
+      { name: '슬픔 허용 시간', desc: '하루 20분을 "슬퍼도 되는 시간"으로 정하세요. 그 시간에는 실컷 울어도 돼요. 대신 시간이 끝나면 다른 활동으로 전환하세요.' },
+      { name: '자기 정체성 회복', desc: '"우리"가 아닌 "나"로 돌아오세요. 연인 없이도 나는 완전한 사람이에요. 혼자 해보고 싶었던 것 하나를 이번 주에 해보세요.' }
+    ],
     check: {
       id: 'ct_breakup', title: '지금 내 상태는?',
       questions: ['2주 이상 일상생활(식사, 수면, 업무)이 어렵다','이 사람 없이는 살 수 없다는 생각이 든다','나를 해치고 싶다는 생각이 든다'],
@@ -256,6 +326,13 @@ function buildRelationDetail(container, id) {
   const meta = RELATIONSHIP_DATA.situations.find(s => s.id === id);
   if (!d || !meta) return;
 
+  const techHTML = d.techniques ? d.techniques.map(t =>
+    `<div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    </div>`
+  ).join('') : '';
+
   container.innerHTML = `
     <button class="page-back" onclick="renderRelationPage(document.getElementById('relation-content'))">← 관계 가이드로</button>
     <div class="content-hero" style="background:linear-gradient(135deg,var(--relation-d),var(--relation))">
@@ -263,28 +340,67 @@ function buildRelationDetail(container, id) {
       <h1>${esc(meta.label)}</h1>
       <p>${esc(meta.sub)}</p>
     </div>
+
     <div class="step-section">
-      <div class="step-label">① 상황 인식</div>
+      <div class="step-label">지금 이런 상태예요</div>
       <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(d.recognition)}</p>
     </div>
-    <div class="step-section" id="relation-check-${id}">
-      <div class="step-label">② 상황 판단</div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">③ 행동 가이드</div>
-      <div class="action-checklist">${_actionItems(d.actions)}</div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">④ 도움 연결</div>
-      <div class="help-cards">
-        ${d.help.map(h => `
-          <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
-            <div class="help-card-num">📞 ${h.number}</div>
-            <div class="help-card-info">
-              <div class="help-card-name">${esc(h.name)}</div>
-              <div class="help-card-desc">${esc(h.desc)}</div>
-            </div>
-          </a>`).join('')}
+
+    <div class="accordion-group">
+      ${d.psychology ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 왜 이렇게 힘든 걸까?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+        </div></div>
+      </div>` : ''}
+
+      ${techHTML ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💡 심리학적 자기 돌봄법</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${techHTML}
+        </div></div>
+      </div>` : ''}
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="relation-check-${id}"></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>✅ 행동 가이드</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
       </div>
     </div>
   `;
@@ -331,6 +447,12 @@ const TRANSITION_DATA = {
   ],
   jobless: {
     recognition: '직장을 잃는 것은 정체성의 일부가 흔들리는 경험이에요. 불안한 건 당연해요.',
+    psychology: '실직은 단순한 수입 상실이 아니라 "역할 정체성"의 상실이에요. 에릭슨(Erikson)의 발달 이론에서 직업은 성인기 정체감의 핵심이에요. 정체성 공백이 우울·불안으로 이어질 수 있어요.',
+    techniques: [
+      { name: '역할 다변화', desc: '"직장인"만이 내 정체성이 아니에요. 친구, 자녀, 취미인, 배우는 사람 — 다른 역할들을 의식적으로 활성화해 보세요.' },
+      { name: '구조화된 하루', desc: '출근하지 않아도 기상→아침→활동→점심→활동→저녁의 구조를 유지하세요. 구조가 없으면 무기력이 빠르게 찾아와요.' },
+      { name: '작은 성취 일기', desc: '매일 저녁 "오늘 한 것 3개" 적기. 지원서 하나 썼다, 산책했다, 밥 해먹었다 — 아무리 작아도 괜찮아요.' }
+    ],
     check: {
       id: 'ct_jobless', title: '지금 내 상태는?',
       questions: ['2주 이상 무기력하거나 불안하다','재정적으로 즉시 어려운 상황이다','나를 해치고 싶다는 생각이 든다'],
@@ -356,6 +478,12 @@ const TRANSITION_DATA = {
   },
   failure: {
     recognition: '사업 실패는 사람에 대한 실패가 아니에요. 수많은 성공한 사람들이 실패를 겪었어요. 지금 느끼는 수치심은 실제 현실보다 훨씬 크게 느껴질 수 있어요.',
+    psychology: '사업 실패 후 느끼는 수치심은 뇌의 사회적 통증 회로를 활성화해요. "다른 사람들이 나를 어떻게 볼까"는 진화적 생존 본능(집단에서 배제당할 공포)에서 비롯돼요. 이 감정은 실제보다 훨씬 크게 느껴져요.',
+    techniques: [
+      { name: '인지적 탈융합(Defusion)', desc: '"나는 실패자다"를 "나는 \'나는 실패자다\'라는 생각을 하고 있다"로 바꿔보세요. 생각과 나를 분리하면 그 생각의 지배력이 줄어들어요.' },
+      { name: '실패 재프레이밍', desc: '실패는 "끝"이 아니라 "데이터"예요. "무엇을 배웠는가?"를 적어보세요. 이 과정이 회복탄력성(Resilience)의 핵심이에요.' },
+      { name: '수치심 내성 훈련', desc: '브레네 브라운의 방법: 수치심을 느끼면 신뢰할 수 있는 1명에게 말하세요. 수치심은 비밀 속에서 자라고, 말하는 순간 줄어들어요.' }
+    ],
     check: {
       id: 'ct_failure', title: '지금 내 상태는?',
       questions: ['수치심이나 자괴감이 매우 크다','재정적 위기 상황이다 (부채, 압류 등)','나를 해치고 싶다는 생각이 든다'],
@@ -380,6 +508,12 @@ const TRANSITION_DATA = {
   },
   direction: {
     recognition: '진로를 모르는 건 이상한 게 아니에요. 삶의 방향이 명확한 사람이 오히려 소수예요. "모른다"는 것은 아직 가능성이 열려 있다는 뜻이에요.',
+    psychology: '방향 상실감은 실존적 공허(existential vacuum)의 한 형태예요. 빅터 프랭클(Frankl)은 "의미의 부재"가 현대인의 가장 큰 고통이라 했어요. 방향을 모르는 것 자체가 문제가 아니라, "방향을 알아야 한다"는 압박이 고통을 만들어요.',
+    techniques: [
+      { name: '가치 탐색(Values Clarification)', desc: '"하고 싶은 일"이 아니라 "어떤 사람이 되고 싶은가"부터 생각해 보세요. 직업은 바뀔 수 있지만, 가치(정직, 창의, 돌봄 등)는 방향을 잡아줘요.' },
+      { name: '실험적 접근', desc: '정답을 찾으려 하지 말고, 작은 실험을 해보세요. 1주일 봉사활동, 1달 취미 수업, 1일 직업 체험 — 해봐야 맞는지 알 수 있어요.' },
+      { name: '비교 중단 연습', desc: 'SNS에서 "잘 나가는 동기"를 보면 더 막막해져요. 1주일만 SNS 사용을 줄이고, 나의 내면에 집중하는 시간을 만들어 보세요.' }
+    ],
     check: {
       id: 'ct_direction', title: '지금 내 상태는?',
       questions: ['무력감이 2주 이상 지속됐다','아무것도 하기 싫은 상태다','미래에 대한 희망이 없다는 생각이 든다'],
@@ -401,6 +535,12 @@ const TRANSITION_DATA = {
   },
   move: {
     recognition: '새로운 곳에서 아무도 모르는 느낌, 그건 정상이에요. 어른이 된 후의 이사나 이민은 예상보다 훨씬 외롭고 어려워요.',
+    psychology: '새 환경 적응은 "문화 충격(Culture Shock)"의 U자 곡선을 따라요: 기대→충격→적응→안정. 지금 힘든 건 "충격" 단계일 수 있어요. 이 단계는 반드시 지나가요. 보통 3~6개월이 걸려요.',
+    techniques: [
+      { name: '앵커 포인트 만들기', desc: '"나만의 장소" 하나를 만드세요. 자주 가는 카페, 산책로, 공원 벤치 — 익숙한 공간이 심리적 안전기지(Secure Base) 역할을 해요.' },
+      { name: '과도기 의식(Transition Ritual)', desc: '이사 전 동네에 작별 인사 편지 쓰기, 새 동네에서 "첫 산책" 하기. 의식적인 구분이 뇌에게 "새로운 시작"의 신호를 보내요.' },
+      { name: '연결 유지 + 연결 생성', desc: '이전 관계를 유지하면서(주 1회 영상통화) 새 관계를 만들어 보세요(동네 모임). 둘 다 필요해요.' }
+    ],
     check: {
       id: 'ct_move', title: '지금 내 상태는?',
       questions: ['이사·이민 후 2주 이상 적응이 어렵다','의지할 사람이 새 환경에 아무도 없다','돌아가고 싶다는 생각이 매우 강하다'],
@@ -427,6 +567,13 @@ function buildTransitionDetail(container, id) {
   const meta = TRANSITION_DATA.situations.find(s => s.id === id);
   if (!d || !meta) return;
 
+  const techHTML = d.techniques ? d.techniques.map(t =>
+    `<div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    </div>`
+  ).join('') : '';
+
   container.innerHTML = `
     <button class="page-back" onclick="renderTransitionPage(document.getElementById('transition-content'))">← 전환기 가이드로</button>
     <div class="content-hero" style="background:linear-gradient(135deg,var(--transition-d),var(--transition-c))">
@@ -434,28 +581,67 @@ function buildTransitionDetail(container, id) {
       <h1>${esc(meta.label)}</h1>
       <p>${esc(meta.sub)}</p>
     </div>
+
     <div class="step-section">
-      <div class="step-label">① 상황 인식</div>
+      <div class="step-label">지금 이런 상태예요</div>
       <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(d.recognition)}</p>
     </div>
-    <div class="step-section" id="transition-check-${id}">
-      <div class="step-label">② 상황 판단</div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">③ 행동 가이드</div>
-      <div class="action-checklist">${_actionItems(d.actions)}</div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">④ 도움 연결</div>
-      <div class="help-cards">
-        ${d.help.map(h => `
-          <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
-            <div class="help-card-num">📞 ${h.number}</div>
-            <div class="help-card-info">
-              <div class="help-card-name">${esc(h.name)}</div>
-              <div class="help-card-desc">${esc(h.desc)}</div>
-            </div>
-          </a>`).join('')}
+
+    <div class="accordion-group">
+      ${d.psychology ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 왜 이렇게 힘든 걸까?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+        </div></div>
+      </div>` : ''}
+
+      ${techHTML ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💡 심리학적 자기 돌봄법</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${techHTML}
+        </div></div>
+      </div>` : ''}
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="transition-check-${id}"></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>✅ 행동 가이드</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
       </div>
     </div>
   `;

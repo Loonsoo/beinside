@@ -6,6 +6,12 @@ const EMOTION_GUIDE_DATA = {
   sad: {
     icon: '😢', label: '계속 슬퍼요',
     recognition: '계속 슬픈 건, 뭔가 중요한 걸 잃었거나 지쳐 있다는 신호예요. 이 감정을 느끼는 건 나약한 게 아니에요.',
+    psychology: '정신의학에서 지속적 슬픔은 "주요우울장애(MDD)"의 핵심 증상이에요. 세로토닌·노르에피네프린 등 신경전달물질의 불균형이 원인일 수 있어요. 2주 이상 지속되면 단순한 기분이 아닌 뇌의 화학적 변화일 가능성이 높아요.',
+    techniques: [
+      { name: '행동 활성화(Behavioral Activation)', desc: '우울할 때 가만히 있으면 더 우울해져요. 아주 작은 행동(이불 개기, 창문 열기)부터 시작해 뇌의 보상 회로를 조금씩 깨워 보세요.' },
+      { name: '인지 재구성(Cognitive Restructuring)', desc: '"나는 쓸모없어"라는 생각이 들면, 그 생각의 증거를 찾아보세요. 대부분 증거가 부족해요. 생각은 사실이 아닐 수 있어요.' },
+      { name: '감정 라벨링(Affect Labeling)', desc: '"슬프다"라고 이름 붙이는 것만으로 편도체(공포·감정 중추)의 활성화가 줄어들어요. 감정을 느끼면 구체적으로 이름을 붙여보세요.' }
+    ],
     check: {
       id: 'ct_sad',
       title: '아래 중 해당되는 게 있나요?',
@@ -35,6 +41,12 @@ const EMOTION_GUIDE_DATA = {
   anxious: {
     icon: '😰', label: '불안해서 잠이 안 와요',
     recognition: '불안은 위험을 감지하는 정상적인 신호예요. 하지만 잠을 방해할 정도라면, 몸이 과부하 상태라는 뜻이에요.',
+    psychology: '불안은 편도체가 위험 신호를 과잉 감지할 때 발생해요. 범불안장애(GAD)에서는 이 경보 시스템이 계속 켜져 있어요. 자율신경계의 "투쟁-도피 반응"이 활성화되어 심장이 빨라지고, 근육이 긴장하고, 소화가 멈춰요.',
+    techniques: [
+      { name: '박스 호흡법(Box Breathing)', desc: '4초 들이쉬기→4초 멈추기→4초 내쉬기→4초 멈추기. 부교감신경을 활성화해 불안의 신체 반응을 직접 낮춰줘요.' },
+      { name: '점진적 근이완법(PMR)', desc: '발끝부터 머리까지 근육을 5초간 긴장시켰다가 풀기를 반복해요. 몸의 긴장이 풀리면 뇌도 "안전하다"는 신호를 받아요.' },
+      { name: '걱정 시간 제한법(Worry Time)', desc: '하루 15분을 "걱정 시간"으로 정하세요. 그 외 시간에 걱정이 오면 "나중에 걱정하자"로 미루세요. 뇌가 걱정의 통제감을 되찾아요.' }
+    ],
     check: {
       id: 'ct_anxious',
       title: '아래 중 해당되는 게 있나요?',
@@ -65,6 +77,12 @@ const EMOTION_GUIDE_DATA = {
   numb: {
     icon: '😶', label: '아무 감정도 안 느껴져요',
     recognition: '감정이 없는 것처럼 느껴질 때, 사실 뇌는 너무 많은 것을 처리해 감정을 차단하고 있어요. 이것도 정상적인 반응이에요.',
+    psychology: '감정 무감각(Emotional Numbing)은 뇌가 과도한 스트레스로부터 자신을 보호하는 해리(Dissociation) 반응이에요. 전전두엽이 감정 처리를 억제하면서 "꺼진 것 같은" 상태가 돼요. 우울증이나 PTSD의 한 형태일 수 있어요.',
+    techniques: [
+      { name: '감각 자극법(Sensory Grounding)', desc: '얼음 조각 쥐기, 찬물 세수, 강한 향의 것 맡기 — 신체 감각 자극이 해리 상태에서 "지금 여기"로 돌아오게 도와줘요.' },
+      { name: '5-4-3-2-1 기법', desc: '지금 보이는 것 5개, 들리는 것 4개, 만질 수 있는 것 3개, 냄새 2개, 맛 1개를 찾아보세요. 감각을 통해 현재에 연결돼요.' },
+      { name: '마이크로 감정 일기', desc: '하루에 한 번, "지금 0~10점 중 몇 점?"만 기록해 보세요. 숫자로라도 감정을 인식하는 연습이 감정 회로를 다시 여는 시작이에요.' }
+    ],
     check: {
       id: 'ct_numb',
       title: '아래 중 해당되는 게 있나요?',
@@ -92,6 +110,12 @@ const EMOTION_GUIDE_DATA = {
   angry: {
     icon: '😤', label: '이유 없이 화가 나요',
     recognition: '이유 없는 분노 뒤에는 대부분 억눌린 슬픔이나 무력감이 있어요. 화는 감정의 문이에요 — 들어가 보면 다른 감정이 있어요.',
+    psychology: '분노의 이면에는 대부분 1차 감정(두려움, 슬픔, 무력감)이 숨어 있어요. 뇌과학적으로 편도체가 위협을 감지하면 전전두엽(이성적 판단)보다 먼저 반응해요. 이것이 "생각 전에 폭발하는" 이유예요.',
+    techniques: [
+      { name: 'STOP 기법', desc: 'Stop(멈추기)→Take a breath(숨 쉬기)→Observe(관찰하기)→Proceed(진행하기). 자동 반응과 의식적 반응 사이에 공간을 만들어줘요.' },
+      { name: '분노 이면 탐색', desc: '"화가 났다" 밑에 무엇이 있는지 물어보세요. "사실은 무시당한 것 같아서 서러웠다"처럼, 진짜 감정을 찾으면 분노가 줄어들어요.' },
+      { name: '신체 에너지 방출', desc: '분노의 에너지는 신체에 저장돼요. 빠르게 걷기, 계단 오르기, 쿠션 치기 등으로 물리적으로 방출하면 뇌의 각성 수준이 내려가요.' }
+    ],
     check: {
       id: 'ct_angry',
       title: '아래 중 해당되는 게 있나요?',
@@ -119,6 +143,12 @@ const EMOTION_GUIDE_DATA = {
   exhausted: {
     icon: '🫠', label: '너무 지쳐서 아무것도 하기 싫어요',
     recognition: '아무것도 하기 싫을 때, 그건 게으름이 아니에요. 몸과 마음이 충전을 요청하는 신호예요.',
+    psychology: '만성 피로는 코르티솔(스트레스 호르몬)의 장기적 과잉 분비 후 고갈되는 "부신 피로" 상태와 관련돼요. 번아웃이 심해지면 뇌의 보상 회로가 둔감해져서 아무것도 하고 싶지 않게 돼요. 이건 의지력 문제가 아니라 신경생물학적 고갈이에요.',
+    techniques: [
+      { name: '에너지 버짓(Energy Budget)', desc: '하루 에너지를 10칸으로 나누고, 각 활동에 칸을 배분해 보세요. "에너지를 쓰는 것"과 "채우는 것"을 구분하는 것이 회복의 시작이에요.' },
+      { name: '최소 유효 행동(Minimum Viable Action)', desc: '"운동 30분"이 아니라 "현관문 밖에 서기"부터. 가장 작은 한 걸음만 해보세요. 뇌는 "시작했다"는 것만으로도 보상 신호를 보내요.' },
+      { name: '수면 위생(Sleep Hygiene)', desc: '매일 같은 시간에 자고 일어나기, 잠자리에서 핸드폰 보지 않기, 카페인 오후 2시 이후 금지. 수면의 질이 회복의 기반이에요.' }
+    ],
     check: {
       id: 'ct_exhausted',
       title: '아래 중 해당되는 게 있나요?',
@@ -146,6 +176,12 @@ const EMOTION_GUIDE_DATA = {
   lonely: {
     icon: '😔', label: '외로워서 견딜 수 없어요',
     recognition: '외로움은 연결에 대한 인간의 본능적 욕구예요. 느끼는 것 자체가 잘못된 게 아니에요.',
+    psychology: '외로움은 뇌에서 실제 신체적 통증과 같은 영역(전대상회피질)을 활성화해요. 진화적으로 인간은 집단에서 이탈하면 생존이 위협받았기 때문에, 외로움을 "위험 신호"로 처리해요. 만성 외로움은 면역 기능 저하, 심혈관 질환 위험 증가와도 연관돼요.',
+    techniques: [
+      { name: '소속감의 3단계', desc: '1단계: 같은 공간에 있기 (카페, 도서관). 2단계: 같은 활동 하기 (수업, 동호회). 3단계: 서로 알기 (이름, 이야기). 1단계부터 시작해도 돼요.' },
+      { name: '자기 연민(Self-Compassion)', desc: '크리스틴 네프 교수의 방법: "지금 힘들구나"(마음챙김) + "누구나 외로울 수 있어"(공통 인간성) + "나에게 따뜻하게 대하자"(자기 친절).' },
+      { name: '마이크로 연결', desc: '편의점 직원에게 "감사합니다" 한마디, 이웃에게 목례, 온라인 커뮤니티 댓글 — 아주 작은 연결도 뇌의 사회적 보상 회로를 활성화해요.' }
+    ],
     check: {
       id: 'ct_lonely',
       title: '아래 중 해당되는 게 있나요?',
@@ -173,6 +209,12 @@ const EMOTION_GUIDE_DATA = {
   overthinking: {
     icon: '🤯', label: '생각이 너무 많아요',
     recognition: '생각이 멈추지 않을 때, 뇌가 문제를 해결하려 과부하 상태예요. 생각을 멈추려는 것보다 생각을 흘려보내는 것이 효과적이에요.',
+    psychology: '반추(Rumination)는 같은 생각을 반복하는 패턴으로, 우울증·불안장애의 핵심 유지 요인이에요. 뇌의 디폴트 모드 네트워크(DMN)가 과활성화되어 자기 참조적 사고가 멈추지 않아요. 생각을 "멈추려" 할수록 역설적으로 더 강해져요.',
+    techniques: [
+      { name: '메타인지 훈련', desc: '"나는 지금 반추하고 있구나"라고 한 발 물러서 관찰해 보세요. 생각의 "내용"이 아니라 "과정"을 보는 것만으로 강도가 줄어요.' },
+      { name: '외부화(Externalization)', desc: '걱정을 종이에 적으면 뇌의 작업 기억에서 "내려놓기"가 돼요. "적어뒀으니 잊어도 된다"는 신호를 보내는 거예요.' },
+      { name: '감각 전환(Sensory Switch)', desc: '생각이 멈추지 않을 때 감각 채널을 바꿔보세요. 냉수 세수, 강한 민트 사탕, 빠른 음악 — DMN을 끊고 외부 감각으로 주의를 전환해요.' }
+    ],
     check: {
       id: 'ct_overthink',
       title: '아래 중 해당되는 게 있나요?',
@@ -236,6 +278,13 @@ function buildEmotionDetail(container, key) {
   const d = EMOTION_GUIDE_DATA[key];
   if (!d) return;
 
+  const techHTML = d.techniques ? d.techniques.map(t =>
+    `<div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    </div>`
+  ).join('') : '';
+
   container.innerHTML = `
     <button class="page-back" onclick="renderEmotionPage(document.getElementById('emotion-content'))">← 감정 목록으로</button>
     <div class="content-hero" style="background:linear-gradient(135deg,var(--lavender-d),var(--lavender))">
@@ -244,45 +293,78 @@ function buildEmotionDetail(container, key) {
     </div>
 
     <div class="step-section">
-      <div class="step-label">① 상황 인식</div>
+      <div class="step-label">지금 이런 상태예요</div>
       <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(d.recognition)}</p>
     </div>
 
-    <div class="step-section" id="check-section-${key}">
-      <div class="step-label">② 상황 판단</div>
-    </div>
+    <div class="accordion-group">
+      ${d.psychology ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 왜 이런 감정이 드는 걸까?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+        </div></div>
+      </div>` : ''}
 
-    <div class="step-section">
-      <div class="step-label">③ 행동 가이드</div>
-      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:10px;">지금 바로 할 수 있는 것</p>
-      <div class="action-checklist">
-        ${d.actions.map(a => `
-          <div class="action-item" onclick="toggleAction(this)" role="checkbox" aria-checked="false" tabindex="0">
-            <div class="action-check" aria-hidden="true"></div>
-            <div class="action-text"><span class="action-emoji">${a.icon}</span><span>${esc(a.text)}</span></div>
-          </div>
-        `).join('')}
+      ${techHTML ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💡 정신의학적 자기 돌봄법</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${techHTML}
+        </div></div>
+      </div>` : ''}
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="check-section-${key}"></div>
+        </div></div>
       </div>
-    </div>
 
-    <div class="step-section">
-      <div class="step-label">④ 도움 연결</div>
-      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:12px;">혼자 감당이 안 된다면</p>
-      <div class="help-cards">
-        ${d.help.map(h => `
-          <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
-            <div class="help-card-num">📞 ${h.number}</div>
-            <div class="help-card-info">
-              <div class="help-card-name">${esc(h.name)}</div>
-              <div class="help-card-desc">${esc(h.desc)}</div>
-            </div>
-          </a>
-        `).join('')}
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>✅ 지금 바로 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">
+            ${d.actions.map(a => `
+              <div class="action-item" onclick="toggleAction(this)" role="checkbox" aria-checked="false" tabindex="0">
+                <div class="action-check" aria-hidden="true"></div>
+                <div class="action-text"><span class="action-emoji">${a.icon}</span><span>${esc(a.text)}</span></div>
+              </div>
+            `).join('')}
+          </div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        </div></div>
       </div>
     </div>
   `;
 
-  // 체크 툴 주입
+  // 체크 툴 주입 — accordion이 열린 후에도 동작하도록
   const checkSection = container.querySelector(`#check-section-${key}`);
   if (checkSection && typeof renderCheckTool === 'function') {
     renderCheckTool(checkSection, d.check);
