@@ -3161,13 +3161,11 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   -webkit-user-select:none;
   -webkit-touch-callout:none;
 }
-/* 롱프레스 중 텍스트 선택 방지 */
-.sit-card[data-card-id]{
-  -webkit-touch-callout:none;
-}
-.sit-card[data-card-id] *{
+/* 홈 화면 전체 텍스트 선택 방지 */
+.hero, .hero *{
   -webkit-user-select:none;
   user-select:none;
+  -webkit-touch-callout:none;
 }
 .card-edit-mode .sit-card:nth-child(even){animation-delay:.14s;}
 .card-edit-mode .sit-card:nth-child(3n){animation-direction:reverse;}
@@ -3236,13 +3234,12 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .card-edit-hint{font-size:10px;}
   .card-edit-done{padding:5px 12px;font-size:11px;border-radius:8px;}
 }
-/* 편집 안내 힌트 (기본 화면) */
+/* 편집 안내 힌트 (서브타이틀 아래) */
 .card-edit-tip{
-  text-align:center;
-  font-size:11px;
+  font-size:10.5px;
   color:var(--ink-l);
-  opacity:.45;
-  margin:12px 0 4px;
+  opacity:.4;
+  margin:0 0 6px;
   letter-spacing:-.1px;
 }
 .card-edit-mode .card-edit-tip{display:none;}
