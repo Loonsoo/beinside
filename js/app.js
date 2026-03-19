@@ -350,19 +350,100 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ── 용어 툴팁 — 모바일 탭 토글 ── */
-document.addEventListener('click', e => {
-  const term = e.target.closest('.term');
-  // 다른 곳 클릭 시 모든 툴팁 닫기
-  document.querySelectorAll('.term.active').forEach(t => {
-    if (t !== term) t.classList.remove('active');
-  });
-  // 용어 탭 시 토글
-  if (term) {
-    e.preventDefault();
-    term.classList.toggle('active');
+/* ── 용어 툴팁 — 싱글 팝업, 동적 위치 ── */
+(function initTermTooltip() {
+  let popup = null;
+  let activeTerm = null;
+
+  function getPopup() {
+    if (!popup) {
+      popup = document.createElement('div');
+      popup.className = 'term-popup';
+      document.body.appendChild(popup);
+    }
+    return popup;
   }
-});
+
+  function closePopup() {
+    if (popup) popup.classList.remove('on');
+    if (activeTerm) activeTerm.classList.remove('active');
+    activeTerm = null;
+  }
+
+  function showPopup(term) {
+    const tip = term.querySelector('.term-tip');
+    if (!tip) return;
+    const p = getPopup();
+    p.textContent = tip.textContent;
+
+    // 먼저 보이지 않게 배치하여 크기 측정
+    p.classList.remove('on', 'arrow-bottom', 'arrow-top');
+    p.style.left = '0';
+    p.style.top = '0';
+    p.classList.add('on');
+
+    const rect = term.getBoundingClientRect();
+    const pw = p.offsetWidth;
+    const ph = p.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const gap = 10;
+
+    // 좌우 위치 — 용어 중심 기준, 화면 안에 유지
+    let left = rect.left + rect.width / 2 - pw / 2;
+    left = Math.max(16, Math.min(left, vw - pw - 16));
+
+    // 화살표 X — 용어 중심이 팝업 내 어디인지
+    const arrowX = Math.max(16, Math.min(rect.left + rect.width / 2 - left, pw - 16));
+    p.style.setProperty('--arrow-x', arrowX + 'px');
+
+    // 상하 위치 — 위에 공간 있으면 위, 없으면 아래
+    let top;
+    if (rect.top - ph - gap > 0) {
+      top = rect.top - ph - gap;
+      p.classList.add('arrow-bottom');
+    } else {
+      top = rect.bottom + gap;
+      p.classList.add('arrow-top');
+    }
+
+    p.style.left = left + 'px';
+    p.style.top = top + 'px';
+    activeTerm = term;
+    term.classList.add('active');
+  }
+
+  // 클릭(탭) 처리
+  document.addEventListener('click', e => {
+    const term = e.target.closest('.term');
+    if (!term) { closePopup(); return; }
+    e.preventDefault();
+    e.stopPropagation();
+    if (term === activeTerm) { closePopup(); return; }
+    closePopup();
+    showPopup(term);
+  });
+
+  // 데스크톱 호버
+  document.addEventListener('mouseover', e => {
+    const term = e.target.closest('.term');
+    if (!term || activeTerm) return; // 탭 활성 중이면 호버 무시
+    showPopup(term);
+  });
+  document.addEventListener('mouseout', e => {
+    const term = e.target.closest('.term');
+    if (!term || !activeTerm) return;
+    // 클릭으로 열린 건 마우스아웃으로 닫지 않음
+    if (term.classList.contains('active') && activeTerm === term) {
+      // 호버로 연 경우만 닫기 (클릭 구분: pointer 체크)
+    }
+    closePopup();
+  });
+
+  // 스크롤·리사이즈 시 닫기
+  window.addEventListener('scroll', closePopup, { passive: true });
+  window.addEventListener('resize', closePopup);
+})();
 
 /* ── 감정 체크인 (메인 화면) ── */
 function selectMood(mood) {
