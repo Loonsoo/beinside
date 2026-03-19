@@ -3234,15 +3234,31 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .card-edit-hint{font-size:10px;}
   .card-edit-done{padding:5px 12px;font-size:11px;border-radius:8px;}
 }
-/* 편집 안내 힌트 (서브타이틀 아래) */
-.card-edit-tip{
-  font-size:10.5px;
+/* 편집 뱃지 (섹션 타이틀 옆) */
+.card-edit-badge{
+  display:inline-flex;
+  align-items:center;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:10px;
+  font-weight:500;
   color:var(--ink-l);
-  opacity:.4;
-  margin:0 0 6px;
-  letter-spacing:-.1px;
+  background:var(--warm);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:2px 8px;
+  margin-left:6px;
+  cursor:pointer;
+  vertical-align:middle;
+  opacity:.6;
+  transition:opacity .15s, background .15s;
+  letter-spacing:0;
 }
-.card-edit-mode .card-edit-tip{display:none;}
+.card-edit-badge:hover{
+  opacity:1;
+  background:var(--peach-p);
+  border-color:var(--peach);
+}
+.card-edit-mode .card-edit-badge{display:none;}
 /* 긴급 배너 → 감정 섹션 간격 */
 .emergency-banner{margin-bottom:20px;}
 /* 편집 모드에서 카드 클릭 차단 */
