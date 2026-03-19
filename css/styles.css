@@ -3189,29 +3189,43 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 .card-edit-bar{
   display:none;
   position:fixed;
-  bottom:70px;left:50%;transform:translateX(-50%);
+  bottom:80px;left:50%;transform:translateX(-50%);
   z-index:9980;
-  background:var(--ink);
+  background:rgba(58,58,58,.88);
   color:#F7F3EE;
-  border-radius:20px;
-  padding:10px 14px 10px 20px;
-  align-items:center;gap:14px;
-  box-shadow:0 8px 32px rgba(0,0,0,.28);
-  font-size:13px;
-  animation:up .25s ease both;
+  border-radius:14px;
+  padding:8px 12px 8px 16px;
+  align-items:center;gap:10px;
+  box-shadow:0 4px 16px rgba(0,0,0,.20);
+  font-size:12px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  animation:up .2s ease both;
+  white-space:nowrap;
 }
 .card-edit-mode .card-edit-bar{display:flex;}
-.card-edit-hint{opacity:.7;font-size:12px;white-space:nowrap;}
+.card-edit-hint{opacity:.5;font-size:11px;}
 .card-edit-done{
   background:var(--peach);color:#fff;
-  border:none;border-radius:12px;
-  padding:8px 20px;
+  border:none;border-radius:10px;
+  padding:6px 14px;
   font-family:'Noto Sans KR',sans-serif;
-  font-size:13px;font-weight:700;
+  font-size:12px;font-weight:700;
   cursor:pointer;
   transition:background .15s;
+  flex-shrink:0;
 }
 .card-edit-done:hover{background:var(--peach-d);}
+@media(max-width:640px){
+  .card-edit-bar{
+    bottom:72px;
+    padding:6px 10px 6px 14px;
+    border-radius:12px;
+    gap:8px;
+  }
+  .card-edit-hint{font-size:10px;}
+  .card-edit-done{padding:5px 12px;font-size:11px;border-radius:8px;}
+}
 /* 편집 모드에서 카드 클릭 차단 */
 .card-edit-mode .sit-card{pointer-events:auto;}
 
