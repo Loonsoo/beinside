@@ -96,6 +96,7 @@
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <p class="hero-sub">혼자 감당하고 있는 그 순간,<br>여기서부터 시작해 보세요.</p>
 
+      <div class="hero-sections">
       <!-- 영역 1: 돌봄 & 양육 -->
       <div class="section-care">
         <div class="section-header">
@@ -185,15 +186,18 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card sit-card--emergency self-area" onclick="showPage('emergency');setMTab('emergency')">
-            <div class="sit-icon">🚨</div>
-            <div class="sit-card-body">
-              <div class="sit-title">지금 당장 도움이 필요해요</div>
-              <div class="sit-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
-            </div>
-            <div class="sit-arrow">→</div>
-          </div>
         </div>
+      </div>
+      </div><!-- /hero-sections -->
+
+      <!-- 긴급 도움 배너 -->
+      <div class="emergency-banner" onclick="showPage('emergency');setMTab('emergency')">
+        <span class="emergency-banner-icon">🚨</span>
+        <div class="emergency-banner-body">
+          <div class="emergency-banner-title">지금 당장 도움이 필요해요</div>
+          <div class="emergency-banner-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
+        </div>
+        <span class="emergency-banner-arrow">→</span>
       </div>
 
       <!-- 감정 기록 섹션 -->

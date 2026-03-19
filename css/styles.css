@@ -97,6 +97,11 @@
   --disclaimer-bg:#F3F7FF;
   --disclaimer-border:#D1E1FF;
   --disclaimer-ink:#304880;
+
+  /* ── 긴급 배너 ── */
+  --emer-bg:#FFF0F0;
+  --emer-bg-deep:#FFE8E8;
+  --emer-border:rgba(200,60,60,.25);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -2305,11 +2310,15 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 /* self-area 카드 색조 (힐링 그린 기반) */
 .sit-card.self-area{
-  border-color:rgba(123,174,203,.16);
+  border-color:rgba(107,168,133,.16);
+}
+.sit-card.self-area .sit-icon{
+  background:var(--lavender-p);
+  border-color:rgba(107,168,133,.18);
 }
 .sit-card.self-area:hover{
   border-color:var(--lavender);
-  box-shadow:0 8px 28px rgba(123,174,203,.16);
+  box-shadow:0 8px 28px rgba(107,168,133,.16);
 }
 @media(max-width:640px){
   .section-care,
@@ -2324,6 +2333,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   border-top:1px solid var(--line);
   padding:24px 48px 28px;
   text-align:center;
+  border-radius:0;
 }
 .mood-label{
   font-family:'Gowun Batang',serif;
@@ -2378,6 +2388,132 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 @media(max-width:640px){
   .mood-section{ padding:20px 18px 24px; }
+}
+
+/* ══════════════════════════════════════════
+   EMERGENCY BANNER — 긴급 도움 풀와이드 배너
+══════════════════════════════════════════ */
+.emergency-banner{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  width:100%;
+  padding:18px 24px;
+  background:linear-gradient(135deg, var(--emer-bg), var(--emer-bg-deep));
+  border:1.5px solid var(--emer-border);
+  border-radius:16px;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.34,1.2,.64,1);
+  animation:up .5s .24s cubic-bezier(.22,1,.36,1) both;
+}
+.emergency-banner:hover{
+  transform:translateY(-3px);
+  box-shadow:0 8px 28px rgba(200,60,60,.16);
+  border-color:var(--emer-119);
+}
+.emergency-banner-icon{
+  font-size:26px;
+  width:50px;height:50px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(200,60,60,.08);
+  border-radius:14px;
+  flex-shrink:0;
+}
+.emergency-banner-body{flex:1;text-align:left;}
+.emergency-banner-title{
+  font-size:15px;font-weight:700;color:var(--emer-119);
+  margin-bottom:3px;
+}
+.emergency-banner-sub{font-size:12px;color:var(--ink-m);}
+.emergency-banner-arrow{
+  font-size:18px;color:var(--emer-119);
+  flex-shrink:0;transition:transform .2s;
+}
+.emergency-banner:hover .emergency-banner-arrow{transform:translateX(4px);}
+
+/* ══════════════════════════════════════════
+   HERO SECTIONS WRAPPER
+══════════════════════════════════════════ */
+.hero-sections{width:100%;}
+
+/* ══════════════════════════════════════════
+   DESKTOP 2-COLUMN LAYOUT (960px+)
+══════════════════════════════════════════ */
+@media(min-width:960px){
+  .hero{
+    display:grid;
+    grid-template-columns:320px 1fr;
+    grid-template-areas:
+      "title    sections"
+      "subtitle sections"
+      "mood     sections"
+      "banner   banner";
+    column-gap:48px;
+    row-gap:0;
+    text-align:left;
+    align-items:start;
+    padding:48px 60px 28px;
+    max-width:1120px;
+    margin:0 auto;
+  }
+  .hero h1{
+    grid-area:title;
+    text-align:left;
+    margin-bottom:8px;
+  }
+  .hero .hero-sub{
+    grid-area:subtitle;
+    text-align:left;
+    max-width:360px;
+    margin-bottom:28px;
+  }
+  .hero-sections{
+    grid-area:sections;
+  }
+  .emergency-banner{
+    grid-area:banner;
+    margin-top:8px;
+  }
+  #mood-section{
+    grid-area:mood;
+    align-self:start;
+    position:sticky;
+    top:80px;
+  }
+
+  /* 섹션 카드 영역 — 데스크톱 조정 */
+  .section-care,
+  .section-self{
+    padding:24px 28px 28px;
+    border-radius:20px;
+    margin-bottom:16px;
+  }
+  .situation-grid{
+    max-width:100%;
+  }
+
+  /* 감정 체크인 — 데스크톱에서 좌측 정렬 */
+  .mood-section{
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:var(--white);
+  }
+}
+
+/* 태블릿 (641–959px) — 단일 컬럼, 약간 넓은 여백 */
+@media(min-width:641px) and (max-width:959px){
+  .hero{
+    padding:36px 36px 24px;
+  }
+  .situation-grid{
+    max-width:100%;
+  }
+  .section-care,
+  .section-self{
+    padding:24px 28px 28px;
+    border-radius:16px;
+    margin-bottom:12px;
+  }
 }
 
 /* ══════════════════════════════════════════
