@@ -3158,6 +3158,16 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   animation:wiggle .28s ease-in-out infinite;
   cursor:grab;
   user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+/* 롱프레스 중 텍스트 선택 방지 */
+.sit-card[data-card-id]{
+  -webkit-touch-callout:none;
+}
+.sit-card[data-card-id] *{
+  -webkit-user-select:none;
+  user-select:none;
 }
 .card-edit-mode .sit-card:nth-child(even){animation-delay:.14s;}
 .card-edit-mode .sit-card:nth-child(3n){animation-direction:reverse;}
