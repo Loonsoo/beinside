@@ -203,6 +203,56 @@ const GRIEF_DATA = {
       { name: '몸의 회복을 허락하기', desc: '유산 후 몸은 출산과 비슷한 회복 과정을 거쳐요. 충분히 쉬세요. "빨리 일상으로 돌아가야 해"라는 압박을 내려놓아도 돼요. 몸이 준비될 때까지 기다려주세요.' },
       { name: '파트너와의 다른 슬픔 인정하기', desc: '같은 상실이지만 파트너와 슬퍼하는 방식이 다를 수 있어요. 한 사람은 울고, 한 사람은 말이 없을 수 있어요. 어느 쪽이든 틀린 게 아니에요. "우리 각자 방식이 다르구나"를 서로 인정해 보세요.' }
     ],
+    medicalRecovery: [
+      {
+        period: '초기 유산 (12주 이전)',
+        icon: '🌱',
+        physical: [
+          '출혈은 보통 1~2주 지속돼요. 생리보다 양이 많을 수 있어요.',
+          '하복부 통증은 생리통과 비슷해요. 진통제(아세트아미노펜)로 완화할 수 있어요.',
+          '호르몬(hCG)이 정상으로 돌아오는 데 4~6주 정도 걸려요.',
+          '다음 생리는 보통 4~8주 후에 돌아와요.'
+        ],
+        care: [
+          '2주간 탐폰 사용과 성관계를 피해 감염을 예방해 보세요.',
+          '38°C 이상 열이 나거나, 출혈이 갑자기 심해지면 산부인과에 바로 연락하세요.',
+          '잔여 조직 확인을 위해 1~2주 후 초음파 검진을 받아보세요.',
+          '무리한 운동은 2주간 자제하되, 가벼운 산책은 회복에 도움이 돼요.'
+        ]
+      },
+      {
+        period: '중기 유산 (12~20주)',
+        icon: '🌿',
+        physical: [
+          '출혈과 통증이 초기보다 심할 수 있어요. 병원에서의 관리가 중요해요.',
+          '자궁이 원래 크기로 돌아오는 데 4~6주가 걸려요.',
+          '유즙 분비가 시작될 수 있어요. 당황스럽겠지만, 호르몬 반응이에요. 냉찜질이 도움돼요.',
+          '호르몬 변화로 감정 기복이 더 클 수 있어요. 이건 약한 게 아니라 몸의 반응이에요.'
+        ],
+        care: [
+          '병원에서 퇴원 후 2주간 충분한 안정이 필요해요.',
+          '빈혈 검사를 받아보세요. 철분 보충제가 필요할 수 있어요.',
+          '산부인과 추적 검진을 꼭 받아보세요 (보통 2주 후).',
+          '감정적으로 힘들다면 산부인과 의사에게 심리 상담 연계를 요청해 보세요.'
+        ]
+      },
+      {
+        period: '후기 유산·사산 (20주 이후)',
+        icon: '🕊️',
+        physical: [
+          '분만과 유사한 과정을 거치기 때문에 산후 회복이 필요해요.',
+          '유즙 분비가 본격적으로 올 수 있어요. 의료진과 억제 방법을 상의해 보세요.',
+          '자궁 수축과 오로(산후 분비물)가 4~6주간 지속돼요.',
+          '호르몬 급변으로 산후우울증과 유사한 증상이 나타날 수 있어요.'
+        ],
+        care: [
+          '산후 6주 검진을 반드시 받아보세요.',
+          '영양 섭취(단백질, 철분, 엽산)와 수분 보충에 신경 써 보세요.',
+          '아이와의 작별 시간을 가질 수 있어요. 원한다면 안아보기, 발도장 남기기도 가능해요. 병원에 요청해 보세요.',
+          '다음 임신 시도는 의사와 상의해 주세요. 보통 3~6개월 이상 신체 회복을 권해요.'
+        ]
+      }
+    ],
     check: {
       id: 'ct_grief_miscarriage', title: '지금 내 상태는?',
       questions: [
@@ -309,6 +359,37 @@ function buildGriefDetail(container, id) {
         </div>
         <div class="accordion-body"><div class="accordion-body-inner">
           ${techHTML}
+        </div></div>
+      </div>` : ''}
+
+      ${d.medicalRecovery ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🏥 시기별 신체 회복 가이드</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${d.medicalRecovery.map(r => `
+            <div style="margin-bottom:20px;padding:16px 18px;background:var(--white);border:1px solid var(--line);border-radius:14px;">
+              <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+                <span>${r.icon}</span>${esc(r.period)}
+              </div>
+              <div style="margin-bottom:10px;">
+                <div style="font-size:11px;font-weight:700;color:var(--peach-d);letter-spacing:.05em;margin-bottom:6px;">신체 변화</div>
+                <ul style="font-size:12.5px;color:var(--ink-m);line-height:1.75;padding-left:16px;">
+                  ${r.physical.map(p => '<li style="margin-bottom:4px;word-break:keep-all;">' + esc(p) + '</li>').join('')}
+                </ul>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.05em;margin-bottom:6px;">관리 방법</div>
+                <ul style="font-size:12.5px;color:var(--ink-m);line-height:1.75;padding-left:16px;">
+                  ${r.care.map(c => '<li style="margin-bottom:4px;word-break:keep-all;">' + esc(c) + '</li>').join('')}
+                </ul>
+              </div>
+            </div>
+          `).join('')}
+          <div style="font-size:11px;color:var(--ink-l);line-height:1.6;padding:10px 14px;background:var(--disclaimer-bg);border:1px solid var(--disclaimer-border);border-radius:10px;word-break:keep-all;">
+            이 정보는 일반적인 참고 사항이에요. 개인마다 상황이 다르므로, 반드시 담당 산부인과 전문의와 상의해 주세요.
+          </div>
         </div></div>
       </div>` : ''}
 

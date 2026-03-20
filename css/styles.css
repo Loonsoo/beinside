@@ -446,7 +446,7 @@ nav button.on{
 }
 
 /* ── RESULT ── */
-#result{padding:0 48px 60px;display:none;}
+#result{padding:0 24px 60px;max-width:720px;margin:0 auto;display:none;}
 #result.on{display:block;animation:up .4s ease both;}
 .rhead{
   border-radius:18px;padding:24px 30px;
@@ -617,7 +617,7 @@ nav button.on{
 .sit-btn.s3.on,.sit-btn.s3:hover{background:var(--sit-plum-active);border-color:var(--sit-plum);}
 
 /* ── SP RESULT PANEL ── */
-#sp-result{padding:16px 48px 60px;}
+#sp-result{padding:16px 24px 60px;max-width:720px;margin:0 auto;}
 #sp-result.on{display:block;animation:up .4s ease both;}
 
 .sp-header{
@@ -1510,7 +1510,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 /* ── Guide TOC (목차 박스) ── */
 .guide-toc {
-  margin: 0 48px 28px;
+  margin: 0 24px 28px;
   background: white;
   border: 1.5px solid rgba(123,174,203,.18);
   border-radius: 16px;
@@ -1804,7 +1804,12 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 
 /* ── 페이지 뷰 (상황별 상세 페이지) ── */
-.page-view { animation: up .4s cubic-bezier(.22,1,.36,1) both; }
+.page-view {
+  animation: up .4s cubic-bezier(.22,1,.36,1) both;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
 .page-header {
   display: flex; align-items: center; gap: 14px;
   padding: 18px 28px 14px;
@@ -1812,6 +1817,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   position: sticky; top: 64px; z-index: 90;
   background: rgba(255,248,242,.92);
   backdrop-filter: blur(20px);
+  max-width:720px;margin-left:auto;margin-right:auto;
 }
 .page-back {
   background: none; border: 1.5px solid rgba(123,174,203,.22);
@@ -2688,6 +2694,14 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .emergency-quiet{
     margin-top:12px;
   }
+  .page-view{
+    max-width:720px;
+  }
+  .page-header{
+    max-width:720px;
+    margin:0 auto;
+    border-radius:0 0 16px 16px;
+  }
 }
 
 /* 태블릿 (641–959px) */
@@ -2735,7 +2749,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 .content-hero{
   border-radius:20px;
   padding:28px 32px;
-  margin:0 48px 22px;
+  margin:0 24px 22px;
   color:white;
   position:relative;
   overflow:hidden;
@@ -2768,7 +2782,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   padding:6px 14px;
   font-size:12px;
   color:var(--ink-m);
-  margin:0 48px 20px;
+  margin:0 24px 20px;
 }
 .stat-badge strong{
   font-size:14px;
@@ -2776,7 +2790,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   color:var(--peach-d);
 }
 .step-section{
-  padding:0 48px;
+  padding:0 24px;
   margin-bottom:26px;
 }
 .step-label{
@@ -2981,6 +2995,12 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   font-size:12px;
   color:var(--ink-l);
   line-height:1.5;
+}
+.page-view .accordion-group{
+  padding:0 24px;
+}
+.page-view .help-cards{
+  max-width:100%;
 }
 
 /* 긴급 전화 대형 버튼 */
