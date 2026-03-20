@@ -2663,11 +2663,15 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   margin-bottom:0;
 }
 .section-care{
-  background:var(--cream);
+  background:var(--peach-p);
+  border:1px solid rgba(123,174,203,.12);
+  border-radius:20px;
+  margin-bottom:16px;
 }
 .section-self{
   background:var(--lavender-bg);
-  border-top:1px solid rgba(123,174,203,.10);
+  border:1px solid rgba(107,168,133,.12);
+  border-radius:20px;
 }
 .section-header{
   margin-bottom:18px;
@@ -2870,7 +2874,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .hero h1{ font-size:18px; margin-bottom:4px; }
   .hero .hero-sub{ font-size:13px; margin-bottom:14px; }
   .section-care,
-  .section-self{ padding:16px 16px 20px; }
+  .section-self{ padding:16px 16px 20px; border-radius:16px; }
   .section-header{ margin-bottom:12px; }
   .section-title{ font-size:15px; }
   .situation-grid{ gap:8px; margin-bottom:0; }
@@ -4153,6 +4157,14 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .journal-entry{
   background:var(--white);
   border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .section-care{
+  background:rgba(123,174,203,.06);
+  border-color:rgba(123,174,203,.10);
+}
+[data-theme="dark"] .section-self{
+  background:rgba(107,168,133,.06);
+  border-color:rgba(107,168,133,.10);
 }
 
 /* ── 접근성: 모션 감소 ── */
