@@ -347,6 +347,8 @@ initBirth();
 /* ── Escape 키 처리 ── */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
+    closeHeaderMenu();
+    closeSettings();
     closeSourceDrawer();
     closeModal();
     closeGuideFinder();
@@ -931,3 +933,70 @@ function getRecommendedGuides(topic, duration, daily) {
   // Limit to 3 recommendations
   return picks.slice(0, 3);
 }
+
+/* ══════════════════════════════════════════════════════
+   헤더 메뉴 + 설정 패널
+══════════════════════════════════════════════════════ */
+
+/* ── 헤더 드롭다운 메뉴 ── */
+function toggleHeaderMenu() {
+  const menu = document.getElementById('hdr-menu');
+  const overlay = document.getElementById('hdr-menu-overlay');
+  const isOpen = menu.classList.contains('on');
+  if (isOpen) {
+    closeHeaderMenu();
+  } else {
+    menu.classList.add('on');
+    overlay.classList.add('on');
+  }
+}
+
+function closeHeaderMenu() {
+  document.getElementById('hdr-menu').classList.remove('on');
+  document.getElementById('hdr-menu-overlay').classList.remove('on');
+}
+
+/* ── 설정 패널 ── */
+function openSettings() {
+  document.getElementById('settings-overlay').classList.add('on');
+  document.getElementById('settings-panel').classList.add('on');
+  document.body.style.overflow = 'hidden';
+  updateThemeToggleUI();
+}
+
+function closeSettings() {
+  document.getElementById('settings-overlay').classList.remove('on');
+  document.getElementById('settings-panel').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+/* ── 테마 (라이트/다크) ── */
+const THEME_KEY = 'beinside_theme';
+
+function getTheme() {
+  return localStorage.getItem(THEME_KEY) || 'light';
+}
+
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem(THEME_KEY, theme);
+  updateThemeToggleUI();
+}
+
+function cycleTheme() {
+  const current = getTheme();
+  setTheme(current === 'light' ? 'dark' : 'light');
+}
+
+function updateThemeToggleUI() {
+  const label = document.getElementById('theme-toggle-label');
+  if (label) label.textContent = getTheme() === 'dark' ? '다크' : '라이트';
+}
+
+// 초기 테마 적용
+(function initTheme() {
+  const saved = getTheme();
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
