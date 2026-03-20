@@ -1,0 +1,313 @@
+/* ═══════════════════════════════════════════════════════════
+   BeInside — 사별·상실 가이드 (grief-page.js)
+   떠나보낸 사람들을 위한 따뜻한 동행
+═══════════════════════════════════════════════════════════ */
+
+const GRIEF_DATA = {
+  situations: [
+    { id: 'parent',  icon: '🕊️', label: '부모님을 떠나보냈어요',     sub: '세상에서 가장 오래된 안전기지를 잃었을 때' },
+    { id: 'child',   icon: '🌷', label: '아이를 떠나보냈어요',       sub: '세상에서 가장 큰 상실을 겪고 있을 때' },
+    { id: 'spouse',  icon: '💫', label: '배우자를 떠나보냈어요',     sub: '함께한 일상이 사라졌을 때' },
+    { id: 'sibling', icon: '🤝', label: '형제·자매를 떠나보냈어요',  sub: '어린 시절을 함께한 사람을 잃었을 때' },
+    { id: 'pet',     icon: '🐾', label: '반려동물을 떠나보냈어요',   sub: '말 없이 곁을 지켜준 존재를 잃었을 때' }
+  ],
+
+  parent: {
+    recognition: '부모님은 내가 이 세상에 존재하는 이유이자, 가장 오래된 안전기지였어요. 그 분이 떠나면 아무리 나이가 들어도 "고아가 된 것 같은" 느낌이 들 수 있어요. 그 감정은 완전히 자연스러운 거예요.',
+    psychology: '존 볼비(Bowlby)의 애착이론에서 부모는 인간의 첫 번째 "안전기지(Secure Base)"예요. 이 기지를 잃으면 성인이 되어도 세상이 불안하게 느껴질 수 있어요. 애도(grief)는 뇌가 "더 이상 이 사람에게 돌아갈 수 없다"는 현실을 처리하는 과정이에요. 이 과정에는 정해진 시간이 없어요.',
+    techniques: [
+      { name: '지속 유대(Continuing Bonds)', desc: '고인과의 관계가 "끝난" 것이 아니라 "형태가 바뀐" 거예요. 생전에 해주시던 말을 떠올리거나, 좋아하시던 음식을 만들어 보세요. 기억 속에서 관계는 계속돼요.' },
+      { name: '이중 과정 모델(Dual Process)', desc: '슬픔에 빠지는 시간과 일상을 살아가는 시간이 번갈아 와요. 울다가도 밥을 먹고, 웃다가도 갑자기 울 수 있어요. 이건 건강한 애도 과정이에요.' },
+      { name: '기억 의식(Memorial Ritual)', desc: '제사나 추모가 아니어도 괜찮아요. 부모님이 좋아하시던 산책길을 걷거나, 생신에 케이크를 사는 것 — 나만의 방식으로 기억하는 의식을 만들어 보세요.' }
+    ],
+    check: {
+      id: 'ct_grief_parent', title: '지금 내 상태는?',
+      questions: [
+        '일상생활(식사, 수면, 업무)이 2주 이상 어렵다',
+        '떠나신 분에 대한 죄책감이 매우 크다',
+        '주변 사람들과 관계가 단절되고 있다',
+        '나를 해치고 싶다는 생각이 든다'
+      ],
+      emergencyIndex: 3,
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      results: {
+        high: { label: '지금 전문적 지원이 필요한 상태예요', threshold: 2, action: '복잡성 애도(Complicated Grief)일 수 있어요. 정신건강복지센터(무료)에서 상담을 받아보세요.' },
+        mid:  { label: '힘든 시기를 지나고 있어요', threshold: 1 },
+        low:  { label: '천천히 애도의 과정을 걸어가고 있어요', threshold: 0 }
+      }
+    },
+    actions: [
+      { icon: '✍️', text: '떠나신 분에게 편지를 써 보세요. 다 하지 못한 말, 고마웠던 것, 미안했던 것 — 적는 것만으로도 감정이 정리돼요.' },
+      { icon: '📸', text: '사진 한 장을 꺼내 보세요. 그때의 이야기를 누군가에게 들려주세요. 기억을 나누면 슬픔이 조금 가벼워져요.' },
+      { icon: '🚶', text: '오늘 10분만 밖에 나가 걸어보세요. 부모님이 좋아하셨을 하늘을 올려다보세요.' },
+      { icon: '🤝', text: '같은 경험을 한 사람을 찾아보세요. 사별 자조 모임은 "나만 이런 게 아니구나"를 느끼게 해줘요.' }
+    ],
+    help: [
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 상실의 고통이 극심할 때. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 애도 과정에서 전문 상담이 필요할 때.' },
+      { number: '1393-8282', name: '한국호스피스완화의료학회', desc: '사별 가족 지원 프로그램 안내.' }
+    ]
+  },
+
+  child: {
+    recognition: '자녀를 잃는 것은 인간이 경험하는 가장 큰 상실이에요. "부모보다 먼저 갈 수 없다"는 자연의 순서가 깨진 것이기에, 이 고통에는 어떤 위로도 부족하게 느껴질 수 있어요. 그저 지금 여기까지 온 것만으로도 대단한 일이에요.',
+    psychology: '자녀 상실은 "복잡성 애도(Complicated Grief)"로 발전할 확률이 가장 높은 상실 유형이에요. 부모의 정체성 자체가 흔들리기 때문이에요. 죄책감("내가 더 잘했더라면"), 분노("왜 하필 우리 아이가"), 의미 상실("살아서 뭐하나")이 복합적으로 나타날 수 있어요. 이 모든 감정은 사랑의 다른 표현이에요.',
+    techniques: [
+      { name: '의미 재구성(Meaning Reconstruction)', desc: '로버트 네이마이어(Neimeyer) 교수의 접근법이에요. "왜?"라는 질문에 답이 없을 때, "이 경험 속에서 무엇을 발견할 수 있을까?"로 질문을 바꿔보세요. 시간이 필요하고, 지금은 그냥 아파도 괜찮아요.' },
+      { name: '기억 보존 작업', desc: '아이의 물건, 사진, 그림, 영상 — 정리하지 않아도 돼요. 준비가 됐을 때, 기억 상자를 만들거나 앨범을 정리해 보세요. 기억을 보존하는 것은 잊지 않겠다는 약속이에요.' },
+      { name: '동반 애도(Shared Grieving)', desc: '배우자나 다른 자녀와 함께 슬퍼해 보세요. 서로 다른 방식으로 슬퍼하는 것은 당연해요. "각자의 방식을 존중하되, 함께 있는 시간"을 만들어 보세요.' }
+    ],
+    check: {
+      id: 'ct_grief_child', title: '지금 내 상태는?',
+      questions: [
+        '아이를 보낸 후 일상이 완전히 멈췄다',
+        '"내 탓이다"라는 죄책감이 극심하다',
+        '다른 아이를 보면 견딜 수 없다',
+        '나를 해치고 싶다는 생각이 든다'
+      ],
+      emergencyIndex: 3,
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      results: {
+        high: { label: '전문적 애도 상담이 필요한 상태예요', threshold: 2, action: '사별 전문 상담을 받아보세요. 정신건강복지센터에서 무료 상담이 가능해요.' },
+        mid:  { label: '극심한 고통의 시기를 지나고 있어요', threshold: 1 },
+        low:  { label: '아이를 기억하며 한 걸음씩 나아가고 있어요', threshold: 0 }
+      }
+    },
+    actions: [
+      { icon: '🕯️', text: '아이를 위한 작은 공간을 만들어 보세요. 사진 한 장, 좋아하던 인형 하나 — 기억할 수 있는 장소가 위안이 돼요.' },
+      { icon: '✍️', text: '아이에게 편지를 써 보세요. "보고 싶어", "사랑해" — 하고 싶었던 말을 적어보세요.' },
+      { icon: '🤝', text: '같은 경험을 한 부모 모임을 찾아보세요. 이 고통을 이해하는 사람은 같은 경험을 한 사람뿐이에요.' },
+      { icon: '💛', text: '다른 자녀가 있다면, 그 아이도 슬퍼하고 있어요. 함께 기억을 나누는 시간을 만들어 보세요.' }
+    ],
+    help: [
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
+    ]
+  },
+
+  spouse: {
+    recognition: '배우자를 잃으면 사랑하는 사람뿐 아니라 함께 만든 일상, 미래의 계획, "우리"라는 정체성까지 한꺼번에 사라져요. 집에 돌아왔을 때의 적막, 식탁의 빈자리 — 그 무게는 겪어본 사람만 알아요.',
+    psychology: '배우자 상실은 성인기 가장 큰 스트레스 사건으로 분류돼요 (Holmes-Rahe 스트레스 척도 1위). "우리"라는 공동 정체성이 깨지면서 "나는 누구인가?"라는 실존적 질문이 찾아와요. 수면 장애, 식욕 변화, 면역력 저하 등 신체적 영향도 커요.',
+    techniques: [
+      { name: '슬픔의 파도 이론(Wave Theory)', desc: '슬픔은 직선으로 줄어들지 않아요. 파도처럼 밀려왔다 빠져나가요. 처음에는 파도가 크고 자주 오지만, 시간이 지나면 간격이 넓어지고 파도 사이에서 숨 쉴 수 있게 돼요.' },
+      { name: '일상 재설계', desc: '함께 하던 루틴이 이제 혼자의 것이 됐어요. 새 루틴을 만드는 건 배신이 아니에요. 아침 커피 한 잔, 저녁 산책 — 나만의 새 리듬을 찾아보세요.' },
+      { name: '사회적 재연결', desc: '부부 단위로 만나던 관계가 어색해질 수 있어요. 혼자서도 편한 모임, 새로운 활동을 시작해 보세요. 새 관계가 고인을 대체하는 게 아니에요.' }
+    ],
+    check: {
+      id: 'ct_grief_spouse', title: '지금 내 상태는?',
+      questions: [
+        '혼자 있는 시간이 견딜 수 없이 힘들다',
+        '일상생활(가사, 재정 관리 등)이 어렵다',
+        '미래가 전혀 보이지 않는다',
+        '나를 해치고 싶다는 생각이 든다'
+      ],
+      emergencyIndex: 3,
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      results: {
+        high: { label: '전문적 지원이 필요한 상태예요', threshold: 2, action: '정신건강복지센터(무료) 또는 사별 전문 상담을 받아보세요.' },
+        mid:  { label: '매우 힘든 시기를 지나고 있어요', threshold: 1 },
+        low:  { label: '한 걸음씩 나아가고 있어요', threshold: 0 }
+      }
+    },
+    actions: [
+      { icon: '📋', text: '가장 급한 것 하나만: 재정·보험·행정 처리가 필요하다면 주민센터에 문의해 보세요. 사별 가족 원스톱 서비스가 있어요.' },
+      { icon: '🍚', text: '오늘 한 끼만 제대로 먹어보세요. 배우자가 좋아하던 음식이어도 괜찮아요.' },
+      { icon: '📞', text: '오늘 한 사람에게 전화해 보세요. "그냥 목소리 듣고 싶어서"라고만 해도 돼요.' },
+      { icon: '✍️', text: '함께한 시간 중 가장 좋았던 순간을 적어보세요. 그 기억은 영원히 당신의 것이에요.' }
+    ],
+    help: [
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' },
+      { number: '129', name: '보건복지상담센터', desc: '사별 가족 지원 제도, 복지 서비스 안내.' }
+    ]
+  },
+
+  sibling: {
+    recognition: '형제·자매는 내 인생에서 가장 오래 함께할 사람이었어요. 어린 시절의 기억, 부모님에 대한 공유된 경험 — 이 모든 것을 함께 나눌 수 있는 유일한 사람을 잃은 거예요. 그런데 세상은 종종 형제 상실의 슬픔을 과소평가해요.',
+    psychology: '형제 사별은 "인정받지 못하는 슬픔(Disenfranchised Grief)"이 되기 쉬워요. 주변에서 "부모님은 얼마나 힘드실까"라고 먼저 걱정하고, 남겨진 형제의 슬픔은 뒷전이 되는 경우가 많아요. 하지만 당신의 슬픔도 똑같이 유효해요.',
+    techniques: [
+      { name: '슬픔 인정하기', desc: '"나도 슬퍼할 자격이 있다"를 스스로에게 허락해 보세요. 부모님을 위로하느라 자신의 감정을 미루고 있지 않은지 돌아보세요.' },
+      { name: '공유된 기억 보존', desc: '함께한 사진, 대화, 장난 — 기억을 적어두세요. 시간이 지나면 디테일이 흐려져요. 지금 기억나는 것을 남겨두는 건 소중한 일이에요.' },
+      { name: '역할 변화 인식', desc: '형제를 잃으면 가족 안에서 역할이 바뀔 수 있어요. "이제 네가 장남/장녀"라는 압박을 느낄 수 있지만, 당신이 누군가를 대체할 필요는 없어요.' }
+    ],
+    check: {
+      id: 'ct_grief_sibling', title: '지금 내 상태는?',
+      questions: [
+        '형제를 잃은 슬픔을 표현할 곳이 없다',
+        '부모님을 돌보느라 내 감정을 미루고 있다',
+        '2주 이상 일상이 어렵다',
+        '나를 해치고 싶다는 생각이 든다'
+      ],
+      emergencyIndex: 3,
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      results: {
+        high: { label: '전문 상담이 도움이 될 수 있어요', threshold: 2, action: '정신건강복지센터(무료)에서 상담을 받아보세요.' },
+        mid:  { label: '당신의 슬픔도 돌봐야 할 때예요', threshold: 1 },
+        low:  { label: '기억하며 나아가고 있어요', threshold: 0 }
+      }
+    },
+    actions: [
+      { icon: '💬', text: '신뢰하는 사람에게 "나도 많이 슬프다"고 말해 보세요. 부모님 걱정 말고, 내 감정을 먼저 꺼내도 괜찮아요.' },
+      { icon: '✍️', text: '형제에게 하지 못한 말을 편지로 써 보세요. 고마웠다, 미안했다, 보고 싶다 — 어떤 말이든.' },
+      { icon: '📸', text: '함께 찍은 사진을 하나 골라 핸드폰 배경으로 설정해 보세요. 작지만 매일 만나는 기억이 돼요.' }
+    ],
+    help: [
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
+    ]
+  },
+
+  pet: {
+    recognition: '반려동물은 말 없이 곁을 지켜준 가족이에요. 출근할 때 현관에서 배웅하고, 힘든 날 무조건 안겨주던 존재. "동물인데 왜 그래"라는 말에 상처받았을 수도 있어요. 하지만 당신의 슬픔은 진짜예요.',
+    psychology: '반려동물 상실은 "인정받지 못하는 슬픔(Disenfranchised Grief)"의 대표적 형태예요. 사회가 이 슬픔을 과소평가하지만, 뇌과학적으로 반려동물과의 유대는 인간 관계와 동일한 옥시토신·도파민 회로를 활성화해요. 슬퍼하는 것은 당연해요.',
+    techniques: [
+      { name: '추모 의식 만들기', desc: '사진 한 장을 프린트해서 놓아두거나, 좋아하던 산책길을 걸어보세요. 장례를 치르든 안 치르든, 나만의 방식으로 작별 인사를 하는 것이 중요해요.' },
+      { name: '빈자리 인정하기', desc: '집에 들어왔을 때 뛰어나오지 않는 현관, 비어 있는 밥그릇 — 그 빈자리가 슬플 수 있어요. 정리하는 건 준비가 됐을 때 해도 돼요.' },
+      { name: '새 반려동물에 대한 압박 거부', desc: '"새로 키우면 되지"라는 말에 상처받을 수 있어요. 다음 반려동물을 맞이하는 건 대체가 아니라 새로운 사랑이에요. 준비가 됐을 때 하세요.' }
+    ],
+    check: {
+      id: 'ct_grief_pet', title: '지금 내 상태는?',
+      questions: [
+        '2주 이상 슬픔이 지속되고 있다',
+        '주변에서 이해받지 못해 더 힘들다',
+        '일상생활이 어려울 정도로 슬프다'
+      ],
+      results: {
+        high: { label: '전문 상담이 도움이 될 수 있어요', threshold: 2, action: '정신건강복지센터(무료)에서 상담을 받아보세요. 반려동물 상실도 애도 상담의 대상이에요.' },
+        mid:  { label: '슬픔이 깊은 시기예요', threshold: 1 },
+        low:  { label: '기억하며 보내주는 중이에요', threshold: 0 }
+      }
+    },
+    actions: [
+      { icon: '📸', text: '가장 좋아하는 사진을 골라 액자에 넣어보세요. 기억할 수 있는 공간이 위안이 돼요.' },
+      { icon: '✍️', text: '함께한 시간 중 가장 행복했던 순간을 적어보세요. 첫 만남, 산책, 안겨 자던 밤.' },
+      { icon: '💬', text: '같은 경험을 한 사람에게 이야기해 보세요. 반려동물 사별 커뮤니티에서 위로를 받을 수 있어요.' },
+      { icon: '🌿', text: '반려동물의 이름으로 작은 화분을 키워보는 것도 좋은 추모 방법이에요.' }
+    ],
+    help: [
+      { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 반려동물 상실의 슬픔도 상담받을 수 있어요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+    ]
+  }
+};
+
+/* ── 사별 상세 페이지 (아코디언 구조) ── */
+function buildGriefDetail(container, id) {
+  const d = GRIEF_DATA[id];
+  const meta = GRIEF_DATA.situations.find(s => s.id === id);
+  if (!d || !meta) return;
+
+  const techHTML = d.techniques ? d.techniques.map(t =>
+    `<div style="margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
+      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    </div>`
+  ).join('') : '';
+
+  container.innerHTML = `
+    <button class="page-back" onclick="renderGriefPage(document.getElementById('grief-content'))">← 사별 가이드로</button>
+    <div class="content-hero" style="background:linear-gradient(135deg,#5A6A8A,#7A8AAA)">
+      <span class="content-hero-icon">${meta.icon}</span>
+      <h1>${esc(meta.label)}</h1>
+      <p>${esc(meta.sub)}</p>
+    </div>
+
+    <div class="step-section">
+      <div class="step-label">지금 이런 마음이시죠</div>
+      <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(d.recognition)}</p>
+    </div>
+
+    <div class="accordion-group">
+      ${d.psychology ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 왜 이렇게 아픈 걸까?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+        </div></div>
+      </div>` : ''}
+
+      ${techHTML ? `
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💡 마음을 돌보는 방법</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          ${techHTML}
+        </div></div>
+      </div>` : ''}
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 지금 내 상태 확인</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="grief-check-${id}"></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>✅ 오늘 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number.replace(/-/g,'')}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
+      </div>
+    </div>
+  `;
+
+  const checkWrap = container.querySelector(`#grief-check-${id}`);
+  if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
+}
+
+/* ── 사별 메인 목록 화면 ── */
+function renderGriefPage(container) {
+  if (!container) return;
+  container.innerHTML = `
+    <button class="page-back" onclick="goHome()">← 홈으로</button>
+    <div class="content-hero" style="background:linear-gradient(135deg,#5A6A8A,#7A8AAA)">
+      <span class="content-hero-icon">🕊️</span>
+      <h1>떠나보낸 사람을 위한 가이드</h1>
+      <p>사랑하는 사람을 보내는 건, 삶에서 가장 무거운 일이에요.<br>여기서 잠깐 쉬어가도 괜찮아요.</p>
+    </div>
+    <div class="step-section">
+      <div class="step-label">누구를 떠나보내셨나요?</div>
+      <div class="emotion-grid">
+        ${GRIEF_DATA.situations.map(s => `
+          <button class="emotion-btn" onclick="buildGriefDetail(document.getElementById('grief-content'),'${s.id}')" aria-label="${s.label}">
+            <span class="emotion-btn-icon">${s.icon}</span>
+            <div>
+              <div style="font-size:13.5px;font-weight:600;">${esc(s.label)}</div>
+              <div style="font-size:11.5px;color:var(--ink-l);">${esc(s.sub)}</div>
+            </div>
+          </button>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+/* ── 초기화 ── */
+function initGriefPage() {
+  const el = document.getElementById('grief-content');
+  if (el && typeof renderGriefPage === 'function') renderGriefPage(el);
+}

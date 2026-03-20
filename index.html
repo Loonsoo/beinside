@@ -171,6 +171,14 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
+          <div class="sit-card" data-card-id="grief" onclick="showPage('grief');setMTab('home')" tabindex="0" role="button">
+            <div class="sit-icon">🕊️</div>
+            <div class="sit-card-body">
+              <div class="sit-title">소중한 사람을 떠나보냈어요</div>
+              <div class="sit-sub">사별의 아픔 속에서 함께 걸어가는 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
         </div>
       </div>
 
@@ -679,6 +687,11 @@
       <div id="elder-content"></div>
     </div>
 
+    <!-- ══════════════ PAGE: 사별·상실 가이드 ══════════════ -->
+    <div class="page-view" id="page-grief" style="display:none">
+      <div id="grief-content"></div>
+    </div>
+
     <!-- ══════════════ PAGE: 기록 ══════════════ -->
     <div class="page-view" id="page-journal" style="display:none">
       <div class="page-header">
@@ -1001,6 +1014,7 @@
 <script src="js/emotion-page.js"></script>
 <script src="js/self-pages.js"></script>
 <script src="js/elder-care.js"></script>
+<script src="js/grief-page.js"></script>
 <script src="js/app.js"></script>
 <script src="js/onboard.js"></script>
 <script src="js/share.js"></script>

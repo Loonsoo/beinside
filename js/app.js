@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'journal'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'journal'];
 
 /* ── 페이지 전환 ── */
 function showPage(id) {
@@ -36,6 +36,7 @@ function showPage(id) {
     if (id === 'transition') initTransitionPage();
     if (id === 'workplace') initWorkplacePage();
     if (id === 'elder') initElderPage();
+    if (id === 'grief') initGriefPage();
     if (id === 'journal') initJournalPage();
   }
 
@@ -873,6 +874,7 @@ function getRecommendedGuides(topic, duration, daily) {
     growth:      { page: 'growth',     tab: 'growth', icon: '🌱', title: '아이 성장 가이드',      sub: '연령별 발달 기준과 체크리스트' },
     sp:          { page: 'sp',         tab: 'home',  icon: '🫂', title: '한부모 양육 가이드',     sub: '혼자 아이를 키우는 분들을 위해' },
     elder:       { page: 'elder',      tab: 'home',  icon: '🍵', title: '부모님 돌봄 가이드',     sub: '간병 번아웃, 치매 돌봄, 복지 연결' },
+    grief:       { page: 'grief',      tab: 'home',  icon: '🕊️', title: '사별·상실 가이드',    sub: '소중한 사람을 떠나보냈을 때' },
     emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' }
   };
 
@@ -887,6 +889,7 @@ function getRecommendedGuides(topic, duration, daily) {
       break;
     case 'relation':
       picks.push(all.relation);
+      picks.push(all.grief);
       picks.push(all.emotion);
       break;
     case 'work':
