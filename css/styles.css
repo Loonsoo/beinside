@@ -1633,22 +1633,31 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 /* ── 가이드 파인더 ("잘 모르겠어요") ── */
 .guide-finder-btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;max-width:560px;
-  padding:14px 24px;margin-bottom:16px;
-  background:none;
-  border:1.5px dashed rgba(123,174,203,.35);
-  border-radius:16px;
-  font-family:'Noto Sans KR',sans-serif;font-size:13.5px;font-weight:600;
-  color:var(--peach-d);cursor:pointer;
-  transition:all .22s cubic-bezier(.34,1.56,.64,1);
-  animation:up .5s .22s cubic-bezier(.22,1,.36,1) both;
-  word-break:keep-all;
+  display:inline-block;
+  background:none;border:none;
+  font-family:'Gowun Batang',serif;
+  font-size:14px;font-weight:400;font-style:italic;
+  color:var(--ink-l);
+  cursor:pointer;
+  padding:8px 0;margin-top:4px;margin-bottom:20px;
+  letter-spacing:-.2px;
+  transition:color .25s, transform .25s;
+  animation:up .5s .10s cubic-bezier(.22,1,.36,1) both;
+  position:relative;
+}
+.guide-finder-btn::after{
+  content:'';position:absolute;
+  bottom:6px;left:50%;transform:translateX(-50%);
+  width:0;height:1px;
+  background:var(--peach-l);
+  transition:width .3s cubic-bezier(.22,1,.36,1);
 }
 .guide-finder-btn:hover{
-  background:var(--peach-p);border-color:var(--peach);
-  transform:translateY(-2px);
-  box-shadow:0 4px 16px rgba(123,174,203,.15);
+  color:var(--peach);
+  transform:translateY(-1px);
+}
+.guide-finder-btn:hover::after{
+  width:100%;
 }
 
 /* 가이드 파인더 모달 */
