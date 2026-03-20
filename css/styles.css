@@ -1947,10 +1947,14 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 /* ── 페이지 뷰 (상황별 상세 페이지) ── */
 .page-view {
-  animation: up .4s cubic-bezier(.22,1,.36,1) both;
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+  animation: pageEnter .45s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes pageEnter {
+  from { opacity:0; transform:translateY(20px) scale(.98); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
 }
 .page-header {
   display: flex; align-items: center; gap: 14px;
@@ -1967,6 +1971,12 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   font-family: 'Noto Sans KR', sans-serif; font-size: 12.5px; font-weight: 700;
   color: var(--ink-m); cursor: pointer; transition: all .2s;
   white-space: nowrap; flex-shrink: 0;
+}
+/* JS 렌더링 페이지에서 page-back이 content-hero 위에 올 때 여백 */
+.page-view > .page-back:first-child,
+.page-view > div > .page-back:first-child{
+  display:inline-block;
+  margin:20px 24px 16px;
 }
 .page-back:hover { background: var(--peach-p); border-color: var(--peach); color: var(--peach-d); }
 .page-title {

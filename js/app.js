@@ -14,7 +14,12 @@ function showPage(id) {
   const hero = document.getElementById('hero');
 
   if (id === 'home') {
-    if (hero) hero.style.display = '';
+    if (hero) {
+      hero.style.display = '';
+      hero.style.animation = 'none';
+      hero.offsetHeight;
+      hero.style.animation = 'pageEnter .4s cubic-bezier(.22,1,.36,1) both';
+    }
     ALL_PAGES.forEach(p => {
       const el = document.getElementById('page-' + p);
       if (el) el.style.display = 'none';
@@ -23,7 +28,17 @@ function showPage(id) {
     if (hero) hero.style.display = 'none';
     ALL_PAGES.forEach(p => {
       const el = document.getElementById('page-' + p);
-      if (el) el.style.display = (p === id) ? '' : 'none';
+      if (el) {
+        if (p === id) {
+          el.style.display = '';
+          // 애니메이션 재트리거
+          el.style.animation = 'none';
+          el.offsetHeight; // reflow
+          el.style.animation = '';
+        } else {
+          el.style.display = 'none';
+        }
+      }
     });
     // 페이지 특수 초기화
     if (id === 'sp' && curSit >= 0) renderSP(curSit);
