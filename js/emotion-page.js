@@ -21,9 +21,9 @@ const EMOTION_GUIDE_DATA = {
         '나를 해치고 싶다는 생각이 든다'
       ],
       emergencyIndex: 2,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <br><a href="tel:1393" style="color:inherit;font-weight:700;text-decoration:underline;">📞 1393 자살예방상담전화</a> — 무료, 24시간. 자세한 내용(비밀보장 등)은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <br><a href="tel:109" style="color:inherit;font-weight:700;text-decoration:underline;">📞 109 자살예방상담전화</a> — 무료, 24시간. 자세한 내용(비밀보장 등)은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문 상담을 받아보는 것을 권해요', threshold: 2, action: '가까운 정신건강복지센터나 <a href="tel:1393">1393</a>(무료·24시간)에 연락해 보세요.' },
+        high: { label: '전문 상담을 받아보는 것을 권해요', threshold: 2, action: '가까운 정신건강복지센터나 <a href="tel:109">109</a>(무료·24시간)에 연락해 보세요.' },
         mid:  { label: '일시적일 수 있지만, 전문가 상담도 고려해 보세요', threshold: 1, action: '증상이 지속되면 보건소 정신건강 서비스(무료)를 이용해 보세요.' },
         low:  { label: '일시적인 감정일 수 있어요. 아래 방법을 시도해 보세요.', threshold: 0 }
       }
@@ -34,7 +34,7 @@ const EMOTION_GUIDE_DATA = {
       { icon: '💬', text: '신뢰하는 사람 1명에게 "나 좀 힘들어"라고 문자 보내기' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 상담사가 이야기를 들어줘요. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 상담사가 이야기를 들어줘요. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 정신건강 어려움 전반.' }
     ]
   },
@@ -57,7 +57,7 @@ const EMOTION_GUIDE_DATA = {
         '나를 해치고 싶다는 생각이 든다'
       ],
       emergencyIndex: 3,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
         high: { label: '전문가 상담이 필요한 수준이에요', threshold: 3, action: '<a href="tel:1577-0199">1577-0199</a>(정신건강위기상담, 무료·24시간) 또는 정신건강복지센터에 연락해 보세요.' },
         mid:  { label: '주의가 필요해요', threshold: 1, action: '증상이 지속되면 보건소 정신건강 서비스를 이용해 보세요.' },
@@ -70,7 +70,7 @@ const EMOTION_GUIDE_DATA = {
       { icon: '📵', text: '잠자리에 들기 1시간 전에는 스마트폰을 내려두세요. 블루라이트가 수면 신호를 방해해요.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   },
@@ -104,7 +104,7 @@ const EMOTION_GUIDE_DATA = {
     ],
     help: [
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
   angry: {
@@ -136,7 +136,7 @@ const EMOTION_GUIDE_DATA = {
       { icon: '⏸️', text: '반응하기 전 10초 기다리기. "나는 지금 화가 났다"를 소리 내어 말해보세요.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   },
@@ -170,7 +170,7 @@ const EMOTION_GUIDE_DATA = {
     ],
     help: [
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
   lonely: {
@@ -199,10 +199,10 @@ const EMOTION_GUIDE_DATA = {
     actions: [
       { icon: '💌', text: '오래된 친구에게 문자 한 통 보내기. "잘 지내?"라고만 해도 충분해요.' },
       { icon: '☕', text: '카페나 도서관처럼 사람이 있는 곳에 가서 1~2시간 있어보기.' },
-      { icon: '📞', text: '말이 하고 싶다면 <a href="tel:1393">1393</a>에 전화해도 돼요. 상담사가 들어줘요.' }
+      { icon: '📞', text: '말이 하고 싶다면 <a href="tel:109">109</a>에 전화해도 돼요. 상담사가 들어줘요.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 외로울 때도 전화할 수 있어요. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 외로울 때도 전화할 수 있어요. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   },
@@ -236,7 +236,7 @@ const EMOTION_GUIDE_DATA = {
     ],
     help: [
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   }
 };
@@ -250,8 +250,8 @@ function buildCrisisScreen(container) {
         <em>여기까지 온 것만으로도 용기 있는 일이에요.</em><br><br>
         지금 바로 이야기를 들어줄 사람이 있어요.
       </div>
-      <a href="tel:1393" class="emergency-call-big" aria-label="1393 자살예방상담전화 전화하기">
-        📞 1393 자살예방상담전화
+      <a href="tel:109" class="emergency-call-big" aria-label="109 자살예방상담전화 전화하기">
+        📞 109 자살예방상담전화
       </a>
       <p style="font-size:13px;color:var(--ink-m);margin-bottom:24px;">전화하면 상담사가 이야기를 들어줘요. 무료, 24시간.<br>자세한 내용(비밀보장 범위 등)은 전화 시 확인해 주세요.</p>
       <a href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener"

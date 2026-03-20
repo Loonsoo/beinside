@@ -145,11 +145,11 @@ function ppdAnswer(qIdx, val) {
     if (score >= 10) {
       cls = 'res-critical';
       msg = '😔 지금 많이 힘드시겠어요. 전문가의 도움이 필요한 수준이에요.';
-      action = '지금 바로 <a href="tel:1393" style="color:inherit;font-weight:700">1393</a>(무료·24시간)에 전화하거나, 가까운 정신건강복지센터·산부인과를 방문해 주세요.';
+      action = '지금 바로 <a href="tel:109" style="color:inherit;font-weight:700">109</a>(무료·24시간)에 전화하거나, 가까운 정신건강복지센터·산부인과를 방문해 주세요.';
     } else if (score >= 7) {
       cls = 'res-high';
       msg = '💜 산후우울 증상이 상당히 나타나고 있어요.';
-      action = '보건소·산부인과에서 에든버러 산후우울증 척도(EPDS) 무료 검사를 받아보세요. 1393으로 상담 연결도 가능해요.';
+      action = '보건소·산부인과에서 에든버러 산후우울증 척도(EPDS) 무료 검사를 받아보세요. 109으로 상담 연결도 가능해요.';
     } else if (score >= 4) {
       cls = 'res-mid';
       msg = '🌿 약간의 어려움이 있는 것 같아요.';
@@ -348,6 +348,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeSourceDrawer();
     closeModal();
+    closeGuideFinder();
   }
 });
 
@@ -673,7 +674,7 @@ function selectMood(mood) {
   const msgs = {
     okay:    { text: '오늘도 잘 버텨냈어요. 🌿', sub: '' },
     holding: { text: '버티는 것도 대단한 거예요.', sub: '잠깐 쉬어도 돼요. 깊게 숨 한번 쉬어보세요.' },
-    hard:    { text: '혼자 감당하지 않아도 돼요.', sub: '지금 바로 <a href="tel:1393" style="color:var(--peach-d);font-weight:700">1393</a> (자살예방상담, 무료·24시간)에 전화하거나, 아래 마음 가이드를 확인해 보세요.' }
+    hard:    { text: '혼자 감당하지 않아도 돼요.', sub: '지금 바로 <a href="tel:109" style="color:var(--peach-d);font-weight:700">109</a> (자살예방상담, 무료·24시간)에 전화하거나, 아래 마음 가이드를 확인해 보세요.' }
   };
   const m = msgs[mood];
   res.style.display = 'block';
@@ -766,3 +767,164 @@ document.addEventListener('keydown', function(e) {
     }
   }
 });
+
+/* ══════════════════════════════════════════════════════
+   가이드 파인더 ("잘 모르겠어요")
+══════════════════════════════════════════════════════ */
+let _gfAnswers = {};
+
+function openGuideFinder() {
+  _gfAnswers = {};
+  document.getElementById('gf-overlay').classList.add('on');
+  document.body.style.overflow = 'hidden';
+  // reset steps
+  document.querySelectorAll('.gf-step').forEach(s => s.classList.remove('on'));
+  document.getElementById('gf-step-1').classList.add('on');
+  document.querySelectorAll('.gf-dot').forEach(d => d.classList.remove('on'));
+  document.getElementById('gf-dot-1').classList.add('on');
+  document.getElementById('gf-result').classList.remove('on');
+  document.getElementById('gf-result').style.display = 'none';
+}
+
+function closeGuideFinder() {
+  document.getElementById('gf-overlay').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+function gfAnswer(step, value) {
+  _gfAnswers[step] = value;
+
+  if (step < 3) {
+    // next step
+    document.getElementById('gf-step-' + step).classList.remove('on');
+    document.getElementById('gf-step-' + (step + 1)).classList.add('on');
+    document.getElementById('gf-dot-' + step).classList.remove('on');
+    document.getElementById('gf-dot-' + (step + 1)).classList.add('on');
+  } else {
+    // show result
+    document.querySelectorAll('.gf-step').forEach(s => s.classList.remove('on'));
+    document.querySelectorAll('.gf-dot').forEach(d => d.classList.add('on'));
+    showGuideFinderResult();
+  }
+}
+
+function showGuideFinderResult() {
+  const a = _gfAnswers;
+  const resultEl = document.getElementById('gf-result');
+
+  // Rule-based matching
+  const guides = getRecommendedGuides(a[1], a[2], a[3]);
+
+  let msg = '';
+  if (a[3] === 'cant') {
+    msg = '지금 많이 힘드신 상태예요. 아래 가이드가 도움이 될 수 있어요.<br>혼자 감당하기 어렵다면 전문가 상담도 좋은 선택이에요.';
+  } else if (a[2] === 'months' || a[2] === 'notsure') {
+    msg = '오래 참아오셨군요. 아래 가이드를 천천히 살펴보세요.';
+  } else {
+    msg = '이런 가이드가 도움이 될 수 있어요.';
+  }
+
+  const cardsHTML = guides.map(g =>
+    `<div class="gf-card" onclick="closeGuideFinder();showPage('${g.page}');setMTab('${g.tab}')">
+      <div class="gf-card-icon">${g.icon}</div>
+      <div class="gf-card-body">
+        <div class="gf-card-title">${g.title}</div>
+        <div class="gf-card-sub">${g.sub}</div>
+      </div>
+      <div style="color:var(--ink-l);font-size:14px;flex-shrink:0;">→</div>
+    </div>`
+  ).join('');
+
+  // Emergency notice for severe cases
+  let emergencyHTML = '';
+  if (a[3] === 'cant') {
+    emergencyHTML = `
+      <div style="margin-top:16px;padding:16px 18px;background:var(--emer-bg);border:1px solid var(--emer-border);border-radius:14px;">
+        <div style="font-size:13px;font-weight:700;color:var(--result-high-ink);margin-bottom:6px;">지금 바로 이야기를 나눌 수 있어요</div>
+        <a href="tel:109" style="display:flex;align-items:center;gap:8px;color:var(--result-high-ink);font-size:14px;font-weight:700;text-decoration:none;margin-top:8px;">
+          📞 109 자살예방상담전화 (무료·24시간)
+        </a>
+        <a href="tel:1577-0199" style="display:flex;align-items:center;gap:8px;color:var(--result-high-ink);font-size:14px;font-weight:700;text-decoration:none;margin-top:6px;">
+          📞 1577-0199 정신건강위기상담 (무료·24시간)
+        </a>
+      </div>`;
+  }
+
+  resultEl.innerHTML = `
+    <div class="gf-result-msg">${msg}</div>
+    <div class="gf-result-cards">${cardsHTML}</div>
+    ${emergencyHTML}
+    <div style="font-size:11px;color:var(--ink-l);text-align:center;margin-bottom:16px;line-height:1.6;">
+      이 결과는 참고용이며 의학적 진단이 아닙니다.
+    </div>
+    <button class="gf-close" onclick="closeGuideFinder()">닫기</button>
+  `;
+  resultEl.style.display = 'block';
+  resultEl.classList.add('on');
+}
+
+function getRecommendedGuides(topic, duration, daily) {
+  const all = {
+    emotion:     { page: 'emotion',    tab: 'mind', icon: '🌊', title: '감정 돌봄 가이드',       sub: '감정을 알아차리고 다루는 방법' },
+    burnout:     { page: 'burnout',    tab: 'mind', icon: '🫠', title: '번아웃 가이드',          sub: '에너지 고갈에서 회복하기' },
+    relation:    { page: 'relation',   tab: 'mind', icon: '💔', title: '관계 회복 가이드',        sub: '이별·이혼·단절 후 감정 정리' },
+    transition:  { page: 'transition', tab: 'mind', icon: '🌀', title: '인생 전환기 가이드',      sub: '삶의 방향이 흔들릴 때' },
+    workplace:   { page: 'workplace',  tab: 'mind', icon: '🏢', title: '직장 내 어려운 사람 대처', sub: '나르시시스트·가스라이터 대처법' },
+    growth:      { page: 'growth',     tab: 'growth', icon: '🌱', title: '아이 성장 가이드',      sub: '연령별 발달 기준과 체크리스트' },
+    sp:          { page: 'sp',         tab: 'home',  icon: '🫂', title: '한부모 양육 가이드',     sub: '혼자 아이를 키우는 분들을 위해' },
+    elder:       { page: 'elder',      tab: 'home',  icon: '🍵', title: '부모님 돌봄 가이드',     sub: '간병 번아웃, 치매 돌봄, 복지 연결' },
+    emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' }
+  };
+
+  let picks = [];
+
+  // Topic-based primary recommendation
+  switch (topic) {
+    case 'emotion':
+      picks.push(all.emotion);
+      if (duration === 'months' || daily === 'cant') picks.push(all.burnout);
+      else picks.push(all.transition);
+      break;
+    case 'relation':
+      picks.push(all.relation);
+      picks.push(all.emotion);
+      break;
+    case 'work':
+      picks.push(all.workplace);
+      picks.push(all.burnout);
+      break;
+    case 'care':
+      picks.push(all.elder);
+      picks.push(all.burnout);
+      if (daily === 'cant') picks.push(all.sp);
+      break;
+    case 'life':
+      picks.push(all.transition);
+      picks.push(all.emotion);
+      break;
+    case 'unknown':
+    default:
+      // If they truly don't know, recommend based on severity
+      if (daily === 'cant') {
+        picks.push(all.emotion);
+        picks.push(all.emergency);
+      } else if (duration === 'months' || duration === 'notsure') {
+        picks.push(all.burnout);
+        picks.push(all.emotion);
+        picks.push(all.transition);
+      } else {
+        picks.push(all.emotion);
+        picks.push(all.burnout);
+        picks.push(all.relation);
+      }
+      break;
+  }
+
+  // Severity-based additions
+  if (daily === 'cant' && !picks.find(p => p.page === 'emergency')) {
+    picks.unshift(all.emergency);
+  }
+
+  // Limit to 3 recommendations
+  return picks.slice(0, 3);
+}

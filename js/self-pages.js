@@ -62,7 +62,7 @@ const BURNOUT_DATA = {
   ],
   help: [
     { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 번아웃이 심해졌을 때 언제든. 자세한 내용은 전화 시 확인해 주세요.' },
-    { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
+    { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
   ]
 };
 
@@ -218,7 +218,7 @@ const RELATIONSHIP_DATA = {
       id: 'ct_divorce', title: '지금 내 상태는?',
       questions: ['감정 기복이 심하고 집중이 안 된다','일상(식사, 수면, 업무)이 어렵다','아이(자녀)가 있어 걱정이 크다','나를 해치고 싶다는 생각이 든다'],
       emergencyIndex: 3,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
         high: { label: '전문적 지원이 필요한 상태예요', threshold: 2, action: '정신건강복지센터(무료) 또는 한부모가족지원센터에 연락해 보세요.' },
         mid:  { label: '힘든 시기예요. 지지 체계가 필요해요.', threshold: 1 },
@@ -234,7 +234,7 @@ const RELATIONSHIP_DATA = {
     help: [
       { number: '1644-6621', name: '한부모가족지원센터', desc: '자녀 양육·경제·법적 지원 안내. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '132', name: '대한법률구조공단', desc: '이혼·양육권·재산 관련 무료 법률 상담.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
   family: {
@@ -260,7 +260,7 @@ const RELATIONSHIP_DATA = {
       { icon: '🤝', text: '관심 있는 모임(독서, 운동, 봉사)에 한 번만 참석해 보세요. 연결의 시작이에요.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   },
@@ -287,7 +287,7 @@ const RELATIONSHIP_DATA = {
       { icon: '☕', text: '직장 동료나 이웃에게 "커피 한 잔 어때요?" 한 번 말해보기.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 외로울 때도 전화할 수 있어요. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 외로울 때도 전화할 수 있어요. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   },
@@ -303,7 +303,7 @@ const RELATIONSHIP_DATA = {
       id: 'ct_breakup', title: '지금 내 상태는?',
       questions: ['2주 이상 일상생활(식사, 수면, 업무)이 어렵다','이 사람 없이는 살 수 없다는 생각이 든다','나를 해치고 싶다는 생각이 든다'],
       emergencyIndex: 2,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
         high: { label: '전문적 지원이 필요한 상태예요', threshold: 1, action: '정신건강복지센터(무료)에서 상담을 받아보세요.' },
         low:  { label: '지금 느끼는 것들은 회복의 과정이에요.', threshold: 0 }
@@ -315,7 +315,7 @@ const RELATIONSHIP_DATA = {
       { icon: '📞', text: '지금 연락할 수 있는 친구 1명에게 전화하기. "그냥 목소리 듣고 싶어서"라고만 해도 돼요.' }
     ],
     help: [
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 이별 후 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 이별 후 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간.' }
     ]
   }
@@ -457,9 +457,9 @@ const TRANSITION_DATA = {
       id: 'ct_jobless', title: '지금 내 상태는?',
       questions: ['2주 이상 무기력하거나 불안하다','재정적으로 즉시 어려운 상황이다','나를 해치고 싶다는 생각이 든다'],
       emergencyIndex: 2,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '지금 전문적 지원이 필요해요', threshold: 2, action: '<a href="tel:1393">1393</a>(자살예방상담, 무료·24시간) 또는 <a href="tel:1577-0199">1577-0199</a>에 연락해 보세요.' },
+        high: { label: '지금 전문적 지원이 필요해요', threshold: 2, action: '<a href="tel:109">109</a>(자살예방상담, 무료·24시간) 또는 <a href="tel:1577-0199">1577-0199</a>에 연락해 보세요.' },
         mid:  { label: '재정 + 정서 두 가지 모두 챙겨야 할 때예요.', threshold: 1 },
         low:  { label: '아래 순서대로 해보세요.', threshold: 0 }
       }
@@ -473,7 +473,7 @@ const TRANSITION_DATA = {
     help: [
       { number: '1350', name: '고용노동부 고객센터', desc: '실업급여, 취업 지원 프로그램 안내.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 실직 후 심리적 어려움이 클 때. 자세한 내용은 전화 시 확인해 주세요.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
   failure: {
@@ -488,9 +488,9 @@ const TRANSITION_DATA = {
       id: 'ct_failure', title: '지금 내 상태는?',
       questions: ['수치심이나 자괴감이 매우 크다','재정적 위기 상황이다 (부채, 압류 등)','나를 해치고 싶다는 생각이 든다'],
       emergencyIndex: 2,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '지금 전문적 지원이 필요해요', threshold: 2, action: '<a href="tel:1393">1393</a>(자살예방상담, 무료·24시간)에 연락해 보세요.' },
+        high: { label: '지금 전문적 지원이 필요해요', threshold: 2, action: '<a href="tel:109">109</a>(자살예방상담, 무료·24시간)에 연락해 보세요.' },
         mid:  { label: '재정·정서 모두 도움이 필요한 시점이에요.', threshold: 1 },
         low:  { label: '아래 순서대로 해보세요.', threshold: 0 }
       }
@@ -502,7 +502,7 @@ const TRANSITION_DATA = {
     ],
     help: [
       { number: '132', name: '대한법률구조공단', desc: '부채·파산·개인회생 무료 법률 상담.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
@@ -530,7 +530,7 @@ const TRANSITION_DATA = {
     ],
     help: [
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 무력감이 클 때. 자세한 내용은 전화 시 확인해 주세요.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
   move: {
@@ -557,7 +557,7 @@ const TRANSITION_DATA = {
     ],
     help: [
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   }
 };
@@ -861,7 +861,7 @@ function renderWorkplacePage(container) {
     <div class="step-section">
       <div class="step-label">⑤ 도움 연결</div>
       <div class="help-cards">
-        <a href="tel:1393" class="help-card"><div class="help-card-num">📞 1393</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>
+        <a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>
         <a href="tel:1350" class="help-card"><div class="help-card-num">📞 1350</div><div class="help-card-info"><div class="help-card-name">고용노동부 상담센터</div><div class="help-card-desc">직장 내 괴롭힘·부당 대우 신고 및 상담</div></div></a>
         <a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">무료, 24시간. 전문 심리 상담 연결</div></div></a>
       </div>

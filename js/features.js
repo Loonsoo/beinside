@@ -60,7 +60,7 @@ function renderCheckTool(container, config) {
         // 긴급 질문 처리
         if (config.emergencyIndex !== undefined && i === config.emergencyIndex) {
           showCheckResult(resultEl, 'high',
-            config.emergencyMsg || '지금 바로 <a href="tel:1393" style="color:inherit;font-weight:700">1393</a>(자살예방상담, 무료·24시간)에 전화해 주세요.',
+            config.emergencyMsg || '지금 바로 <a href="tel:109" style="color:inherit;font-weight:700">109</a>(자살예방상담, 무료·24시간)에 전화해 주세요.',
             true);
           return;
         }

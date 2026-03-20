@@ -167,7 +167,7 @@ nav button.on {
 ### Emergency Call Big `.emergency-call-big`
 
 ```html
-<a href="tel:1393" class="emergency-call-big">📞 자살예방상담전화 1393</a>
+<a href="tel:109" class="emergency-call-big">📞 자살예방상담전화 109</a>
 ```
 
 ```css

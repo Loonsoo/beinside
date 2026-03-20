@@ -2,6 +2,8 @@
 <html lang="ko">
 <head>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOWVtJyBmb250LXNpemU9JzkwJz7wn4y7PC90ZXh0Pjwvc3ZnPg==">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeInside - 너와 함께</title>
@@ -31,6 +33,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Analytics: Umami (프라이버시 우선, 쿠키 없음) — 설정 후 활성화 -->
+  <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script> -->
 </head>
 <body>
 <div id="scroll-bar"></div>
@@ -227,6 +232,10 @@
         </div>
       </div>
       </div><!-- /hero-sections -->
+
+          <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
+            🤔 잘 모르겠어요 — 나에게 맞는 가이드 찾기
+          </button>
 
       <!-- 긴급 도움 배너 -->
       <div class="emergency-banner" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
@@ -428,7 +437,7 @@
           <div class="symptom-item">
             <span class="symptom-q">2주 이상 깊은 슬픔·무기력이 지속되나요?</span>
             <div class="symptom-btns">
-              <button class="sym-yes" onclick="showSymRes(this,'💜 산후우울증 가능성이 있어요. 혼자 감당하지 않아도 돼요. 1393(무료·24시간)으로 연락해 보세요.')">예</button>
+              <button class="sym-yes" onclick="showSymRes(this,'💜 산후우울증 가능성이 있어요. 혼자 감당하지 않아도 돼요. 109(무료·24시간)로 연락해 보세요.')">예</button>
               <button class="sym-no" onclick="hideSymRes(this)">아니요</button>
             </div>
             <div class="symptom-result" style="display:none"></div>
@@ -554,8 +563,8 @@
           <span class="teen-sos-num">1388</span>
           <span class="teen-sos-desc">청소년 전화 — 무료, 24시간<br>전화하면 상담사가 이야기 들어줘</span>
         </a>
-        <a href="tel:1393" class="teen-sos-btn">
-          <span class="teen-sos-num">1393</span>
+        <a href="tel:109" class="teen-sos-btn">
+          <span class="teen-sos-num">109</span>
           <span class="teen-sos-desc">자살예방 전화 — 무료, 24시간<br>부담 없이 전화해도 돼</span>
         </a>
         <a href="tel:15770199" class="teen-sos-btn">
@@ -596,10 +605,10 @@
             <span class="ebf-desc">아동학대·가정폭력·범죄 신고. 24시간</span>
           </div>
         </a>
-        <a href="tel:1393" class="emergency-btn-full" style="--ebf-color:var(--emer-1393)">
+        <a href="tel:109" class="emergency-btn-full" style="--ebf-color:var(--emer-109)">
           <span class="ebf-icon">💜</span>
           <div class="ebf-content">
-            <span class="ebf-number">1393</span>
+            <span class="ebf-number">109</span>
             <span class="ebf-name">자살예방 상담전화</span>
             <span class="ebf-desc">무료, 24시간. 전화하면 상담사가 이야기 들어줘요</span>
           </div>
@@ -937,6 +946,56 @@
   </button>
 </div>
 
+<!-- ── 가이드 파인더 모달 ── -->
+<div class="gf-overlay" id="gf-overlay" onclick="if(event.target===this)closeGuideFinder()">
+  <div class="gf-modal" role="dialog" aria-label="나에게 맞는 가이드 찾기">
+    <div class="gf-title">몇 가지만 여쭤볼게요</div>
+    <div class="gf-sub">대화 내용은 저장되지 않아요</div>
+    <div class="gf-progress">
+      <div class="gf-dot on" id="gf-dot-1"></div>
+      <div class="gf-dot" id="gf-dot-2"></div>
+      <div class="gf-dot" id="gf-dot-3"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="gf-step on" id="gf-step-1">
+      <div class="gf-question">지금 가장 힘든 게 뭐예요?</div>
+      <div class="gf-options">
+        <button class="gf-opt" onclick="gfAnswer(1,'emotion')"><span class="gf-opt-icon">🌊</span>감정이 힘들어요 (슬픔, 불안, 분노, 무기력)</button>
+        <button class="gf-opt" onclick="gfAnswer(1,'relation')"><span class="gf-opt-icon">💔</span>관계가 힘들어요 (이별, 가족, 고립)</button>
+        <button class="gf-opt" onclick="gfAnswer(1,'work')"><span class="gf-opt-icon">🏢</span>일·직장이 힘들어요</button>
+        <button class="gf-opt" onclick="gfAnswer(1,'care')"><span class="gf-opt-icon">🫂</span>누군가를 돌보는 게 힘들어요</button>
+        <button class="gf-opt" onclick="gfAnswer(1,'life')"><span class="gf-opt-icon">🌀</span>삶의 방향을 모르겠어요</button>
+        <button class="gf-opt" onclick="gfAnswer(1,'unknown')"><span class="gf-opt-icon">🤷</span>그것도 잘 모르겠어요</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="gf-step" id="gf-step-2">
+      <div class="gf-question">얼마나 오래됐어요?</div>
+      <div class="gf-options">
+        <button class="gf-opt" onclick="gfAnswer(2,'recent')"><span class="gf-opt-icon">📅</span>오늘, 며칠 됐어요</button>
+        <button class="gf-opt" onclick="gfAnswer(2,'weeks')"><span class="gf-opt-icon">📆</span>2주 이상이에요</button>
+        <button class="gf-opt" onclick="gfAnswer(2,'months')"><span class="gf-opt-icon">🗓️</span>몇 달째예요</button>
+        <button class="gf-opt" onclick="gfAnswer(2,'notsure')"><span class="gf-opt-icon">🤔</span>잘 기억이 안 나요</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="gf-step" id="gf-step-3">
+      <div class="gf-question">일상생활(식사, 수면, 외출)은 괜찮은 편이에요?</div>
+      <div class="gf-options">
+        <button class="gf-opt" onclick="gfAnswer(3,'ok')"><span class="gf-opt-icon">🙂</span>괜찮아요</button>
+        <button class="gf-opt" onclick="gfAnswer(3,'hard')"><span class="gf-opt-icon">😕</span>좀 힘들어요</button>
+        <button class="gf-opt" onclick="gfAnswer(3,'cant')"><span class="gf-opt-icon">😢</span>거의 못 하고 있어요</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="gf-result" id="gf-result"></div>
+  </div>
+</div>
+
 <!-- Kakao SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 
@@ -979,6 +1038,9 @@ document.addEventListener('keydown',function(e){
     e.preventDefault();e.target.click();
   }
 });
+</script>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{});}
 </script>
 </body>
 </html>

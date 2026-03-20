@@ -2,6 +2,7 @@
    BeInside — 공유 (카카오톡 + 링크복사 + Web Share API)
 ═══════════════════════════════════════════════════════════ */
 (function initShare() {
+  /* 카카오 SDK 활성화: https://developers.kakao.com → 앱 등록 → JavaScript 키를 여기에 입력 */
   const KAKAO_KEY = ''; // 카카오 앱 키 (추후 설정)
   let menuOpen = false;
 

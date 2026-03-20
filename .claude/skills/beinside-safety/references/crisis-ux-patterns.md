@@ -100,9 +100,9 @@
 ### HTML
 
 ```html
-<a href="tel:1393" class="crisis-call-btn">
+<a href="tel:109" class="crisis-call-btn">
   <span class="crisis-call-label">자살예방상담전화</span>
-  <span class="crisis-call-number">1393</span>
+  <span class="crisis-call-number">109</span>
   <span class="crisis-call-desc">24시간, 무료</span>
 </a>
 ```

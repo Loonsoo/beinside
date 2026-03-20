@@ -70,8 +70,8 @@ Full-width, high-contrast button for immediate phone connection.
 ### Specification
 
 ```html
-<a href="tel:1393" class="emergency-call-big">
-  📞 자살예방상담전화 1393
+<a href="tel:109" class="emergency-call-big">
+  📞 자살예방상담전화 109
 </a>
 ```
 
@@ -103,7 +103,7 @@ Full-width, high-contrast button for immediate phone connection.
 
 ### Rules
 - Always use `<a href="tel:XXXX">` -- never `onclick` for phone calls
-- Include both the number AND a description (e.g., "자살예방상담전화 1393")
+- Include both the number AND a description (e.g., "자살예방상담전화 109")
 - Minimum height 56px for easy thumb tap
 - Full width to maximize hit area
 - High-contrast gradient background
@@ -120,7 +120,7 @@ Full-width, high-contrast button for immediate phone connection.
 
 **Color variants:**
 - `.emer-red` -- 119 fire/ambulance: `linear-gradient(135deg, #E84040, #C82020)`
-- `.emer-purple` -- 1393 suicide prevention: `linear-gradient(135deg, #7A40C8, #5A28A0)`
+- `.emer-purple` -- 109 suicide prevention: `linear-gradient(135deg, #7A40C8, #5A28A0)`
 - `.emer-green` -- 1388 youth: `linear-gradient(135deg, #2A9060, #1A7050)`
 - `.emer-blue` -- 1577 mental health: `linear-gradient(135deg, #2060B8, #1848A0)`
 
@@ -140,8 +140,8 @@ When a user indicates suicidal thoughts, the interface should shift to a maximal
     지금 많이 힘드시죠.<br>
     <em>당신의 이야기를 들을 사람이 있어요.</em>
   </div>
-  <a href="tel:1393" class="emergency-call-big">
-    📞 자살예방상담전화 1393
+  <a href="tel:109" class="emergency-call-big">
+    📞 자살예방상담전화 109
   </a>
   <a href="tel:109" class="emergency-call-big" style="background:linear-gradient(135deg,#2060B8,#4080D0)">
     📞 자살예방상담전화 109

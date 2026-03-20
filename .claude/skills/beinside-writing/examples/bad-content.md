@@ -101,14 +101,14 @@ help: [
   { number: '1577-0199', name: '정신건강위기상담전화', desc: '' },
   // X: desc 비어있음. 전화해서 뭘 할 수 있는지 모름
 
-  { number: '1393', name: '자살예방상담전화' }
+  { number: '109', name: '자살예방상담전화' }
   // X: desc 필드 자체가 없음
 ]
 
 // GOOD (비교)
 help: [
   { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 번아웃이 심해졌을 때 언제든. 자세한 내용은 전화 시 확인해 주세요.' },
-  { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
+  { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
 ]
 ```
 
@@ -126,7 +126,7 @@ container.innerHTML = `
     <li>잠을 자세요</li>
     <li>전문가에게 상담받으세요</li>
   </ul>
-  <p>전화: 1393</p>
+  <p>전화: 109</p>
 `;
 // X: 상황 인식 → 판단 → 행동 → 연결 구조 없음
 // X: step-section, step-label 미사용
@@ -149,7 +149,7 @@ container.innerHTML = `
   <div class="step-section">                 <!-- ④ 도움 연결 -->
     <div class="step-label">④ 도움 연결</div>
     <div class="help-cards">
-      <a href="tel:1393" class="help-card">...</a>
+      <a href="tel:109" class="help-card">...</a>
     </div>
   </div>
 `;

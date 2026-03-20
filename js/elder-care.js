@@ -33,7 +33,7 @@ const ELDER_CARE_DATA = {
         '나 자신을 해치고 싶다는 생각이 든다'
       ],
       emergencyIndex: 3,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
         high: { label: '돌보는 사람을 위한 전문 지원이 필요해요', threshold: 2, action: '치매안심센터(1899-9988, 무료) 또는 정신건강복지센터에 연락해 보세요. 당신을 위한 상담이에요.' },
         mid:  { label: '간병 부담이 높은 상태예요. 쉬어야 해요.', threshold: 1 },
@@ -50,7 +50,7 @@ const ELDER_CARE_DATA = {
     help: [
       { number: '1899-9988', name: '중앙치매센터', desc: '치매 관련 모든 상담. 무료, 365일 운영. 자세한 내용은 전화 시 확인해 주세요.' },
       { number: '1577-1000', name: '국민건강보험공단', desc: '장기요양등급 신청 및 안내.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 간병이 너무 힘들 때도 전화해도 돼요. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 간병이 너무 힘들 때도 전화해도 돼요. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
 
@@ -98,9 +98,9 @@ const ELDER_CARE_DATA = {
         '감정이 무뎌져서 슬프지도 화나지도 않다'
       ],
       emergencyIndex: 3,
-      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:1393" style="color:inherit;font-weight:700">📞 1393</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
+      emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '지금 당장 쉬어야 해요. 간병을 멈추는 것이 아니라 나를 살리는 거예요.', threshold: 3, action: '긴급돌봄(1577-1000)을 신청하거나 1393에 전화해 보세요.' },
+        high: { label: '지금 당장 쉬어야 해요. 간병을 멈추는 것이 아니라 나를 살리는 거예요.', threshold: 3, action: '긴급돌봄(1577-1000)을 신청하거나 109에 전화해 보세요.' },
         mid:  { label: '간병 번아웃이 시작됐어요. 분담과 휴식이 필요해요.', threshold: 2 },
         low:  { label: '지금 상태를 유지하면서 예방이 중요해요.', threshold: 0 }
       }
@@ -115,7 +115,7 @@ const ELDER_CARE_DATA = {
     help: [
       { number: '1577-1000', name: '국민건강보험공단', desc: '긴급돌봄·단기 보호 서비스 신청.' },
       { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 간병 번아웃 전용 상담도 가능해요. 자세한 내용은 전화 시 확인해 주세요.' },
-      { number: '1393', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
+      { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' }
     ]
   },
 
@@ -408,7 +408,7 @@ function renderElderPage(container) {
         <a href="tel:15771000" class="help-card"><div class="help-card-num">📞 1577-1000</div><div class="help-card-info"><div class="help-card-name">국민건강보험공단</div><div class="help-card-desc">장기요양등급 신청·재가급여·긴급돌봄 안내.</div></div></a>
         <a href="tel:15771389" class="help-card"><div class="help-card-num">📞 1577-1389</div><div class="help-card-info"><div class="help-card-name">노인보호전문기관</div><div class="help-card-desc">노인 학대 상담·신고. 가해자 상담도 가능.</div></div></a>
         <a href="tel:129" class="help-card"><div class="help-card-num">📞 129</div><div class="help-card-info"><div class="help-card-name">정부 복지상담센터</div><div class="help-card-desc">노인 복지 혜택 통합 안내. 무료.</div></div></a>
-        <a href="tel:1393" class="help-card"><div class="help-card-num">📞 1393</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간. 간병이 너무 힘들 때도 전화해도 돼요.</div></div></a>
+        <a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간. 간병이 너무 힘들 때도 전화해도 돼요.</div></div></a>
       </div>
     </div>
   `;

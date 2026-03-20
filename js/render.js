@@ -613,12 +613,12 @@ function renderMentalPageContent(key) {
   if (!d || !el) return;
 
   const hotlineMap = {
-    infant:    '1393 (자살예방·산후우울 상담, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
-    toddler:   '1393 (정신건강 위기상담, 무료·24시간) / 1577-0199 (정신건강복지센터)',
-    preschool: '1393 / Wee센터 (학교 아동상담, 무료) / 아동상담치료센터',
-    school:    '1388 (청소년전화) / Wee클래스 (학교 내 무료 상담) / 1393',
-    teen:      '1393 (자살예방, 무료·24시간) / 1388 (청소년전화) / 청소년 마음이음 상담센터',
-    young:     '1577-0199 (정신건강 위기상담) / 청년 마음건강 바우처 (복지로 검색) / 1393',
+    infant:    '109 (자살예방·산후우울 상담, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
+    toddler:   '109 (정신건강 위기상담, 무료·24시간) / 1577-0199 (정신건강복지센터)',
+    preschool: '109 / Wee센터 (학교 아동상담, 무료) / 아동상담치료센터',
+    school:    '1388 (청소년전화) / Wee클래스 (학교 내 무료 상담) / 109',
+    teen:      '109 (자살예방, 무료·24시간) / 1388 (청소년전화) / 청소년 마음이음 상담센터',
+    young:     '1577-0199 (정신건강 위기상담) / 청년 마음건강 바우처 (복지로 검색) / 109',
     adult:     '1577-0199 / 직장인 EAP(근로자지원프로그램, 회사별 무료 제공) / 정신건강복지센터',
     middle:    '1577-0199 / 정신건강복지센터 (전국, 무료) / 갱년기 클리닉',
     senior:    '1577-0199 / 정신건강복지센터 (무료) / 노인맞춤돌봄서비스 (주민센터)',
@@ -632,7 +632,7 @@ function renderMentalPageContent(key) {
       <ul>${d.signs.map(s=>`<li>${s}</li>`).join('')}</ul>
       <div class="mental-section-label">마음 훈련 &amp; 대처법</div>
       <ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>
-      <div class="mental-hotline">📞 <strong>전문 도움 연결</strong><br>${hotlineMap[key]||'1393 (무료·24시간)'}<br><span style="font-size:11px;color:var(--ink-l);">※ 전화하면 상담사가 이야기 들어줍니다. 비밀보장·기록 정책은 전화 시 확인해 주세요.</span></div>
+      <div class="mental-hotline">📞 <strong>전문 도움 연결</strong><br>${hotlineMap[key]||'109 (무료·24시간)'}<br><span style="font-size:11px;color:var(--ink-l);">※ 전화하면 상담사가 이야기 들어줍니다. 비밀보장·기록 정책은 전화 시 확인해 주세요.</span></div>
     </div>`;
 }
 
@@ -734,7 +734,7 @@ function initBirth() {
         </div>
       </div>
       <div style="background:rgba(232,137,106,.06);border-radius:12px;padding:14px 18px;margin-top:4px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">
-        📞 <strong>도움이 되는 연락처</strong> — 산후우울증 상담 <strong>1393</strong> / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
+        📞 <strong>도움이 되는 연락처</strong> — 산후우울증 상담 <strong>109</strong> / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
       </div>
     `;
     stagesEl.appendChild(div);

@@ -1,0 +1,29 @@
+{
+  "name": "BeInside — 혼자라고 느낄 때, 가장 먼저 닿는 곳",
+  "short_name": "BeInside",
+  "description": "육아, 정신건강, 감정 돌봄, 한부모 가이드 — 판단 없이, 당신 편에서 안내합니다.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F7F3EE",
+  "theme_color": "#7BAECB",
+  "orientation": "portrait",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

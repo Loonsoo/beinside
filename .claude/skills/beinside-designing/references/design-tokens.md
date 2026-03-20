@@ -135,7 +135,7 @@ Complete CSS custom properties from `:root` in `css/styles.css`.
 |-------|-------|---------|
 | `--emer-119` | `#C8302A` | 119 Fire/Ambulance |
 | `--emer-112` | `#A02020` | 112 Police |
-| `--emer-1393` | `#6A3A9A` | 1393 Suicide Prevention |
+| `--emer-109` | `#6A3A9A` | 109 Suicide Prevention |
 | `--emer-1388` | `#2A7A4A` | 1388 Youth Crisis |
 | `--emer-1366` | `#C84A8A` | 1366 Domestic Violence |
 | `--emer-1577` | `#2A5A9A` | 1577 Mental Health |
