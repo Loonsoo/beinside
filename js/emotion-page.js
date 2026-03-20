@@ -254,12 +254,12 @@ function buildCrisisScreen(container) {
         📞 1393 자살예방상담전화
       </a>
       <p style="font-size:13px;color:var(--ink-m);margin-bottom:24px;">전화하면 상담사가 이야기를 들어줘요. 무료, 24시간.<br>자세한 내용(비밀보장 범위 등)은 전화 시 확인해 주세요.</p>
-      <a href="https://pf.kakao.com/_xoxaeyxj" target="_blank" rel="noopener"
+      <a href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener"
          class="emergency-call-big" style="background:linear-gradient(135deg,#3A1F6E,#6A3CB8);"
-         aria-label="카카오톡 마음이음 상담">
-        💬 카카오톡으로 상담하기
+         aria-label="카카오톡 마들랜 자살예방 상담">
+        💬 카카오톡으로 상담하기 (마들랜)
       </a>
-      <p style="font-size:13px;color:var(--ink-m);margin-bottom:32px;">전화가 어려우면 카카오톡으로도 상담할 수 있어요.<br>(한국자살예방상담전화 공식 채널)</p>
+      <p style="font-size:13px;color:var(--ink-m);margin-bottom:32px;">전화가 어려우면 카카오톡으로도 상담할 수 있어요.<br>(보건복지부 공식 자살예방 SNS상담 '마들랜', 무료·24시간)</p>
       <p class="crisis-sub">
         지금 당장 전화하기 어렵다면,<br>
         이 페이지를 닫지 말고 잠시만 있어주세요.<br>
