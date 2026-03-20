@@ -40,10 +40,6 @@
 <body>
 <div id="scroll-bar"></div>
 
-<button class="sos-btn" onclick="showPage('emergency');setMTab('emergency')" aria-label="24시간 긴급상담 연결">
-  <span>💬</span> 24시 긴급상담
-</button>
-
 <header>
   <div id="prof-chip" class="prof-chip" onclick="openProfPanel()" title="프로필" aria-label="프로필 패널 열기">
     <div class="prof-avatar" id="hdr-avatar"><span id="hdr-avatar-em">🌱</span></div>
@@ -53,6 +49,7 @@
   </div>
   <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" tabindex="0" role="button" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</div>
   <div class="hdr-right">
+    <button class="hdr-sos" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움">SOS</button>
     <button class="card-edit-badge" onclick="enterCardEdit()" title="카드 순서 편집" aria-label="카드 순서 편집">✏️</button>
     <button class="menu-btn" onclick="openSourceDrawer()" title="출처 및 참고문헌" aria-label="출처 페이지 열기">
       <span></span><span></span><span></span>
@@ -236,14 +233,10 @@
       </div>
       </div><!-- /hero-sections -->
 
-      <!-- 긴급 도움 배너 -->
-      <div class="emergency-banner" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
-        <span class="emergency-banner-icon">🚨</span>
-        <div class="emergency-banner-body">
-          <div class="emergency-banner-title">지금 당장 도움이 필요해요</div>
-          <div class="emergency-banner-sub">24시간 긴급 상담 연결, 응급처치 가이드</div>
-        </div>
-        <span class="emergency-banner-arrow">→</span>
+      <!-- 긴급 도움 -->
+      <div class="emergency-quiet" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
+        <span class="eq-text">지금 당장 도움이 필요하다면</span>
+        <span class="eq-arrow">→</span>
       </div>
 
       <!-- 감정 기록 섹션 -->

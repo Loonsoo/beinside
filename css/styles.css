@@ -1365,17 +1365,26 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 
 /* ── SOS Floating Button ── */
-.sos-btn {
-  position: fixed; bottom: 100px; right: 24px; z-index: 1000;
-  background: var(--sos); color: #fff; border: none; padding: 12px 20px;
-  border-radius: 30px; font-weight: 700; font-size: 14px;
-  box-shadow: 0 8px 20px var(--sos-shadow);
-  cursor: pointer; display: flex; align-items: center; gap: 8px;
-  transition: 0.2s; font-family: 'Noto Sans KR', sans-serif;
+/* ── 헤더 SOS 버튼 ── */
+.hdr-sos{
+  width:34px;height:34px;
+  border-radius:10px;
+  border:1.5px solid rgba(200,60,60,.25);
+  background:rgba(200,60,60,.06);
+  color:var(--emer-119);
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:10px;font-weight:800;
+  letter-spacing:.5px;
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.34,1.2,.64,1);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
 }
-.sos-btn:hover { transform: translateY(-3px) scale(1.05); }
-@media(max-width:640px){
-  .sos-btn { display: none !important; }
+.hdr-sos:hover{
+  background:rgba(200,60,60,.12);
+  border-color:var(--emer-119);
+  transform:scale(1.08);
+  box-shadow:0 2px 12px rgba(200,60,60,.18);
 }
 
 /* ── Data Source Bar ── */
@@ -2609,54 +2618,27 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 /* ══════════════════════════════════════════
    EMERGENCY BANNER — 긴급 도움 풀와이드 배너
 ══════════════════════════════════════════ */
-.emergency-banner{
-  display:flex;
-  align-items:center;
-  gap:16px;
+/* ── 긴급 도움 (조용한 링크) ── */
+.emergency-quiet{
+  display:flex;align-items:center;justify-content:center;gap:6px;
   width:100%;
-  padding:18px 24px;
-  background:linear-gradient(135deg, var(--emer-bg), var(--emer-bg-deep));
-  border:1.5px solid var(--emer-border);
-  border-radius:16px;
+  padding:14px 0;
   cursor:pointer;
-  transition:all .25s cubic-bezier(.34,1.2,.64,1);
-  animation:up .5s .24s cubic-bezier(.22,1,.36,1) both;
-  position:relative;overflow:hidden;
+  animation:up .5s .28s cubic-bezier(.22,1,.36,1) both;
 }
-.emergency-banner::after{
-  content:'';position:absolute;inset:0;
-  border-radius:inherit;
-  box-shadow:0 0 0 0 rgba(200,60,60,.15);
-  animation:emer-pulse 3s ease-in-out infinite;
+.eq-text{
+  font-family:'Gowun Batang',serif;
+  font-size:13px;font-weight:400;
+  color:var(--ink-l);
+  letter-spacing:-.2px;
+  transition:color .25s;
 }
-@keyframes emer-pulse{
-  0%,100%{box-shadow:0 0 0 0 rgba(200,60,60,.15);}
-  50%{box-shadow:0 0 0 6px rgba(200,60,60,0);}
+.eq-arrow{
+  font-size:12px;color:var(--ink-l);
+  transition:all .25s;
 }
-.emergency-banner:hover{
-  transform:translateY(-3px);
-  box-shadow:0 8px 28px rgba(200,60,60,.16);
-  border-color:var(--emer-119);
-}
-.emergency-banner-icon{
-  font-size:26px;
-  width:50px;height:50px;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(200,60,60,.08);
-  border-radius:14px;
-  flex-shrink:0;
-}
-.emergency-banner-body{flex:1;text-align:left;}
-.emergency-banner-title{
-  font-size:15px;font-weight:700;color:var(--emer-119);
-  margin-bottom:3px;
-}
-.emergency-banner-sub{font-size:12px;color:var(--ink-m);}
-.emergency-banner-arrow{
-  font-size:18px;color:var(--emer-119);
-  flex-shrink:0;transition:transform .2s;
-}
-.emergency-banner:hover .emergency-banner-arrow{transform:translateX(4px);}
+.emergency-quiet:hover .eq-text{color:var(--emer-119);}
+.emergency-quiet:hover .eq-arrow{color:var(--emer-119);transform:translateX(3px);}
 
 /* ══════════════════════════════════════════
    HERO SECTIONS WRAPPER
@@ -2703,8 +2685,8 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
     gap:10px;
     margin-bottom:0;
   }
-  .emergency-banner{
-    margin-top:20px;
+  .emergency-quiet{
+    margin-top:12px;
   }
 }
 
@@ -2744,9 +2726,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .mood-label{ font-size:14px; margin-bottom:10px; }
   .mood-btn{ min-width:76px; min-height:64px; padding:10px 12px; font-size:20px; }
   .mood-btn span{ font-size:11px; }
-  .emergency-banner{ padding:14px 16px; gap:12px; }
-  .emergency-banner-icon{ width:42px; height:42px; font-size:22px; }
-  .emergency-banner-title{ font-size:13.5px; }
+  .emergency-quiet{ padding:10px 0; }
 }
 
 /* ══════════════════════════════════════════
@@ -3515,8 +3495,8 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   justify-content:flex-end;
   gap:2px;
 }
-/* 긴급 배너 → 감정 섹션 간격 */
-.emergency-banner{margin-bottom:20px;}
+/* 긴급 → 감정 섹션 간격 */
+.emergency-quiet{margin-bottom:12px;}
 /* 편집 모드에서 카드 클릭 차단 */
 .card-edit-mode .sit-card{pointer-events:auto;}
 
@@ -3816,10 +3796,10 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
     right:12px;
   }
 }
-/* SOS 버튼이 데스크톱에서만 보이므로 데스크톱에서 FAB 위치 조정 */
+/* 데스크톱 FAB 위치 */
 @media(min-width:641px){
-  .share-fab{ bottom:160px; }
-  .share-menu{ bottom:218px; }
+  .share-fab{ bottom:24px; }
+  .share-menu{ bottom:82px; }
 }
 
 /* ── 접근성: 포커스 표시 ── */
