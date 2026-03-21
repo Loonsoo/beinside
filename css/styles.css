@@ -1796,9 +1796,9 @@ footer{
   opacity: 0; transition: opacity .2s;
 }
 .sit-card:hover {
-  border-color: rgba(123,174,203,.35);
+  border-color: var(--peach);
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(123,174,203,.13), 0 2px 6px rgba(0,0,0,.04);
+  box-shadow: 0 8px 24px rgba(123,174,203,.16), 0 2px 6px rgba(0,0,0,.04);
 }
 .sit-card:hover::before { opacity: 1; }
 .sit-icon {
