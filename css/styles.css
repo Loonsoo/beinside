@@ -1006,14 +1006,62 @@ nav button.on{
 }
 
 /* ── FOOTER ── */
+/* ── 홈 위로 문구 ── */
+.home-quote{
+  text-align:center;
+  padding:24px 24px 8px;
+}
+.home-quote p{
+  font-family:'Gowun Batang',serif;
+  font-size:13.5px;
+  font-style:italic;
+  color:var(--ink-l);
+  line-height:1.8;
+  word-break:keep-all;
+}
+
+/* ── 푸터 ── */
 footer{
   background:linear-gradient(135deg,var(--footer-bg) 0%,var(--footer-bg-end) 100%);
   color:rgba(255,238,226,.45);
-  text-align:center;padding:36px 24px;
-  font-size:12.5px;line-height:2.0;
-  border-top:1px solid rgba(255,238,226,.06);
+  text-align:center;
+  padding:40px 24px 32px;
+  font-size:12.5px;line-height:1.7;
+  border-top:none;
 }
-footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
+.footer-logo{
+  font-family:'Gowun Batang',serif;
+  font-size:18px;font-weight:700;
+  color:rgba(255,238,226,.75);
+  margin-bottom:6px;
+}
+.footer-tagline{
+  font-size:12.5px;
+  color:rgba(255,238,226,.40);
+  margin-bottom:20px;
+}
+.footer-divider{
+  width:40px;height:1px;
+  background:rgba(255,238,226,.12);
+  margin:0 auto 20px;
+}
+.footer-disclaimer{
+  font-size:11.5px;
+  color:rgba(255,238,226,.35);
+  line-height:1.7;
+  margin-bottom:16px;
+  word-break:keep-all;
+}
+.footer-contact{
+  font-size:11.5px;
+  color:rgba(255,238,226,.40);
+  margin-bottom:10px;
+}
+.footer-copy{
+  font-size:10.5px;
+  color:rgba(255,238,226,.25);
+  letter-spacing:.03em;
+}
 
 /* ── ANIMATIONS ── */
 @keyframes up{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -2730,16 +2778,25 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 ══════════════════════════════════════════ */
 .mood-section{
   background:var(--white);
-  border-top:1px solid var(--line);
-  padding:24px 48px 28px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:28px 24px 24px;
   text-align:center;
-  border-radius:0;
+  margin:0 16px;
+}
+.mood-icon-row{
+  font-size:28px;margin-bottom:8px;
 }
 .mood-label{
   font-family:'Gowun Batang',serif;
   font-size:15px;
   font-weight:700;
   color:var(--ink);
+  margin-bottom:4px;
+}
+.mood-sub{
+  font-size:12px;
+  color:var(--ink-l);
   margin-bottom:16px;
 }
 .mood-btns{
@@ -2905,7 +2962,7 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   .sit-icon{ width:36px; height:36px; font-size:20px; border-radius:10px; }
   .sit-title{ font-size:12.5px; }
   .sit-sub{ font-size:10.5px; }
-  .mood-section{ padding:16px 16px 20px; }
+  .mood-section{ padding:20px 16px; margin:0 8px; }
   .mood-label{ font-size:14px; margin-bottom:10px; }
   .mood-btn{ min-width:76px; min-height:64px; padding:10px 12px; font-size:20px; }
   .mood-btn span{ font-size:11px; }
@@ -4188,6 +4245,13 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .section-self{
   background:rgba(107,168,133,.06);
   border-color:rgba(107,168,133,.10);
+}
+[data-theme="dark"] .mood-section{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .home-quote p{
+  color:var(--ink-l);
 }
 
 /* ── 접근성: 모션 감소 ── */

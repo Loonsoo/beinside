@@ -295,13 +295,20 @@
 
       <!-- 감정 기록 섹션 -->
       <div class="mood-section" id="mood-section">
+        <div class="mood-icon-row">🌤️</div>
         <div class="mood-label">오늘 기분이 어때요?</div>
+        <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
         <div class="mood-btns">
           <button class="mood-btn" onclick="selectMood('okay')">🙂<span>괜찮아요</span></button>
           <button class="mood-btn" onclick="selectMood('holding')">😐<span>버티는 중</span></button>
           <button class="mood-btn" onclick="selectMood('hard')">😢<span>많이 힘들어요</span></button>
         </div>
         <div class="mood-result" id="mood-result" style="display:none"></div>
+      </div>
+
+      <!-- 한 줄 위로 -->
+      <div class="home-quote">
+        <p>"당신이 여기까지 온 것만으로도, 이미 용기 있는 일이에요."</p>
       </div>
 
     </section>
@@ -912,11 +919,16 @@
     </div>
 
     <footer>
-      <strong>BeInside</strong> — 당신의 어려움에 가장 먼저 닿을 수 있는 곳<br>
-      본 정보는 의학·심리학 기반 참고 목적이며, 전문 의료 진료를 대체하지 않습니다.<br>
-      이상이 의심될 경우 소아청소년과·정신건강의학과·가정의학과 전문의와 상담하세요.<br><br>
-      <span style="opacity:.55;font-size:11.5px;">문의 · 제안 &nbsp;|&nbsp; <span style="color:rgba(255,238,226,.7);">lune0427&#64;gmail&#46;com</span></span><br>
-      <span style="opacity:.4;font-size:11px;letter-spacing:.03em;">© 2025 BeInside. All rights reserved.</span>
+      <div class="footer-logo">🌻 BeInside</div>
+      <div class="footer-tagline">혼자라고 느낄 때, 가장 먼저 닿는 곳</div>
+      <div class="footer-divider"></div>
+      <div class="footer-disclaimer">
+        본 정보는 의학·심리학 기반 참고 목적이며,<br>전문 의료 진료를 대체하지 않습니다.
+      </div>
+      <div class="footer-contact">
+        문의 · 제안 &nbsp;|&nbsp; <a href="mailto:lune0427@gmail.com" style="color:rgba(255,238,226,.65);text-decoration:none;">lune0427@gmail.com</a>
+      </div>
+      <div class="footer-copy">© 2026 BeInside</div>
     </footer>
 
   </div><!-- /main-col -->
