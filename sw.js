@@ -1,4 +1,4 @@
-const CACHE_NAME = 'beinside-v2';
+const CACHE_NAME = 'beinside-v3';
 const ASSETS = [
   '/',
   '/index.html',
@@ -16,7 +16,8 @@ const ASSETS = [
   '/js/self-pages.js',
   '/js/emotion-page.js',
   '/js/elder-care.js',
-  '/js/grief-page.js'
+  '/js/grief-page.js',
+  '/js/sleep-page.js'
 ];
 
 self.addEventListener('install', e => {

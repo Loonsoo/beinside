@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'journal'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'journal'];
 
 /* ── 페이지 전환 ── */
 function showPage(id) {
@@ -52,6 +52,7 @@ function showPage(id) {
     if (id === 'workplace') initWorkplacePage();
     if (id === 'elder') initElderPage();
     if (id === 'grief') initGriefPage();
+    if (id === 'sleep') initSleepPage();
     if (id === 'journal') initJournalPage();
   }
 
@@ -720,6 +721,10 @@ function initWorkplacePage() {
   const el = document.getElementById('workplace-content');
   if (el && typeof renderWorkplacePage === 'function') renderWorkplacePage(el);
 }
+function initSleepPage() {
+  const el = document.getElementById('sleep-content');
+  if (el && typeof renderSleepPage === 'function') renderSleepPage(el);
+}
 function initElderPage() {
   const el = document.getElementById('elder-content');
   if (el && typeof renderElderPage === 'function') renderElderPage(el);
@@ -892,6 +897,7 @@ function getRecommendedGuides(topic, duration, daily) {
     sp:          { page: 'sp',         tab: 'home',  icon: '🫂', title: '한부모 양육 가이드',     sub: '혼자 아이를 키우는 분들을 위해' },
     elder:       { page: 'elder',      tab: 'home',  icon: '🍵', title: '부모님 돌봄 가이드',     sub: '간병 번아웃, 치매 돌봄, 복지 연결' },
     grief:       { page: 'grief',      tab: 'home',  icon: '🕊️', title: '사별·상실 가이드',    sub: '소중한 사람을 떠나보냈을 때' },
+    sleep:       { page: 'sleep',      tab: 'mind',  icon: '🛏️', title: '수면 가이드',           sub: '불면, 악몽, 과수면 대처법' },
     emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' }
   };
 
@@ -902,7 +908,7 @@ function getRecommendedGuides(topic, duration, daily) {
     case 'emotion':
       picks.push(all.emotion);
       if (duration === 'months' || daily === 'cant') picks.push(all.burnout);
-      else picks.push(all.transition);
+      else picks.push(all.sleep);
       break;
     case 'relation':
       picks.push(all.relation);
