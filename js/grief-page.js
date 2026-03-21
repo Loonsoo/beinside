@@ -15,7 +15,7 @@ const GRIEF_DATA = {
   ],
 
   parent: {
-    recognition: '부모님은 내가 이 세상에 존재하는 이유이자, 가장 오래된 안전기지였어요. 그 분이 떠나면 아무리 나이가 들어도 "고아가 된 것 같은" 느낌이 들 수 있어요. 그 감정은 완전히 자연스러운 거예요.',
+    recognition: '부모님은 당신에게 세상에서 가장 오래된 안전기지였어요. 그 분이 떠나면 세상이 흔들리는 느낌이 들 수 있어요. 그 감정은 완전히 자연스러운 거예요. 그리고 당신은 그 분 없이도 여기까지 온, 충분히 강한 사람이에요.',
     psychology: '존 볼비(Bowlby)의 애착이론에서 부모는 인간의 첫 번째 "안전기지(Secure Base)"예요. 이 기지를 잃으면 성인이 되어도 세상이 불안하게 느껴질 수 있어요. 애도(grief)는 뇌가 "더 이상 이 사람에게 돌아갈 수 없다"는 현실을 처리하는 과정이에요. 이 과정에는 정해진 시간이 없어요.',
     techniques: [
       { name: '지속 유대(Continuing Bonds)', desc: '고인과의 관계가 "끝난" 것이 아니라 "형태가 바뀐" 거예요. 생전에 해주시던 말을 떠올리거나, 좋아하시던 음식을 만들어 보세요. 기억 속에서 관계는 계속돼요.' },
@@ -33,7 +33,7 @@ const GRIEF_DATA = {
       emergencyIndex: 3,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '지금 전문적 지원이 필요한 상태예요', threshold: 2, action: '복잡성 애도(Complicated Grief)일 수 있어요. 정신건강복지센터(무료)에서 상담을 받아보세요.' },
+        high: { label: '지금 많이 힘든 상태예요', threshold: 2, action: '오늘 하나만: 떠나신 분에게 편지를 써 보세요. 그리고 이 마음을 나눌 수 있는 전문 상담(정신건강복지센터, 무료)도 도움이 돼요.' },
         mid:  { label: '힘든 시기를 지나고 있어요', threshold: 1 },
         low:  { label: '천천히 애도의 과정을 걸어가고 있어요', threshold: 0 }
       }
@@ -70,8 +70,8 @@ const GRIEF_DATA = {
       emergencyIndex: 3,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문적 애도 상담이 필요한 상태예요', threshold: 2, action: '사별 전문 상담을 받아보세요. 정신건강복지센터에서 무료 상담이 가능해요.' },
-        mid:  { label: '극심한 고통의 시기를 지나고 있어요', threshold: 1 },
+        high: { label: '지금 많이 힘든 상태예요', threshold: 2, action: '오늘 하나만: 아이에게 편지를 써 보세요. 그리고 준비가 되면 사별 전문 상담(정신건강복지센터, 무료)도 도움이 돼요.' },
+        mid:  { label: '깊은 슬픔의 시기를 지나고 있어요. 당신은 혼자가 아니에요.', threshold: 1 },
         low:  { label: '아이를 기억하며 한 걸음씩 나아가고 있어요', threshold: 0 }
       }
     },
@@ -106,7 +106,7 @@ const GRIEF_DATA = {
       emergencyIndex: 3,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문적 지원이 필요한 상태예요', threshold: 2, action: '정신건강복지센터(무료) 또는 사별 전문 상담을 받아보세요.' },
+        high: { label: '지금 많이 힘든 상태예요', threshold: 2, action: '오늘 하나만: 혼자 있지 말고, 신뢰하는 사람에게 전화해 보세요. 전문 상담(정신건강복지센터, 무료)도 언제든 열려 있어요.' },
         mid:  { label: '매우 힘든 시기를 지나고 있어요', threshold: 1 },
         low:  { label: '한 걸음씩 나아가고 있어요', threshold: 0 }
       }
@@ -264,7 +264,7 @@ const GRIEF_DATA = {
       emergencyIndex: 3,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문적 지원이 필요한 상태예요', threshold: 2, action: '산부인과 상담 + 정신건강복지센터(무료) 상담을 함께 받아보세요.' },
+        high: { label: '지금 몸과 마음 모두 힘든 상태예요', threshold: 2, action: '오늘 하나만: 따뜻한 차 한 잔 마시며 쉬어보세요. 산부인과 추적 검진과 심리 상담도 회복을 도와줘요.' },
         mid:  { label: '깊은 슬픔의 시기를 지나고 있어요', threshold: 1 },
         low:  { label: '천천히 회복하고 있어요', threshold: 0 }
       }

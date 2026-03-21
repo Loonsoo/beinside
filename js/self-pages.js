@@ -42,7 +42,7 @@ const BURNOUT_DATA = {
       { icon: '📋', text: '이번 주 "안 해도 되는 일" 목록을 만들어보세요. 빼는 것이 채우는 것보다 먼저예요.' }
     ],
     longterm: [
-      { icon: '🧠', text: '번아웃과 우울증은 달라요. 쉬어도 회복이 안 된다면 우울증일 수 있어요. 전문가와 상담하세요.' },
+      { icon: '🧠', text: '번아웃과 우울증은 달라요. 쉬어도 회복이 안 된다면, 먼저 수면과 식사 루틴부터 점검해 보세요. 그래도 나아지지 않으면 전문가 상담도 좋은 선택이에요.' },
       { icon: '🏢', text: '직장인이라면 EAP(근로자 지원 프로그램)를 확인해 보세요. 대기업 대부분 무료 상담을 제공해요.' },
       { icon: '💆', text: '환경을 바꿀 수 없다면 환경에 대한 나의 반응을 바꾸는 연습을 시작해 보세요. 인지행동치료(CBT)가 효과적이에요.' }
     ]
@@ -220,7 +220,7 @@ const RELATIONSHIP_DATA = {
       emergencyIndex: 3,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문적 지원이 필요한 상태예요', threshold: 2, action: '정신건강복지센터(무료) 또는 한부모가족지원센터에 연락해 보세요.' },
+        high: { label: '지금 많이 힘든 상태예요', threshold: 2, action: '오늘 하나만: 가장 급한 것(주거, 재정) 하나를 정리해 보세요. 한부모가족지원센터나 정신건강복지센터(무료)도 함께 힘이 돼요.' },
         mid:  { label: '힘든 시기예요. 지지 체계가 필요해요.', threshold: 1 },
         low:  { label: '아래 가이드를 따라가 보세요.', threshold: 0 }
       }
@@ -305,7 +305,7 @@ const RELATIONSHIP_DATA = {
       emergencyIndex: 2,
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
-        high: { label: '전문적 지원이 필요한 상태예요', threshold: 1, action: '정신건강복지센터(무료)에서 상담을 받아보세요.' },
+        high: { label: '지금 많이 힘든 상태예요', threshold: 1, action: '오늘 하나만: 이 감정을 종이에 적어보세요. 그리고 준비가 되면 정신건강복지센터(무료) 상담도 도움이 돼요.' },
         low:  { label: '지금 느끼는 것들은 회복의 과정이에요.', threshold: 0 }
       }
     },
