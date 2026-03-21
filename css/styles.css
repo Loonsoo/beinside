@@ -1469,16 +1469,26 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 
 .settings-panel{
   position:fixed;
-  top:50%;left:50%;transform:translate(-50%,-50%);
+  top:0;left:0;right:0;bottom:0;
+  margin:auto;
+  width:min(380px, calc(100vw - 40px));
+  height:fit-content;
+  max-height:80vh;
+  overflow-y:auto;
   z-index:895;
   background:var(--white);
   border:1px solid var(--line);
   border-radius:20px;
-  width:min(380px,90vw);
   box-shadow:0 16px 48px rgba(0,0,0,.15);
   display:none;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity .2s ease, transform .25s cubic-bezier(.34,1.2,.64,1);
 }
-.settings-panel.on{display:block;animation:slideUp .25s cubic-bezier(.34,1.2,.64,1) both;}
+.settings-panel.on{
+  opacity:1;
+  transform:translateY(0);
+}
 
 .settings-header{
   display:flex;align-items:center;justify-content:space-between;

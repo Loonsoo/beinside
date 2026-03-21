@@ -976,12 +976,13 @@ function openSettings() {
   const overlay = document.getElementById('settings-overlay');
   const panel = document.getElementById('settings-panel');
   overlay.classList.add('on');
-  panel.classList.remove('on');
   panel.style.display = 'block';
-  panel.style.animation = 'none';
-  panel.offsetHeight; // reflow
-  panel.style.animation = '';
-  panel.classList.add('on');
+  // 다음 프레임에서 transition 트리거
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      panel.classList.add('on');
+    });
+  });
   document.body.style.overflow = 'hidden';
   updateThemeToggleUI();
 }
