@@ -987,8 +987,11 @@ function openSettings() {
 }
 
 function closeSettings() {
+  const panel = document.getElementById('settings-panel');
   document.getElementById('settings-overlay').classList.remove('on');
-  document.getElementById('settings-panel').classList.remove('on');
+  panel.classList.remove('on');
+  panel.style.display = 'none';
+  panel.style.animation = '';
   document.body.style.overflow = '';
 }
 
