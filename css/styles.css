@@ -1477,9 +1477,8 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
   width:min(380px,90vw);
   box-shadow:0 16px 48px rgba(0,0,0,.15);
   display:none;
-  animation:slideUp .25s cubic-bezier(.34,1.2,.64,1) both;
 }
-.settings-panel.on{display:block;}
+.settings-panel.on{display:block;animation:slideUp .25s cubic-bezier(.34,1.2,.64,1) both;}
 
 .settings-header{
   display:flex;align-items:center;justify-content:space-between;
@@ -2463,8 +2462,12 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 .ppd-checker {
   background: linear-gradient(135deg,#F8F0FE,#F0EAFF);
   border: 1.5px solid rgba(160,80,200,.15);
-  border-radius: 20px; padding: 20px 22px;
-  margin: 0 48px 16px;
+  border-radius: 20px; padding: 20px 18px;
+  margin: 0 24px 16px;
+}
+@media(max-width:640px){
+  .ppd-checker{ margin:0 18px 16px; padding:16px 14px; }
+  .ppd-btn{ min-width:auto; padding:6px 10px; font-size:12px; }
 }
 .ppd-checker-title {
   font-size: 15px; font-weight: 800;
@@ -2476,14 +2479,14 @@ footer strong{color:rgba(255,238,226,.80);font-size:14px;letter-spacing:-.2px;}
 }
 .ppd-questions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
 .ppd-q-item {
-  display: flex; align-items: flex-start;
+  display: flex; flex-direction:column;
   gap: 10px; background: var(--white);
-  border-radius: 13px; padding: 13px 16px;
+  border-radius: 16px; padding: 13px 16px;
   border: 1px solid rgba(160,80,200,.10);
 }
 .ppd-q-item.critical { border-color: rgba(200,40,40,.25); background: #FFF5F5; }
 .ppd-q-text { flex: 1; font-size: 13px; color: var(--ink); line-height: 1.6; word-break: keep-all; }
-.ppd-q-btns { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+.ppd-q-btns { display: flex; gap: 6px; flex-wrap:wrap; align-items: center; }
 .ppd-btn {
   min-width: 44px; min-height: 36px; padding: 6px 12px;
   border: 1.5px solid rgba(160,80,200,.20);

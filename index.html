@@ -715,13 +715,63 @@
 
     <!-- ══════════════ PAGE: 아빠 가이드 (메인 진입) ══════════════ -->
     <div class="page-view" id="page-dad" style="display:none">
-      <div class="page-header">
-        <button class="page-back" onclick="goHome()">← 홈으로</button>
-        <h2 class="page-title">👨 아빠 가이드</h2>
+      <button class="page-back" onclick="goHome()" style="margin:20px 24px 16px;display:inline-block;">← 홈으로</button>
+      <div class="content-hero" style="background:linear-gradient(135deg,#4A7A9A,#6A9ABA)">
+        <span class="content-hero-icon">🧸</span>
+        <h1>아빠 육아 가이드</h1>
+        <p>서툴러도 괜찮아요. 함께하는 것 자체가 최고의 육아예요.</p>
       </div>
-      <div style="padding:0 48px 80px;" id="dad-page-content">
-        <p style="padding:20px 0;color:var(--ink-m);font-size:14px;">아이 나이를 입력하면 아빠 맞춤 가이드를 보여줘요.</p>
-        <button class="page-back" style="background:var(--peach-p);border:1px solid var(--line);border-radius:12px;padding:12px 20px;color:var(--peach-d);font-weight:700;" onclick="showPage('growth');setMTab('growth')">👶 성장 가이드에서 아빠 탭 보기 →</button>
+      <div class="step-section">
+        <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;margin-bottom:20px;">
+          아이의 나이에 따라 아빠만의 육아 방법이 달라요.<br>
+          성장 가이드에서 <strong>아빠 탭</strong>을 선택하면 연령별 맞춤 가이드를 볼 수 있어요.
+        </p>
+        <div onclick="showPage('growth');setMTab('growth')" tabindex="0" role="button" style="display:flex;align-items:center;gap:14px;background:var(--white);border:1.5px solid rgba(123,174,203,.18);border-radius:16px;padding:18px 20px;cursor:pointer;transition:all .22s cubic-bezier(.34,1.2,.64,1);">
+          <span style="font-size:28px;">👶</span>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--peach-d);margin-bottom:3px;">성장 가이드에서 아빠 탭 보기</div>
+            <div style="font-size:12px;color:var(--ink-l);">아이 나이를 입력하면 맞춤 가이드가 나와요</div>
+          </div>
+          <span style="font-size:16px;color:var(--ink-l);">→</span>
+        </div>
+      </div>
+      <div class="step-section">
+        <div class="step-label">아빠 육아, 이것만은 기억하세요</div>
+        <div class="accordion-group">
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+              <span>🫂 스킨십이 가장 강력한 도구예요</span><span class="accordion-arrow">▼</span>
+            </div>
+            <div class="accordion-body"><div class="accordion-body-inner">
+              <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">
+                아빠의 체온, 심장 소리, 낮은 목소리 — 이것만으로 아이의 스트레스 호르몬이 낮아져요.
+                안아주고, 말을 걸고, 눈을 맞추는 것. 거창한 게 아니어도 돼요.
+              </p>
+            </div></div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+              <span>😤 아이가 아빠를 밀어낼 때</span><span class="accordion-arrow">▼</span>
+            </div>
+            <div class="accordion-body"><div class="accordion-body-inner">
+              <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">
+                "엄마 엄마"만 찾는 시기가 있어요. 상처받을 수 있지만, 이건 아빠가 부족해서가 아니에요.
+                주양육자를 선호하는 건 발달상 자연스러운 과정이에요. 꾸준히 함께하면 반드시 바뀌어요.
+              </p>
+            </div></div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+              <span>🧠 아빠의 마음도 중요해요</span><span class="accordion-arrow">▼</span>
+            </div>
+            <div class="accordion-body"><div class="accordion-body-inner">
+              <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">
+                "나는 아빠 자격이 없나" 하는 생각이 들 수 있어요. 아빠도 산후우울증을 겪을 수 있어요 (약 10%).
+                힘들면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700;">1577-0199</a>(정신건강위기상담, 무료·24시간)에 연락해 보세요.
+              </p>
+            </div></div>
+          </div>
+        </div>
       </div>
     </div>
 

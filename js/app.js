@@ -973,8 +973,15 @@ function closeHeaderMenu() {
 
 /* ── 설정 패널 ── */
 function openSettings() {
-  document.getElementById('settings-overlay').classList.add('on');
-  document.getElementById('settings-panel').classList.add('on');
+  const overlay = document.getElementById('settings-overlay');
+  const panel = document.getElementById('settings-panel');
+  overlay.classList.add('on');
+  panel.classList.remove('on');
+  panel.style.display = 'block';
+  panel.style.animation = 'none';
+  panel.offsetHeight; // reflow
+  panel.style.animation = '';
+  panel.classList.add('on');
   document.body.style.overflow = 'hidden';
   updateThemeToggleUI();
 }
