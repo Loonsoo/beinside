@@ -4155,6 +4155,16 @@ a:focus:not(:focus-visible){
   border-color:rgba(255,255,255,.06);
   box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
+[data-theme="dark"] .sit-card:hover{
+  border-color:var(--peach);
+  border-width:2px;
+  box-shadow:0 0 0 3px rgba(123,174,203,.18), 0 8px 24px rgba(123,174,203,.12);
+}
+[data-theme="dark"] .sit-card.self-area:hover{
+  border-color:var(--lavender);
+  border-width:2px;
+  box-shadow:0 0 0 3px rgba(107,168,133,.18), 0 8px 24px rgba(107,168,133,.12);
+}
 [data-theme="dark"] .sit-card::before{
   background:linear-gradient(135deg, rgba(123,174,203,.06), rgba(107,168,133,.03));
 }
