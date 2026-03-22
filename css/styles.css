@@ -2347,7 +2347,7 @@ footer{
 /* ── 긴급 허브 페이지 ── */
 .page-view--emergency { background: var(--cream); }
 .emergency-grid {
-  display: grid; grid-template-columns: 1fr;
+  display: grid; grid-template-columns: 1fr 1fr;
   gap: 10px; padding: 20px 28px;
 }
 .emer-btn {
@@ -2423,7 +2423,7 @@ footer{
   .page-title { font-size: 16px; }
   .summary-panel { margin-bottom: 14px; }
   .acc-container { margin: 0; }
-  .emergency-grid { grid-template-columns: 1fr; padding: 16px 18px; gap: 8px; }
+  .emergency-grid { padding: 16px 18px; gap: 8px; }
   .emer-btn { padding: 18px 8px; min-height: 80px; }
   .emer-num { font-size: 20px; }
   .emer-notes { margin: 0 18px 16px; }
@@ -2738,30 +2738,30 @@ footer{
 
 /* ── 긴급 허브 개선된 버튼 ── */
 .emergency-btn-full {
-  display: flex; align-items: center;
-  gap: 16px; width: 100%;
-  padding: 20px 22px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px; width: 100%;
+  padding: 18px 12px 16px;
   background: var(--white);
   border: 1.5px solid rgba(0,0,0,.06);
-  border-left: 4px solid var(--ebf-color, var(--peach));
+  border-top: 3px solid var(--ebf-color, var(--peach));
   border-radius: 18px;
   text-decoration: none; color: var(--ink);
   transition: all .25s cubic-bezier(.34,1.2,.64,1); cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  text-align: center; min-height: 120px;
 }
 .emergency-btn-full:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0,0,0,.08);
-  border-left-width: 5px;
 }
 .emergency-btn-full:active {
   transform: translateY(-1px);
 }
-.ebf-icon { font-size: 26px; flex-shrink: 0; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 14px; background: rgba(0,0,0,.03); }
+.ebf-icon { font-size: 24px; flex-shrink: 0; }
 .ebf-content { flex: 1; }
-.ebf-number { font-size: 21px; font-weight: 800; color: var(--ebf-color, var(--peach-d)); font-family: 'Gowun Batang', serif; display: block; letter-spacing: -.3px; }
-.ebf-name { font-size: 13.5px; font-weight: 700; color: var(--ink); display: block; margin-top: 2px; }
-.ebf-desc { font-size: 11.5px; color: var(--ink-l); line-height: 1.5; margin-top: 3px; display: block; }
+.ebf-number { font-size: 22px; font-weight: 800; color: var(--ebf-color, var(--peach-d)); font-family: 'Gowun Batang', serif; display: block; letter-spacing: -.3px; }
+.ebf-name { font-size: 12.5px; font-weight: 700; color: var(--ink); display: block; margin-top: 2px; }
+.ebf-desc { font-size: 11px; color: var(--ink-l); line-height: 1.45; margin-top: 3px; display: block; }
 
 /* 긴급 허브 헤더 메시지 */
 .emergency-hero-msg {
@@ -4474,17 +4474,14 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .emergency-btn-full{
   background:rgba(255,255,255,.04);
   border-color:rgba(255,255,255,.06);
-  border-left-color:var(--ebf-color, var(--peach));
+  border-top-color:var(--ebf-color, var(--peach));
   box-shadow:0 1px 4px rgba(0,0,0,.15);
 }
 [data-theme="dark"] .emergency-btn-full:hover{
   background:rgba(255,255,255,.07);
   border-color:rgba(255,255,255,.10);
-  border-left-color:var(--ebf-color, var(--peach));
-  box-shadow:0 8px 28px rgba(0,0,0,.25), 0 0 20px rgba(var(--ebf-color-rgb, 123,174,203),.08);
-}
-[data-theme="dark"] .ebf-icon{
-  background:rgba(255,255,255,.06);
+  border-top-color:var(--ebf-color, var(--peach));
+  box-shadow:0 8px 28px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .ebf-number{
   color:var(--ebf-color, var(--peach-d));
@@ -4516,6 +4513,57 @@ a:focus:not(:focus-visible){
 }
 [data-theme="dark"] .emergency-hero-text span{
   color:var(--ink-l);
+}
+/* ── 응급처치 카드 다크모드 ── */
+[data-theme="dark"]{
+  --fa-risk-bg:rgba(200,60,60,.12);
+  --fa-risk-ink:#E07070;
+  --fa-tip-bg:rgba(60,140,90,.10);
+  --fa-tip-ink:#6BC090;
+}
+[data-theme="dark"] .fa-item{
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .fa-item.fa-red{
+  background:linear-gradient(135deg,#2E2222,#2C2020);
+  border-color:rgba(200,60,60,.18);
+}
+[data-theme="dark"] .fa-item.fa-amber{
+  background:linear-gradient(135deg,#2E2820,#2C2618);
+  border-color:rgba(200,150,50,.18);
+}
+[data-theme="dark"] .fa-item.fa-green{
+  background:linear-gradient(135deg,#202E24,#1E2C20);
+  border-color:rgba(60,140,90,.18);
+}
+[data-theme="dark"] .fa-item-title{
+  color:var(--ink);
+}
+[data-theme="dark"] .urg-911{
+  background:rgba(200,60,60,.18);
+  color:#E07070;
+}
+[data-theme="dark"] .urg-now{
+  background:rgba(200,140,50,.18);
+  color:#E0B060;
+}
+[data-theme="dark"] .urg-watch{
+  background:rgba(60,140,90,.18);
+  color:#6BC090;
+}
+[data-theme="dark"] .fa-item ol li,
+[data-theme="dark"] .fa-item ul li{
+  color:var(--ink-m);
+}
+[data-theme="dark"] .fa-item ol li::before{
+  color:var(--peach-d);
+  background:var(--peach-p);
+}
+[data-theme="dark"] .card.cbg-emergency h3{
+  color:var(--ink);
+}
+[data-theme="dark"] .card-audience{
+  color:var(--ink-m);
 }
 
 /* ── 접근성: 모션 감소 ── */
