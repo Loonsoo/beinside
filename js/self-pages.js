@@ -13,6 +13,16 @@ const BURNOUT_DATA = {
     sub: '에너지가 바닥난 상태예요. 충전이 필요할 뿐이에요.',
     stat: { pct: '46.3%', label: '심각한 스트레스를 경험한 국민 비율 (국립정신건강센터, 2024년 정신건강실태조사)' }
   },
+  recognition: {
+    title: '지금 이런 상태인가요?',
+    items: [
+      '아침에 눈을 뜨면 "또 하루"라는 생각부터 들어요',
+      '일이 끝나도 피로가 풀리지 않아요',
+      '예전에 좋아하던 것에 더 이상 흥미가 없어요',
+      '사소한 일에도 짜증이 폭발해요',
+      '몸이 자주 아파요 (두통, 소화불량, 가슴 답답함)'
+    ]
+  },
   check: {
     id: 'ct_burnout',
     title: '지금 내 상태는?',
@@ -94,6 +104,18 @@ function renderBurnoutPage(container) {
       <p>${esc(d.intro.sub)}</p>
     </div>
     <div class="stat-badge"><strong>${d.intro.stat.pct}</strong>&nbsp;${esc(d.intro.stat.label)}</div>
+
+    <div class="step-section">
+      <div class="step-label">${esc(d.recognition.title)}</div>
+      <div style="background:var(--warm);border-radius:14px;padding:16px 18px;">
+        ${d.recognition.items.map(item =>
+          `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+            <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>${esc(item)}</span>
+          </div>`
+        ).join('')}
+        <p style="font-size:12px;color:var(--ink-l);margin-top:8px;line-height:1.6;">하나라도 해당된다면, 아래 내용을 천천히 살펴보세요.</p>
+      </div>
+    </div>
 
     <div class="accordion-group">
       ${d.psychology ? `
@@ -828,45 +850,76 @@ function renderWorkplacePage(container) {
       <h1>직장에서 어려운 사람 대처 가이드</h1>
       <p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>
     </div>
+    <div class="stat-badge"><strong>73.6%</strong>&nbsp;직장인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024)</div>
+
     <div class="step-section">
-      <div class="step-label">① 상황 인식</div>
-      <p style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">
-        직장에서 특정 사람 때문에 지속적으로 힘들다면, 그건 당신이 예민한 게 아니에요.
-        어떤 사람들은 구조적으로 관계를 어렵게 만들어요. 유형을 알면 대응할 수 있어요.
-      </p>
-      <div style="background:linear-gradient(135deg,rgba(123,174,203,.08),rgba(107,168,133,.06));border:1px solid rgba(123,174,203,.15);border-radius:14px;padding:14px 18px;margin-top:14px;">
-        <div style="font-size:12px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">📊 통계</div>
-        <div style="font-size:13px;color:var(--ink-m);line-height:1.7;">직장인의 <strong>73.6%</strong>가 지난 1년간 정신건강 문제(스트레스·우울 등)를 경험했어요. (국립정신건강센터, 2024)</div>
+      <div class="step-label">지금 이런 상황인가요?</div>
+      <div style="background:var(--warm);border-radius:14px;padding:16px 18px;">
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+          <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>특정 사람 때문에 출근이 두려워요</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+          <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>대화 후 자존감이 바닥나는 느낌이에요</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+          <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>내가 잘못한 건지 헷갈려요</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+          <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>퇴근 후에도 그 사람 생각에서 벗어나기 어려워요</span>
+        </div>
+        <p style="font-size:12px;color:var(--ink-l);margin-top:8px;line-height:1.6;">그건 당신이 예민한 게 아니에요. 아래에서 유형과 대처법을 확인해 보세요.</p>
       </div>
     </div>
-    <div class="step-section">
-      <div class="step-label">② 유형 파악 — 어떤 사람인가요?</div>
-      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 유형을 눌러보세요. 특징과 대처법을 알려드려요.</p>
-      <div class="accordion-group">${typesHTML}</div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">③ 나의 중심을 지키는 마음가짐</div>
-      <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">정신분석학의 핵심 개념으로 나를 보호하는 방법이에요.</p>
-      ${mindsetHTML}
-    </div>
-    <div class="step-section">
-      <div class="step-label">④ 지금 바로 할 수 있는 것</div>
-      <div class="action-checklist">
-        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📝</span><span class="action-text">오늘부터 "감정 일기"를 시작해 보세요. 직장에서 느낀 불편한 감정과 상황을 3줄로 기록하세요.</span></div>
-        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🧘</span><span class="action-text">퇴근 후 "심리적 탈의" 의식을 만들어 보세요. 샤워하며 직장의 감정을 물과 함께 흘려보내는 상상을 해 보세요.</span></div>
-        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🗣️</span><span class="action-text">신뢰할 수 있는 사람 1명에게 "나 요즘 직장에서 힘들어"라고 말해 보세요. 말하는 것만으로 달라져요.</span></div>
-        <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📚</span><span class="action-text">추천 도서: 「나는 왜 네가 힘든 걸까」(김혜남), 「경계의 기술」(헨리 클라우드)</span></div>
+
+    <div class="accordion-group">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 유형 파악 — 어떤 사람인가요?</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 유형을 눌러보세요. 특징과 대처법을 알려드려요.</p>
+          <div class="accordion-group">${typesHTML}</div>
+        </div></div>
       </div>
-    </div>
-    <div class="step-section">
-      <div class="step-label">⑤ 도움 연결</div>
-      <div class="help-cards">
-        <a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>
-        <a href="tel:1350" class="help-card"><div class="help-card-num">📞 1350</div><div class="help-card-info"><div class="help-card-name">고용노동부 상담센터</div><div class="help-card-desc">직장 내 괴롭힘·부당 대우 신고 및 상담</div></div></a>
-        <a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">무료, 24시간. 전문 심리 상담 연결</div></div></a>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 나의 중심을 지키는 마음가짐</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">정신분석학의 핵심 개념으로 나를 보호하는 방법이에요.</p>
+          ${mindsetHTML}
+        </div></div>
       </div>
-      <div style="margin-top:14px;padding:12px 16px;background:var(--warm);border-radius:12px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">
-        💼 <strong>EAP(근로자 지원 프로그램)</strong>가 회사에 있다면 무료로 전문 상담을 받을 수 있어요. 인사팀에 문의하거나, 사내 복지 페이지를 확인해 보세요.
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>✅ 지금 바로 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">
+            <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📝</span><span class="action-text">오늘부터 "감정 일기"를 시작해 보세요. 직장에서 느낀 불편한 감정과 상황을 3줄로 기록하세요.</span></div>
+            <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🧘</span><span class="action-text">퇴근 후 "심리적 탈의" 의식을 만들어 보세요. 샤워하며 직장의 감정을 물과 함께 흘려보내는 상상을 해 보세요.</span></div>
+            <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">🗣️</span><span class="action-text">신뢰할 수 있는 사람 1명에게 "나 요즘 직장에서 힘들어"라고 말해 보세요. 말하는 것만으로 달라져요.</span></div>
+            <div class="action-item" onclick="toggleAction(this)"><span class="action-check"></span><span class="action-icon">📚</span><span class="action-text">추천 도서: 「나는 왜 네가 힘든 걸까」(김혜남), 「경계의 기술」(헨리 클라우드)</span></div>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            <a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>
+            <a href="tel:1350" class="help-card"><div class="help-card-num">📞 1350</div><div class="help-card-info"><div class="help-card-name">고용노동부 상담센터</div><div class="help-card-desc">직장 내 괴롭힘·부당 대우 신고 및 상담</div></div></a>
+            <a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">무료, 24시간. 전문 심리 상담 연결</div></div></a>
+          </div>
+          <div style="margin-top:14px;padding:12px 16px;background:var(--warm);border-radius:12px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">
+            💼 <strong>EAP(근로자 지원 프로그램)</strong>가 회사에 있다면 무료로 전문 상담을 받을 수 있어요. 인사팀에 문의하거나, 사내 복지 페이지를 확인해 보세요.
+          </div>
+        </div></div>
       </div>
     </div>
   `;
