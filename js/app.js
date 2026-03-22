@@ -70,17 +70,27 @@ function goHome() {
 
 /* ── 모바일 카드 터치 피드백 (iOS Safari :active 미지원 대응) ── */
 (function initTapFeedback() {
+  var tapCard = null;
   document.addEventListener('touchstart', function(e) {
     var card = e.target.closest('.sit-card');
-    if (card) card.classList.add('tap');
+    if (!card) return;
+    tapCard = card;
+    card.classList.add('tap');
   }, { passive: true });
-  document.addEventListener('touchend', function() {
-    var els = document.querySelectorAll('.sit-card.tap');
-    for (var i = 0; i < els.length; i++) els[i].classList.remove('tap');
-  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    if (!tapCard) return;
+    var card = tapCard;
+    tapCard = null;
+    // onclick을 가로채서 딜레이 후 실행
+    e.preventDefault();
+    setTimeout(function() {
+      card.classList.remove('tap');
+      card.click();
+    }, 120);
+  });
   document.addEventListener('touchcancel', function() {
-    var els = document.querySelectorAll('.sit-card.tap');
-    for (var i = 0; i < els.length; i++) els[i].classList.remove('tap');
+    if (tapCard) tapCard.classList.remove('tap');
+    tapCard = null;
   }, { passive: true });
 })();
 
