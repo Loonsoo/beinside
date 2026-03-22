@@ -56,6 +56,13 @@ function showPage(id) {
     if (id === 'journal') initJournalPage();
   }
 
+  // URL 해시 라우팅
+  if (id === 'home') {
+    history.pushState(null, '', '/');
+  } else {
+    history.pushState(null, '', '#/' + id);
+  }
+  updatePageMeta(id);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1030,5 +1037,74 @@ function updateThemeToggleUI() {
   const saved = getTheme();
   if (saved === 'dark') {
     document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+
+/* ══════════════════════════════════════════════════════
+   SEO: 페이지별 동적 메타태그 + URL 라우팅
+══════════════════════════════════════════════════════ */
+const PAGE_META = {
+  home:       { title: 'BeInside — 육아·정신건강·감정 돌봄 가이드', desc: '육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다.' },
+  growth:     { title: '아이 성장 가이드 — BeInside', desc: '연령별 발달 기준과 체크리스트. 우리 아이 성장이 불안할 때, 근거 기반 가이드를 제공합니다.' },
+  sp:         { title: '한부모 양육 가이드 — BeInside', desc: '혼자 아이를 키우는 분들을 위한 상황별 맞춤 가이드. 정서·경제·법률 지원 정보.' },
+  birth:      { title: '출산 후 회복 가이드 — BeInside', desc: '산후 몸과 마음 돌봄. 산후우울증 자가진단, 회복 로드맵, 지원 제도 안내.' },
+  dad:        { title: '아빠 육아 가이드 — BeInside', desc: '서툴러도 괜찮아요. 연령별 아빠 맞춤 육아 가이드와 마음 돌봄.' },
+  elder:      { title: '부모님 돌봄 가이드 — BeInside', desc: '간병 번아웃, 치매 돌봄, 학대 예방, 복지 연결. 돌보는 당신도 돌봄이 필요해요.' },
+  grief:      { title: '사별·상실 가이드 — BeInside', desc: '소중한 사람을 떠나보낸 당신에게. 부모, 자녀, 배우자, 친구, 반려동물 상실의 애도 가이드.' },
+  emotion:    { title: '감정 돌봄 가이드 — BeInside', desc: '슬픔, 불안, 분노, 무감각, 외로움. 감정을 알아차리고 다루는 정신의학적 방법.' },
+  burnout:    { title: '번아웃 가이드 — BeInside', desc: '번아웃 자가진단과 단계별 회복 로드맵. 에너지 고갈에서 빠져나오는 방법.' },
+  relation:   { title: '관계 회복 가이드 — BeInside', desc: '이혼, 가족 단절, 이별 후 감정 정리와 회복. 관계가 무너졌을 때의 심리학적 가이드.' },
+  transition: { title: '인생 전환기 가이드 — BeInside', desc: '실직, 사업 실패, 진로 고민, 새 환경 적응. 삶의 방향이 흔들릴 때.' },
+  workplace:  { title: '직장 내 어려운 사람 대처법 — BeInside', desc: '나르시시스트, 가스라이터, 마이크로매니저. 정신분석학 관점의 이해와 실전 대처법.' },
+  teen:       { title: '청소년·청년 가이드 — BeInside', desc: '나 혼자 버텨왔어. 판단 없이, 네 편에서 이야기합니다.' },
+  sleep:      { title: '수면 가이드 — BeInside', desc: '불면, 악몽, 과수면. 잠을 못 자겠을 때, 수면 전문 자기 돌봄법.' },
+  emergency:  { title: '긴급 도움 — BeInside', desc: '24시간 긴급 상담 연결. 109, 1388, 1577-0199, 112, 119.' },
+  journal:    { title: '기록 — BeInside', desc: '오늘의 감정을 기록하고, 나를 돌아보는 시간.' }
+};
+
+function updatePageMeta(id) {
+  const meta = PAGE_META[id] || PAGE_META.home;
+  document.title = meta.title;
+
+  const descEl = document.querySelector('meta[name="description"]');
+  if (descEl) descEl.setAttribute('content', meta.desc);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', meta.title);
+
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  if (ogDesc) ogDesc.setAttribute('content', meta.desc);
+
+  const twTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twTitle) twTitle.setAttribute('content', meta.title);
+
+  const twDesc = document.querySelector('meta[name="twitter:description"]');
+  if (twDesc) twDesc.setAttribute('content', meta.desc);
+}
+
+// 해시 기반 초기 라우팅
+(function initRouter() {
+  window.addEventListener('popstate', function() {
+    const hash = location.hash.replace('#/', '');
+    if (hash && ALL_PAGES.includes(hash)) {
+      showPage(hash);
+      setMTab(hash === 'emotion' || hash === 'burnout' || hash === 'relation' || hash === 'transition' || hash === 'workplace' || hash === 'sleep' ? 'mind' : hash === 'journal' ? 'journal' : hash === 'emergency' ? 'emergency' : hash === 'growth' || hash === 'dad' ? 'growth' : 'home');
+    } else {
+      showPage('home');
+      setMTab('home');
+    }
+  });
+
+  // 페이지 로드 시 해시 확인
+  const hash = location.hash.replace('#/', '');
+  if (hash && ALL_PAGES.includes(hash)) {
+    // DOMContentLoaded 후 실행
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        showPage(hash);
+      });
+    } else {
+      setTimeout(function() { showPage(hash); }, 100);
+    }
   }
 })();

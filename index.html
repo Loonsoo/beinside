@@ -6,7 +6,7 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeInside - 너와 함께</title>
+  <title>BeInside — 육아·정신건강·감정 돌봄 가이드 | 조용히, 나만을 위한 공간</title>
   <meta name="description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다. 24시간 긴급상담 연결.">
   <meta name="keywords" content="육아 가이드, 아이 발달, 산후우울증, 정신건강, 번아웃, 한부모, 청소년 상담, 감정 돌봄, 긴급상담, BeInside">
   <meta name="author" content="BeInside">
@@ -31,6 +31,7 @@
   <link rel="canonical" href="https://beinside.kr">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 
@@ -1122,38 +1123,100 @@
 <!-- Kakao SDK -->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 
-<script src="js/data.js"></script>
-<script src="js/utils.js"></script>
-<script src="js/storage.js"></script>
-<script src="js/memo.js"></script>
-<script src="js/profiles.js"></script>
-<script src="js/render.js"></script>
-<script src="js/features.js"></script>
-<script src="js/emotion-page.js"></script>
-<script src="js/self-pages.js"></script>
-<script src="js/elder-care.js"></script>
-<script src="js/grief-page.js"></script>
-<script src="js/sleep-page.js"></script>
-<script src="js/app.js"></script>
-<script src="js/onboard.js"></script>
-<script src="js/share.js"></script>
+<script defer src="js/data.js"></script>
+<script defer src="js/utils.js"></script>
+<script defer src="js/storage.js"></script>
+<script defer src="js/memo.js"></script>
+<script defer src="js/profiles.js"></script>
+<script defer src="js/render.js"></script>
+<script defer src="js/features.js"></script>
+<script defer src="js/emotion-page.js"></script>
+<script defer src="js/self-pages.js"></script>
+<script defer src="js/elder-care.js"></script>
+<script defer src="js/grief-page.js"></script>
+<script defer src="js/sleep-page.js"></script>
+<script defer src="js/app.js"></script>
+<script defer src="js/onboard.js"></script>
+<script defer src="js/share.js"></script>
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "BeInside",
-  "alternateName": "비인사이드",
-  "url": "https://beinside.kr",
-  "description": "조용히, 나만을 위한 공간. 육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담.",
-  "inLanguage": "ko",
-  "publisher": {
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "BeInside",
+    "alternateName": "비인사이드",
+    "url": "https://beinside.kr",
+    "description": "육아, 정신건강, 감정 돌봄, 한부모 가이드 — 조용히, 나만을 위한 공간",
+    "inLanguage": "ko",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://beinside.kr/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
     "@type": "Organization",
     "name": "BeInside",
-    "url": "https://beinside.kr"
+    "url": "https://beinside.kr",
+    "logo": "https://beinside.kr/og-image.svg",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "lune0427@gmail.com",
+      "contactType": "customer service",
+      "availableLanguage": "Korean"
+    },
+    "sameAs": []
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "번아웃과 우울증은 어떻게 다른가요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "번아웃은 특정 영역(주로 직장)에 한정되며 쉬면 일시적으로 나아집니다. 우울증은 삶 전체에 영향을 미치며 쉬어도 나아지지 않습니다. 구분이 어렵다면 정신건강복지센터(무료)에서 상담을 받아보세요."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "긴급 자살예방 상담전화 번호는?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "109 (자살예방상담전화, 무료, 24시간). 전화하면 전문 상담사가 이야기를 들어줍니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "산후우울증 증상은 어떤 것이 있나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "2주 이상 지속되는 깊은 슬픔이나 무기력감, 아이에 대한 감정적 연결 부족, 수면 장애, 극심한 불안이 대표적입니다. 산모 중 68.5%가 산후우울감을 경험합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "잠을 못 잘 때 어떻게 해야 하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "잠자리 1시간 전 스마트폰 내려놓기, 침대에서 잠 외의 활동 금지, 침실 온도 18~20°C 유지, 4-7-8 호흡법 등이 도움이 됩니다. 2주 이상 지속되면 수면 전문 클리닉 상담을 권합니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "정신건강위기상담전화 번호는?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1577-0199 (정신건강위기상담전화, 무료, 24시간). 정신건강 어려움 전반에 대해 상담받을 수 있습니다."
+        }
+      }
+    ]
   }
-}
+]
 </script>
 
 <script>
