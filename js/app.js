@@ -9,17 +9,14 @@ let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal'];
 
 /* ── 페이지 전환 ── */
+const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
+
 function showPage(id) {
   curPage = id;
   const hero = document.getElementById('hero');
 
   if (id === 'home') {
-    if (hero) {
-      hero.style.display = '';
-      hero.style.animation = 'none';
-      hero.offsetHeight;
-      hero.style.animation = 'pageEnter .4s cubic-bezier(.22,1,.36,1) both';
-    }
+    if (hero) hero.style.display = '';
     ALL_PAGES.forEach(p => {
       const el = document.getElementById('page-' + p);
       if (el) el.style.display = 'none';
@@ -28,34 +25,27 @@ function showPage(id) {
     if (hero) hero.style.display = 'none';
     ALL_PAGES.forEach(p => {
       const el = document.getElementById('page-' + p);
-      if (el) {
-        if (p === id) {
-          el.style.display = '';
-          // 애니메이션 재트리거
-          el.style.animation = 'none';
-          el.offsetHeight; // reflow
-          el.style.animation = '';
-        } else {
-          el.style.display = 'none';
-        }
-      }
+      if (el) el.style.display = (p === id) ? '' : 'none';
     });
-    // 페이지 특수 초기화
-    if (id === 'sp' && curSit >= 0) renderSP(curSit);
-    if (id === 'mental') initMentalPage();
-    if (id === 'teen') initTeenPage();
-    if (id === 'emergency') initEmergencyFirstAid();
-    if (id === 'emotion') initEmotionPage();
-    if (id === 'burnout') initBurnoutPage();
-    if (id === 'relation') initRelationPage();
-    if (id === 'transition') initTransitionPage();
-    if (id === 'workplace') initWorkplacePage();
-    if (id === 'elder') initElderPage();
-    if (id === 'grief') initGriefPage();
-    if (id === 'sleep') initSleepPage();
-    if (id === 'postpartum') initPostpartumPage();
-    if (id === 'menopause') initMenopausePage();
-    if (id === 'journal') initJournalPage();
+    // 최초 진입 시에만 렌더링
+    if (!_pageRendered[id]) {
+      _pageRendered[id] = true;
+      if (id === 'sp' && curSit >= 0) renderSP(curSit);
+      if (id === 'mental') initMentalPage();
+      if (id === 'teen') initTeenPage();
+      if (id === 'emergency') initEmergencyFirstAid();
+      if (id === 'emotion') initEmotionPage();
+      if (id === 'burnout') initBurnoutPage();
+      if (id === 'relation') initRelationPage();
+      if (id === 'transition') initTransitionPage();
+      if (id === 'workplace') initWorkplacePage();
+      if (id === 'elder') initElderPage();
+      if (id === 'grief') initGriefPage();
+      if (id === 'sleep') initSleepPage();
+      if (id === 'postpartum') initPostpartumPage();
+      if (id === 'menopause') initMenopausePage();
+      if (id === 'journal') initJournalPage();
+    }
   }
 
   // URL 해시 라우팅
@@ -65,7 +55,7 @@ function showPage(id) {
     history.pushState(null, '', '#/' + id);
   }
   updatePageMeta(id);
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 /* ── 홈으로 ── */
