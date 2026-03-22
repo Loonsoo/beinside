@@ -1793,13 +1793,15 @@ footer{
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
-.sit-card:active {
+.sit-card:active,
+.sit-card.tap {
   transform: scale(.97);
   border: 2px solid rgba(123,174,203,.65);
   box-shadow: 0 0 12px rgba(123,174,203,.30), 0 0 24px rgba(123,174,203,.12);
   transition-duration: .08s;
 }
-.sit-card.self-area:active {
+.sit-card.self-area:active,
+.sit-card.self-area.tap {
   border: 2px solid rgba(107,168,133,.65);
   box-shadow: 0 0 12px rgba(107,168,133,.30), 0 0 24px rgba(107,168,133,.12);
 }
@@ -1854,7 +1856,8 @@ footer{
 @media (hover: hover) {
   .sit-card--teen:hover { border-color: #5B7CFA; box-shadow: 0 8px 28px rgba(80,100,200,.18); }
 }
-.sit-card--teen:active { border-color: rgba(80,100,200,.40); }
+.sit-card--teen:active,
+.sit-card--teen.tap { border-color: rgba(80,100,200,.40); }
 
 /* 긴급 카드 — 레드 보더 */
 .sit-card--emergency {
@@ -1864,7 +1867,8 @@ footer{
 @media (hover: hover) {
   .sit-card--emergency:hover { border-color: #E04040; box-shadow: 0 8px 28px rgba(200,60,60,.16); }
 }
-.sit-card--emergency:active { border-color: rgba(200,60,60,.45); }
+.sit-card--emergency:active,
+.sit-card--emergency.tap { border-color: rgba(200,60,60,.45); }
 
 /* ── 가이드 파인더 ("잘 모르겠어요") ── */
 .guide-finder-btn{

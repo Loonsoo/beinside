@@ -68,6 +68,22 @@ function goHome() {
   setMTab('home');
 }
 
+/* ── 모바일 카드 터치 피드백 (iOS Safari :active 미지원 대응) ── */
+(function initTapFeedback() {
+  document.addEventListener('touchstart', function(e) {
+    var card = e.target.closest('.sit-card');
+    if (card) card.classList.add('tap');
+  }, { passive: true });
+  document.addEventListener('touchend', function() {
+    var els = document.querySelectorAll('.sit-card.tap');
+    for (var i = 0; i < els.length; i++) els[i].classList.remove('tap');
+  }, { passive: true });
+  document.addEventListener('touchcancel', function() {
+    var els = document.querySelectorAll('.sit-card.tap');
+    for (var i = 0; i < els.length; i++) els[i].classList.remove('tap');
+  }, { passive: true });
+})();
+
 /* ── 뷰 전환 (하위 호환 — 탭바·카드에서 호출될 수 있음) ── */
 function switchView(v) {
   const map = { normal: 'growth', sp: 'sp', birth: 'birth', growth: 'growth', mind: 'mind', journal: 'journal', emergency: 'emergency' };
