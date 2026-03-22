@@ -71,25 +71,51 @@ function goHome() {
 /* ── 모바일 카드 터치 피드백 (iOS Safari :active 미지원 대응) ── */
 (function initTapFeedback() {
   var tapCard = null;
+  var startX = 0;
+  var startY = 0;
+  var scrolled = false;
+
   document.addEventListener('touchstart', function(e) {
     var card = e.target.closest('.sit-card');
     if (!card) return;
     tapCard = card;
+    scrolled = false;
+    var t = e.touches[0];
+    startX = t.clientX;
+    startY = t.clientY;
     card.classList.add('tap');
   }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!tapCard) return;
+    var t = e.touches[0];
+    var dx = Math.abs(t.clientX - startX);
+    var dy = Math.abs(t.clientY - startY);
+    // 10px 이상 이동하면 스크롤로 판단 → 탭 취소
+    if (dx > 10 || dy > 10) {
+      scrolled = true;
+      tapCard.classList.remove('tap');
+    }
+  }, { passive: true });
+
   document.addEventListener('touchend', function(e) {
     if (!tapCard) return;
     var card = tapCard;
     tapCard = null;
-    // onclick을 가로채서 딜레이 후 실행
+    if (scrolled) {
+      card.classList.remove('tap');
+      return;
+    }
+    // 탭 확정: 블루 피드백 보여준 뒤 페이지 전환
     e.preventDefault();
     setTimeout(function() {
       card.classList.remove('tap');
       card.click();
     }, 120);
   });
+
   document.addEventListener('touchcancel', function() {
-    if (tapCard) tapCard.classList.remove('tap');
+    if (tapCard) { tapCard.classList.remove('tap'); }
     tapCard = null;
   }, { passive: true });
 })();

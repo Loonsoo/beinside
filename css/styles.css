@@ -4212,6 +4212,16 @@ a:focus:not(:focus-visible){
       0 0 48px rgba(107,168,133,.06);
   }
 }
+[data-theme="dark"] .sit-card:active,
+[data-theme="dark"] .sit-card.tap {
+  border: 2px solid rgba(123,174,203,.75);
+  box-shadow: 0 0 14px rgba(123,174,203,.35), 0 0 28px rgba(123,174,203,.15);
+}
+[data-theme="dark"] .sit-card.self-area:active,
+[data-theme="dark"] .sit-card.self-area.tap {
+  border: 2px solid rgba(107,168,133,.75);
+  box-shadow: 0 0 14px rgba(107,168,133,.35), 0 0 28px rgba(107,168,133,.15);
+}
 [data-theme="dark"] .sit-card::before{
   background:linear-gradient(135deg, rgba(123,174,203,.06), rgba(107,168,133,.03));
 }
