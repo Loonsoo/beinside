@@ -706,7 +706,7 @@ function initBirth() {
           <p>${stage.desc}</p>
         </div>
       </div>
-      <div style="background:linear-gradient(135deg,rgba(232,137,106,.08),rgba(212,160,84,.06));border:1px solid rgba(232,137,106,.18);border-radius:13px;padding:13px 18px;margin-bottom:16px;font-size:13px;color:var(--peach-d);line-height:1.7;font-style:italic;">
+      <div class="birth-alone-msg">
         💛 ${stage.alone}
       </div>
       <div class="birth-grid">
@@ -733,7 +733,7 @@ function initBirth() {
             </div>`).join('')}
         </div>
       </div>
-      <div style="background:rgba(232,137,106,.06);border-radius:12px;padding:14px 18px;margin-top:4px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">
+      <div class="birth-contacts">
         📞 <strong>도움이 되는 연락처</strong> — 산후우울증 상담 <strong>109</strong> / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
       </div>
     `;
