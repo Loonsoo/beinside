@@ -1795,13 +1795,13 @@ footer{
 }
 .sit-card:active {
   transform: scale(.97);
-  border-color: rgba(123,174,203,.55);
-  box-shadow: 0 0 10px rgba(123,174,203,.25), 0 0 20px rgba(123,174,203,.10);
+  border: 2px solid rgba(123,174,203,.65);
+  box-shadow: 0 0 12px rgba(123,174,203,.30), 0 0 24px rgba(123,174,203,.12);
   transition-duration: .08s;
 }
 .sit-card.self-area:active {
-  border-color: rgba(107,168,133,.55);
-  box-shadow: 0 0 10px rgba(107,168,133,.25), 0 0 20px rgba(107,168,133,.10);
+  border: 2px solid rgba(107,168,133,.65);
+  box-shadow: 0 0 12px rgba(107,168,133,.30), 0 0 24px rgba(107,168,133,.12);
 }
 .sit-card::before {
   content: '';
