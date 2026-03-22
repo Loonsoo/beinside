@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'journal'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal'];
 
 /* ── 페이지 전환 ── */
 function showPage(id) {
@@ -53,6 +53,8 @@ function showPage(id) {
     if (id === 'elder') initElderPage();
     if (id === 'grief') initGriefPage();
     if (id === 'sleep') initSleepPage();
+    if (id === 'postpartum') initPostpartumPage();
+    if (id === 'menopause') initMenopausePage();
     if (id === 'journal') initJournalPage();
   }
 
@@ -736,6 +738,14 @@ function initElderPage() {
   const el = document.getElementById('elder-content');
   if (el && typeof renderElderPage === 'function') renderElderPage(el);
 }
+function initPostpartumPage() {
+  const el = document.getElementById('postpartum-content');
+  if (el && typeof renderPostpartumPage === 'function') renderPostpartumPage(el);
+}
+function initMenopausePage() {
+  const el = document.getElementById('menopause-content');
+  if (el && typeof renderMenopausePage === 'function') renderMenopausePage(el);
+}
 function initJournalPage() {
   if (typeof renderJournalPage === 'function') renderJournalPage();
 }
@@ -905,6 +915,8 @@ function getRecommendedGuides(topic, duration, daily) {
     elder:       { page: 'elder',      tab: 'home',  icon: '🍵', title: '부모님 돌봄 가이드',     sub: '간병 번아웃, 치매 돌봄, 복지 연결' },
     grief:       { page: 'grief',      tab: 'home',  icon: '🕊️', title: '사별·상실 가이드',    sub: '소중한 사람을 떠나보냈을 때' },
     sleep:       { page: 'sleep',      tab: 'mind',  icon: '🛏️', title: '수면 가이드',           sub: '불면, 악몽, 과수면 대처법' },
+    postpartum:  { page: 'postpartum', tab: 'mind', icon: '🌸', title: '산후우울증 가이드',     sub: '출산 후 마음이 이상할 때' },
+    menopause:   { page: 'menopause',  tab: 'mind', icon: '🍂', title: '갱년기 우울증 가이드',   sub: '몸도 마음도 변하고 있을 때' },
     emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' }
   };
 
@@ -914,8 +926,9 @@ function getRecommendedGuides(topic, duration, daily) {
   switch (topic) {
     case 'emotion':
       picks.push(all.emotion);
-      if (duration === 'months' || daily === 'cant') picks.push(all.burnout);
+      if (duration === 'months' || daily === 'cant') picks.push(all.postpartum);
       else picks.push(all.sleep);
+      picks.push(all.menopause);
       break;
     case 'relation':
       picks.push(all.relation);
@@ -1058,6 +1071,8 @@ const PAGE_META = {
   workplace:  { title: '직장 내 어려운 사람 대처법 — BeInside', desc: '나르시시스트, 가스라이터, 마이크로매니저. 정신분석학 관점의 이해와 실전 대처법.' },
   teen:       { title: '청소년·청년 가이드 — BeInside', desc: '나 혼자 버텨왔어. 판단 없이, 네 편에서 이야기합니다.' },
   sleep:      { title: '수면 가이드 — BeInside', desc: '불면, 악몽, 과수면. 잠을 못 자겠을 때, 수면 전문 자기 돌봄법.' },
+  postpartum: { title: '산후우울증 가이드 — BeInside', desc: '출산 후 마음이 이상할 때. 산후우울증 자가진단, 호르몬 변화 이해, 회복 로드맵.' },
+  menopause:  { title: '갱년기 우울증 가이드 — BeInside', desc: '갱년기 호르몬 변화와 우울. 자가진단, 빈 둥지 증후군, 전문 치료 안내.' },
   emergency:  { title: '긴급 도움 — BeInside', desc: '24시간 긴급 상담 연결. 109, 1388, 1577-0199, 112, 119.' },
   journal:    { title: '기록 — BeInside', desc: '오늘의 감정을 기록하고, 나를 돌아보는 시간.' }
 };
@@ -1088,7 +1103,7 @@ function updatePageMeta(id) {
     const hash = location.hash.replace('#/', '');
     if (hash && ALL_PAGES.includes(hash)) {
       showPage(hash);
-      setMTab(hash === 'emotion' || hash === 'burnout' || hash === 'relation' || hash === 'transition' || hash === 'workplace' || hash === 'sleep' ? 'mind' : hash === 'journal' ? 'journal' : hash === 'emergency' ? 'emergency' : hash === 'growth' || hash === 'dad' ? 'growth' : 'home');
+      setMTab(hash === 'emotion' || hash === 'burnout' || hash === 'relation' || hash === 'transition' || hash === 'workplace' || hash === 'sleep' || hash === 'postpartum' || hash === 'menopause' ? 'mind' : hash === 'journal' ? 'journal' : hash === 'emergency' ? 'emergency' : hash === 'growth' || hash === 'dad' ? 'growth' : 'home');
     } else {
       showPage('home');
       setMTab('home');

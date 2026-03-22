@@ -233,7 +233,7 @@
       <div class="section-self">
         <div class="section-header">
           <h2 class="section-title">지금 나 자신이 힘들다면</h2>
-          <p class="section-sub">감정, 번아웃, 관계, 인생 전환기 가이드</p>
+          <p class="section-sub">감정, 번아웃, 관계, 산후우울증, 갱년기 가이드</p>
         </div>
         <div class="situation-grid">
           <div class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')" tabindex="0" role="button">
@@ -289,6 +289,22 @@
             <div class="sit-card-body">
               <div class="sit-title">잠을 못 자겠어요</div>
               <div class="sit-sub">불면, 악몽, 과수면 — 수면이 무너졌을 때</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" tabindex="0" role="button">
+            <div class="sit-icon">🌸</div>
+            <div class="sit-card-body">
+              <div class="sit-title">출산 후 마음이 이상해요</div>
+              <div class="sit-sub">산후우울증 자가진단과 회복 가이드</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" tabindex="0" role="button">
+            <div class="sit-icon">🍂</div>
+            <div class="sit-card-body">
+              <div class="sit-title">몸도 마음도 변하고 있어요</div>
+              <div class="sit-sub">갱년기 우울, 호르몬 변화와 마음 돌봄</div>
             </div>
             <div class="sit-arrow">→</div>
           </div>
@@ -504,58 +520,11 @@
         </div>
       </div>
 
-      <!-- 산후우울증 체커 -->
-      <div class="ppd-checker" id="ppd-checker">
-        <div class="ppd-checker-title">💜 혹시 산후우울증인가요? 간단히 확인해 봐요</div>
-        <div class="ppd-checker-sub">지난 7일 동안을 생각해서 각 문항을 선택해 주세요 (의학적 진단 아닌 참고용)</div>
-        <div class="ppd-questions">
-          <div class="ppd-q-item" data-q="0">
-            <div class="ppd-q-text">1. 이유 없이 슬프거나 눈물이 났다</div>
-            <div class="ppd-q-btns">
-              <button class="ppd-btn" onclick="ppdAnswer(0,0)">거의 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(0,1)">가끔 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(0,2)">자주 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(0,3)">거의 항상</button>
-            </div>
-          </div>
-          <div class="ppd-q-item" data-q="1">
-            <div class="ppd-q-text">2. 아무것도 하고 싶지 않고 무기력했다</div>
-            <div class="ppd-q-btns">
-              <button class="ppd-btn" onclick="ppdAnswer(1,0)">거의 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(1,1)">가끔 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(1,2)">자주 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(1,3)">거의 항상</button>
-            </div>
-          </div>
-          <div class="ppd-q-item" data-q="2">
-            <div class="ppd-q-text">3. 아기에 대한 감정이 잘 느껴지지 않았다</div>
-            <div class="ppd-q-btns">
-              <button class="ppd-btn" onclick="ppdAnswer(2,0)">거의 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(2,1)">가끔 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(2,2)">자주 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(2,3)">거의 항상</button>
-            </div>
-          </div>
-          <div class="ppd-q-item" data-q="3">
-            <div class="ppd-q-text">4. 불안하거나 초조하고 공황 증상이 있었다</div>
-            <div class="ppd-q-btns">
-              <button class="ppd-btn" onclick="ppdAnswer(3,0)">거의 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(3,1)">가끔 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(3,2)">자주 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(3,3)">거의 항상</button>
-            </div>
-          </div>
-          <div class="ppd-q-item" data-q="4">
-            <div class="ppd-q-text">5. 나 자신이나 아기를 해치고 싶다는 생각이 들었다</div>
-            <div class="ppd-q-btns">
-              <button class="ppd-btn" onclick="ppdAnswer(4,0)">전혀 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(4,1)">거의 없었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(4,2)">가끔 있었다</button>
-              <button class="ppd-btn" onclick="ppdAnswer(4,3)">자주 있었다</button>
-            </div>
-          </div>
-        </div>
-        <div class="ppd-result" id="ppd-result" style="display:none"></div>
+      <!-- 산후우울증 가이드 링크 -->
+      <div style="margin:16px 0;padding:14px 18px;background:linear-gradient(135deg,rgba(176,123,172,.10),rgba(212,160,176,.08));border:1px solid rgba(176,123,172,.18);border-radius:14px;">
+        <div style="font-size:13.5px;font-weight:700;color:var(--peach-d);margin-bottom:6px;">💜 마음이 힘들다면</div>
+        <div style="font-size:12.5px;color:var(--ink-m);line-height:1.6;margin-bottom:10px;">산후우울증 자가진단, 호르몬 변화 이해, 단계별 회복 가이드</div>
+        <button onclick="showPage('postpartum');setMTab('mind')" style="background:var(--peach-d);color:white;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">산후우울증 가이드 보기 →</button>
       </div>
 
       <div class="birth-wrap">
@@ -804,6 +773,16 @@
     <!-- ══════════════ PAGE: 사별·상실 가이드 ══════════════ -->
     <div class="page-view" id="page-grief" style="display:none">
       <div id="grief-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 산후우울증 가이드 ══════════════ -->
+    <div class="page-view" id="page-postpartum" style="display:none">
+      <div id="postpartum-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 갱년기 우울증 가이드 ══════════════ -->
+    <div class="page-view" id="page-menopause" style="display:none">
+      <div id="menopause-content"></div>
     </div>
 
     <!-- ══════════════ PAGE: 기록 ══════════════ -->
@@ -1212,6 +1191,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "1577-0199 (정신건강위기상담전화, 무료, 24시간). 정신건강 어려움 전반에 대해 상담받을 수 있습니다."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "갱년기 우울증은 어떻게 치료하나요?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "갱년기 우울증은 호르몬 치료와 심리 치료 병행 시 80% 이상 개선됩니다. 갱년기 클리닉에서 호르몬 검사를 받아보고, 필요 시 호르몬 대체요법(HRT)이나 항우울제를 의사와 상의하세요."
         }
       }
     ]

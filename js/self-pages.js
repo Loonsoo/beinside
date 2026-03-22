@@ -871,3 +871,472 @@ function renderWorkplacePage(container) {
     </div>
   `;
 }
+
+/* ══════════════════════════════════════════════════════
+   Part B-6: 산후우울증 가이드
+══════════════════════════════════════════════════════ */
+
+const POSTPARTUM_DATA = {
+  intro: {
+    title: '이건 의지 문제가 아니에요',
+    sub: '출산 후 호르몬과 뇌의 변화가 만든 자연스러운 반응이에요.',
+    stat: { pct: '68.5%', label: '산모 중 산후우울감 경험 비율 (보건복지부 2024 산후조리 실태조사)' }
+  },
+  recognition: {
+    title: '지금 이런 느낌이 드나요?',
+    items: [
+      '아기를 보면서도 기쁘지 않고, 오히려 죄책감이 들어요',
+      '아무것도 하고 싶지 않은데, 쉴 수도 없어요',
+      '"나는 좋은 엄마가 아닌 것 같아"라는 생각이 멈추지 않아요',
+      '갑자기 눈물이 나거나, 아무 이유 없이 화가 나요',
+      '아기와 단둘이 있는 게 무서워요'
+    ]
+  },
+  science: {
+    title: '산후우울증, 왜 생기는 걸까요?',
+    text: '출산 후 에스트로겐과 프로게스테론이 급격히 떨어져요. 이 호르몬들은 세로토닌과 도파민 조절에 관여하기 때문에, 호르몬 변화만으로도 기분·수면·식욕이 크게 흔들릴 수 있어요. 여기에 수면 부족, 역할 변화, 고립감이 더해지면 뇌의 감정 조절 회로가 과부하 상태에 빠지게 돼요.',
+    distinctions: [
+      { name: '베이비 블루스', desc: '출산 후 3~5일에 시작, 2주 이내 자연스럽게 나아져요. 산모 80%가 경험해요.', icon: '🌧️' },
+      { name: '산후우울증', desc: '2주 이상 지속되는 깊은 우울·무기력. 일상생활이 어려워요. 전문 도움이 필요해요.', icon: '🌑' },
+      { name: '산후 정신병', desc: '환각, 망상, 혼란 등 극단적 증상. 즉시 응급 의료가 필요한 상태예요.', icon: '🚨' }
+    ]
+  },
+  check: {
+    id: 'ct_postpartum',
+    title: '산후우울증 자가 체크',
+    sub: '지난 7일을 기준으로 체크해 주세요 (의학적 진단이 아닌 참고용)',
+    questions: [
+      '이유 없이 슬프거나 눈물이 났다',
+      '아무것도 하고 싶지 않고 무기력했다',
+      '아기에 대한 감정이 잘 느껴지지 않았다',
+      '불안하거나 초조하고 공황 증상이 있었다',
+      '잠들기 어렵거나 아기가 자도 잠이 오지 않았다',
+      '식욕이 크게 변했다 (전혀 없거나 과식)',
+      '나 자신이나 아기를 해치고 싶다는 생각이 들었다'
+    ],
+    emergencyIndex: 6,
+    emergencyMsg: '<strong>지금 바로 도움을 받을 수 있어요.</strong><br>📞 <a href="tel:109">109</a> (자살예방상담, 무료·24시간)<br>이 생각은 호르몬 변화가 만든 것이에요. 당신의 잘못이 아니에요.',
+    results: {
+      high: { label: '산후우울증 가능성이 높아요', threshold: 4, action: '혼자 감당하지 않아도 돼요. 산부인과나 정신건강의학과 방문을 권해요. 보건소에서 무료 상담도 가능해요.' },
+      mid:  { label: '주의가 필요한 상태예요', threshold: 2, action: '아래 행동 가이드를 시도해 보세요. 2주 후에도 나아지지 않으면 전문가 상담을 고려해 보세요.' },
+      low:  { label: '지금은 비교적 안정적이에요', threshold: 0 }
+    }
+  },
+  actions: {
+    immediate: [
+      { icon: '🛌', text: '수면을 최우선으로 — 누군가에게 도움을 받아 최소 4시간 연속 수면을 확보해 보세요. 수면 부족이 우울증의 가장 강력한 촉진제예요.' },
+      { icon: '☀️', text: '하루 10분, 햇빛 아래 나가 보세요. 세로토닌 합성에 자연광이 필수적이에요. 아기와 함께도 괜찮아요.' },
+      { icon: '📱', text: '"나 좀 힘들어"라고 말할 사람 1명에게 연락해 보세요. 감정을 말로 꺼내면 편도체 활성화가 줄어들어요.' }
+    ],
+    week: [
+      { icon: '🍽️', text: '규칙적인 식사를 시도해 보세요 — 완벽하지 않아도 돼요. 오메가-3(생선, 견과류)와 비타민D가 기분 조절에 도움이 돼요.' },
+      { icon: '🚶', text: '가벼운 산책을 시작해 보세요. 10~15분이면 충분해요. 운동은 항우울제에 버금가는 효과가 있어요.' },
+      { icon: '📓', text: '하루 3줄 감정 일기를 써보세요. "오늘 힘들었던 것 1개, 감사한 것 1개, 내일 할 수 있는 것 1개". 인지행동치료의 핵심이에요.' }
+    ],
+    longterm: [
+      { icon: '🏥', text: '보건소 정신건강 서비스는 무료예요 — 산후우울증 선별 검사(EPDS)를 받아볼 수 있어요. 정신건강의학과 방문은 치과 가는 것과 같아요.' },
+      { icon: '💊', text: '산후우울증은 약물치료 + 심리치료 병행 시 80% 이상 개선돼요. 수유 중에도 안전한 약이 있으니 의사와 상의해 보세요.' },
+      { icon: '👥', text: '산후우울증 자조 모임이나 온라인 커뮤니티에 참여해 보세요. 같은 경험을 나누는 것만으로도 고립감이 줄어들어요.' }
+    ]
+  },
+  riskFactors: {
+    title: '산후우울증 고위험군',
+    items: [
+      '이전에 우울증·불안장애를 경험한 적이 있는 경우',
+      '가족 중 우울증 병력이 있는 경우',
+      '사회적 지지가 부족한 경우 (혼자 육아)',
+      '임신·출산 중 합병증을 경험한 경우',
+      '원치 않은 임신이었던 경우',
+      '경제적 어려움이 있는 경우'
+    ]
+  },
+  partnerTip: {
+    title: '배우자·가족이 알아야 할 것',
+    items: [
+      '"힘내", "다 그런 거야"는 도움이 안 돼요. "네가 힘든 거 알아. 내가 뭘 해줄까?"가 훨씬 나아요.',
+      '밤중 수유 1회라도 대신하면 연속 수면 확보에 큰 도움이 돼요.',
+      '산후우울증은 의지의 문제가 아니에요. "병원에 같이 가자"고 제안해 보세요.',
+      '집안일·외부 방문객 관리를 대신 맡아주세요. 산모의 에너지를 아끼는 것이 최고의 지지예요.'
+    ]
+  },
+  help: [
+    { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' },
+    { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 산후우울증 포함 정신건강 전반 상담.' },
+    { number: '1366', name: '여성긴급전화', desc: '무료, 24시간. 산후 위기, 가정 내 어려움 상담 및 긴급 보호 연계.' }
+  ]
+};
+
+function renderPostpartumPage(container) {
+  if (!container) return;
+  const d = POSTPARTUM_DATA;
+
+  const distHTML = d.science.distinctions.map(di =>
+    `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">
+      <span style="font-size:20px;flex-shrink:0;">${di.icon}</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:2px;">${esc(di.name)}</div>
+        <p style="font-size:12.5px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">${esc(di.desc)}</p>
+      </div>
+    </div>`
+  ).join('');
+
+  container.innerHTML = `
+    <button class="page-back" onclick="goHome()">← 홈으로</button>
+    <div class="content-hero" style="background:linear-gradient(135deg,#B07BAC,#D4A0B0)">
+      <span class="content-hero-icon">🌸</span>
+      <h1>${esc(d.intro.title)}</h1>
+      <p>${esc(d.intro.sub)}</p>
+    </div>
+    <div class="stat-badge"><strong>${d.intro.stat.pct}</strong>&nbsp;${esc(d.intro.stat.label)}</div>
+
+    <div class="step-section">
+      <div class="step-label">${esc(d.recognition.title)}</div>
+      <div style="background:var(--warm);border-radius:14px;padding:16px 18px;">
+        ${d.recognition.items.map(item =>
+          `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+            <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>${esc(item)}</span>
+          </div>`
+        ).join('')}
+        <p style="font-size:12px;color:var(--ink-l);margin-top:8px;line-height:1.6;">하나라도 해당된다면, 아래 내용을 천천히 읽어보세요.</p>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 ${esc(d.science.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;margin-bottom:16px;">${esc(d.science.text)}</p>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">베이비 블루스 vs 산후우울증 vs 산후 정신병</div>
+          ${distHTML}
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단 — 자가 체크</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="postpartum-check-wrap"></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>⏸️ 오늘 당장 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.immediate)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📅 이번 주에 시도해볼 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.week)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🏥 전문적 도움 받기</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.longterm)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>⚠️ ${esc(d.riskFactors.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div style="background:var(--warm);border-radius:12px;padding:14px 16px;">
+            ${d.riskFactors.items.map(item =>
+              `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+                <span style="flex-shrink:0;">•</span><span>${esc(item)}</span>
+              </div>`
+            ).join('')}
+            <p style="font-size:12px;color:var(--ink-l);margin-top:10px;line-height:1.6;">해당 사항이 있다면, 산후우울 증상이 나타나기 전에 미리 전문가와 상담해 보는 것도 좋아요.</p>
+          </div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>💑 ${esc(d.partnerTip.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div style="background:var(--warm);border-radius:12px;padding:14px 16px;">
+            ${d.partnerTip.items.map(item =>
+              `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+                <span style="flex-shrink:0;">💬</span><span>${esc(item)}</span>
+              </div>`
+            ).join('')}
+          </div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <div style="margin:20px 0;padding:14px 18px;background:linear-gradient(135deg,rgba(176,123,172,.08),rgba(212,160,176,.06));border:1px solid rgba(176,123,172,.15);border-radius:14px;">
+      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:6px;">출산 후 신체 회복이 궁금하다면</div>
+      <div style="font-size:12.5px;color:var(--ink-m);line-height:1.6;margin-bottom:10px;">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</div>
+      <button onclick="showPage('birth')" style="background:var(--peach-d);color:white;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">출산 후 회복 가이드 보기 →</button>
+    </div>
+  `;
+
+  const checkWrap = container.querySelector('#postpartum-check-wrap');
+  if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
+}
+
+/* ══════════════════════════════════════════════════════
+   Part B-7: 갱년기 우울증 가이드
+══════════════════════════════════════════════════════ */
+
+const MENOPAUSE_DATA = {
+  intro: {
+    title: '변하고 있는 건 자연스러운 거예요',
+    sub: '몸과 마음이 함께 흔들리는 시기. 혼자 버티지 않아도 돼요.',
+    stat: { pct: '46.3%', label: '심각한 스트레스를 경험한 국민 비율 (국립정신건강센터, 2024년 정신건강실태조사)' }
+  },
+  recognition: {
+    title: '이런 변화가 느껴지나요?',
+    items: [
+      '갑자기 얼굴이 화끈거리고 식은땀이 나요 (열감)',
+      '이유 없이 우울하거나, 갑자기 눈물이 나요',
+      '집중이 안 되고, 기억력이 떨어진 것 같아요',
+      '잠들기 어렵거나, 자주 깨요',
+      '짜증이 부쩍 늘고, 사소한 일에 감정이 폭발해요',
+      '"나는 이제 필요 없는 사람인 것 같아"라는 생각이 들어요'
+    ]
+  },
+  science: {
+    title: '갱년기에 몸과 마음에서 무슨 일이 일어나고 있을까요?',
+    text: '폐경 전후 에스트로겐이 급격히 감소해요. 에스트로겐은 세로토닌(기분), 노르에피네프린(에너지), 도파민(동기)의 조절에 깊이 관여하기 때문에, 호르몬 변화만으로도 우울·불안·수면장애·인지기능 저하가 나타날 수 있어요. 여기에 자녀 독립(빈 둥지 증후군), 부모 돌봄 부담, 역할 변화까지 겹치면 마음이 무너질 수 있어요.',
+    phases: [
+      { name: '갱년기 전기 (40대 중반~)', desc: '생리 불규칙, 열감 시작, 기분 변화가 나타나기 시작해요.', icon: '🌅' },
+      { name: '갱년기 (평균 50~51세)', desc: '마지막 생리 후 12개월. 호르몬 변화가 가장 급격한 시기예요.', icon: '🌊' },
+      { name: '갱년기 후기', desc: '호르몬이 새로운 균형을 찾아가요. 증상이 점차 완화돼요.', icon: '🌤️' }
+    ]
+  },
+  check: {
+    id: 'ct_menopause',
+    title: '갱년기 우울 자가 체크',
+    sub: '최근 2주를 기준으로 체크해 주세요 (의학적 진단이 아닌 참고용)',
+    questions: [
+      '이유 없이 우울하거나 공허한 느낌이 든다',
+      '열감(홧김)이나 식은땀으로 수면이 방해된다',
+      '예전에 즐기던 일에 흥미를 잃었다',
+      '집중력이 떨어지고 기억력이 나빠진 것 같다',
+      '사소한 일에 짜증이 나거나 감정 조절이 어렵다',
+      '"나는 더 이상 매력적이지 않다"는 생각이 든다',
+      '삶의 의미를 모르겠거나 극단적인 생각이 든다'
+    ],
+    emergencyIndex: 6,
+    emergencyMsg: '<strong>지금 바로 이야기를 나눌 수 있어요.</strong><br>📞 <a href="tel:109">109</a> (자살예방상담, 무료·24시간)<br>이 생각은 호르몬 변화와 삶의 전환이 만든 것이에요. 당신의 잘못이 아니에요.',
+    results: {
+      high: { label: '갱년기 우울증 가능성이 높아요', threshold: 4, action: '혼자 감당하지 않아도 돼요. 갱년기 클리닉이나 정신건강의학과 방문을 권해요.' },
+      mid:  { label: '주의가 필요한 상태예요', threshold: 2, action: '아래 행동 가이드를 시도해 보세요. 증상이 지속되면 전문가 상담을 고려해 보세요.' },
+      low:  { label: '지금은 비교적 안정적이에요', threshold: 0 }
+    }
+  },
+  actions: {
+    immediate: [
+      { icon: '☀️', text: '아침에 15분 햇빛 산책을 해보세요. 세로토닌 합성과 체내 시계 조절에 가장 효과적이에요.' },
+      { icon: '🫁', text: '열감이 올 때 — 4-7-8 호흡법을 시도해 보세요 (4초 들숨, 7초 참기, 8초 날숨). 자율신경계를 빠르게 안정시켜요.' },
+      { icon: '📱', text: '"요즘 좀 힘들어"라고 말할 수 있는 사람 1명에게 연락해 보세요. 중년의 고립감은 우울을 악화시켜요.' }
+    ],
+    week: [
+      { icon: '🏃', text: '유산소 운동을 주 3회 시작해 보세요 (걷기, 수영, 자전거). 운동은 에스트로겐 감소로 줄어든 세로토닌을 자연적으로 높여줘요.' },
+      { icon: '🥬', text: '콩류(두부, 된장, 두유)를 식단에 추가해 보세요. 식물성 에스트로겐(이소플라본)이 갱년기 증상 완화에 도움이 돼요.' },
+      { icon: '🛌', text: '수면 환경을 점검해 보세요 — 실내 온도 18~20°C, 면 소재 잠옷, 취침 1시간 전 스마트폰 내려놓기. 열감으로 인한 수면 방해를 줄여줘요.' }
+    ],
+    longterm: [
+      { icon: '🏥', text: '갱년기 클리닉을 방문해 보세요. 호르몬 검사로 현재 상태를 정확히 파악할 수 있어요. 호르몬 대체요법(HRT)은 의사와 상의하여 결정해요.' },
+      { icon: '💊', text: '갱년기 우울증은 호르몬 치료 + 심리 치료 병행 시 80% 이상 개선돼요. 항우울제도 효과적인 선택지예요.' },
+      { icon: '🧘', text: '명상이나 요가를 시작해 보세요. 마음챙김(MBSR)은 갱년기 우울·불안 완화에 과학적으로 검증된 방법이에요.' },
+      { icon: '🌱', text: '"이제 나를 위한 시간"이라고 재구성해 보세요. 새로운 취미, 배움, 봉사 — 중년 이후의 삶에서 새 의미를 찾는 사람들이 많아요.' }
+    ]
+  },
+  distinction: {
+    title: '갱년기 증상 vs 우울증, 어떻게 다른가요?',
+    menopause: ['열감·땀·수면장애가 주요 증상', '호르몬 변화와 연동', '신체 증상이 먼저, 기분 변화가 따라옴', '갱년기 치료로 개선 가능'],
+    depression: ['삶 전체의 의미 상실', '호르몬과 무관하게 지속', '감정 변화가 먼저, 신체 증상이 따라옴', '항우울제·심리치료 필요'],
+    note: '갱년기 증상과 우울증이 겹치는 경우가 많아요. 구분이 어렵다면 갱년기 클리닉에서 호르몬 검사와 정신건강 평가를 함께 받아보세요.'
+  },
+  emptyNest: {
+    title: '빈 둥지 증후군',
+    text: '자녀가 독립한 뒤 찾아오는 공허함과 정체성 혼란이에요. 갱년기 호르몬 변화와 맞물리면 우울이 깊어질 수 있어요.',
+    tips: [
+      '자녀가 떠난 것이 아니라 관계가 변한 거예요 — 새로운 성인 대 성인 관계를 만들어 가보세요.',
+      '오랫동안 미뤄왔던 "나만의 것"을 시작해 보세요. 배움, 여행, 봉사, 운동 — 무엇이든 괜찮아요.',
+      '배우자와의 관계를 다시 들여다볼 좋은 시기예요. 부부 상담은 위기가 아니라 업그레이드예요.'
+    ]
+  },
+  help: [
+    { number: '1577-0199', name: '정신건강위기상담전화', desc: '무료, 24시간. 갱년기 우울 포함 정신건강 전반 상담.' },
+    { number: '109', name: '자살예방상담전화', desc: '무료, 24시간. 극단적 생각이 들 때. 자세한 내용은 전화 시 확인해 주세요.' },
+    { number: '129', name: '정부민원안내콜센터', desc: '평일 09~18시. 갱년기 클리닉, 건강검진 등 복지 서비스 안내.' }
+  ]
+};
+
+function renderMenopausePage(container) {
+  if (!container) return;
+  const d = MENOPAUSE_DATA;
+
+  const phaseHTML = d.science.phases.map(p =>
+    `<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">
+      <span style="font-size:20px;flex-shrink:0;">${p.icon}</span>
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:2px;">${esc(p.name)}</div>
+        <p style="font-size:12.5px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">${esc(p.desc)}</p>
+      </div>
+    </div>`
+  ).join('');
+
+  container.innerHTML = `
+    <button class="page-back" onclick="goHome()">← 홈으로</button>
+    <div class="content-hero" style="background:linear-gradient(135deg,#8B6E4E,#C9A96E)">
+      <span class="content-hero-icon">🍂</span>
+      <h1>${esc(d.intro.title)}</h1>
+      <p>${esc(d.intro.sub)}</p>
+    </div>
+    <div class="stat-badge"><strong>${d.intro.stat.pct}</strong>&nbsp;${esc(d.intro.stat.label)}</div>
+
+    <div class="step-section">
+      <div class="step-label">${esc(d.recognition.title)}</div>
+      <div style="background:var(--warm);border-radius:14px;padding:16px 18px;">
+        ${d.recognition.items.map(item =>
+          `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+            <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>${esc(item)}</span>
+          </div>`
+        ).join('')}
+        <p style="font-size:12px;color:var(--ink-l);margin-top:8px;line-height:1.6;">이 중 하나라도 공감된다면, 아래 내용을 천천히 살펴보세요.</p>
+      </div>
+    </div>
+
+    <div class="accordion-group">
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🧠 ${esc(d.science.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;margin-bottom:16px;">${esc(d.science.text)}</p>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">갱년기의 단계</div>
+          ${phaseHTML}
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🔍 상황 판단 — 자가 체크</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div id="menopause-check-wrap"></div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>⏸️ 오늘 당장 할 수 있는 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.immediate)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📅 이번 주에 시도해볼 것</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.week)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🏥 전문적 도움 받기</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="action-checklist">${_actionItems(d.actions.longterm)}</div>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>${esc(d.distinction.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="distinction-grid">
+            <div class="distinction-col burnout">
+              <div class="distinction-col-title">갱년기 증상</div>
+              <ul>${d.distinction.menopause.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+            </div>
+            <div class="distinction-col depression">
+              <div class="distinction-col-title">우울증</div>
+              <ul>${d.distinction.depression.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+            </div>
+          </div>
+          <p class="distinction-note">${esc(d.distinction.note)}</p>
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>🏠 ${esc(d.emptyNest.title)}</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;margin-bottom:12px;">${esc(d.emptyNest.text)}</p>
+          ${d.emptyNest.tips.map(tip =>
+            `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
+              <span style="flex-shrink:0;">💡</span><span>${esc(tip)}</span>
+            </div>`
+          ).join('')}
+        </div></div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">
+          <span>📞 도움 연결</span><span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-body"><div class="accordion-body-inner">
+          <div class="help-cards">
+            ${d.help.map(h => `
+              <a href="tel:${h.number}" class="help-card" aria-label="${h.name} ${h.number}">
+                <div class="help-card-num">📞 ${h.number}</div>
+                <div class="help-card-info">
+                  <div class="help-card-name">${esc(h.name)}</div>
+                  <div class="help-card-desc">${esc(h.desc)}</div>
+                </div>
+              </a>`).join('')}
+          </div>
+        </div></div>
+      </div>
+    </div>
+  `;
+
+  const checkWrap = container.querySelector('#menopause-check-wrap');
+  if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
+}
