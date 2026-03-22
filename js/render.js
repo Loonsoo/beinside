@@ -94,7 +94,7 @@ function getAloneHTML(months){
   const key=getAloneKey(months);
   if(!key)return'';
   const d=ALONE_DATA[key];
-  return`<div class="card full" style="background:linear-gradient(135deg,#FFF8F2,#FEF2F8);border:1px solid rgba(220,140,160,.18);border-radius:20px;padding:26px 28px;">
+  return`<div class="card full cbg-alone" style="border-radius:20px;padding:26px 28px;">
     <div class="card-audience aud-child">🧒 본인 (아이·청소년·청년)</div>
     <h3>🫶 ${key==='child'?'많이 버텨온 너에게':key==='teen'?'스스로 견뎌온 너에게':'혼자 감당해온 너에게'}</h3>
     <div class="stat-badge" style="margin-bottom:14px;" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
@@ -114,7 +114,7 @@ function getAloneHTML(months){
 /* ── 영유아 응급처치 ── */
 function getFirstAidHTML(months){
   if(months>36)return'';
-  return`<div class="card full" style="background:linear-gradient(135deg,#FFF5F2,#FFF0EE);border:1px solid rgba(220,80,60,.15);border-radius:20px;padding:26px 28px;">
+  return`<div class="card full cbg-emergency" style="border-radius:20px;padding:26px 28px;">
     <div class="card-audience aud-parent">👨‍👩‍👧 부모·보호자 필독</div>
     <h3>🚨 영유아 응급처치 가이드</h3>
     <div style="background:var(--fa-risk-bg);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:var(--fa-risk-ink);font-weight:600;">

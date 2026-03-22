@@ -492,6 +492,8 @@ nav button.on{
 .card.cbg-sky:hover{border-top-color:var(--sky);}
 .card.cbg-lavender{background:linear-gradient(145deg,#EDFAF4,#DFF3E9);border-color:rgba(107,168,133,.15);}
 .card.cbg-lavender:hover{border-top-color:var(--lavender);}
+.card.cbg-alone{background:linear-gradient(135deg,#FFF8F2,#FEF2F8);border:1px solid rgba(220,140,160,.18);}
+.card.cbg-emergency{background:linear-gradient(135deg,#FFF5F2,#FFF0EE);border:1px solid rgba(220,80,60,.15);}
 
 /* icon badges */
 
@@ -1793,13 +1795,13 @@ footer{
 }
 .sit-card:active {
   transform: scale(.97);
-  border-color: rgba(123,174,203,.40);
-  box-shadow: 0 0 6px rgba(123,174,203,.15);
+  border-color: rgba(123,174,203,.55);
+  box-shadow: 0 0 10px rgba(123,174,203,.25), 0 0 20px rgba(123,174,203,.10);
   transition-duration: .08s;
 }
 .sit-card.self-area:active {
-  border-color: rgba(107,168,133,.40);
-  box-shadow: 0 0 6px rgba(107,168,133,.15);
+  border-color: rgba(107,168,133,.55);
+  box-shadow: 0 0 10px rgba(107,168,133,.25), 0 0 20px rgba(107,168,133,.10);
 }
 .sit-card::before {
   content: '';
@@ -4183,6 +4185,8 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .card.cbg-p{background:linear-gradient(145deg,#222830,#242C36);border-color:rgba(123,174,203,.12);}
 [data-theme="dark"] .card.cbg-sky{background:linear-gradient(145deg,#22272E,#242A32);border-color:rgba(108,160,200,.12);}
 [data-theme="dark"] .card.cbg-lavender{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
+[data-theme="dark"] .card.cbg-alone{background:linear-gradient(135deg,#2E2428,#2C222A);border-color:rgba(220,140,160,.15);}
+[data-theme="dark"] .card.cbg-emergency{background:linear-gradient(135deg,#2E2222,#2C2020);border-color:rgba(220,80,60,.12);}
 [data-theme="dark"] .sit-card{
   background:var(--white);
   border-color:rgba(255,255,255,.06);
@@ -4256,6 +4260,21 @@ a:focus:not(:focus-visible){
   border-color:rgba(255,255,255,.08);
   color:var(--ink-m);
   box-shadow:0 1px 4px rgba(0,0,0,.15);
+}
+[data-theme="dark"] .summary-panel{
+  background:linear-gradient(135deg,#2A2822,#2E2824);
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .summary-warn{
+  background:rgba(200,60,60,.12);
+  border-color:rgba(200,60,60,.20);
+}
+[data-theme="dark"] .toolkit-wrap{
+  background:linear-gradient(135deg,#2A2520,#2E2822);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .guide-tab-bar{
+  border-bottom-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .source-drawer{
   background:var(--cream);
