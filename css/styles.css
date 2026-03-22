@@ -1793,11 +1793,13 @@ footer{
 }
 .sit-card:active {
   transform: scale(.97);
-  border-color: rgba(123,174,203,.35);
+  border-color: rgba(123,174,203,.40);
+  box-shadow: 0 0 6px rgba(123,174,203,.15);
   transition-duration: .08s;
 }
 .sit-card.self-area:active {
-  border-color: rgba(107,168,133,.35);
+  border-color: rgba(107,168,133,.40);
+  box-shadow: 0 0 6px rgba(107,168,133,.15);
 }
 .sit-card::before {
   content: '';
@@ -4176,6 +4178,11 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .card:hover{
   box-shadow:0 8px 28px rgba(123,174,203,.08), 0 2px 6px rgba(0,0,0,.12);
 }
+[data-theme="dark"] .card.cbg-a{background:linear-gradient(145deg,#2E2A22,#332E24);border-color:rgba(200,144,64,.12);}
+[data-theme="dark"] .card.cbg-s{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
+[data-theme="dark"] .card.cbg-p{background:linear-gradient(145deg,#222830,#242C36);border-color:rgba(123,174,203,.12);}
+[data-theme="dark"] .card.cbg-sky{background:linear-gradient(145deg,#22272E,#242A32);border-color:rgba(108,160,200,.12);}
+[data-theme="dark"] .card.cbg-lavender{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
 [data-theme="dark"] .sit-card{
   background:var(--white);
   border-color:rgba(255,255,255,.06);

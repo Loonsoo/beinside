@@ -55,6 +55,10 @@ function showPage(id) {
     history.pushState(null, '', '#/' + id);
   }
   updatePageMeta(id);
+  // 카드 눌림 상태 해제
+  if (document.activeElement && document.activeElement.classList.contains('sit-card')) {
+    document.activeElement.blur();
+  }
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
