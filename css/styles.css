@@ -1788,6 +1788,16 @@ footer{
   box-shadow: 0 2px 6px rgba(0,0,0,.05);
   text-align: left;
   position: relative; overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.sit-card:active {
+  transform: scale(.97);
+  border-color: rgba(123,174,203,.35);
+  transition-duration: .08s;
+}
+.sit-card.self-area:active {
+  border-color: rgba(107,168,133,.35);
 }
 .sit-card::before {
   content: '';
@@ -1840,6 +1850,7 @@ footer{
 @media (hover: hover) {
   .sit-card--teen:hover { border-color: #5B7CFA; box-shadow: 0 8px 28px rgba(80,100,200,.18); }
 }
+.sit-card--teen:active { border-color: rgba(80,100,200,.40); }
 
 /* 긴급 카드 — 레드 보더 */
 .sit-card--emergency {
@@ -1849,6 +1860,7 @@ footer{
 @media (hover: hover) {
   .sit-card--emergency:hover { border-color: #E04040; box-shadow: 0 8px 28px rgba(200,60,60,.16); }
 }
+.sit-card--emergency:active { border-color: rgba(200,60,60,.45); }
 
 /* ── 가이드 파인더 ("잘 모르겠어요") ── */
 .guide-finder-btn{
@@ -4187,6 +4199,14 @@ a:focus:not(:focus-visible){
 }
 [data-theme="dark"] .sit-card::before{
   background:linear-gradient(135deg, rgba(123,174,203,.06), rgba(107,168,133,.03));
+}
+[data-theme="dark"] .sit-card--teen{
+  background:linear-gradient(135deg, #252A3E, #1E2438);
+  border-color:rgba(91,124,250,.25);
+}
+[data-theme="dark"] .sit-card--emergency{
+  background:linear-gradient(135deg, #3A2228, #2E1A1E);
+  border-color:rgba(224,64,64,.30);
 }
 [data-theme="dark"] .sit-icon{
   background:rgba(123,174,203,.10);
