@@ -120,21 +120,40 @@ function getMoodLabel(mood) {
   return mood === 'okay' ? '괜찮아요' : mood === 'holding' ? '버티는 중' : '많이 힘들어요';
 }
 
+function formatMoodDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.floor((today - d) / 86400000);
+  if (diff === 0) return '오늘';
+  if (diff === 1) return '어제';
+  if (diff < 7) return diff + '일 전';
+  return (d.getMonth()+1) + '월 ' + d.getDate() + '일';
+}
+
 function buildMoodWidget(container) {
   const moods = loadMoods();
   const today = new Date().toISOString().split('T')[0];
   const todayEntry = moods.find(m => m.date === today);
 
-  let html = `<div class="journal-entry-form" id="mood-widget-form">
-    <div class="mood-label" style="text-align:left;margin-bottom:12px;font-size:14px;">오늘 기분이 어때요?</div>
-    <div class="mood-btns" style="justify-content:flex-start;">
+  let html = `<div class="jn-card jn-card-mood" id="mood-widget-form">
+    <div class="jn-card-header">
+      <span class="jn-card-icon">🌤</span>
+      <div>
+        <div class="jn-card-title">오늘 기분이 어때요?</div>
+        <div class="jn-card-sub">하루 한 번, 나의 마음을 기록해요</div>
+      </div>
+    </div>
+    <div class="mood-btns">
       ${['okay','holding','hard'].map(m =>
-        `<button class="mood-btn${todayEntry && todayEntry.mood === m ? ' selected' : ''}" onclick="saveMoodEntry('${m}',this)" aria-label="${getMoodLabel(m)}">${getMoodEmoji(m)}<span>${getMoodLabel(m)}</span></button>`
+        `<button class="mood-btn${todayEntry && todayEntry.mood === m ? ' selected' : ''}" onclick="saveMoodEntry('${m}',this)" aria-label="${getMoodLabel(m)}">
+          <span class="mood-btn-emoji">${getMoodEmoji(m)}</span>
+          <span class="mood-btn-label">${getMoodLabel(m)}</span>
+        </button>`
       ).join('')}
     </div>
-    <div id="mood-memo-wrap" style="margin-top:14px;display:${todayEntry ? 'block' : 'none'}">
-      <textarea class="journal-textarea" id="mood-memo-input" placeholder="오늘 한 줄만 적어볼까요? (선택사항, 최대 100자)" maxlength="100" style="min-height:60px;">${todayEntry ? esc(todayEntry.memo || '') : ''}</textarea>
-      <button class="journal-save-btn" onclick="saveMoodMemo()" style="margin-top:8px;">저장</button>
+    <div id="mood-memo-wrap" class="mood-memo-wrap${todayEntry ? ' show' : ''}">
+      <textarea class="jn-textarea" id="mood-memo-input" placeholder="오늘 한 줄만 적어볼까요? (선택사항)" maxlength="100" rows="2">${todayEntry ? esc(todayEntry.memo || '') : ''}</textarea>
+      <button class="jn-btn-save" onclick="saveMoodMemo()">메모 저장</button>
     </div>
   </div>`;
 
@@ -143,8 +162,9 @@ function buildMoodWidget(container) {
   for (let i = 6; i >= 0; i--) {
     const d = new Date(); d.setDate(d.getDate() - i);
     const ds = d.toISOString().split('T')[0];
+    const dayLabel = ['일','월','화','수','목','금','토'][d.getDay()];
     const entry = moods.find(m => m.date === ds);
-    recent7.push(entry ? getMoodEmoji(entry.mood) : '⬜');
+    recent7.push({ emoji: entry ? getMoodEmoji(entry.mood) : '·', day: dayLabel, isToday: i === 0 });
   }
   const hardDays = moods.filter(m => {
     const d = new Date(m.date); const now = new Date();
@@ -159,25 +179,80 @@ function buildMoodWidget(container) {
     timelineMsg = `최근 7일 중 ${hardDays}일은 힘들었어요. 괜찮아요, 파도처럼 오르내리는 거예요.`;
   }
 
-  html += `<div class="mood-timeline">${recent7.map(e => `<span class="mood-dot">${e}</span>`).join('')}</div>
-    <p class="mood-timeline-msg">${timelineMsg}</p>`;
+  html += `<div class="jn-timeline-card">
+    <div class="jn-timeline-row">${recent7.map(e =>
+      `<div class="jn-timeline-day${e.isToday ? ' today' : ''}">
+        <span class="jn-timeline-emoji">${e.emoji}</span>
+        <span class="jn-timeline-label">${e.day}</span>
+      </div>`
+    ).join('')}</div>
+    <p class="jn-timeline-msg">${timelineMsg}</p>
+  </div>`;
+
+  // 감정 기록 히스토리
+  html += buildMoodHistory(moods);
 
   container.innerHTML = html;
+}
+
+function buildMoodHistory(moods) {
+  const sorted = [...moods].sort((a,b) => b.timestamp - a.timestamp);
+  if (sorted.length === 0) return '';
+
+  let html = `<div class="jn-history-section">
+    <div class="jn-section-title">지난 기록</div>
+    <div class="jn-history-list">`;
+  sorted.slice(0, 30).forEach(m => {
+    html += `<div class="jn-history-item">
+      <div class="jn-history-left">
+        <span class="jn-history-emoji">${getMoodEmoji(m.mood)}</span>
+        <div class="jn-history-info">
+          <span class="jn-history-mood">${getMoodLabel(m.mood)}</span>
+          <span class="jn-history-date">${formatMoodDate(m.date)}</span>
+        </div>
+      </div>
+      ${m.memo ? `<div class="jn-history-memo">${esc(m.memo)}</div>` : ''}
+      <button class="jn-delete-btn" onclick="deleteMoodEntry('${m.date}',this)" aria-label="삭제">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4.5 3V2.5C4.5 1.67 5.17 1 6 1h4c.83 0 1.5.67 1.5 1.5V3m2 0H2.5m2 0v9.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>`;
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function deleteMoodEntry(date, btnEl) {
+  const item = btnEl.closest('.jn-history-item');
+  if (item) {
+    item.style.transition = 'opacity .25s, transform .25s';
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(20px)';
+  }
+  setTimeout(() => {
+    const moods = loadMoods().filter(m => m.date !== date);
+    saveMoods(moods);
+    const wrap = document.getElementById('journal-tab-mood');
+    if (wrap) buildMoodWidget(wrap);
+  }, 250);
 }
 
 function saveMoodEntry(mood, btnEl) {
   const moods = loadMoods();
   const today = new Date().toISOString().split('T')[0];
+  const existing = moods.find(m => m.date === today);
   const filtered = moods.filter(m => m.date !== today);
-  filtered.push({ date: today, mood, memo: '', timestamp: Date.now() });
+  filtered.push({ date: today, mood, memo: existing ? existing.memo : '', timestamp: Date.now() });
   saveMoods(filtered);
 
-  // 버튼 강조
   btnEl.closest('.mood-btns').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
   btnEl.classList.add('selected');
-  btnEl.style.transform = 'scale(1.15)';
+  btnEl.style.transform = 'scale(1.08)';
   setTimeout(() => { btnEl.style.transform = ''; }, 200);
-  document.getElementById('mood-memo-wrap').style.display = 'block';
+  document.querySelector('.mood-memo-wrap').classList.add('show');
+
+  // 타임라인과 히스토리 갱신
+  const wrap = document.getElementById('journal-tab-mood');
+  if (wrap) buildMoodWidget(wrap);
 }
 
 function saveMoodMemo() {
@@ -186,8 +261,12 @@ function saveMoodMemo() {
   const today = new Date().toISOString().split('T')[0];
   const entry = moods.find(m => m.date === today);
   if (entry) { entry.memo = memo; saveMoods(moods); }
-  const btn = document.querySelector('#mood-widget-form .journal-save-btn');
-  if (btn) { btn.textContent = '저장됐어요 ✓'; setTimeout(() => { btn.textContent = '저장'; }, 1500); }
+  const btn = document.querySelector('#mood-widget-form .jn-btn-save');
+  if (btn) {
+    btn.textContent = '저장됐어요';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = '메모 저장'; btn.classList.remove('saved'); }, 1500);
+  }
 }
 
 /* ══════════════════════════════════════════════════════
@@ -218,20 +297,30 @@ let _selectedJournalTag = 'emotion';
 
 function buildJournalForm(container) {
   container.innerHTML = `
-    <div class="journal-entry-form">
-      <label>태그</label>
-      <div class="journal-tag-row" id="journal-tag-row">
+    <div class="jn-card jn-card-write">
+      <div class="jn-card-header">
+        <span class="jn-card-icon">✏️</span>
+        <div>
+          <div class="jn-card-title">오늘 있었던 일</div>
+          <div class="jn-card-sub">마음속에 담아두지 않아도 괜찮아요</div>
+        </div>
+      </div>
+      <div class="jn-tag-row" id="journal-tag-row">
         ${Object.entries(JOURNAL_TAGS).map(([k, v]) =>
-          `<button class="journal-tag-btn${k === _selectedJournalTag ? ' on' : ''}" onclick="selectJournalTag('${k}',this)">${v.label}</button>`
+          `<button class="jn-tag${k === _selectedJournalTag ? ' on' : ''}" onclick="selectJournalTag('${k}',this)">${v.label}</button>`
         ).join('')}
       </div>
-      <label>오늘 있었던 일을 적어보세요</label>
-      <textarea class="journal-textarea" id="journal-text-input" placeholder="여기에 적은 것은 아무에게도 보이지 않아요." maxlength="500"></textarea>
-      <div style="text-align:right;font-size:11px;color:var(--ink-l);margin-top:4px;"><span id="journal-char-count">0</span>/500</div>
-      <button class="journal-save-btn" onclick="saveJournalEntry()">저장</button>
+      <div class="jn-textarea-wrap">
+        <textarea class="jn-textarea" id="journal-text-input" placeholder="여기에 적은 것은 아무에게도 보이지 않아요." maxlength="500" rows="4"></textarea>
+        <span class="jn-char-count"><span id="journal-char-count">0</span>/500</span>
+      </div>
+      <button class="jn-btn-save" onclick="saveJournalEntry()">기록 저장</button>
     </div>
     <div id="journal-list-wrap"></div>
-    <div class="journal-privacy">이 기록은 당신의 기기에만 저장돼요. 서버로 전송되지 않아요.</div>
+    <div class="jn-privacy">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style="vertical-align:-2px;margin-right:4px"><path d="M3.5 6V4.5a3.5 3.5 0 017 0V6M2 6h10v6.5a1 1 0 01-1 1H3a1 1 0 01-1-1V6z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      이 기록은 당신의 기기에만 저장돼요. 서버로 전송되지 않아요.
+    </div>
   `;
 
   const ta = container.querySelector('#journal-text-input');
@@ -245,7 +334,7 @@ function buildJournalForm(container) {
 
 function selectJournalTag(key, btnEl) {
   _selectedJournalTag = key;
-  btnEl.closest('.journal-tag-row').querySelectorAll('.journal-tag-btn').forEach(b => b.classList.remove('on'));
+  btnEl.closest('.jn-tag-row').querySelectorAll('.jn-tag').forEach(b => b.classList.remove('on'));
   btnEl.classList.add('on');
 }
 
@@ -267,36 +356,75 @@ function saveJournalEntry() {
   const cc = document.getElementById('journal-char-count');
   if (cc) cc.textContent = '0';
 
+  const btn = document.querySelector('.jn-card-write .jn-btn-save');
+  if (btn) {
+    btn.textContent = '저장됐어요';
+    btn.classList.add('saved');
+    setTimeout(() => { btn.textContent = '기록 저장'; btn.classList.remove('saved'); }, 1500);
+  }
+
   const listWrap = document.getElementById('journal-list-wrap');
   if (listWrap) buildJournalList(listWrap);
+}
+
+function deleteJournalEntry(id, btnEl) {
+  const item = btnEl.closest('.jn-journal-item');
+  if (item) {
+    item.style.transition = 'opacity .25s, transform .25s';
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(20px)';
+  }
+  setTimeout(() => {
+    const entries = loadJournal().filter(e => e.id !== id);
+    saveJournal(entries);
+    const listWrap = document.getElementById('journal-list-wrap');
+    if (listWrap) buildJournalList(listWrap);
+  }, 250);
 }
 
 function buildJournalList(container) {
   const entries = loadJournal();
   if (!container) return;
   if (entries.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:var(--ink-l);font-size:13px;padding:20px 0;">아직 기록이 없어요. 오늘의 이야기를 적어보세요.</p>';
+    container.innerHTML = `<div class="jn-empty">
+      <span class="jn-empty-icon">📖</span>
+      <p>아직 기록이 없어요</p>
+      <p class="jn-empty-sub">오늘의 이야기를 적어보세요</p>
+    </div>`;
     return;
   }
-  container.innerHTML = '<div class="journal-list">' +
+
+  container.innerHTML = `<div class="jn-history-section">
+    <div class="jn-section-title">지난 기록</div>
+    <div class="jn-journal-list">` +
     entries.slice(0, 30).map(e => {
       const tag = JOURNAL_TAGS[e.tag] || JOURNAL_TAGS.other;
-      const preview = e.text.length > 40 ? e.text.slice(0, 40) + '…' : e.text;
-      return `<div class="journal-item">
-        <div class="journal-item-header" onclick="toggleJournalItem(this)">
-          <span class="journal-item-date">${e.date}</span>
-          <span class="journal-item-tag" style="color:${tag.color}">${tag.label}</span>
-          <span class="journal-item-preview">${esc(preview)}</span>
+      return `<div class="jn-journal-item">
+        <div class="jn-journal-header" onclick="toggleJournalItem(this)">
+          <div class="jn-journal-meta">
+            <span class="jn-journal-tag">${tag.label}</span>
+            <span class="jn-journal-date">${formatMoodDate(e.date)}</span>
+          </div>
+          <span class="jn-journal-preview">${esc(e.text.length > 50 ? e.text.slice(0,50) + '…' : e.text)}</span>
+          <span class="jn-journal-chevron">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
         </div>
-        <div class="journal-item-body">${esc(e.text)}</div>
+        <div class="jn-journal-body">
+          <p>${esc(e.text)}</p>
+          <button class="jn-delete-btn" onclick="deleteJournalEntry('${e.id}',this)" aria-label="이 기록 삭제">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4.5 3V2.5C4.5 1.67 5.17 1 6 1h4c.83 0 1.5.67 1.5 1.5V3m2 0H2.5m2 0v9.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            삭제
+          </button>
+        </div>
       </div>`;
     }).join('') +
-  '</div>';
+  '</div></div>';
 }
 
 function toggleJournalItem(headerEl) {
-  const body = headerEl.nextElementSibling;
-  if (body) body.classList.toggle('open');
+  const item = headerEl.closest('.jn-journal-item');
+  if (item) item.classList.toggle('open');
 }
 
 /* ══════════════════════════════════════════════════════
@@ -307,13 +435,25 @@ function renderJournalPage() {
   const container = document.getElementById('journal-content');
   if (!container) return;
 
+  const moodCount = loadMoods().length;
+  const journalCount = loadJournal().length;
+
   container.innerHTML = `
-    <div class="journal-tabs" role="tablist">
-      <button class="journal-tab on" id="jtab-mood" onclick="switchJournalTab('mood',this)" role="tab" aria-selected="true">😊 감정 기록</button>
-      <button class="journal-tab" id="jtab-journal" onclick="switchJournalTab('journal',this)" role="tab" aria-selected="false">📓 상황 기록</button>
+    <div class="jn-hero">
+      <div class="jn-hero-icon">📝</div>
+      <h2 class="jn-hero-title">나의 기록</h2>
+      <p class="jn-hero-sub">기록은 나를 이해하는 첫걸음이에요</p>
     </div>
-    <div id="journal-tab-mood"></div>
-    <div id="journal-tab-journal" style="display:none"></div>
+    <div class="jn-tabs" role="tablist">
+      <button class="jn-tab on" id="jtab-mood" onclick="switchJournalTab('mood',this)" role="tab" aria-selected="true">
+        <span class="jn-tab-icon">🌤</span>감정<span class="jn-tab-count">${moodCount}</span>
+      </button>
+      <button class="jn-tab" id="jtab-journal" onclick="switchJournalTab('journal',this)" role="tab" aria-selected="false">
+        <span class="jn-tab-icon">✏️</span>상황<span class="jn-tab-count">${journalCount}</span>
+      </button>
+    </div>
+    <div id="journal-tab-mood" class="jn-tab-content"></div>
+    <div id="journal-tab-journal" class="jn-tab-content" style="display:none"></div>
   `;
 
   buildMoodWidget(container.querySelector('#journal-tab-mood'));
@@ -321,7 +461,7 @@ function renderJournalPage() {
 }
 
 function switchJournalTab(tab, btnEl) {
-  document.querySelectorAll('.journal-tab').forEach(b => { b.classList.remove('on'); b.setAttribute('aria-selected', 'false'); });
+  document.querySelectorAll('.jn-tab').forEach(b => { b.classList.remove('on'); b.setAttribute('aria-selected', 'false'); });
   btnEl.classList.add('on'); btnEl.setAttribute('aria-selected', 'true');
   document.getElementById('journal-tab-mood').style.display    = tab === 'mood'    ? '' : 'none';
   document.getElementById('journal-tab-journal').style.display = tab === 'journal' ? '' : 'none';

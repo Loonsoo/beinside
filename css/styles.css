@@ -3381,207 +3381,608 @@ footer{
 /* ══════════════════════════════════════════
    JOURNAL — 기록 페이지
 ══════════════════════════════════════════ */
-.journal-tabs{
-  display:flex;
-  gap:8px;
-  margin-bottom:22px;
-  border-bottom:1px solid var(--line);
-  padding-bottom:0;
+/* ══════════════════════════════════════════
+   JOURNAL PAGE — 기록 페이지 (Apple-inspired)
+══════════════════════════════════════════ */
+
+/* ── Page Container ── */
+.jn-page-content{
+  padding:0 18px 100px;
+  max-width:560px;
+  margin:0 auto;
 }
-.journal-tab{
-  padding:10px 16px;
-  border:none;
-  background:none;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:13px;
-  font-weight:700;
-  color:var(--ink-l);
-  cursor:pointer;
-  border-bottom:3px solid transparent;
-  transition:color .18s,border-color .18s;
-  margin-bottom:-1px;
+
+/* ── Hero ── */
+.jn-hero{
+  text-align:center;
+  padding:28px 0 8px;
+  animation:up .45s ease both;
 }
-.journal-tab.on{
-  color:var(--peach-d);
-  border-bottom-color:var(--peach-d);
-}
-.journal-entry-form{
-  background:var(--white);
-  border:1.5px solid var(--line);
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:20px;
-}
-.journal-entry-form label{
+.jn-hero-icon{
+  font-size:36px;
   display:block;
-  font-size:12px;
+  margin-bottom:8px;
+}
+.jn-hero-title{
+  font-family:'Gowun Batang',serif;
+  font-size:22px;
   font-weight:700;
+  color:var(--ink);
+  letter-spacing:-.3px;
+  margin:0 0 6px;
+}
+.jn-hero-sub{
+  font-size:13px;
   color:var(--ink-l);
-  margin-bottom:6px;
+  margin:0;
 }
-.journal-tag-row{
+
+/* ── Tabs ── */
+.jn-tabs{
   display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  margin-bottom:16px;
+  gap:6px;
+  margin:20px 0 24px;
+  background:var(--section-alt);
+  border-radius:14px;
+  padding:4px;
+  animation:up .45s .05s ease both;
 }
-.journal-tag-btn{
-  padding:6px 14px;
-  border:1.5px solid var(--line);
-  border-radius:20px;
-  background:var(--white);
-  font-size:12px;
-  color:var(--ink-m);
-  cursor:pointer;
-  transition:all .18s;
-}
-.journal-tag-btn.on{
-  background:var(--peach-p);
-  border-color:var(--peach);
-  color:var(--peach-d);
-  font-weight:600;
-}
-.journal-textarea{
-  width:100%;
-  border:1.5px solid var(--line);
-  border-radius:12px;
-  padding:12px 14px;
+.jn-tab{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:11px 0;
+  border:none;
+  background:transparent;
+  border-radius:11px;
   font-family:'Noto Sans KR',sans-serif;
   font-size:13.5px;
-  color:var(--ink);
-  resize:vertical;
-  min-height:100px;
-  background:var(--cream);
-  transition:border-color .18s,box-shadow .18s;
+  font-weight:600;
+  color:var(--ink-l);
+  cursor:pointer;
+  transition:all .22s cubic-bezier(.4,0,.2,1);
 }
-.journal-textarea:focus{
+.jn-tab.on{
+  background:var(--white);
+  color:var(--ink);
+  box-shadow:0 1px 4px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+}
+.jn-tab-icon{
+  font-size:15px;
+}
+.jn-tab-count{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-l);
+  background:var(--line);
+  border-radius:10px;
+  padding:1px 7px;
+  min-width:18px;
+  text-align:center;
+}
+.jn-tab.on .jn-tab-count{
+  background:var(--peach-p);
+  color:var(--peach-d);
+}
+
+/* ── Tab Content ── */
+.jn-tab-content{
+  animation:up .35s .1s ease both;
+}
+
+/* ── Cards ── */
+.jn-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:24px;
+  margin-bottom:16px;
+  transition:box-shadow .22s;
+}
+.jn-card-header{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  margin-bottom:20px;
+}
+.jn-card-icon{
+  font-size:28px;
+  flex-shrink:0;
+  line-height:1;
+}
+.jn-card-title{
+  font-family:'Gowun Batang',serif;
+  font-size:16px;
+  font-weight:700;
+  color:var(--ink);
+  letter-spacing:-.2px;
+  margin-bottom:3px;
+}
+.jn-card-sub{
+  font-size:12.5px;
+  color:var(--ink-l);
+  line-height:1.5;
+}
+
+/* ── Mood Buttons (in card) ── */
+.jn-card .mood-btns{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:4px;
+}
+.jn-card .mood-btn{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  padding:18px 12px;
+  border:1.5px solid var(--line);
+  border-radius:16px;
+  background:var(--cream);
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.jn-card .mood-btn-emoji{
+  font-size:28px;
+  line-height:1;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.jn-card .mood-btn-label{
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink-m);
+}
+.jn-card .mood-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(0,0,0,.08);
+  border-color:var(--peach);
+}
+.jn-card .mood-btn:hover .mood-btn-emoji{
+  transform:scale(1.15);
+}
+.jn-card .mood-btn.selected{
+  background:var(--peach-p);
+  border-color:var(--peach);
+  box-shadow:0 4px 16px rgba(123,174,203,.18);
+}
+.jn-card .mood-btn.selected .mood-btn-label{
+  color:var(--peach-d);
+}
+
+/* ── Mood Memo ── */
+.mood-memo-wrap{
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition:max-height .35s ease, opacity .25s ease, margin .25s ease;
+  margin-top:0;
+}
+.mood-memo-wrap.show{
+  max-height:200px;
+  opacity:1;
+  margin-top:18px;
+}
+
+/* ── Shared Textarea ── */
+.jn-textarea{
+  width:100%;
+  border:1.5px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:14px;
+  color:var(--ink);
+  resize:none;
+  background:var(--cream);
+  line-height:1.65;
+  transition:border-color .2s, box-shadow .2s;
+  box-sizing:border-box;
+}
+.jn-textarea:focus{
   outline:none;
   border-color:var(--peach);
-  box-shadow:0 0 0 3px var(--peach-glow);
+  box-shadow:0 0 0 4px var(--peach-glow);
 }
-.journal-save-btn{
+.jn-textarea::placeholder{
+  color:var(--ink-l);
+}
+
+.jn-textarea-wrap{
+  position:relative;
+  margin-bottom:4px;
+}
+.jn-char-count{
+  position:absolute;
+  bottom:10px;
+  right:14px;
+  font-size:11px;
+  color:var(--ink-l);
+  pointer-events:none;
+}
+
+/* ── Shared Save Button ── */
+.jn-btn-save{
   width:100%;
-  padding:13px;
-  border-radius:12px;
+  padding:14px;
+  border-radius:14px;
   background:var(--peach-d);
   color:white;
   font-family:'Noto Sans KR',sans-serif;
-  font-size:14px;
+  font-size:14.5px;
   font-weight:700;
   border:none;
   cursor:pointer;
   margin-top:12px;
-  transition:transform .22s,box-shadow .22s;
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+  letter-spacing:-.1px;
 }
-.journal-save-btn:hover{
+.jn-btn-save:hover{
   transform:translateY(-2px);
-  box-shadow:0 6px 18px rgba(184,80,48,.28);
+  box-shadow:0 8px 24px rgba(123,174,203,.22);
 }
-.journal-list{ display:flex; flex-direction:column; gap:10px; }
-.journal-item{
-  background:var(--white);
-  border:1px solid var(--line);
-  border-radius:14px;
-  overflow:hidden;
+.jn-btn-save:active{
+  transform:scale(.98);
 }
-.journal-item-header{
+.jn-btn-save.saved{
+  background:var(--amber);
+}
+
+/* ── Tags ── */
+.jn-tag-row{
   display:flex;
-  align-items:center;
-  gap:10px;
-  padding:13px 16px;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:18px;
+}
+.jn-tag{
+  padding:7px 14px;
+  border:1.5px solid var(--line);
+  border-radius:24px;
+  background:var(--white);
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12.5px;
+  color:var(--ink-m);
   cursor:pointer;
+  transition:all .2s;
 }
-.journal-item-date{
-  font-size:12px;
-  color:var(--ink-l);
-  font-weight:600;
-}
-.journal-item-tag{
-  font-size:11px;
-  padding:3px 10px;
-  border-radius:20px;
+.jn-tag.on{
   background:var(--peach-p);
+  border-color:var(--peach);
   color:var(--peach-d);
   font-weight:600;
 }
-.journal-item-preview{
+.jn-tag:hover{
+  border-color:var(--peach);
+}
+
+/* ── Timeline Card ── */
+.jn-timeline-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px;
+  margin-bottom:16px;
+}
+.jn-timeline-row{
+  display:flex;
+  justify-content:space-between;
+  gap:4px;
+  margin-bottom:12px;
+}
+.jn-timeline-day{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  flex:1;
+}
+.jn-timeline-day.today{
+  position:relative;
+}
+.jn-timeline-day.today::after{
+  content:'';
+  position:absolute;
+  bottom:-4px;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--peach);
+}
+.jn-timeline-emoji{
+  font-size:22px;
+  line-height:1;
+}
+.jn-timeline-label{
+  font-size:10px;
+  font-weight:600;
+  color:var(--ink-l);
+  text-transform:uppercase;
+}
+.jn-timeline-msg{
+  text-align:center;
+  font-size:12.5px;
+  color:var(--ink-m);
+  line-height:1.65;
+  margin:0;
+  padding:0 4px;
+  word-break:keep-all;
+}
+
+/* ── History Section ── */
+.jn-history-section{
+  margin-top:8px;
+}
+.jn-section-title{
+  font-size:13px;
+  font-weight:700;
+  color:var(--ink-l);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+/* ── Mood History List ── */
+.jn-history-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.jn-history-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 16px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:14px;
+  transition:opacity .25s, transform .25s;
+}
+.jn-history-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+  min-width:0;
+}
+.jn-history-emoji{
+  font-size:22px;
+  flex-shrink:0;
+}
+.jn-history-info{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+.jn-history-mood{
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--ink);
+}
+.jn-history-date{
+  font-size:11.5px;
+  color:var(--ink-l);
+}
+.jn-history-memo{
+  font-size:12.5px;
+  color:var(--ink-m);
+  flex:1;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  max-width:140px;
+}
+
+/* ── Delete Button ── */
+.jn-delete-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:8px 14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:transparent;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12px;
+  color:var(--ink-l);
+  cursor:pointer;
+  transition:all .2s;
+  flex-shrink:0;
+}
+.jn-delete-btn:hover{
+  color:#C85050;
+  border-color:#C85050;
+  background:rgba(200,80,80,.06);
+}
+
+/* ── Journal List ── */
+.jn-journal-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.jn-journal-item{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  transition:opacity .25s, transform .25s, box-shadow .2s;
+}
+.jn-journal-item:hover{
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.jn-journal-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:16px 18px;
+  cursor:pointer;
+  transition:background .15s;
+}
+.jn-journal-header:active{
+  background:var(--section-alt);
+}
+.jn-journal-meta{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex-shrink:0;
+}
+.jn-journal-tag{
+  font-size:12px;
+  font-weight:600;
+}
+.jn-journal-date{
+  font-size:11px;
+  color:var(--ink-l);
+}
+.jn-journal-preview{
   font-size:13px;
   color:var(--ink-m);
   flex:1;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+  word-break:keep-all;
 }
-.journal-item-body{
-  display:none;
-  padding:0 16px 14px;
-  font-size:13.5px;
+.jn-journal-chevron{
+  color:var(--ink-l);
+  flex-shrink:0;
+  transition:transform .25s ease;
+}
+.jn-journal-item.open .jn-journal-chevron{
+  transform:rotate(90deg);
+}
+.jn-journal-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease, padding .3s ease;
+  padding:0 18px;
+}
+.jn-journal-item.open .jn-journal-body{
+  max-height:400px;
+  padding:0 18px 18px;
+}
+.jn-journal-body p{
+  font-size:14px;
   color:var(--ink);
-  line-height:1.7;
-  border-top:1px solid var(--line);
+  line-height:1.72;
   white-space:pre-wrap;
   word-break:keep-all;
+  margin:0 0 14px;
+  border-top:1px solid var(--line);
+  padding-top:14px;
 }
-.journal-item-body.open{ display:block; }
-
-/* ── 저널 엔트리 ── */
-.journal-entry{
-  padding:14px 18px;
-  background:var(--white);
-  border:1px solid rgba(123,174,203,.10);
-  border-radius:14px;
-  margin-bottom:8px;
-}
-.journal-entry-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:6px;
-}
-.journal-entry-tag{
-  font-size:11.5px;font-weight:700;
-}
-.journal-entry-date{
-  font-size:11px;color:var(--ink-l);
-}
-.journal-entry-text{
-  font-size:13px;color:var(--ink-m);line-height:1.7;
-  word-break:keep-all;
+.jn-journal-body .jn-delete-btn{
+  margin-top:0;
 }
 
-.journal-privacy{
+/* ── Empty State ── */
+.jn-empty{
   text-align:center;
-  font-size:11.5px;
-  color:var(--ink-l);
-  margin-top:20px;
-  padding:14px;
-  background:var(--section-alt);
-  border-radius:12px;
+  padding:48px 20px;
 }
-
-/* ══════════════════════════════════════════
-   MOOD TIMELINE — 감정 흐름
-══════════════════════════════════════════ */
-.mood-timeline{
-  display:flex;
-  gap:6px;
-  align-items:center;
-  justify-content:center;
-  padding:16px;
-  background:var(--white);
-  border-radius:16px;
-  border:1px solid var(--line);
+.jn-empty-icon{
+  font-size:40px;
+  display:block;
   margin-bottom:12px;
-  flex-wrap:wrap;
+  opacity:.5;
 }
-.mood-dot{
-  font-size:20px;
-  line-height:1;
-}
-.mood-timeline-msg{
-  text-align:center;
-  font-size:13px;
+.jn-empty p{
+  font-size:14px;
+  font-weight:600;
   color:var(--ink-m);
-  line-height:1.65;
-  padding:0 4px;
+  margin:0 0 4px;
+}
+.jn-empty-sub{
+  font-size:13px;
+  color:var(--ink-l);
+}
+
+/* ── Privacy Notice ── */
+.jn-privacy{
+  text-align:center;
+  font-size:12px;
+  color:var(--ink-l);
+  margin-top:24px;
+  padding:16px;
+  background:var(--section-alt);
+  border-radius:14px;
+  line-height:1.5;
+}
+
+/* ── Desktop: wider journal ── */
+@media(min-width:640px){
+  .jn-page-content{ padding:0 32px 100px; }
+}
+@media(min-width:960px){
+  .jn-page-content{ padding:0 48px 100px; }
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"] .jn-card{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .jn-card .mood-btn{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.10);
+}
+[data-theme="dark"] .jn-card .mood-btn.selected{
+  background:var(--peach-p);
+  border-color:var(--peach);
+}
+[data-theme="dark"] .jn-timeline-card{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .jn-tabs{
+  background:rgba(255,255,255,.04);
+}
+[data-theme="dark"] .jn-tab.on{
+  background:var(--white);
+  box-shadow:0 1px 4px rgba(0,0,0,.15);
+}
+[data-theme="dark"] .jn-history-item,
+[data-theme="dark"] .jn-journal-item{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .jn-textarea{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.10);
+  color:var(--ink);
+}
+[data-theme="dark"] .jn-tag{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.10);
+}
+[data-theme="dark"] .jn-tag.on{
+  background:var(--peach-p);
+  border-color:var(--peach);
+}
+[data-theme="dark"] .jn-delete-btn{
+  border-color:rgba(255,255,255,.10);
+}
+[data-theme="dark"] .jn-privacy{
+  background:rgba(255,255,255,.04);
+}
+
+/* ── Reduced Motion ── */
+@media(prefers-reduced-motion:reduce){
+  .jn-hero,
+  .jn-tabs,
+  .jn-tab-content,
+  .jn-card .mood-btn,
+  .mood-memo-wrap{
+    animation:none !important;
+    transition:none !important;
+  }
 }
 
 /* ══════════════════════════════════════════
@@ -4367,10 +4768,7 @@ a:focus:not(:focus-visible){
 [data-theme="dark"] .emergency-quiet .eq-text{
   color:var(--ink-l);
 }
-[data-theme="dark"] .journal-entry{
-  background:var(--white);
-  border-color:rgba(255,255,255,.08);
-}
+/* (journal-entry 스타일은 jn-* 시스템으로 이동) */
 [data-theme="dark"] .section-care{
   background:rgba(123,174,203,.06);
   border-color:rgba(123,174,203,.10);

@@ -796,11 +796,10 @@
 
     <!-- ══════════════ PAGE: 기록 ══════════════ -->
     <div class="page-view" id="page-journal" style="display:none">
-      <div class="page-header">
-        <button class="page-back" onclick="goHome()">← 홈으로</button>
-        <h2 class="page-title">📝 기록</h2>
+      <div class="page-header" style="min-height:0;padding:0;">
+        <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
       </div>
-      <div id="journal-content" style="padding:0 48px 80px;"></div>
+      <div id="journal-content" class="jn-page-content"></div>
     </div>
 
     <!-- 출처 드로어 -->
