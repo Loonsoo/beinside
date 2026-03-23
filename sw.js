@@ -1,4 +1,4 @@
-const CACHE_NAME = 'beinside-v4';
+const CACHE_NAME = 'beinside-v5';
 const ASSETS = [
   '/',
   '/index.html',

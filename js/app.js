@@ -13,53 +13,60 @@ const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 �
 
 function showPage(id) {
   curPage = id;
-  const hero = document.getElementById('hero');
+  var hero = document.getElementById('hero');
+  var mainCol = document.querySelector('.main-col');
 
-  if (id === 'home') {
-    if (hero) hero.style.display = '';
-    ALL_PAGES.forEach(p => {
-      const el = document.getElementById('page-' + p);
-      if (el) el.style.display = 'none';
-    });
-  } else {
-    if (hero) hero.style.display = 'none';
-    ALL_PAGES.forEach(p => {
-      const el = document.getElementById('page-' + p);
-      if (el) el.style.display = (p === id) ? '' : 'none';
-    });
-    // 최초 진입 시에만 렌더링
-    if (!_pageRendered[id]) {
-      _pageRendered[id] = true;
-      if (id === 'sp' && curSit >= 0) renderSP(curSit);
-      if (id === 'mental') initMentalPage();
-      if (id === 'teen') initTeenPage();
-      if (id === 'emergency') initEmergencyFirstAid();
-      if (id === 'emotion') initEmotionPage();
-      if (id === 'burnout') initBurnoutPage();
-      if (id === 'relation') initRelationPage();
-      if (id === 'transition') initTransitionPage();
-      if (id === 'workplace') initWorkplacePage();
-      if (id === 'elder') initElderPage();
-      if (id === 'grief') initGriefPage();
-      if (id === 'sleep') initSleepPage();
-      if (id === 'postpartum') initPostpartumPage();
-      if (id === 'menopause') initMenopausePage();
-      if (id === 'journal') initJournalPage();
+  // fade-out 현재 페이지 → fade-in 새 페이지
+  if (mainCol) mainCol.classList.add('page-leaving');
+
+  setTimeout(function() {
+    if (id === 'home') {
+      if (hero) hero.style.display = '';
+      ALL_PAGES.forEach(function(p) {
+        var el = document.getElementById('page-' + p);
+        if (el) el.style.display = 'none';
+      });
+    } else {
+      if (hero) hero.style.display = 'none';
+      ALL_PAGES.forEach(function(p) {
+        var el = document.getElementById('page-' + p);
+        if (el) el.style.display = (p === id) ? '' : 'none';
+      });
+      // 최초 진입 시에만 렌더링
+      if (!_pageRendered[id]) {
+        _pageRendered[id] = true;
+        if (id === 'sp' && curSit >= 0) renderSP(curSit);
+        if (id === 'mental') initMentalPage();
+        if (id === 'teen') initTeenPage();
+        if (id === 'emergency') initEmergencyFirstAid();
+        if (id === 'emotion') initEmotionPage();
+        if (id === 'burnout') initBurnoutPage();
+        if (id === 'relation') initRelationPage();
+        if (id === 'transition') initTransitionPage();
+        if (id === 'workplace') initWorkplacePage();
+        if (id === 'elder') initElderPage();
+        if (id === 'grief') initGriefPage();
+        if (id === 'sleep') initSleepPage();
+        if (id === 'postpartum') initPostpartumPage();
+        if (id === 'menopause') initMenopausePage();
+        if (id === 'journal') initJournalPage();
+      }
     }
-  }
 
-  // URL 해시 라우팅
-  if (id === 'home') {
-    history.pushState(null, '', '/');
-  } else {
-    history.pushState(null, '', '#/' + id);
-  }
-  updatePageMeta(id);
-  // 카드 눌림 상태 해제
-  if (document.activeElement && document.activeElement.classList.contains('sit-card')) {
-    document.activeElement.blur();
-  }
-  window.scrollTo({ top: 0, behavior: 'instant' });
+    // URL 해시 라우팅
+    if (id === 'home') {
+      history.pushState(null, '', '/');
+    } else {
+      history.pushState(null, '', '#/' + id);
+    }
+    updatePageMeta(id);
+    // 카드 눌림 상태 해제
+    if (document.activeElement && document.activeElement.classList.contains('sit-card')) {
+      document.activeElement.blur();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (mainCol) mainCol.classList.remove('page-leaving');
+  }, 120);
 }
 
 /* ── 홈으로 ── */
