@@ -39,6 +39,12 @@
   <!-- <script defer src="https://cloud.umami.is/script.js" data-website-id="YOUR_WEBSITE_ID"></script> -->
 </head>
 <body>
+<!-- 스킵 네비게이션 (접근성) -->
+<a href="#hero" class="skip-nav">본문으로 건너뛰기</a>
+
+<!-- 스크린리더 알림 영역 -->
+<div id="sr-announce" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
 <div id="scroll-bar"></div>
 
 <header>
@@ -165,6 +171,18 @@
     <!-- ══════════════ HOME / HERO ══════════════ -->
     <section class="hero" id="hero">
       <div class="hero-glow"></div>
+
+      <!-- 위기 후 팔로업 배너 (sessionStorage 기반) -->
+      <div class="followup-banner" id="followup-banner" style="display:none">
+        <div class="followup-inner">
+          <span class="followup-icon" role="img" aria-label="돌봄">🫶</span>
+          <div class="followup-text">
+            <strong>지난번에 힘든 시간이었죠.</strong>
+            <span>오늘은 어떠세요? 당신이 여기 있다는 것만으로도 괜찮아요.</span>
+          </div>
+          <button class="followup-close" onclick="closeFollowup()" aria-label="닫기">✕</button>
+        </div>
+      </div>
 
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
@@ -639,7 +657,7 @@
 
       <div class="emergency-grid">
         <a href="tel:119" class="emergency-btn-full" style="--ebf-color:var(--emer-119)">
-          <span class="ebf-icon">🚑</span>
+          <span class="ebf-icon" role="img" aria-label="구급차">🚑</span>
           <div class="ebf-content">
             <span class="ebf-number">119</span>
             <span class="ebf-name">응급 · 구조</span>
@@ -647,7 +665,7 @@
           </div>
         </a>
         <a href="tel:112" class="emergency-btn-full" style="--ebf-color:var(--emer-112)">
-          <span class="ebf-icon">🚨</span>
+          <span class="ebf-icon" role="img" aria-label="긴급 신고">🚨</span>
           <div class="ebf-content">
             <span class="ebf-number">112</span>
             <span class="ebf-name">학대 · 범죄 신고</span>
@@ -655,7 +673,7 @@
           </div>
         </a>
         <a href="tel:109" class="emergency-btn-full" style="--ebf-color:var(--emer-109)">
-          <span class="ebf-icon">💜</span>
+          <span class="ebf-icon" role="img" aria-label="자살예방">💜</span>
           <div class="ebf-content">
             <span class="ebf-number">109</span>
             <span class="ebf-name">자살예방 상담전화</span>

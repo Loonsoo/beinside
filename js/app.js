@@ -66,6 +66,18 @@ function showPage(id) {
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (mainCol) mainCol.classList.remove('page-leaving');
+
+    // P3: 위기 후 팔로업 — 긴급 허브 방문 기록
+    if (id === 'emergency') {
+      try { sessionStorage.setItem('beinside_crisis_visit', '1'); } catch(e) {}
+    }
+    // 홈 복귀 시 팔로업 배너 표시
+    if (id === 'home') {
+      showFollowupBanner();
+    }
+
+    // 스크린리더 알림
+    announceToSR(id === 'home' ? '홈 화면' : id + ' 페이지로 이동했습니다');
   }, 120);
 }
 
@@ -1199,4 +1211,41 @@ function toggleMoreCards(section) {
     c.style.display = isExpanded ? '' : 'none';
   });
   btn.querySelector('.show-more-text').textContent = isExpanded ? '접기' : '더 보기';
+}
+
+/* ══════════════════════════════════════════
+   P3: 위기 후 팔로업 배너
+══════════════════════════════════════════ */
+function showFollowupBanner() {
+  try {
+    var visited = sessionStorage.getItem('beinside_crisis_visit');
+    var dismissed = sessionStorage.getItem('beinside_followup_dismissed');
+    var banner = document.getElementById('followup-banner');
+    if (visited && !dismissed && banner) {
+      banner.style.display = '';
+      banner.style.animation = 'up .5s .3s cubic-bezier(.22,1,.36,1) both';
+    }
+  } catch(e) {}
+}
+
+function closeFollowup() {
+  var banner = document.getElementById('followup-banner');
+  if (banner) {
+    banner.style.transition = 'opacity .3s, transform .3s';
+    banner.style.opacity = '0';
+    banner.style.transform = 'translateY(-8px)';
+    setTimeout(function() { banner.style.display = 'none'; }, 300);
+  }
+  try { sessionStorage.setItem('beinside_followup_dismissed', '1'); } catch(e) {}
+}
+
+/* ══════════════════════════════════════════
+   P3: 스크린리더 알림
+══════════════════════════════════════════ */
+function announceToSR(msg) {
+  var el = document.getElementById('sr-announce');
+  if (el) {
+    el.textContent = '';
+    setTimeout(function() { el.textContent = msg; }, 100);
+  }
 }

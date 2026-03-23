@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BeInside — 오프라인</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif;
+      background:#F7F3EE;color:#3A3A3A;
+      min-height:100vh;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:32px 24px;text-align:center;
+    }
+    .offline-icon{font-size:48px;margin-bottom:16px;}
+    h1{font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px;}
+    .sub{font-size:14px;color:#6B6B6B;line-height:1.7;margin-bottom:32px;max-width:360px;}
+    .emer-title{font-size:13px;font-weight:700;color:#6B6B6B;margin-bottom:16px;letter-spacing:-.2px;}
+    .emer-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:360px;}
+    .emer-link{
+      display:flex;align-items:center;gap:16px;
+      padding:16px 20px;
+      background:#FFFFFF;border:1.5px solid rgba(0,0,0,.06);
+      border-radius:16px;text-decoration:none;color:#3A3A3A;
+      box-shadow:0 2px 6px rgba(0,0,0,.05);
+    }
+    .emer-link:active{transform:scale(.97);}
+    .emer-num{font-size:22px;font-weight:800;min-width:80px;text-align:left;}
+    .emer-info{flex:1;text-align:left;}
+    .emer-name{font-size:13px;font-weight:700;display:block;}
+    .emer-desc{font-size:11px;color:#9A9A9A;display:block;margin-top:2px;}
+    .retry{
+      margin-top:32px;padding:12px 24px;
+      background:#7BAECB;color:#fff;border:none;border-radius:12px;
+      font-size:13px;font-weight:700;cursor:pointer;
+      font-family:inherit;
+    }
+    .retry:active{opacity:.8;}
+
+    @media(prefers-color-scheme:dark){
+      body{background:#1C1C1E;color:#F5F5F7;}
+      .sub{color:#A1A1A6;}
+      .emer-title{color:#A1A1A6;}
+      .emer-link{background:#2C2C2E;border-color:rgba(255,255,255,.06);color:#F5F5F7;}
+      .emer-desc{color:#636366;}
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-icon" role="img" aria-label="오프라인">📡</div>
+  <h1>인터넷에 연결되지 않았어요</h1>
+  <p class="sub">하지만 긴급 전화는 인터넷 없이도 가능해요.<br>아래 번호를 누르면 바로 연결돼요.</p>
+
+  <div class="emer-title">긴급 전화번호</div>
+  <div class="emer-list">
+    <a href="tel:119" class="emer-link">
+      <span class="emer-num" style="color:#C8302A;">119</span>
+      <div class="emer-info">
+        <span class="emer-name">응급 · 구조</span>
+        <span class="emer-desc">신체 응급 · 구급차 요청. 무료, 24시간</span>
+      </div>
+    </a>
+    <a href="tel:112" class="emer-link">
+      <span class="emer-num" style="color:#A02020;">112</span>
+      <div class="emer-info">
+        <span class="emer-name">학대 · 범죄 신고</span>
+        <span class="emer-desc">아동학대 · 가정폭력 · 범죄 신고. 24시간</span>
+      </div>
+    </a>
+    <a href="tel:109" class="emer-link">
+      <span class="emer-num" style="color:#6A3A9A;">109</span>
+      <div class="emer-info">
+        <span class="emer-name">자살예방 상담전화</span>
+        <span class="emer-desc">무료, 24시간. 상담사가 이야기 들어줘요</span>
+      </div>
+    </a>
+    <a href="tel:1577-0199" class="emer-link">
+      <span class="emer-num" style="color:#2A5A9A;">1577-0199</span>
+      <div class="emer-info">
+        <span class="emer-name">정신건강 위기상담</span>
+        <span class="emer-desc">무료, 24시간</span>
+      </div>
+    </a>
+  </div>
+
+  <button class="retry" onclick="location.reload()">다시 연결 시도</button>
+</body>
+</html>
