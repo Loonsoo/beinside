@@ -1,4 +1,4 @@
-const CACHE_NAME = 'beinside-v7';
+const CACHE_NAME = 'beinside-v8';
 const OFFLINE_PAGE = '/offline.html';
 const ASSETS = [
   '/',

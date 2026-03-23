@@ -6,87 +6,87 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/growth</loc>
+    <loc>https://beinside.kr/growth</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/sp</loc>
+    <loc>https://beinside.kr/sp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/birth</loc>
+    <loc>https://beinside.kr/birth</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/dad</loc>
+    <loc>https://beinside.kr/dad</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/elder</loc>
+    <loc>https://beinside.kr/elder</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/grief</loc>
+    <loc>https://beinside.kr/grief</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/emotion</loc>
+    <loc>https://beinside.kr/emotion</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/burnout</loc>
+    <loc>https://beinside.kr/burnout</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/relation</loc>
+    <loc>https://beinside.kr/relation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/transition</loc>
+    <loc>https://beinside.kr/transition</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/workplace</loc>
+    <loc>https://beinside.kr/workplace</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/teen</loc>
+    <loc>https://beinside.kr/teen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/sleep</loc>
+    <loc>https://beinside.kr/sleep</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/postpartum</loc>
+    <loc>https://beinside.kr/postpartum</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/menopause</loc>
+    <loc>https://beinside.kr/menopause</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/emergency</loc>
+    <loc>https://beinside.kr/emergency</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://beinside.kr/#/journal</loc>
+    <loc>https://beinside.kr/journal</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

@@ -1,0 +1,22 @@
+{
+  "rewrites": [
+    { "source": "/growth", "destination": "/index.html" },
+    { "source": "/sp", "destination": "/index.html" },
+    { "source": "/birth", "destination": "/index.html" },
+    { "source": "/dad", "destination": "/index.html" },
+    { "source": "/elder", "destination": "/index.html" },
+    { "source": "/grief", "destination": "/index.html" },
+    { "source": "/emotion", "destination": "/index.html" },
+    { "source": "/burnout", "destination": "/index.html" },
+    { "source": "/relation", "destination": "/index.html" },
+    { "source": "/transition", "destination": "/index.html" },
+    { "source": "/workplace", "destination": "/index.html" },
+    { "source": "/teen", "destination": "/index.html" },
+    { "source": "/sleep", "destination": "/index.html" },
+    { "source": "/postpartum", "destination": "/index.html" },
+    { "source": "/menopause", "destination": "/index.html" },
+    { "source": "/emergency", "destination": "/index.html" },
+    { "source": "/journal", "destination": "/index.html" },
+    { "source": "/mental", "destination": "/index.html" }
+  ]
+}
