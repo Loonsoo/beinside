@@ -170,6 +170,20 @@
       <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
         잘 모르겠어요..
       </button>
+
+      <!-- 감정 체크인 (최상단) -->
+      <div class="mood-section" id="mood-section">
+        <div class="mood-icon-row">🌤️</div>
+        <div class="mood-label">오늘 기분이 어때요?</div>
+        <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
+        <div class="mood-btns">
+          <button class="mood-btn" onclick="selectMood('okay')">🙂<span>괜찮아요</span></button>
+          <button class="mood-btn" onclick="selectMood('holding')">😐<span>버티는 중</span></button>
+          <button class="mood-btn" onclick="selectMood('hard')">😢<span>많이 힘들어요</span></button>
+        </div>
+        <div class="mood-result" id="mood-result" style="display:none"></div>
+      </div>
+
       <div class="hero-sections">
       <!-- 영역 1: 돌봄 & 양육 -->
       <div class="section-care">
@@ -210,7 +224,8 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="elder" onclick="showPage('elder');setMTab('home')" tabindex="0" role="button">
+          <!-- 더 보기로 숨김 -->
+          <div class="sit-card sit-card--more-care" data-card-id="elder" onclick="showPage('elder');setMTab('home')" tabindex="0" role="button" style="display:none">
             <div class="sit-icon">🍵</div>
             <div class="sit-card-body">
               <div class="sit-title">부모님 돌봄이 힘들어요</div>
@@ -218,7 +233,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card" data-card-id="grief" onclick="showPage('grief');setMTab('home')" tabindex="0" role="button">
+          <div class="sit-card sit-card--more-care" data-card-id="grief" onclick="showPage('grief');setMTab('home')" tabindex="0" role="button" style="display:none">
             <div class="sit-icon">🕊️</div>
             <div class="sit-card-body">
               <div class="sit-title">소중한 사람을 떠나보냈어요</div>
@@ -227,6 +242,10 @@
             <div class="sit-arrow">→</div>
           </div>
         </div>
+        <button class="show-more-btn" id="show-more-care" onclick="toggleMoreCards('care')" aria-label="돌봄 가이드 더 보기">
+          <span class="show-more-text">더 보기</span>
+          <span class="show-more-arrow">↓</span>
+        </button>
       </div>
 
       <!-- 영역 2: 나 자신을 돌보고 있다면 -->
@@ -260,30 +279,6 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" tabindex="0" role="button">
-            <div class="sit-icon">🌀</div>
-            <div class="sit-card-body">
-              <div class="sit-title">삶의 방향을 잃었어요</div>
-              <div class="sit-sub">변화 속 심리적 안정을 되찾는 방법</div>
-            </div>
-            <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card sit-card--teen self-area" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" tabindex="0" role="button">
-            <div class="sit-icon">🌙</div>
-            <div class="sit-card-body">
-              <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
-              <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
-            </div>
-            <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" tabindex="0" role="button">
-            <div class="sit-icon">🏢</div>
-            <div class="sit-card-body">
-              <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
-              <div class="sit-sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
-            </div>
-            <div class="sit-arrow">→</div>
-          </div>
           <div class="sit-card self-area" data-card-id="sleep" onclick="showPage('sleep');setMTab('mind')" tabindex="0" role="button">
             <div class="sit-icon">🛏️</div>
             <div class="sit-card-body">
@@ -292,7 +287,32 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" tabindex="0" role="button">
+          <!-- 더 보기로 숨김 -->
+          <div class="sit-card self-area sit-card--more-self" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" tabindex="0" role="button" style="display:none">
+            <div class="sit-icon">🌀</div>
+            <div class="sit-card-body">
+              <div class="sit-title">삶의 방향을 잃었어요</div>
+              <div class="sit-sub">변화 속 심리적 안정을 되찾는 방법</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card sit-card--teen self-area sit-card--more-self" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" tabindex="0" role="button" style="display:none">
+            <div class="sit-icon">🌙</div>
+            <div class="sit-card-body">
+              <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
+              <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area sit-card--more-self" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" tabindex="0" role="button" style="display:none">
+            <div class="sit-icon">🏢</div>
+            <div class="sit-card-body">
+              <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
+              <div class="sit-sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </div>
+          <div class="sit-card self-area sit-card--more-self" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" tabindex="0" role="button" style="display:none">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
               <div class="sit-title">출산 후 마음이 이상해요</div>
@@ -300,7 +320,7 @@
             </div>
             <div class="sit-arrow">→</div>
           </div>
-          <div class="sit-card self-area" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" tabindex="0" role="button">
+          <div class="sit-card self-area sit-card--more-self" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" tabindex="0" role="button" style="display:none">
             <div class="sit-icon">🍂</div>
             <div class="sit-card-body">
               <div class="sit-title">몸도 마음도 변하고 있어요</div>
@@ -309,6 +329,10 @@
             <div class="sit-arrow">→</div>
           </div>
         </div>
+        <button class="show-more-btn" id="show-more-self" onclick="toggleMoreCards('self')" aria-label="마음 가이드 더 보기">
+          <span class="show-more-text">더 보기</span>
+          <span class="show-more-arrow">↓</span>
+        </button>
       </div>
       </div><!-- /hero-sections -->
 
@@ -316,19 +340,6 @@
       <div class="emergency-quiet" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
         <span class="eq-text">지금 당장 도움이 필요하다면</span>
         <span class="eq-arrow">→</span>
-      </div>
-
-      <!-- 감정 기록 섹션 -->
-      <div class="mood-section" id="mood-section">
-        <div class="mood-icon-row">🌤️</div>
-        <div class="mood-label">오늘 기분이 어때요?</div>
-        <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
-        <div class="mood-btns">
-          <button class="mood-btn" onclick="selectMood('okay')">🙂<span>괜찮아요</span></button>
-          <button class="mood-btn" onclick="selectMood('holding')">😐<span>버티는 중</span></button>
-          <button class="mood-btn" onclick="selectMood('hard')">😢<span>많이 힘들어요</span></button>
-        </div>
-        <div class="mood-result" id="mood-result" style="display:none"></div>
       </div>
 
       <!-- 한 줄 위로 -->
@@ -602,7 +613,7 @@
           <span class="teen-sos-num">109</span>
           <span class="teen-sos-desc">자살예방 전화 — 무료, 24시간<br>부담 없이 전화해도 돼</span>
         </a>
-        <a href="tel:15770199" class="teen-sos-btn">
+        <a href="tel:1577-0199" class="teen-sos-btn">
           <span class="teen-sos-num">1577-0199</span>
           <span class="teen-sos-desc">정신건강 위기상담 — 무료, 24시간<br>비밀보장·기록 정책은 전화 시 확인</span>
         </a>
@@ -666,7 +677,7 @@
             <span class="ebf-desc">가정폭력·성폭력·성매매 피해 지원. 무료, 24시간</span>
           </div>
         </a>
-        <a href="tel:15770199" class="emergency-btn-full" style="--ebf-color:var(--emer-1577)">
+        <a href="tel:1577-0199" class="emergency-btn-full" style="--ebf-color:var(--emer-1577)">
           <span class="ebf-icon">💙</span>
           <div class="ebf-content">
             <span class="ebf-number">1577-0199</span>
@@ -674,6 +685,42 @@
             <span class="ebf-desc">무료, 24시간. 비밀보장·기록 정책은 전화 시 확인</span>
           </div>
         </a>
+      </div>
+
+      <!-- 전화가 어려울 때 대안 채널 -->
+      <div class="emer-alt-channels">
+        <div class="emer-alt-title">전화가 어려우시면</div>
+        <div class="emer-alt-sub">문자나 채팅으로도 상담받을 수 있어요</div>
+        <div class="emer-alt-grid">
+          <a href="sms:109" class="emer-alt-btn">
+            <span class="emer-alt-icon">💬</span>
+            <div class="emer-alt-info">
+              <span class="emer-alt-name">109 문자 상담</span>
+              <span class="emer-alt-desc">자살예방상담전화에 문자를 보낼 수 있어요</span>
+            </div>
+          </a>
+          <a href="https://www.suicide.or.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-icon">💻</span>
+            <div class="emer-alt-info">
+              <span class="emer-alt-name">온라인 채팅 상담</span>
+              <span class="emer-alt-desc">자살예방상담전화 홈페이지에서 채팅 상담 가능</span>
+            </div>
+          </a>
+          <a href="https://www.cyber1388.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-icon">🧒</span>
+            <div class="emer-alt-info">
+              <span class="emer-alt-name">청소년 사이버상담</span>
+              <span class="emer-alt-desc">1388 온라인 채팅·카카오톡 상담</span>
+            </div>
+          </a>
+          <a href="https://www.women1366.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-icon">🌸</span>
+            <div class="emer-alt-info">
+              <span class="emer-alt-name">여성긴급 온라인 상담</span>
+              <span class="emer-alt-desc">가정폭력·성폭력 온라인 상담 접수</span>
+            </div>
+          </a>
+        </div>
       </div>
 
       <div class="emer-firstaid-wrap">

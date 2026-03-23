@@ -1169,3 +1169,17 @@ function updatePageMeta(id) {
     }
   }
 })();
+
+/* ══════════════════════════════════════════
+   P0: "더 보기" 카드 토글
+══════════════════════════════════════════ */
+function toggleMoreCards(section) {
+  var cls = section === 'care' ? 'sit-card--more-care' : 'sit-card--more-self';
+  var btn = document.getElementById('show-more-' + section);
+  var cards = document.querySelectorAll('.' + cls);
+  var isExpanded = btn.classList.toggle('expanded');
+  cards.forEach(function(c) {
+    c.style.display = isExpanded ? '' : 'none';
+  });
+  btn.querySelector('.show-more-text').textContent = isExpanded ? '접기' : '더 보기';
+}
