@@ -180,6 +180,14 @@
   --sp-6:48px;
   --sp-8:64px;
 
+  /* ── Semantic 표면/텍스트 변수 ── */
+  --bg-primary:#F7F3EE;
+  --bg-elevated:#FFFFFF;
+  --bg-sunken:#EEE9E3;
+  --text-primary:#3A3A3A;
+  --text-secondary:#6B6B6B;
+  --text-tertiary:#9A9A9A;
+
   /* ── 푸터 ── */
   --footer-bg:#2C2C2C;
   --footer-bg-end:#3A3A3A;
@@ -4559,10 +4567,18 @@ a:focus:not(:focus-visible){
 
 /* ── 다크 모드 ── */
 [data-theme="dark"]{
-  --cream:#1A1D23;
-  --warm:#22252B;
-  --white:#2A2D35;
-  --section-alt:#1E2128;
+  --cream:#1C1C1E;
+  --warm:#2C2C2E;
+  --white:#3A3A3C;
+  --section-alt:#1E1E20;
+
+  /* Semantic (Apple-inspired) */
+  --bg-primary:#1C1C1E;
+  --bg-elevated:#2C2C2E;
+  --bg-sunken:#161618;
+  --text-primary:#F5F5F7;
+  --text-secondary:#A1A1A6;
+  --text-tertiary:#636366;
 
   --peach:#7BAECB;
   --peach-l:#5A8EAB;
@@ -4577,9 +4593,9 @@ a:focus:not(:focus-visible){
   --amber:#6BA885;
   --rust:#8CCAA5;
 
-  --ink:#E0E0E0;
-  --ink-m:#A0A0A0;
-  --ink-l:#707070;
+  --ink:#F5F5F7;
+  --ink-m:#A1A1A6;
+  --ink-l:#636366;
 
   --line:rgba(255,255,255,.08);
   --glass-bg:rgba(30,33,40,.95);
@@ -5127,6 +5143,134 @@ a:focus:not(:focus-visible){
 }
 [data-theme="dark"] .emer-alt-icon{
   background:rgba(255,255,255,.06);
+}
+
+/* ══════════════════════════════════════════
+   P2: 무드 5단계 스타일 + 시각 피드백
+══════════════════════════════════════════ */
+.mood-btns--5{
+  display:flex;
+  justify-content:center;
+  gap:var(--sp-1);
+  flex-wrap:wrap;
+}
+.mood-btns--5 .mood-btn{
+  min-width:64px;
+  padding:10px 8px;
+  gap:4px;
+}
+.mood-btns--5 .mood-btn-emoji{
+  font-size:22px;
+  display:block;
+  transition:transform .3s cubic-bezier(.2,0,0,1);
+}
+.mood-btns--5 .mood-btn span:last-child{
+  font-size:11px;
+}
+/* 무드 선택 시 배경 색상 전환 */
+.mood-section[data-mood="great"]{
+  border-color:rgba(107,168,133,.25);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(107,168,133,.06));
+}
+.mood-section[data-mood="okay"]{
+  border-color:rgba(123,174,203,.25);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(123,174,203,.06));
+}
+.mood-section[data-mood="soso"]{
+  border-color:rgba(192,137,42,.20);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(192,137,42,.04));
+}
+.mood-section[data-mood="hard"]{
+  border-color:rgba(176,90,66,.20);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(176,90,66,.05));
+}
+.mood-section[data-mood="veryhard"]{
+  border-color:rgba(200,60,60,.20);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(200,60,60,.05));
+}
+.mood-section{
+  transition:background .4s cubic-bezier(.2,0,0,1),border-color .4s cubic-bezier(.2,0,0,1);
+}
+/* Ripple 효과 */
+@keyframes moodRipple{
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(123,174,203,.30);}
+  50%{transform:scale(1.06);box-shadow:0 0 0 8px rgba(123,174,203,0);}
+  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(123,174,203,0);}
+}
+.mood-btn.mood-ripple{
+  animation:moodRipple .4s cubic-bezier(.2,0,0,1);
+}
+@media(max-width:640px){
+  .mood-btns--5 .mood-btn{
+    min-width:56px;
+    padding:8px 6px;
+  }
+  .mood-btns--5 .mood-btn-emoji{font-size:20px;}
+  .mood-btns--5 .mood-btn span:last-child{font-size:10px;}
+}
+
+/* ══════════════════════════════════════════
+   P2: 저장/삭제 마이크로인터랙션
+══════════════════════════════════════════ */
+/* 체크 아이콘 pulse */
+.save-check{
+  display:inline-block;
+  animation:savePulse .4s cubic-bezier(.2,0,0,1);
+}
+@keyframes savePulse{
+  0%{transform:scale(0);opacity:0;}
+  50%{transform:scale(1.3);opacity:1;}
+  100%{transform:scale(1);opacity:1;}
+}
+/* 새 저널 항목 등장 */
+.jn-item-enter{
+  animation:slideDown .35s cubic-bezier(.2,0,0,1) both;
+}
+@keyframes slideDown{
+  from{opacity:0;transform:translateY(-8px);max-height:0;}
+  to{opacity:1;transform:translateY(0);max-height:200px;}
+}
+/* 저장 버튼 saved 상태 */
+.jn-btn-save.saved{
+  background:var(--amber);
+  transition:background .3s cubic-bezier(.2,0,0,1);
+}
+
+/* ══════════════════════════════════════════
+   P2: Semantic 다크모드 — elevated surface 깊이감
+══════════════════════════════════════════ */
+[data-theme="dark"] .mood-section{
+  background:var(--bg-elevated);
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .mood-section[data-mood="great"]{
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(107,168,133,.10));
+}
+[data-theme="dark"] .mood-section[data-mood="okay"]{
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(123,174,203,.10));
+}
+[data-theme="dark"] .mood-section[data-mood="soso"]{
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(192,137,42,.08));
+}
+[data-theme="dark"] .mood-section[data-mood="hard"]{
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(176,90,66,.08));
+}
+[data-theme="dark"] .mood-section[data-mood="veryhard"]{
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(200,60,60,.08));
+}
+/* elevated card 깊이감 */
+[data-theme="dark"] .sit-card,
+[data-theme="dark"] .emergency-btn-full,
+[data-theme="dark"] .emer-alt-btn{
+  background:var(--bg-elevated);
+}
+[data-theme="dark"] .mood-btn{
+  background:var(--bg-elevated);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .mood-btn.selected{
+  border-color:var(--peach);
+  background:rgba(123,174,203,.15);
 }
 
 /* ── 접근성: 모션 감소 ── */

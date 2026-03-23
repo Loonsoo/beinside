@@ -171,15 +171,16 @@
         잘 모르겠어요..
       </button>
 
-      <!-- 감정 체크인 (최상단) -->
+      <!-- 감정 체크인 (최상단) — 5단계 -->
       <div class="mood-section" id="mood-section">
-        <div class="mood-icon-row">🌤️</div>
         <div class="mood-label">오늘 기분이 어때요?</div>
         <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
-        <div class="mood-btns">
-          <button class="mood-btn" onclick="selectMood('okay')">🙂<span>괜찮아요</span></button>
-          <button class="mood-btn" onclick="selectMood('holding')">😐<span>버티는 중</span></button>
-          <button class="mood-btn" onclick="selectMood('hard')">😢<span>많이 힘들어요</span></button>
+        <div class="mood-btns mood-btns--5">
+          <button class="mood-btn" data-mood="great" onclick="selectMood('great')"><span class="mood-btn-emoji">😊</span><span>좋아요</span></button>
+          <button class="mood-btn" data-mood="okay" onclick="selectMood('okay')"><span class="mood-btn-emoji">🙂</span><span>괜찮아요</span></button>
+          <button class="mood-btn" data-mood="soso" onclick="selectMood('soso')"><span class="mood-btn-emoji">😐</span><span>그저 그래요</span></button>
+          <button class="mood-btn" data-mood="hard" onclick="selectMood('hard')"><span class="mood-btn-emoji">😔</span><span>힘들어요</span></button>
+          <button class="mood-btn" data-mood="veryhard" onclick="selectMood('veryhard')"><span class="mood-btn-emoji">😢</span><span>많이 힘들어요</span></button>
         </div>
         <div class="mood-result" id="mood-result" style="display:none"></div>
       </div>

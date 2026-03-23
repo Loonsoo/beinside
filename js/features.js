@@ -113,11 +113,19 @@ function saveMoods(arr) {
   store.setItem(MOOD_KEY, trimmed);
 }
 
+var MOOD_MAP = {
+  great:    { emoji: '😊', label: '좋아요' },
+  okay:     { emoji: '🙂', label: '괜찮아요' },
+  soso:     { emoji: '😐', label: '그저 그래요' },
+  holding:  { emoji: '😐', label: '버티는 중' },  /* 하위 호환 */
+  hard:     { emoji: '😔', label: '힘들어요' },
+  veryhard: { emoji: '😢', label: '많이 힘들어요' }
+};
 function getMoodEmoji(mood) {
-  return mood === 'okay' ? '🙂' : mood === 'holding' ? '😐' : '😢';
+  return (MOOD_MAP[mood] || MOOD_MAP.soso).emoji;
 }
 function getMoodLabel(mood) {
-  return mood === 'okay' ? '괜찮아요' : mood === 'holding' ? '버티는 중' : '많이 힘들어요';
+  return (MOOD_MAP[mood] || MOOD_MAP.soso).label;
 }
 
 function formatMoodDate(dateStr) {
@@ -143,9 +151,9 @@ function buildMoodWidget(container) {
         <div class="jn-card-sub">하루 한 번, 나의 마음을 기록해요</div>
       </div>
     </div>
-    <div class="mood-btns">
-      ${['okay','holding','hard'].map(m =>
-        `<button class="mood-btn${todayEntry && todayEntry.mood === m ? ' selected' : ''}" onclick="saveMoodEntry('${m}',this)" aria-label="${getMoodLabel(m)}">
+    <div class="mood-btns mood-btns--5">
+      ${['great','okay','soso','hard','veryhard'].map(m =>
+        `<button class="mood-btn${todayEntry && todayEntry.mood === m ? ' selected' : ''}" data-mood="${m}" onclick="saveMoodEntry('${m}',this)" aria-label="${getMoodLabel(m)}">
           <span class="mood-btn-emoji">${getMoodEmoji(m)}</span>
           <span class="mood-btn-label">${getMoodLabel(m)}</span>
         </button>`
@@ -224,16 +232,16 @@ function buildMoodHistory(moods) {
 function deleteMoodEntry(date, btnEl) {
   const item = btnEl.closest('.jn-history-item');
   if (item) {
-    item.style.transition = 'opacity .25s, transform .25s';
+    item.style.transition = 'opacity .35s cubic-bezier(.2,0,0,1), transform .35s cubic-bezier(.2,0,0,1)';
     item.style.opacity = '0';
-    item.style.transform = 'translateX(20px)';
+    item.style.transform = 'translateX(20px) scale(.96)';
   }
   setTimeout(() => {
     const moods = loadMoods().filter(m => m.date !== date);
     saveMoods(moods);
     const wrap = document.getElementById('journal-tab-mood');
     if (wrap) buildMoodWidget(wrap);
-  }, 250);
+  }, 350);
 }
 
 function saveMoodEntry(mood, btnEl) {
@@ -246,8 +254,8 @@ function saveMoodEntry(mood, btnEl) {
 
   btnEl.closest('.mood-btns').querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
   btnEl.classList.add('selected');
-  btnEl.style.transform = 'scale(1.08)';
-  setTimeout(() => { btnEl.style.transform = ''; }, 200);
+  btnEl.classList.add('mood-ripple');
+  setTimeout(() => { btnEl.classList.remove('mood-ripple'); }, 400);
   document.querySelector('.mood-memo-wrap').classList.add('show');
 
   // 타임라인과 히스토리 갱신
@@ -263,9 +271,9 @@ function saveMoodMemo() {
   if (entry) { entry.memo = memo; saveMoods(moods); }
   const btn = document.querySelector('#mood-widget-form .jn-btn-save');
   if (btn) {
-    btn.textContent = '저장됐어요';
+    btn.innerHTML = '<span class="save-check">✓</span> 저장됐어요';
     btn.classList.add('saved');
-    setTimeout(() => { btn.textContent = '메모 저장'; btn.classList.remove('saved'); }, 1500);
+    setTimeout(() => { btn.innerHTML = '메모 저장'; btn.classList.remove('saved'); }, 1500);
   }
 }
 
@@ -356,30 +364,39 @@ function saveJournalEntry() {
   const cc = document.getElementById('journal-char-count');
   if (cc) cc.textContent = '0';
 
+  // ✓ 아이콘 + pulse 피드백
   const btn = document.querySelector('.jn-card-write .jn-btn-save');
   if (btn) {
-    btn.textContent = '저장됐어요';
+    btn.innerHTML = '<span class="save-check">✓</span> 저장됐어요';
     btn.classList.add('saved');
-    setTimeout(() => { btn.textContent = '기록 저장'; btn.classList.remove('saved'); }, 1500);
+    setTimeout(() => { btn.innerHTML = '기록 저장'; btn.classList.remove('saved'); }, 1500);
   }
 
   const listWrap = document.getElementById('journal-list-wrap');
-  if (listWrap) buildJournalList(listWrap);
+  if (listWrap) {
+    buildJournalList(listWrap);
+    // 새 항목 slideDown + scrollIntoView
+    const firstItem = listWrap.querySelector('.jn-journal-item');
+    if (firstItem) {
+      firstItem.classList.add('jn-item-enter');
+      firstItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
 }
 
 function deleteJournalEntry(id, btnEl) {
   const item = btnEl.closest('.jn-journal-item');
   if (item) {
-    item.style.transition = 'opacity .25s, transform .25s';
+    item.style.transition = 'opacity .35s cubic-bezier(.2,0,0,1), transform .35s cubic-bezier(.2,0,0,1)';
     item.style.opacity = '0';
-    item.style.transform = 'translateX(20px)';
+    item.style.transform = 'translateX(20px) scale(.96)';
   }
   setTimeout(() => {
     const entries = loadJournal().filter(e => e.id !== id);
     saveJournal(entries);
     const listWrap = document.getElementById('journal-list-wrap');
     if (listWrap) buildJournalList(listWrap);
-  }, 250);
+  }, 350);
 }
 
 function buildJournalList(container) {

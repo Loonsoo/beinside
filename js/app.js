@@ -728,38 +728,48 @@ document.addEventListener('keydown', e => {
 /* ── 감정 체크인 (메인 화면) ── */
 function selectMood(mood) {
   // 저장
-  const entry = {
+  var entry = {
     date: new Date().toISOString().split('T')[0],
     mood: mood,
     memo: '',
     timestamp: Date.now()
   };
-  const MOOD_KEY = 'beinside_mood_v1';
-  const all = JSON.parse(localStorage.getItem(MOOD_KEY) || '[]');
-  // 오늘 날짜 중복 제거
-  const filtered = all.filter(e => e.date !== entry.date);
+  var MOOD_KEY = 'beinside_mood_v1';
+  var all = JSON.parse(localStorage.getItem(MOOD_KEY) || '[]');
+  var filtered = all.filter(function(e) { return e.date !== entry.date; });
   filtered.push(entry);
-  // 90일 초과분 삭제
-  const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
-  const trimmed = filtered.filter(e => e.timestamp > cutoff);
+  var cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+  var trimmed = filtered.filter(function(e) { return e.timestamp > cutoff; });
   localStorage.setItem(MOOD_KEY, JSON.stringify(trimmed));
 
-  // 버튼 표시
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  const btn = document.querySelector(`.mood-btn[onclick*="${mood}"]`);
-  if (btn) btn.classList.add('selected');
+  // 버튼 표시 + ripple 효과
+  document.querySelectorAll('#mood-section .mood-btn').forEach(function(b) { b.classList.remove('selected'); });
+  var btn = document.querySelector('#mood-section .mood-btn[data-mood="' + mood + '"]');
+  if (btn) {
+    btn.classList.add('selected');
+    btn.classList.add('mood-ripple');
+    setTimeout(function() { btn.classList.remove('mood-ripple'); }, 400);
+  }
 
-  // 결과 메시지
-  const res = document.getElementById('mood-result');
+  // 무드 섹션 배경 색상 전환
+  var section = document.getElementById('mood-section');
+  if (section) {
+    section.setAttribute('data-mood', mood);
+  }
+
+  // 결과 메시지 (5단계)
+  var res = document.getElementById('mood-result');
   if (!res) return;
-  const msgs = {
-    okay:    { text: '오늘도 잘 버텨냈어요. 🌿', sub: '' },
-    holding: { text: '버티는 것도 대단한 거예요.', sub: '잠깐 쉬어도 돼요. 깊게 숨 한번 쉬어보세요.' },
-    hard:    { text: '혼자 감당하지 않아도 돼요.', sub: '지금 바로 <a href="tel:109" style="color:var(--peach-d);font-weight:700">109</a> (자살예방상담, 무료·24시간)에 전화하거나, 아래 마음 가이드를 확인해 보세요.' }
+  var msgs = {
+    great:    { text: '좋은 날이네요! ☀️', sub: '' },
+    okay:     { text: '오늘도 잘 버텨냈어요. 🌿', sub: '' },
+    soso:     { text: '그런 날도 있는 거예요.', sub: '억지로 괜찮을 필요 없어요. 잠깐 멈춰도 돼요.' },
+    hard:     { text: '버티는 것도 대단한 거예요.', sub: '깊게 숨 한 번 쉬어보세요. 아래 마음 가이드도 있어요.' },
+    veryhard: { text: '혼자 감당하지 않아도 돼요.', sub: '지금 바로 <a href="tel:109" style="color:var(--peach-d);font-weight:700">109</a> (자살예방상담, 무료·24시간)에 전화하거나, 아래 마음 가이드를 확인해 보세요.' }
   };
-  const m = msgs[mood];
+  var m = msgs[mood];
   res.style.display = 'block';
-  res.innerHTML = `<strong>${m.text}</strong>${m.sub ? '<br><span style="font-weight:400;font-size:13px;">' + m.sub + '</span>' : ''}`;
+  res.innerHTML = '<strong>' + m.text + '</strong>' + (m.sub ? '<br><span style="font-weight:400;font-size:13px;">' + m.sub + '</span>' : '');
 }
 
 /* ── 신규 페이지 초기화 스텁 (각 파일에서 구현) ── */
