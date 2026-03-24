@@ -326,22 +326,24 @@
   .mobile-tabbar{
     display:flex;
     position:fixed;bottom:0;left:0;right:0;
-    background:rgba(255,248,242,.95);
-    backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    border-top:1px solid rgba(123,174,203,.12);
-    z-index:300;padding:8px 0 max(8px,env(safe-area-inset-bottom));
-    box-shadow:0 -4px 20px rgba(40,40,40,.06);
+    background:rgba(255,248,242,.92);
+    backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+    border-top:1px solid rgba(0,0,0,.06);
+    z-index:300;
+    padding:4px 0 max(4px,env(safe-area-inset-bottom));
   }
   .mtab{
-    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;
     background:none;border:none;cursor:pointer;
-    font-family:'Noto Sans KR',sans-serif;font-size:10px;font-weight:600;
-    color:var(--ink-m);padding:6px 0;
-    transition:color .18s;letter-spacing:-.1px;
+    font-family:'Noto Sans KR',sans-serif;
+    font-size:9px;font-weight:500;letter-spacing:.02em;
+    color:var(--ink-l);
+    padding:4px 0 2px;
+    transition:color .2s;
   }
-  .mtab span{font-size:20px;line-height:1.1;}
-  .mtab.active{color:var(--peach-d);}
-  body{padding-bottom:72px;}
+  .mtab span:first-child{font-size:17px;line-height:1.2;}
+  .mtab.active{color:var(--peach-d);font-weight:600;}
+  body{padding-bottom:60px;}
 }
 
 /* ── SOS Floating Button ── */

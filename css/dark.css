@@ -190,9 +190,8 @@
   background:rgba(123,174,203,.10);
 }
 [data-theme="dark"] .mobile-tabbar{
-  background:rgba(26,29,35,.95);
-  border-top-color:rgba(255,255,255,.06);
-  box-shadow:0 -4px 20px rgba(0,0,0,.20);
+  background:rgba(20,22,28,.92);
+  border-top-color:rgba(255,255,255,.05);
 }
 [data-theme="dark"] .page-header{
   background:var(--cream);
