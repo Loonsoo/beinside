@@ -6,15 +6,16 @@
 /* ── 다크 모드 ── */
 [data-theme="dark"]{
   /* Calm Dark Tokens */
-  --calm-bg-deep:#1B2250;
-  --calm-bg-surface:#232A5C;
-  --calm-bg-elevated:#2C3470;
+  --calm-bg-deep:#1A1A1C;
+  --calm-bg-surface:#2C2C2E;
+  --calm-bg-elevated:#363638;
   --calm-text-1:#F5F5F7;
-  --calm-text-2:rgba(255,255,255,.72);
-  --calm-text-3:rgba(255,255,255,.48);
-  --calm-border:rgba(255,255,255,.08);
-  --calm-shadow:0 2px 12px rgba(0,0,0,.15);
-  --calm-glow:0 0 20px rgba(232,168,124,.10);
+  --calm-text-2:rgba(255,255,255,.65);
+  --calm-text-3:rgba(255,255,255,.40);
+  --calm-border:rgba(255,255,255,.06);
+  --calm-shadow:0 1px 6px rgba(0,0,0,.20);
+  --calm-shadow-hover:0 4px 16px rgba(0,0,0,.25);
+  --calm-glow:0 0 20px rgba(123,174,203,.06);
 
   --cream:#1C1C1E;
   --warm:#2C2C2E;
@@ -47,9 +48,9 @@
   --ink-l:#636366;
 
   --line:rgba(255,255,255,.08);
-  --glass-bg:rgba(30,33,40,.95);
-  --glass-border:rgba(255,255,255,.06);
-  --glass-shadow:0 2px 6px rgba(0,0,0,.20);
+  --glass-bg:rgba(30,30,32,.88);
+  --glass-border:rgba(255,255,255,.05);
+  --glass-shadow:0 1px 4px rgba(0,0,0,.20);
 
   --lavender:#6BA885;
   --lavender-d:#8CCAA5;
@@ -96,17 +97,17 @@
   color:var(--ink);
 }
 [data-theme="dark"] header{
-  background:rgba(26,29,35,.92);
-  border-bottom-color:rgba(255,255,255,.06);
-  box-shadow:0 1px 0 rgba(255,255,255,.04), 0 2px 8px rgba(0,0,0,.20);
+  background:rgba(28,28,30,.85);
+  backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
+  border-bottom-color:rgba(255,255,255,.04);
 }
 [data-theme="dark"] .card{
   background:var(--white);
-  border-color:rgba(255,255,255,.06);
-  box-shadow:0 2px 6px rgba(0,0,0,.15);
+  border-color:var(--calm-border);
+  box-shadow:var(--calm-shadow);
 }
 [data-theme="dark"] .card:hover{
-  box-shadow:0 8px 28px rgba(123,174,203,.08), 0 2px 6px rgba(0,0,0,.12);
+  box-shadow:var(--calm-shadow-hover);
 }
 [data-theme="dark"] .card.cbg-a{background:linear-gradient(145deg,#2E2A22,#332E24);border-color:rgba(200,144,64,.12);}
 [data-theme="dark"] .card.cbg-s{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
@@ -118,8 +119,8 @@
 /* 다크모드 카드 — 카드별 은은한 색상 유지 */
 [data-theme="dark"] .sit-card{
   background:rgba(255,255,255,.04);
-  border-color:rgba(255,255,255,.06);
-  box-shadow:0 2px 8px rgba(0,0,0,.20);
+  border-color:var(--calm-border);
+  box-shadow:var(--calm-shadow);
 }
 [data-theme="dark"] .sit-card[data-card-id="growth"]  { background:linear-gradient(160deg, rgba(107,168,133,.08), rgba(107,168,133,.03)); border-color:rgba(107,168,133,.12); }
 [data-theme="dark"] .sit-card[data-card-id="sp"]      { background:linear-gradient(160deg, rgba(160,120,180,.08), rgba(160,120,180,.03)); border-color:rgba(160,120,180,.10); }
@@ -166,12 +167,13 @@
   background:none;
 }
 [data-theme="dark"] .modal{
-  background:rgba(42,45,53,.92);
+  background:rgba(42,42,46,.92);
   backdrop-filter:blur(40px) saturate(1.4);
-  border-color:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.06);
+  box-shadow:0 16px 48px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .modal-overlay{
-  background:rgba(0,0,0,.50);
+  background:rgba(0,0,0,.40);
 }
 [data-theme="dark"] .accordion-item{
   border-color:rgba(255,255,255,.08);
@@ -190,11 +192,13 @@
   background:rgba(123,174,203,.10);
 }
 [data-theme="dark"] .mobile-tabbar{
-  background:rgba(20,22,28,.92);
-  border-top-color:rgba(255,255,255,.05);
+  background:rgba(28,28,30,.88);
+  backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);
+  border-top-color:rgba(255,255,255,.04);
 }
 [data-theme="dark"] .page-header{
-  background:var(--cream);
+  background:rgba(28,28,30,.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 }
 [data-theme="dark"] .life-journey-intro{
   color:rgba(255,255,255,.5);
@@ -240,19 +244,23 @@
   border-bottom-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .source-drawer{
-  background:var(--cream);
+  background:rgba(28,28,30,.96);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 }
 [data-theme="dark"] .help-card{
   background:var(--white);
   border-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .prof-panel{
-  background:var(--cream);
-  border-color:rgba(255,255,255,.06);
+  background:rgba(28,28,30,.92);
+  backdrop-filter:blur(40px) saturate(1.4);-webkit-backdrop-filter:blur(40px) saturate(1.4);
+  border-color:rgba(255,255,255,.04);
+  box-shadow:0 -4px 24px rgba(0,0,0,.20);
 }
 [data-theme="dark"] .gf-modal{
-  background:rgba(42,45,53,.92);
-  border-color:rgba(255,255,255,.08);
+  background:rgba(42,42,46,.92);
+  border-color:rgba(255,255,255,.06);
+  box-shadow:0 12px 40px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .gf-opt{
   background:var(--white);
@@ -260,11 +268,31 @@
   color:var(--ink-m);
 }
 [data-theme="dark"] .hdr-sos{
-  background:rgba(200,60,60,.12);
-  border-color:rgba(200,60,60,.30);
+  background:rgba(200,60,60,.08);
+  border-color:rgba(200,60,60,.22);
 }
 [data-theme="dark"] .content-hero{
-  box-shadow:inset 0 -40px 60px -30px rgba(0,0,0,.15);
+  box-shadow:inset 0 -30px 50px -25px rgba(0,0,0,.12);
+}
+[data-theme="dark"] .search-modal{
+  background:rgba(42,42,46,.95);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
+}
+[data-theme="dark"] .search-overlay{
+  background:rgba(0,0,0,.35);
+}
+[data-theme="dark"] .hdr-menu{
+  background:rgba(42,42,46,.92);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-color:rgba(255,255,255,.06);
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+[data-theme="dark"] .settings-panel{
+  background:rgba(42,42,46,.94);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-color:rgba(255,255,255,.04);
+  box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .logo{
   color:var(--peach-d);

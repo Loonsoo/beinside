@@ -4,13 +4,12 @@
 
 **"고요한 안심 — 아무것도 안 해도 괜찮다고 느끼게 하는 공간"**
 
-영감: Calm App (Calm Technology) × 일본 디자인 철학 (間 Ma · 余白 Yohaku · 侘寂 Wabi-sabi)
+영감: Calm App (Calm Technology)
 
 BeInside serves people in vulnerable moments. Every visual choice must answer:
-1. "이 여백은 숨 쉴 공간을 주는가?" (間 Ma)
-2. "비워둔 공간이 채워진 공간만큼 의미를 전하는가?" (余白 Yohaku)
-3. "이 디자인이 '완벽하게 해야 한다'는 압박 대신 '있는 그대로 괜찮다'는 메시지를 주는가?" (侘寂 Wabi-sabi)
-4. "이 화면이 사용자를 놀라게 하거나 급하게 만드는가?" (静けさ Shizukesa)
+1. "이 여백은 숨 쉴 공간을 주는가?"
+2. "이 디자인이 '있는 그대로 괜찮다'는 메시지를 주는가?"
+3. "이 화면이 사용자를 놀라게 하거나 급하게 만드는가?"
 
 ---
 
@@ -46,21 +45,18 @@ BeInside serves people in vulnerable moments. Every visual choice must answer:
 
 ---
 
-## 余白 Yohaku — 의미 있는 비어 있음
+## Calm Whitespace — 여백은 안심의 공간
 
-"그리지 않은 부분이 그린 부분만큼 중요하다" — 서예와 수묵화의 원칙을 디지털에 적용한다.
-Whitespace in BeInside is not "empty space" -- it is where meaning rests.
+Calm App의 핵심: 충분한 여백은 사용자에게 "천천히 해도 괜찮다"는 메시지를 준다.
 
 ### 핵심 수치
-1. **화면 비율**: 콘텐츠:여백 = 약 50:50을 목표로 한다 (절대 70:30 초과 금지)
-2. **섹션 간 여백**: 36~48px — 사용자가 읽은 내용을 소화하는 "멈춤(Ma)"의 시간
-3. **카드 내부 padding**: 24~32px — 콘텐츠가 카드 안에서 "숨 쉬는" 느낌
-4. **Hero section**: 52px+ — 첫 질문("지금, 어떤 상황이세요?")이 부드럽게 착지하는 공간
-5. **체크리스트 아이템 간**: 8~10px — "정보의 벽" 불안을 방지
-6. **무거운 콘텐츠 뒤**: 반드시 추가 여백 삽입 — 감정적 감압 공간
+1. **섹션 간 여백**: 36~48px — 사용자가 읽은 내용을 소화할 시간
+2. **카드 내부 padding**: 24~32px — 콘텐츠가 카드 안에서 숨 쉬는 느낌
+3. **Hero section**: 52px+ — 첫 질문이 부드럽게 착지하는 공간
+4. **체크리스트 아이템 간**: 8~10px — 정보 과부하 방지
+5. **무거운 콘텐츠 뒤**: 반드시 추가 여백 삽입 — 감정적 감압 공간
 
 ### 체크리스트
-- [ ] 카드 내부 콘텐츠:여백 비율이 50:50에 가까운가?
 - [ ] 스크롤하지 않고 보이는 첫 화면이 "조용하고 넉넉한" 느낌인가?
 - [ ] 한 화면에 핵심 메시지가 하나만 있는가?
 - [ ] 위기 결과·경고 뒤에 충분한 여백이 있는가?
@@ -129,7 +125,7 @@ Teen/youth pages use a completely different visual atmosphere.
 
 ## Micro-Interactions — "호흡하는 모션"
 
-일본 디자인의 リズム(rhythm): 나타남 → 멈춤 → 사라짐. Calm App의 원칙: 모션은 호흡처럼.
+Calm App의 원칙: 모션은 호흡처럼. 나타남 → 멈춤 → 사라짐.
 
 ### Card Hover (translateY -4px, 300ms)
 - **Intent**: The content "lifts" gently, like a breath
@@ -142,7 +138,7 @@ Teen/youth pages use a completely different visual atmosphere.
 
 ### Page Transition (fade, 300~500ms)
 - **Intent**: 페이지 간 미세한 딜레이로 경험에 리듬감 부여
-- **Pattern**: fadeOut(200ms) → pause(100ms) → fadeIn(300ms) — 間(Ma)의 디지털 구현
+- **Pattern**: fadeOut(200ms) → pause(100ms) → fadeIn(300ms) — 호흡하는 전환
 
 ### Emergency Button Hover
 - **Intent**: Rises and gains shadow -- communicates "this is ready for you to press"
