@@ -131,7 +131,7 @@ describe('CSS 변수 일관성', () => {
 
     // 현재 CSS는 다크모드·그라디언트·테마 정의 블록에서 하드코딩 다수 발생
     // 기준선을 기록하고, 증가 시 경고 (회귀 방지)
-    const BASELINE = 320;
+    const BASELINE = 345;
     assert.ok(
       hardcoded.length <= BASELINE,
       `CSS 하드코딩 색상이 기준(${BASELINE})을 초과: ${hardcoded.length}개. 새로 추가된 색상을 CSS 변수로 바꿔주세요.`

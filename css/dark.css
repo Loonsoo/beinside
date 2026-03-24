@@ -197,23 +197,70 @@
 [data-theme="dark"] .page-header{
   background:var(--cream);
 }
+[data-theme="dark"] .life-journey-intro{
+  color:rgba(255,255,255,.5);
+}
+[data-theme="dark"] .life-stage-label{
+  color:rgba(255,255,255,.35);
+}
 [data-theme="dark"] .pill{
-  background:rgba(255,255,255,.08);
-  border-color:rgba(255,255,255,.12);
-  color:rgba(255,255,255,.75);
-  box-shadow:0 1px 4px rgba(0,0,0,.25);
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.10);
+  color:rgba(255,255,255,.7);
+  box-shadow:0 1px 6px rgba(0,0,0,.2);
 }
 [data-theme="dark"] .pill:hover,
 [data-theme="dark"] .pill:focus-visible{
-  background:rgba(123,174,203,.18);
+  background:rgba(123,174,203,.15);
   border-color:rgba(123,174,203,.35);
   color:rgba(255,255,255,.95);
+  box-shadow:0 4px 16px rgba(123,174,203,.12);
+}
+[data-theme="dark"] .pill--baby{
+  background:rgba(168,213,186,.08);
+  border-color:rgba(168,213,186,.18);
+  color:rgba(168,213,186,.85);
+}
+[data-theme="dark"] .pill--baby:hover{
+  background:rgba(168,213,186,.15);
+  border-color:rgba(168,213,186,.35);
+  color:#A8D5BA;
+}
+[data-theme="dark"] .pill--child{
+  background:rgba(200,146,74,.08);
+  border-color:rgba(200,146,74,.15);
+  color:rgba(232,188,124,.85);
+}
+[data-theme="dark"] .pill--child:hover{
+  background:rgba(200,146,74,.15);
+  border-color:rgba(200,146,74,.30);
+  color:#E8BC7C;
+}
+[data-theme="dark"] .pill--adult{
+  background:rgba(123,174,203,.08);
+  border-color:rgba(123,174,203,.15);
+  color:rgba(168,202,223,.85);
+}
+[data-theme="dark"] .pill--adult:hover{
+  background:rgba(123,174,203,.15);
+  border-color:rgba(123,174,203,.30);
+  color:#A8CADF;
+}
+[data-theme="dark"] .pill--senior{
+  background:rgba(138,106,154,.08);
+  border-color:rgba(138,106,154,.15);
+  color:rgba(180,158,194,.85);
+}
+[data-theme="dark"] .pill--senior:hover{
+  background:rgba(138,106,154,.15);
+  border-color:rgba(138,106,154,.30);
+  color:#B49EC2;
 }
 [data-theme="dark"] .pills{
   background:rgba(0,0,0,.15);
 }
 [data-theme="dark"] .cd{
-  box-shadow:0 0 4px currentColor;
+  box-shadow:0 0 6px currentColor;
 }
 [data-theme="dark"] .medical-disclaimer{
   background:rgba(255,255,255,.04);

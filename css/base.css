@@ -461,43 +461,109 @@ nav button.on{
 .hint b{background:var(--peach-p);color:var(--peach-d);padding:2px 8px;border-radius:8px;font-size:11px;}
 
 /* ── QUICK PILLS ── */
-/* ── 시기별 선택 필(pill) ── */
+/* ── 생애 여정 시기 선택 ── */
+.life-journey{
+  padding:28px 24px 20px;
+}
+.life-journey-intro{
+  font-family:'Gowun Batang',serif;
+  font-size:15px;
+  color:var(--ink-m);
+  text-align:center;
+  margin:0 0 24px;
+  line-height:1.6;
+  letter-spacing:-.2px;
+}
+.life-stage{
+  margin-bottom:20px;
+}
+.life-stage-label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink-l);
+  letter-spacing:.04em;
+  margin-bottom:10px;
+  padding-left:4px;
+}
+.life-stage-pills{
+  display:flex;gap:8px;
+  flex-wrap:wrap;
+}
+
+/* ── 기본 pill ── */
 .pills{
   display:flex;gap:10px;
   padding:20px 24px;
   background:var(--section-alt);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
   flex-wrap:wrap;
   justify-content:center;
 }
-.pills::-webkit-scrollbar{display:none;}
 .pill{
   background:var(--white);
-  border:1.5px solid rgba(123,174,203,.18);
+  border:1.5px solid rgba(123,174,203,.14);
   border-radius:28px;
   padding:10px 18px;
   font-size:13px;font-weight:600;color:var(--ink-m);
   cursor:pointer;
-  transition:all .22s var(--calm-ease);
+  transition:all .3s var(--calm-ease);
   display:flex;align-items:center;gap:8px;
   font-family:'Noto Sans KR',sans-serif;
-  box-shadow:0 1px 4px rgba(40,40,40,.06);
+  box-shadow:0 1px 4px rgba(40,40,40,.04);
   letter-spacing:-.2px;
   white-space:nowrap;
   min-height:44px;
+  position:relative;
 }
 .pill:hover,.pill:focus-visible{
   border-color:var(--peach);color:var(--peach-d);
   background:var(--peach-p);
   transform:translateY(-2px);
-  box-shadow:0 5px 14px rgba(123,174,203,.18);
+  box-shadow:0 5px 14px rgba(123,174,203,.15);
 }
 .pill:active{
   transform:translateY(0);
-  box-shadow:0 1px 4px rgba(123,174,203,.12);
+  box-shadow:0 1px 4px rgba(123,174,203,.10);
 }
+
+/* ── 생애 단계별 pill 색상 ── */
+.pill--baby{
+  background:linear-gradient(135deg,#F6FBF8,#EAF5EE);
+  border-color:rgba(168,213,186,.25);
+  color:var(--rust);
+}
+.pill--baby:hover,.pill--baby:focus-visible{
+  background:linear-gradient(135deg,#EAF5EE,#D4ECDE);
+  border-color:var(--amber);color:var(--rust);
+}
+.pill--child{
+  background:linear-gradient(135deg,#FFF8F0,#FEF0DC);
+  border-color:rgba(200,146,74,.18);
+  color:#7A5A30;
+}
+.pill--child:hover,.pill--child:focus-visible{
+  background:linear-gradient(135deg,#FEF0DC,#FDE4C4);
+  border-color:#C8924A;color:#5A3A18;
+}
+.pill--adult{
+  background:linear-gradient(135deg,#F3F6FB,#E4EEFF);
+  border-color:rgba(123,174,203,.20);
+  color:var(--peach-d);
+}
+.pill--adult:hover,.pill--adult:focus-visible{
+  background:linear-gradient(135deg,#E4EEFF,#D4E2FF);
+  border-color:var(--peach);color:var(--peach-d);
+}
+.pill--senior{
+  background:linear-gradient(135deg,#F3F0F8,#E8E0F2);
+  border-color:rgba(107,78,122,.15);
+  color:#6B4E7A;
+}
+.pill--senior:hover,.pill--senior:focus-visible{
+  background:linear-gradient(135deg,#E8E0F2,#DCD0EA);
+  border-color:#8A6A9A;color:#503068;
+}
+
+/* ── 색상 도트 ── */
 .cd{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
 /* ── 의학적 면책 조항 ── */
@@ -1150,7 +1216,9 @@ footer{
   :root{--tl-w:0px;}
   header{padding:0 18px;}nav{display:none;}
   .hero{padding:52px 18px 32px;}
-  #page-growth .pills{padding:16px 18px;}
+  .life-journey{padding:24px 18px 16px;}
+  .life-journey-intro{font-size:14px;margin-bottom:20px;}
+  .life-stage-pills{gap:7px;}
   #result{padding-left:18px;padding-right:18px;}
   .sit-bar,#sp-result{padding-left:18px;padding-right:18px;}
   .grid{grid-template-columns:1fr;}.card.full{grid-column:span 1;}
