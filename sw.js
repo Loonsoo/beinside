@@ -34,6 +34,7 @@ const PRECACHE = [
   '/js/data-guides-new.js',
   '/js/data-centers.js',
   '/js/dashboard.js',
+  '/js/centers-ui.js',
   '/js/new-pages.js',
   '/js/i18n.js',
   '/js/notify.js',

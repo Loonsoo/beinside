@@ -3878,3 +3878,32 @@ a:focus:not(:focus-visible){
 .ninput input:focus-visible{
   outline:none; /* parent .ninput:focus-within handles this */
 }
+
+/* ── 공공기관 연결 섹션 ── */
+.centers-section{
+  margin:32px 20px;padding:24px;
+  background:var(--white);border-radius:var(--calm-r);
+  border:1px solid var(--line);
+}
+.centers-header{
+  display:flex;align-items:center;gap:8px;margin-bottom:16px;
+}
+.centers-icon{font-size:20px;}
+.centers-title{font-size:16px;font-weight:700;color:var(--ink);}
+.centers-list{display:flex;flex-direction:column;gap:8px;}
+.center-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 16px;border-radius:14px;
+  background:var(--cream);text-decoration:none;color:var(--ink);
+  transition:background .15s;min-height:48px;
+}
+.center-item:hover{background:var(--peach-p);}
+.center-info{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;}
+.center-name{font-size:14px;font-weight:600;}
+.center-desc{font-size:12px;color:var(--ink-m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.center-phone{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:12px;}
+.center-number{font-size:15px;font-weight:700;color:var(--peach-d);}
+.center-badge{
+  font-size:11px;padding:2px 6px;border-radius:6px;
+  background:var(--lavender-p);color:var(--lavender-d);font-weight:600;
+}

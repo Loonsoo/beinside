@@ -57,6 +57,9 @@ function showPage(id) {
       }
     }
 
+    // 공공기관 연결 자동 렌더링
+    if (typeof renderPageCenters === 'function') renderPageCenters(id);
+
     // URL History API 라우팅 (SEO)
     var newPath = id === 'home' ? '/' : '/' + id;
     if (location.pathname !== newPath) {
