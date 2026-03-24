@@ -31,6 +31,12 @@ const PRECACHE = [
   '/js/grief-page.js',
   '/js/sleep-page.js',
   '/js/multicultural-page.js',
+  '/js/data-guides-new.js',
+  '/js/data-centers.js',
+  '/js/dashboard.js',
+  '/js/new-pages.js',
+  '/js/i18n.js',
+  '/js/notify.js',
   '/js/search.js',
   '/js/vitals.js'
 ];

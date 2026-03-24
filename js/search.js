@@ -24,7 +24,10 @@
     emergency:  '긴급 응급 SOS 119 112 109 1388 자살 위기 상담',
     journal:    '일기 감정기록 무드 기록 트래킹',
     mental:     '정신건강 생애주기 우울증 우울 정신과',
-    multicultural: '다문화 베트남 중국 영어 이민 외국인'
+    multicultural: '다문화 베트남 중국 영어 이민 외국인',
+    adhd:          'ADHD 주의력 집중 산만 과잉행동 성인ADHD 집중력',
+    addiction:     '중독 스마트폰 게임 알코올 도박 술 의존',
+    finance:       '금융 돈 부채 빚 파산 경제 서민 신용회복'
   };
 
   /* ── 검색 인덱스 빌드 ── */
@@ -39,7 +42,8 @@
       grief:'🕊️', emotion:'💛', burnout:'🔥', relation:'💔',
       transition:'🔄', workplace:'🏢', teen:'🌙', sleep:'😴',
       postpartum:'🤱', menopause:'🌸', emergency:'🆘', journal:'📝',
-      mental:'🧠', multicultural:'🌍'
+      mental:'🧠', multicultural:'🌍',
+      adhd:'🧩', addiction:'🔄', finance:'💰'
     };
 
     for (var id in PAGE_META) {

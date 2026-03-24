@@ -166,6 +166,18 @@
       </div>
       <button class="settings-action-btn" onclick="closeSettings();enterCardEdit()" data-i18n="common.edit">편집</button>
     </div>
+    <div class="settings-item">
+      <div class="settings-item-label">
+        <span>🔔</span>
+        <div>
+          <div class="settings-item-title">일일 감정 체크인</div>
+          <div class="settings-item-sub">매일 저녁 감정 기록 알림을 보내드려요</div>
+        </div>
+      </div>
+      <label class="settings-toggle-wrap" style="cursor:pointer;">
+        <input type="checkbox" id="checkin-toggle" onchange="toggleDailyCheckin(this.checked)" style="width:18px;height:18px;">
+      </label>
+    </div>
   </div>
 </div>
 
@@ -943,6 +955,30 @@
       <div id="multicultural-content"></div>
     </div>
 
+    <!-- ── ADHD 가이드 ── -->
+    <div class="page-view" id="page-adhd" style="display:none">
+      <div class="page-header" style="min-height:0;padding:0;">
+        <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
+      </div>
+      <div id="adhd-content"></div>
+    </div>
+
+    <!-- ── 중독 회복 가이드 ── -->
+    <div class="page-view" id="page-addiction" style="display:none">
+      <div class="page-header" style="min-height:0;padding:0;">
+        <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
+      </div>
+      <div id="addiction-content"></div>
+    </div>
+
+    <!-- ── 금융 스트레스 가이드 ── -->
+    <div class="page-view" id="page-finance" style="display:none">
+      <div class="page-header" style="min-height:0;padding:0;">
+        <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
+      </div>
+      <div id="finance-content"></div>
+    </div>
+
     <!-- 출처 드로어 -->
     <div class="source-drawer-overlay" id="source-overlay" onclick="closeSourceDrawer()"></div>
     <div class="source-drawer" id="source-drawer" role="dialog" aria-label="통계 데이터 출처">
@@ -1252,7 +1288,10 @@
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" crossorigin="anonymous"></script>
 
 <script defer src="js/i18n.js"></script>
+<script defer src="js/i18n.js"></script>
 <script defer src="js/data.js"></script>
+<script defer src="js/data-guides-new.js"></script>
+<script defer src="js/data-centers.js"></script>
 <script defer src="js/utils.js"></script>
 <script defer src="js/storage.js"></script>
 <script defer src="js/memo.js"></script>
@@ -1266,10 +1305,13 @@
 <script defer src="js/grief-page.js"></script>
 <script defer src="js/sleep-page.js"></script>
 <script defer src="js/multicultural-page.js"></script>
+<script defer src="js/dashboard.js"></script>
+<script defer src="js/new-pages.js"></script>
 <script defer src="js/app.js"></script>
 <script defer src="js/onboard.js"></script>
 <script defer src="js/share.js"></script>
 <script defer src="js/search.js"></script>
+<script defer src="js/notify.js"></script>
 <script defer src="js/vitals.js"></script>
 
 <!-- Structured Data (JSON-LD) -->

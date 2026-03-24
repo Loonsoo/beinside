@@ -18,6 +18,9 @@
     { "source": "/emergency", "destination": "/index.html" },
     { "source": "/journal", "destination": "/index.html" },
     { "source": "/mental", "destination": "/index.html" },
-    { "source": "/multicultural", "destination": "/index.html" }
+    { "source": "/multicultural", "destination": "/index.html" },
+    { "source": "/adhd", "destination": "/index.html" },
+    { "source": "/addiction", "destination": "/index.html" },
+    { "source": "/finance", "destination": "/index.html" }
   ]
 }
