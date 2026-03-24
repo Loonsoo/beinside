@@ -1812,6 +1812,17 @@ footer{
 .tl-sidebar { display: none !important; }
 :root { --tl-w: 0px; }
 
+/* ── 인사말 — 심리적 안전감 프라이밍 ── */
+.hero-greeting{
+  font-family:'Gowun Batang',serif;
+  font-size:14px;
+  color:var(--ink-l);
+  letter-spacing:-.1px;
+  margin-bottom:var(--sp-3);
+  animation:up .5s .06s cubic-bezier(.22,1,.36,1) both;
+  word-break:keep-all;
+}
+
 /* ── 히어로 보조 카피 ── */
 .hero .hero-sub {
   font-size: 14px; color: var(--ink-m);
@@ -1820,25 +1831,39 @@ footer{
   word-break: keep-all; max-width: 460px;
 }
 
+/* ── 무드→가이드 브릿지 텍스트 ── */
+.mood-bridge{
+  padding:var(--sp-6) 0 var(--sp-3);
+  text-align:center;
+}
+.bridge-text{
+  font-family:'Gowun Batang',serif;
+  font-size:13px;
+  color:var(--ink-l);
+  letter-spacing:-.1px;
+  line-height:1.6;
+  word-break:keep-all;
+}
+
 /* ── 상황 카드 그리드 ── */
 .situation-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  width: 100%; max-width: 680px;
-  margin-bottom: var(--sp-3);
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%; max-width: 480px;
+  margin: 0 auto var(--sp-3);
   animation: up .5s .18s cubic-bezier(.22,1,.36,1) both;
 }
 
 /* ── 상황 카드 — 감성 리디자인 ── */
 .sit-card {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 14px;
-  padding: 28px 20px 24px;
-  border-radius: 20px;
+  display: flex; flex-direction: row; align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 18px;
   cursor: pointer;
   transition: all .32s cubic-bezier(.34,1.2,.64,1);
-  text-align: center;
+  text-align: left;
   position: relative; overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -1897,10 +1922,9 @@ footer{
   line-height: 1.55; word-break: keep-all;
 }
 .sit-arrow {
-  font-size: 12px; color: var(--ink-l);
+  font-size: 14px; color: var(--ink-l);
   flex-shrink: 0; transition: all .25s;
-  opacity: .4;
-  position: absolute; bottom: 12px; right: 14px;
+  opacity: .35;
 }
 
 /* ── 카드별 개성 컬러 ── */
@@ -2056,7 +2080,7 @@ footer{
   font-size:14px;font-weight:400;font-style:italic;
   color:var(--ink-l);
   cursor:pointer;
-  padding:8px 0;margin-top:4px;margin-bottom:20px;
+  padding:8px 0;margin-top:4px;margin-bottom:var(--sp-4);
   letter-spacing:-.2px;
   transition:color .25s, transform .25s;
   animation:up .5s .10s cubic-bezier(.22,1,.36,1) both;
@@ -2960,22 +2984,21 @@ footer{
 ══════════════════════════════════════════ */
 .section-care,
 .section-self{
-  padding:var(--sp-4) var(--sp-6) var(--sp-4);
+  padding:var(--sp-4) 0;
   margin-bottom:0;
 }
 .section-care{
-  background:linear-gradient(180deg, rgba(123,174,203,.06) 0%, rgba(123,174,203,.02) 100%);
+  background:transparent;
   border:none;
-  border-radius:24px;
-  margin-bottom:var(--sp-2);
+  border-radius:0;
 }
 .section-self{
-  background:linear-gradient(180deg, rgba(107,168,133,.06) 0%, rgba(107,168,133,.02) 100%);
+  background:transparent;
   border:none;
-  border-radius:24px;
+  border-radius:0;
 }
 .section-header{
-  margin-bottom:var(--sp-3);
+  margin-bottom:var(--sp-4);
   text-align:center;
 }
 .section-title{
@@ -3016,12 +3039,12 @@ footer{
    MOOD SECTION — 오늘 기분 기록
 ══════════════════════════════════════════ */
 .mood-section{
-  background:var(--white);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:var(--sp-3);
+  background:transparent;
+  border:none;
+  border-radius:0;
+  padding:var(--sp-3) 0;
   text-align:center;
-  margin:0 var(--sp-2) var(--sp-3);
+  margin:0 0 var(--sp-2);
 }
 .mood-icon-row{
   font-size:28px;margin-bottom:8px;
@@ -3115,7 +3138,11 @@ footer{
 /* ══════════════════════════════════════════
    HERO SECTIONS WRAPPER
 ══════════════════════════════════════════ */
-.hero-sections{width:100%;}
+.hero-sections{
+  width:100%;
+  display:flex;flex-direction:column;
+  gap:var(--sp-4);
+}
 
 /* ══════════════════════════════════════════
    DESKTOP LAYOUT (960px+)
@@ -3132,30 +3159,27 @@ footer{
   }
   /* 감정 체크인: 섹션 위, 가로 정렬 */
   .mood-section{
-    border:1px solid var(--line);
-    border-radius:20px;
-    background:var(--white);
-    border-top:none;
+    background:transparent;
+    border:none;
     margin-bottom:var(--sp-4);
   }
   .mood-btns{ gap:var(--sp-2); }
-  /* 섹션 2컬럼 나란히 */
+  /* 섹션 세로 스택 (Ma 철학: 한 섹션씩 순차 탐색) */
   .hero-sections{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:var(--sp-3);
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-8);
+    max-width:560px;
+    margin:0 auto;
   }
   .section-care,
   .section-self{
-    padding:var(--sp-3) var(--sp-3) var(--sp-4);
-    border-radius:20px;
-    margin-bottom:0;
+    padding:0;
   }
   .situation-grid{
     grid-template-columns:1fr;
     max-width:100%;
-    gap:var(--sp-1);
-    margin-bottom:0;
+    gap:12px;
   }
   .emergency-quiet{
     margin-top:12px;
@@ -3173,16 +3197,15 @@ footer{
 /* 태블릿 (641–959px) */
 @media(min-width:641px) and (max-width:959px){
   .hero{
-    padding:var(--sp-4) var(--sp-4) var(--sp-3);
+    padding:var(--sp-6) var(--sp-4) var(--sp-3);
   }
   .situation-grid{
-    max-width:100%;
+    max-width:480px;
+    margin:0 auto;
   }
   .section-care,
   .section-self{
-    padding:var(--sp-3) var(--sp-3) var(--sp-4);
-    border-radius:16px;
-    margin-bottom:var(--sp-2);
+    padding:var(--sp-3) 0;
   }
 }
 
@@ -3190,20 +3213,20 @@ footer{
    MOBILE COMPACT (≤640px)
 ══════════════════════════════════════════ */
 @media(max-width:640px){
-  .hero{ padding:var(--sp-2) var(--sp-2) var(--sp-2); }
-  .hero h1{ font-size:18px; margin-bottom:4px; }
+  .hero{ padding:var(--sp-4) var(--sp-2) var(--sp-2); }
+  .hero h1{ font-size:18px; margin-bottom:var(--sp-2); }
   .hero .hero-sub{ font-size:13px; margin-bottom:var(--sp-2); }
   .section-care,
-  .section-self{ padding:var(--sp-2) var(--sp-2) var(--sp-3); border-radius:20px; }
+  .section-self{ padding:var(--sp-2) 0; }
   .section-header{ margin-bottom:var(--sp-2); }
   .section-title{ font-size:15px; }
   .situation-grid{ gap:10px; margin-bottom:0; }
-  .sit-card{ padding:20px 14px 18px; gap:10px; border-radius:16px; }
+  .sit-card{ padding:16px; gap:12px; border-radius:16px; }
   .sit-icon{ width:40px; height:40px; font-size:22px; }
   .sit-title{ font-size:12.5px; }
   .sit-sub{ font-size:10.5px; }
-  .sit-arrow{ bottom:8px; right:10px; font-size:11px; }
-  .mood-section{ padding:var(--sp-2); margin:0 var(--sp-1) var(--sp-2); }
+  .sit-arrow{ bottom:10px; right:12px; font-size:11px; }
+  .mood-section{ padding:var(--sp-2) 0; margin:0; }
   .mood-label{ font-size:14px; margin-bottom:var(--sp-1); }
   .mood-btn{ min-width:76px; min-height:64px; padding:10px 12px; font-size:20px; }
   .mood-btn span{ font-size:11px; }
@@ -4951,11 +4974,11 @@ a:focus:not(:focus-visible){
 }
 /* (journal-entry 스타일은 jn-* 시스템으로 이동) */
 [data-theme="dark"] .section-care{
-  background:linear-gradient(180deg, rgba(123,174,203,.05) 0%, transparent 100%);
+  background:transparent;
   border:none;
 }
 [data-theme="dark"] .section-self{
-  background:linear-gradient(180deg, rgba(107,168,133,.05) 0%, transparent 100%);
+  background:transparent;
   border:none;
 }
 [data-theme="dark"] .toolkit-btn{
@@ -5039,8 +5062,8 @@ a:focus:not(:focus-visible){
   background:rgba(232,137,106,.08);
 }
 [data-theme="dark"] .mood-section{
-  background:var(--white);
-  border-color:rgba(255,255,255,.08);
+  background:transparent;
+  border:none;
 }
 [data-theme="dark"] .home-quote p{
   color:var(--ink-l);
@@ -5388,8 +5411,8 @@ a:focus:not(:focus-visible){
    P2: Semantic 다크모드 — elevated surface 깊이감
 ══════════════════════════════════════════ */
 [data-theme="dark"] .mood-section{
-  background:var(--bg-elevated);
-  border-color:rgba(255,255,255,.06);
+  background:transparent;
+  border:none;
 }
 [data-theme="dark"] .mood-section[data-mood="great"]{
   background:linear-gradient(135deg,var(--bg-elevated),rgba(107,168,133,.10));
