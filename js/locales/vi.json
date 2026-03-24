@@ -1,0 +1,58 @@
+{
+  "header": {
+    "profileAdd": "Thêm hồ sơ",
+    "emergency": "Khẩn cấp",
+    "menu": "Menu",
+    "search": "Tìm kiếm",
+    "settings": "Cài đặt",
+    "home": "Về trang chủ BeInside"
+  },
+  "tab": {
+    "home": "Nhà",
+    "growth": "Phát triển",
+    "mind": "Tâm lý",
+    "journal": "Nhật ký",
+    "emergency": "Khẩn cấp"
+  },
+  "common": {
+    "goHome": "← Trang chủ",
+    "more": "Xem thêm",
+    "less": "Thu gọn",
+    "close": "Đóng",
+    "reload": "Tải lại",
+    "settings": "Cài đặt",
+    "edit": "Sửa",
+    "save": "Lưu",
+    "cancel": "Hủy",
+    "confirm": "Xác nhận"
+  },
+  "search": {
+    "placeholder": "Bạn cần giúp gì?",
+    "noResult": "Không tìm thấy kết quả",
+    "close": "Đóng tìm kiếm"
+  },
+  "error": {
+    "title": "Đã xảy ra lỗi tạm thời",
+    "message": "Vui lòng thử lại sau"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "themeMode": "Chế độ hiển thị",
+    "themeSub": "Chuyển giữa chế độ sáng / tối",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "themeSystem": "Hệ thống",
+    "cardEdit": "Sắp xếp thẻ trang chủ",
+    "cardEditSub": "Nhấn giữ thẻ để di chuyển",
+    "language": "Ngôn ngữ",
+    "languageSub": "Thay đổi ngôn ngữ hiển thị"
+  },
+  "profile": {
+    "title": "Hồ sơ của tôi",
+    "subtitle": "Lưu nhiều hồ sơ và chuyển đổi nhanh",
+    "addNew": "+ Thêm hồ sơ mới",
+    "backToList": "← Quay lại danh sách",
+    "photo": "Ảnh"
+  },
+  "greeting": "Xin chào, {name}"
+}

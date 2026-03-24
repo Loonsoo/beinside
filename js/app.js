@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural', 'adhd', 'addiction', 'finance'];
 
 /* ── 페이지 전환 ── */
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
@@ -51,6 +51,9 @@ function showPage(id) {
         if (id === 'menopause') initMenopausePage();
         if (id === 'journal') initJournalPage();
         if (id === 'multicultural') initMulticulturalPage();
+        if (id === 'adhd') initAdhdPage();
+        if (id === 'addiction') initAddictionPage();
+        if (id === 'finance') initFinancePage();
       }
     }
 
@@ -1161,7 +1164,10 @@ const PAGE_META = {
   emergency:  { title: '긴급 도움 — BeInside', desc: '24시간 긴급 상담 연결. 119, 112, 109 자살예방, 1388 청소년, 1366 여성긴급, 1577-0199 정신건강.', keywords: '긴급 상담, 자살예방 전화, 109, 1388, 1577-0199, 정신건강 위기' },
   journal:    { title: '감정 기록 — BeInside', desc: '오늘의 감정을 기록하고, 나를 돌아보는 시간.', keywords: '감정 기록, 감정 일기, 마음 일기, 무드 트래킹' },
   mental:        { title: '생애주기별 정신건강 가이드 — BeInside', desc: '영아기부터 노년기까지, 생애 단계별 정신건강 위험 신호와 돌봄법. 통계 기반 가이드.', keywords: '정신건강, 생애주기, 우울증, 산후우울증, 청소년 우울, 노인 우울, 정신건강 가이드' },
-  multicultural: { title: '다문화 가정 가이드 — BeInside', desc: '다문화 가정을 위한 다국어(베트남어·중국어·영어) 양육·정신건강 가이드. 긴급상담 연결.', keywords: '다문화 가정, 다국어 가이드, 베트남어, 중국어, 이민자 가정, 외국인 육아, multicultural family' }
+  multicultural: { title: '다문화 가정 가이드 — BeInside', desc: '다문화 가정을 위한 다국어(베트남어·중국어·영어) 양육·정신건강 가이드. 긴급상담 연결.', keywords: '다문화 가정, 다국어 가이드, 베트남어, 중국어, 이민자 가정, 외국인 육아, multicultural family' },
+  adhd:          { title: 'ADHD 가이드 — BeInside', desc: '게으른 게 아니에요. 성인 ADHD 자가체크, 치료법, 직장·학업 관리 팁.', keywords: 'ADHD, 성인 ADHD, 집중력, 주의력결핍, ADHD 자가진단, ADHD 치료' },
+  addiction:     { title: '중독 회복 가이드 — BeInside', desc: '스마트폰·게임·알코올·도박 중독 자가체크와 단계별 회복 가이드.', keywords: '중독, 스마트폰 중독, 게임 중독, 알코올 중독, 도박 중독, 중독 상담' },
+  finance:       { title: '금융 스트레스 가이드 — BeInside', desc: '부채·파산·경제적 위기 속 정신건강 돌봄과 실제 지원 제도 안내.', keywords: '금융 스트레스, 부채, 파산, 경제적 위기, 신용회복, 서민금융' }
 };
 
 function updatePageMeta(id) {
@@ -1246,7 +1252,8 @@ function toggleMoreCards(section) {
   cards.forEach(function(c) {
     c.style.display = isExpanded ? '' : 'none';
   });
-  btn.querySelector('.show-more-text').textContent = isExpanded ? '접기' : '더 보기';
+  var moreText = (typeof I18n !== 'undefined') ? I18n.t(isExpanded ? 'common.less' : 'common.more') : (isExpanded ? '접기' : '더 보기');
+  btn.querySelector('.show-more-text').textContent = moreText;
 }
 
 /* ══════════════════════════════════════════
@@ -1285,3 +1292,24 @@ function announceToSR(msg) {
     setTimeout(function() { el.textContent = msg; }, 100);
   }
 }
+
+/* ══════════════════════════════════════════
+   i18n 초기화
+══════════════════════════════════════════ */
+(function initI18n() {
+  if (typeof I18n === 'undefined') return;
+
+  function run() {
+    I18n.init(function () {
+      // 언어 선택 드롭다운 동기화
+      var sel = document.getElementById('i18n-select');
+      if (sel) sel.value = I18n.getLocale();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();

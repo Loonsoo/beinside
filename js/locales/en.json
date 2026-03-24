@@ -1,0 +1,58 @@
+{
+  "header": {
+    "profileAdd": "Add Profile",
+    "emergency": "Emergency",
+    "menu": "Menu",
+    "search": "Search",
+    "settings": "Settings",
+    "home": "Go to BeInside Home"
+  },
+  "tab": {
+    "home": "Home",
+    "growth": "Growth",
+    "mind": "Mind",
+    "journal": "Journal",
+    "emergency": "SOS"
+  },
+  "common": {
+    "goHome": "← Home",
+    "more": "More",
+    "less": "Less",
+    "close": "Close",
+    "reload": "Reload",
+    "settings": "Settings",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "OK"
+  },
+  "search": {
+    "placeholder": "What help do you need?",
+    "noResult": "No results found",
+    "close": "Close search"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "message": "Please try again in a moment"
+  },
+  "settings": {
+    "title": "Settings",
+    "themeMode": "Display Mode",
+    "themeSub": "Switch between light / dark mode",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "cardEdit": "Edit Home Card Order",
+    "cardEditSub": "Long-press cards to rearrange them",
+    "language": "Language",
+    "languageSub": "Change the display language"
+  },
+  "profile": {
+    "title": "My Profiles",
+    "subtitle": "Save multiple profiles and switch between them",
+    "addNew": "+ Add New Profile",
+    "backToList": "← Back to list",
+    "photo": "Photo"
+  },
+  "greeting": "Hello, {name}"
+}

@@ -554,6 +554,28 @@
   border-color:var(--peach);
 }
 
+/* 설정 언어 선택 드롭다운 */
+.settings-lang-select{
+  padding:8px 12px;
+  background:var(--peach-p);
+  border:1px solid rgba(123,174,203,.20);
+  border-radius:10px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;font-weight:600;
+  color:var(--ink);cursor:pointer;
+  transition:all .2s;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' stroke='%236B6B6B' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  padding-right:28px;
+  min-width:120px;
+}
+.settings-lang-select:focus{
+  outline:2px solid var(--peach);
+  outline-offset:2px;
+}
+
 /* ── Source Drawer (출처 패널) ── */
 .source-drawer-overlay {
   position: fixed; inset: 0; z-index: 2000;
@@ -3051,6 +3073,194 @@
 }
 @media(min-width:960px){
   .jn-page-content{ padding:0 48px 100px; }
+}
+
+/* ═══════════════════════════════════════════════
+   감정 대시보드 (Dashboard)
+═══════════════════════════════════════════════ */
+
+.dash-section{
+  margin-bottom:16px;
+}
+
+.dash-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  min-height:52px;
+  padding:14px 18px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  cursor:pointer;
+  transition:background .15s, box-shadow .15s;
+  -webkit-appearance:none;
+  appearance:none;
+  font:inherit;
+  color:inherit;
+}
+.dash-toggle:hover{
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+}
+.dash-toggle:active{
+  background:var(--section-alt);
+}
+.dash-toggle-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.dash-toggle-icon{
+  font-size:18px;
+}
+.dash-toggle-text{
+  font-size:14px;
+  font-weight:600;
+  color:var(--ink);
+}
+.dash-chevron{
+  color:var(--ink-l);
+  transition:transform .3s var(--calm-ease, cubic-bezier(.25,.1,.25,1));
+  display:flex;
+  align-items:center;
+}
+.dash-chevron.open{
+  transform:rotate(180deg);
+}
+
+.dash-body{
+  margin-top:8px;
+  animation:dashFadeIn .3s ease;
+}
+@keyframes dashFadeIn{
+  from{ opacity:0; transform:translateY(-6px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* ── Empty State ── */
+.dash-empty{
+  text-align:center;
+  padding:40px 20px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+.dash-empty-icon{
+  font-size:36px;
+  display:block;
+  margin-bottom:12px;
+  opacity:.5;
+}
+.dash-empty p{
+  font-size:13px;
+  color:var(--ink-l);
+  margin:0;
+  line-height:1.6;
+}
+
+/* ── Insight ── */
+.dash-insight{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px 18px;
+  margin-bottom:12px;
+}
+.dash-insight-item{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  font-size:13px;
+  color:var(--ink);
+  line-height:1.7;
+}
+.dash-insight-item + .dash-insight-item{
+  margin-top:6px;
+}
+.dash-insight-dot{
+  width:5px;
+  height:5px;
+  min-width:5px;
+  border-radius:50%;
+  background:var(--peach);
+  display:inline-block;
+  margin-top:7px;
+}
+.dash-insight-item strong{
+  color:var(--peach-d);
+  font-weight:600;
+}
+
+/* ── Charts ── */
+.dash-charts{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.dash-chart-wrap{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px 14px 12px;
+  overflow:hidden;
+}
+.dash-chart-wrap canvas{
+  width:100% !important;
+  display:block;
+}
+.dash-chart-title{
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink-m);
+  margin-bottom:10px;
+  letter-spacing:.02em;
+}
+.dash-chart-row{
+  display:flex;
+  gap:12px;
+}
+.dash-chart-half{
+  flex:1;
+  min-width:0;
+}
+
+/* ── Mobile ── */
+@media(max-width:560px){
+  .dash-chart-row{
+    flex-direction:column;
+  }
+  .dash-chart-half{
+    flex:none;
+  }
+}
+
+/* ── Desktop ── */
+@media(min-width:640px){
+  .dash-toggle{
+    padding:16px 22px;
+  }
+  .dash-insight{
+    padding:18px 22px;
+  }
+}
+
+/* ── Dark Mode (Dashboard) ── */
+[data-theme="dark"] .dash-toggle{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .dash-empty{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .dash-insight{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .dash-chart-wrap{
+  background:var(--white);
+  border-color:rgba(255,255,255,.08);
 }
 
 /* ── Dark Mode ── */

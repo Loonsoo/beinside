@@ -1,0 +1,58 @@
+{
+  "header": {
+    "profileAdd": "添加档案",
+    "emergency": "紧急求助",
+    "menu": "菜单",
+    "search": "搜索",
+    "settings": "设置",
+    "home": "返回BeInside首页"
+  },
+  "tab": {
+    "home": "首页",
+    "growth": "成长",
+    "mind": "心理",
+    "journal": "日记",
+    "emergency": "紧急"
+  },
+  "common": {
+    "goHome": "← 首页",
+    "more": "查看更多",
+    "less": "收起",
+    "close": "关闭",
+    "reload": "刷新",
+    "settings": "设置",
+    "edit": "编辑",
+    "save": "保存",
+    "cancel": "取消",
+    "confirm": "确认"
+  },
+  "search": {
+    "placeholder": "您需要什么帮助？",
+    "noResult": "没有搜索结果",
+    "close": "关闭搜索"
+  },
+  "error": {
+    "title": "出现了临时问题",
+    "message": "请稍后再试"
+  },
+  "settings": {
+    "title": "设置",
+    "themeMode": "显示模式",
+    "themeSub": "切换亮色 / 暗色模式",
+    "themeLight": "亮色",
+    "themeDark": "暗色",
+    "themeSystem": "系统",
+    "cardEdit": "编辑首页卡片顺序",
+    "cardEditSub": "长按卡片可以调整位置",
+    "language": "语言",
+    "languageSub": "更改显示语言"
+  },
+  "profile": {
+    "title": "我的档案",
+    "subtitle": "保存多个档案并快速切换",
+    "addNew": "+ 添加新档案",
+    "backToList": "← 返回列表",
+    "photo": "照片"
+  },
+  "greeting": "{name}，你好"
+}
