@@ -1898,17 +1898,14 @@ footer{
   .sit-card:hover .sit-arrow { opacity: 1; transform: translateX(3px); }
 }
 
-/* 이모지 아이콘 — 글로우 오브 */
+/* 이모지 아이콘 — 배경 없이 순수 이모지 */
 .sit-icon {
   font-size: 28px; flex-shrink: 0; line-height: 1;
-  width: 48px; height: 48px;
+  width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
-  border-radius: 50%;
   border: none;
-  position: relative;
+  background: none;
   transition: transform .3s cubic-bezier(.34,1.2,.64,1);
-  /* 기본 연한 글로우 — 카드별 오버라이드 */
-  background: radial-gradient(circle, rgba(123,174,203,.12) 0%, rgba(123,174,203,.03) 70%);
 }
 
 .sit-card-body { flex: 1; min-width: 0; }
@@ -1933,50 +1930,29 @@ footer{
   background: linear-gradient(160deg, #F2FAF0 0%, #E8F5E4 100%);
   border-color: rgba(107,168,133,.15);
 }
-.sit-card[data-card-id="growth"] .sit-icon {
-  background: radial-gradient(circle, rgba(107,168,133,.15) 0%, rgba(107,168,133,.04) 70%);
-}
 .sit-card[data-card-id="sp"] {
   background: linear-gradient(160deg, #F8F2FA 0%, #F0E5F5 100%);
   border-color: rgba(160,120,180,.12);
-}
-.sit-card[data-card-id="sp"] .sit-icon {
-  background: radial-gradient(circle, rgba(160,120,180,.12) 0%, transparent 70%);
 }
 .sit-card[data-card-id="birth"] {
   background: linear-gradient(160deg, #FFF5F7 0%, #FCEDF0 100%);
   border-color: rgba(220,140,160,.12);
 }
-.sit-card[data-card-id="birth"] .sit-icon {
-  background: radial-gradient(circle, rgba(220,140,160,.12) 0%, transparent 70%);
-}
 .sit-card[data-card-id="dad"] {
   background: linear-gradient(160deg, #FFF8F0 0%, #FFF0E0 100%);
   border-color: rgba(200,160,80,.12);
-}
-.sit-card[data-card-id="dad"] .sit-icon {
-  background: radial-gradient(circle, rgba(200,160,80,.14) 0%, transparent 70%);
 }
 .sit-card[data-card-id="elder"] {
   background: linear-gradient(160deg, #F5F2EE 0%, #EDE8E2 100%);
   border-color: rgba(160,140,120,.12);
 }
-.sit-card[data-card-id="elder"] .sit-icon {
-  background: radial-gradient(circle, rgba(160,140,120,.12) 0%, transparent 70%);
-}
 .sit-card[data-card-id="grief"] {
   background: linear-gradient(160deg, #F4F6FA 0%, #EAEEF5 100%);
   border-color: rgba(130,140,170,.12);
 }
-.sit-card[data-card-id="grief"] .sit-icon {
-  background: radial-gradient(circle, rgba(130,140,170,.12) 0%, transparent 70%);
-}
 .sit-card[data-card-id="multicultural"] {
   background: linear-gradient(160deg, #F0F8FF 0%, #E6F2FF 100%);
   border-color: rgba(100,150,200,.12);
-}
-.sit-card[data-card-id="multicultural"] .sit-icon {
-  background: radial-gradient(circle, rgba(100,150,200,.12) 0%, transparent 70%);
 }
 
 /* 마음 영역 — 부드러운 톤 */
@@ -1984,64 +1960,37 @@ footer{
   background: linear-gradient(160deg, #F0F6FC 0%, #E4EFF8 100%);
   border-color: rgba(100,150,200,.14);
 }
-.sit-card[data-card-id="emotion"] .sit-icon {
-  background: radial-gradient(circle, rgba(100,150,200,.14) 0%, transparent 70%);
-}
 .sit-card[data-card-id="burnout"] {
   background: linear-gradient(160deg, #FDF8F0 0%, #FBF0E0 100%);
   border-color: rgba(192,137,42,.12);
-}
-.sit-card[data-card-id="burnout"] .sit-icon {
-  background: radial-gradient(circle, rgba(192,137,42,.12) 0%, transparent 70%);
 }
 .sit-card[data-card-id="relation"] {
   background: linear-gradient(160deg, #FBF2F0 0%, #F5E8E4 100%);
   border-color: rgba(176,90,66,.10);
 }
-.sit-card[data-card-id="relation"] .sit-icon {
-  background: radial-gradient(circle, rgba(176,90,66,.10) 0%, transparent 70%);
-}
 .sit-card[data-card-id="sleep"] {
   background: linear-gradient(160deg, #F2F0FA 0%, #E8E4F5 100%);
   border-color: rgba(120,100,180,.12);
-}
-.sit-card[data-card-id="sleep"] .sit-icon {
-  background: radial-gradient(circle, rgba(120,100,180,.12) 0%, transparent 70%);
 }
 .sit-card[data-card-id="transition"] {
   background: linear-gradient(160deg, #F0FAF8 0%, #E2F5F0 100%);
   border-color: rgba(80,160,140,.12);
 }
-.sit-card[data-card-id="transition"] .sit-icon {
-  background: radial-gradient(circle, rgba(80,160,140,.12) 0%, transparent 70%);
-}
 .sit-card[data-card-id="teen"] {
   background: linear-gradient(160deg, #F0F2FF 0%, #E8ECFF 100%);
   border-color: rgba(91,124,250,.14);
-}
-.sit-card[data-card-id="teen"] .sit-icon {
-  background: radial-gradient(circle, rgba(91,124,250,.12) 0%, transparent 70%);
 }
 .sit-card[data-card-id="workplace"] {
   background: linear-gradient(160deg, #F4F5F8 0%, #EAECF2 100%);
   border-color: rgba(100,110,140,.10);
 }
-.sit-card[data-card-id="workplace"] .sit-icon {
-  background: radial-gradient(circle, rgba(100,110,140,.10) 0%, transparent 70%);
-}
 .sit-card[data-card-id="postpartum"] {
   background: linear-gradient(160deg, #FFF5F8 0%, #FCEDF2 100%);
   border-color: rgba(200,130,160,.10);
 }
-.sit-card[data-card-id="postpartum"] .sit-icon {
-  background: radial-gradient(circle, rgba(200,130,160,.10) 0%, transparent 70%);
-}
 .sit-card[data-card-id="menopause"] {
   background: linear-gradient(160deg, #FAF5EE 0%, #F5ECE0 100%);
   border-color: rgba(180,140,90,.10);
-}
-.sit-card[data-card-id="menopause"] .sit-icon {
-  background: radial-gradient(circle, rgba(180,140,90,.10) 0%, transparent 70%);
 }
 
 /* ── 카드 진입 스태거 애니메이션 ── */
@@ -3221,7 +3170,7 @@ footer{
   .section-title{ font-size:15px; }
   .situation-grid{ gap:10px; margin-bottom:0; }
   .sit-card{ padding:16px; gap:12px; border-radius:16px; }
-  .sit-icon{ width:40px; height:40px; font-size:24px; }
+  .sit-icon{ width:32px; height:32px; font-size:22px; }
   .sit-title{ font-size:13px; }
   .sit-sub{ font-size:10.5px; }
   .sit-arrow{ bottom:10px; right:12px; font-size:11px; }
@@ -4880,7 +4829,7 @@ a:focus:not(:focus-visible){
   border-color:rgba(224,64,64,.20);
 }
 [data-theme="dark"] .sit-icon{
-  background:rgba(255,255,255,.05);
+  background:none;
 }
 [data-theme="dark"] .modal{
   background:rgba(42,45,53,.92);
