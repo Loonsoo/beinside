@@ -14,10 +14,15 @@
 /* ── 시맨틱 버튼 리셋 — div role="button"에서 전환된 요소 ── */
 button.sit-card,
 button.pill,
-button.logo,
 button.theme-toggle,
 button.emergency-quiet{
   border:none;font:inherit;color:inherit;
+  background:none;padding:0;margin:0;
+  text-align:left;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+}
+button.logo{
+  border:none;color:inherit;
   background:none;padding:0;margin:0;
   text-align:left;cursor:pointer;
   -webkit-appearance:none;appearance:none;
