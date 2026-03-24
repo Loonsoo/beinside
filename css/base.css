@@ -1224,7 +1224,7 @@ footer{
 
 /* ── 검색 모달 ── */
 .search-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:900;
+  position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:960;
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   opacity:0;pointer-events:none;transition:opacity .35s var(--calm-ease);
 }
@@ -1232,7 +1232,7 @@ footer{
 
 .search-modal{
   position:fixed;top:0;left:50%;transform:translateX(-50%) translateY(-10px);
-  width:min(520px,92vw);z-index:901;
+  width:min(520px,92vw);z-index:961;
   background:rgba(255,255,255,.95);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-radius:0 0 var(--calm-r) var(--calm-r);

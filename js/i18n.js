@@ -109,6 +109,16 @@ var I18n = (function () {
       // 언어 선택 UI 동기화
       var sel = document.getElementById('i18n-select');
       if (sel) sel.value = lang;
+      // JS 렌더 페이지 캐시 초기화 → 재진입 시 다시 렌더
+      if (typeof _pageRendered !== 'undefined') {
+        for (var k in _pageRendered) {
+          if (_pageRendered.hasOwnProperty(k)) delete _pageRendered[k];
+        }
+      }
+      // 현재 페이지 리렌더 (홈이 아닌 경우)
+      if (typeof curPage !== 'undefined' && curPage && curPage !== 'home') {
+        if (typeof showPage === 'function') showPage(curPage);
+      }
       cb && cb();
     });
   }

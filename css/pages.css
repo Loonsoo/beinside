@@ -3505,6 +3505,10 @@
   25%{transform:rotate(-1.2deg)}
   75%{transform:rotate(1.2deg)}
 }
+/* 편집 모드: hero overflow 해제 → 카드 잘림 방지 */
+.card-edit-mode .hero{
+  overflow:visible;
+}
 .card-edit-mode .sit-card{
   animation:wiggle .28s ease-in-out infinite;
   cursor:grab;
