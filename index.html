@@ -1,9 +1,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <!-- 글로벌 에러 핸들링: JS 실패 시 빈 화면 방지 -->
+  <script>
+  (function(){
+    var shown = false;
+    function showFallback(msg) {
+      if (shown) return;
+      shown = true;
+      var el = document.getElementById('error-fallback');
+      if (!el) {
+        el = document.createElement('div');
+        el.id = 'error-fallback';
+        el.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#F7F3EE;padding:32px;text-align:center;font-family:sans-serif;color:#3A3A3A';
+        el.innerHTML = '<div>'
+          + '<p style="font-size:48px;margin:0 0 16px">🌻</p>'
+          + '<h2 style="font-size:20px;margin:0 0 8px">일시적인 문제가 발생했어요</h2>'
+          + '<p style="font-size:14px;color:#6B6B6B;margin:0 0 24px">잠시 후 다시 시도해 주세요</p>'
+          + '<button onclick="location.reload()" style="padding:12px 32px;border:none;border-radius:24px;background:#7BAECB;color:#fff;font-size:16px;cursor:pointer">새로고침</button>'
+          + '</div>';
+        (document.body || document.documentElement).appendChild(el);
+      }
+    }
+    window.onerror = function(msg, src, line, col, err) {
+      if (src && src.indexOf('/js/') !== -1) showFallback();
+    };
+    window.addEventListener('unhandledrejection', function(e) {
+      showFallback();
+    });
+  })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAxMDAgMTAwJz48dGV4dCB5PScuOWVtJyBmb250LXNpemU9JzkwJz7wn4y7PC90ZXh0Pjwvc3ZnPg==">
   <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon.svg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeInside — 육아·정신건강·감정 돌봄 가이드</title>
