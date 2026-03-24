@@ -1,4 +1,4 @@
-const CACHE_NAME = 'beinside-v8';
+const CACHE_NAME = 'beinside-v9';
 const OFFLINE_PAGE = '/offline.html';
 const ASSETS = [
   '/',
@@ -19,7 +19,8 @@ const ASSETS = [
   '/js/emotion-page.js',
   '/js/elder-care.js',
   '/js/grief-page.js',
-  '/js/sleep-page.js'
+  '/js/sleep-page.js',
+  '/js/multicultural-page.js'
 ];
 
 self.addEventListener('install', e => {

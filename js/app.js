@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural'];
 
 /* ── 페이지 전환 ── */
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
@@ -50,6 +50,7 @@ function showPage(id) {
         if (id === 'postpartum') initPostpartumPage();
         if (id === 'menopause') initMenopausePage();
         if (id === 'journal') initJournalPage();
+        if (id === 'multicultural') initMulticulturalPage();
       }
     }
 
@@ -751,7 +752,8 @@ function selectMood(mood) {
     timestamp: Date.now()
   };
   var MOOD_KEY = 'beinside_mood_v1';
-  var all = JSON.parse(localStorage.getItem(MOOD_KEY) || '[]');
+  var all;
+  try { all = JSON.parse(localStorage.getItem(MOOD_KEY) || '[]'); } catch(e) { all = []; }
   var filtered = all.filter(function(e) { return e.date !== entry.date; });
   filtered.push(entry);
   var cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
@@ -827,6 +829,10 @@ function initMenopausePage() {
 }
 function initJournalPage() {
   if (typeof renderJournalPage === 'function') renderJournalPage();
+}
+function initMulticulturalPage() {
+  const el = document.getElementById('multicultural-content');
+  if (el && typeof renderMulticulturalPage === 'function') renderMulticulturalPage(el);
 }
 
 /* ── 체크 아이템 토글 ── */
@@ -1153,7 +1159,8 @@ const PAGE_META = {
   postpartum: { title: '산후우울증 자가진단과 회복 가이드 — BeInside', desc: '출산 후 마음이 이상할 때. 산후우울증 자가진단, 호르몬 변화 이해, 회복 로드맵.', keywords: '산후우울증, 산후우울증 자가진단, 출산 후 우울, 산후 정신건강' },
   menopause:  { title: '갱년기 우울증 가이드 — BeInside', desc: '갱년기 호르몬 변화와 우울. 자가진단, 빈 둥지 증후군, 전문 치료 안내.', keywords: '갱년기, 갱년기 우울증, 호르몬 변화, 빈 둥지 증후군, 갱년기 치료' },
   emergency:  { title: '긴급 도움 — BeInside', desc: '24시간 긴급 상담 연결. 119, 112, 109 자살예방, 1388 청소년, 1366 여성긴급, 1577-0199 정신건강.', keywords: '긴급 상담, 자살예방 전화, 109, 1388, 1577-0199, 정신건강 위기' },
-  journal:    { title: '감정 기록 — BeInside', desc: '오늘의 감정을 기록하고, 나를 돌아보는 시간.', keywords: '감정 기록, 감정 일기, 마음 일기, 무드 트래킹' }
+  journal:    { title: '감정 기록 — BeInside', desc: '오늘의 감정을 기록하고, 나를 돌아보는 시간.', keywords: '감정 기록, 감정 일기, 마음 일기, 무드 트래킹' },
+  multicultural: { title: '다문화 가정 가이드 — BeInside', desc: '다문화 가정을 위한 다국어(베트남어·중국어·영어) 양육·정신건강 가이드. 긴급상담 연결.', keywords: '다문화 가정, 다국어 가이드, 베트남어, 중국어, 이민자 가정, 외국인 육아, multicultural family' }
 };
 
 function updatePageMeta(id) {

@@ -56,7 +56,7 @@
       <span class="prof-add">프로필 추가</span>
     </div>
   </div>
-  <div class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" tabindex="0" role="button" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</div>
+  <button class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</button>
   <div class="hdr-right">
     <button class="hdr-sos" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움">SOS</button>
     <button class="menu-btn" onclick="toggleHeaderMenu()" aria-label="메뉴 열기">
@@ -94,10 +94,10 @@
           <div class="settings-item-sub">라이트 / 다크 모드 전환</div>
         </div>
       </div>
-      <div class="theme-toggle" id="theme-toggle" onclick="cycleTheme()" tabindex="0" role="button" aria-label="화면 모드 변경">
+      <button class="theme-toggle" id="theme-toggle" onclick="cycleTheme()" aria-label="화면 모드 변경">
         <div class="theme-toggle-thumb" id="theme-toggle-thumb"></div>
         <span class="theme-toggle-label" id="theme-toggle-label">라이트</span>
-      </div>
+      </button>
     </div>
     <div class="settings-item">
       <div class="settings-item-label">
@@ -213,55 +213,63 @@
           <p class="section-sub">연령별 발달 기준, 한부모·출산 가이드, 아빠 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')" tabindex="0" role="button">
+          <button class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')">
             <div class="sit-icon">🌱</div>
             <div class="sit-card-body">
               <div class="sit-title">아이 성장이 불안해요</div>
               <div class="sit-sub">연령별 발달 기준과 체크리스트</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card" data-card-id="sp" onclick="showPage('sp')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card" data-card-id="sp" onclick="showPage('sp')">
             <div class="sit-icon">🫂</div>
             <div class="sit-card-body">
               <div class="sit-title">혼자 아이를 키워요</div>
               <div class="sit-sub">한부모·홀로 양육하는 분들을 위한 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card" data-card-id="birth" onclick="showPage('birth')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card" data-card-id="birth" onclick="showPage('birth')">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
               <div class="sit-title">출산 후 혼자 회복 중이에요</div>
               <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')">
             <div class="sit-icon">🧸</div>
             <div class="sit-card-body">
               <div class="sit-title">아빠로서 어떻게 해야 할지 모르겠어요</div>
               <div class="sit-sub">아빠 전용 육아 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
+          </button>
           <!-- 더 보기로 숨김 -->
-          <div class="sit-card sit-card--more-care" data-card-id="elder" onclick="showPage('elder');setMTab('home')" tabindex="0" role="button" style="display:none">
+          <button class="sit-card sit-card--more-care" data-card-id="elder" onclick="showPage('elder');setMTab('home')" style="display:none">
             <div class="sit-icon">🍵</div>
             <div class="sit-card-body">
               <div class="sit-title">부모님 돌봄이 힘들어요</div>
               <div class="sit-sub">간병 번아웃, 치매 돌봄, 복지 연결 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card sit-card--more-care" data-card-id="grief" onclick="showPage('grief');setMTab('home')" tabindex="0" role="button" style="display:none">
+          </button>
+          <button class="sit-card sit-card--more-care" data-card-id="grief" onclick="showPage('grief');setMTab('home')" style="display:none">
             <div class="sit-icon">🕊️</div>
             <div class="sit-card-body">
               <div class="sit-title">소중한 사람을 떠나보냈어요</div>
               <div class="sit-sub">사별의 아픔 속에서 함께 걸어가는 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
+          </button>
+          <button class="sit-card sit-card--more-care" data-card-id="multicultural" onclick="showPage('multicultural');setMTab('home')" style="display:none">
+            <div class="sit-icon">🌍</div>
+            <div class="sit-card-body">
+              <div class="sit-title">다문화 가정 가이드</div>
+              <div class="sit-sub">베트남어·중국어·영어 다국어 지원</div>
+            </div>
+            <div class="sit-arrow">→</div>
+          </button>
         </div>
         <button class="show-more-btn" id="show-more-care" onclick="toggleMoreCards('care')" aria-label="돌봄 가이드 더 보기">
           <span class="show-more-text">더 보기</span>
@@ -276,79 +284,79 @@
           <p class="section-sub">감정, 번아웃, 관계, 산후우울증, 갱년기 가이드</p>
         </div>
         <div class="situation-grid">
-          <div class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')" tabindex="0" role="button">
+          <button class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')">
             <div class="sit-icon">🌊</div>
             <div class="sit-card-body">
               <div class="sit-title">감정을 어떻게 해야 할지 모르겠어요</div>
               <div class="sit-sub">감정을 알아차리고, 다루는 방법을 안내해요</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')">
             <div class="sit-icon">🫠</div>
             <div class="sit-card-body">
               <div class="sit-title">번아웃인 것 같아요</div>
               <div class="sit-sub">자가진단과 단계별 회복 로드맵</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')">
             <div class="sit-icon">💔</div>
             <div class="sit-card-body">
               <div class="sit-title">관계가 무너졌어요</div>
               <div class="sit-sub">상실 뒤 감정 정리와 회복으로 가는 길</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area" data-card-id="sleep" onclick="showPage('sleep');setMTab('mind')" tabindex="0" role="button">
+          </button>
+          <button class="sit-card self-area" data-card-id="sleep" onclick="showPage('sleep');setMTab('mind')">
             <div class="sit-icon">🛏️</div>
             <div class="sit-card-body">
               <div class="sit-title">잠을 못 자겠어요</div>
               <div class="sit-sub">불면, 악몽, 과수면 — 수면이 무너졌을 때</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
+          </button>
           <!-- 더 보기로 숨김 -->
-          <div class="sit-card self-area sit-card--more-self" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" tabindex="0" role="button" style="display:none">
+          <button class="sit-card self-area sit-card--more-self" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌀</div>
             <div class="sit-card-body">
               <div class="sit-title">삶의 방향을 잃었어요</div>
               <div class="sit-sub">변화 속 심리적 안정을 되찾는 방법</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card sit-card--teen self-area sit-card--more-self" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" tabindex="0" role="button" style="display:none">
+          </button>
+          <button class="sit-card sit-card--teen self-area sit-card--more-self" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌙</div>
             <div class="sit-card-body">
               <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
               <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area sit-card--more-self" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" tabindex="0" role="button" style="display:none">
+          </button>
+          <button class="sit-card self-area sit-card--more-self" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" style="display:none">
             <div class="sit-icon">🏢</div>
             <div class="sit-card-body">
               <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
               <div class="sit-sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area sit-card--more-self" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" tabindex="0" role="button" style="display:none">
+          </button>
+          <button class="sit-card self-area sit-card--more-self" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
               <div class="sit-title">출산 후 마음이 이상해요</div>
               <div class="sit-sub">산후우울증 자가진단과 회복 가이드</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
-          <div class="sit-card self-area sit-card--more-self" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" tabindex="0" role="button" style="display:none">
+          </button>
+          <button class="sit-card self-area sit-card--more-self" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" style="display:none">
             <div class="sit-icon">🍂</div>
             <div class="sit-card-body">
               <div class="sit-title">몸도 마음도 변하고 있어요</div>
               <div class="sit-sub">갱년기 우울, 호르몬 변화와 마음 돌봄</div>
             </div>
             <div class="sit-arrow">→</div>
-          </div>
+          </button>
         </div>
         <button class="show-more-btn" id="show-more-self" onclick="toggleMoreCards('self')" aria-label="마음 가이드 더 보기">
           <span class="show-more-text">더 보기</span>
@@ -358,10 +366,10 @@
       </div><!-- /hero-sections -->
 
       <!-- 긴급 도움 -->
-      <div class="emergency-quiet" onclick="showPage('emergency');setMTab('emergency')" tabindex="0" role="button" aria-label="긴급 도움 페이지로 이동">
+      <button class="emergency-quiet" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움 페이지로 이동">
         <span class="eq-text">지금 당장 도움이 필요하다면</span>
         <span class="eq-arrow">→</span>
-      </div>
+      </button>
 
       <!-- 한 줄 위로 -->
       <div class="home-quote">
@@ -480,19 +488,19 @@
 
       <input type="hidden" id="ai" value="0">
       <div class="pills">
-        <div class="pill" onclick="qs(0,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-newborn)"></span>신생아</div>
-        <div class="pill" onclick="qs(3,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-3m)"></span>3개월</div>
-        <div class="pill" onclick="qs(6,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-6m)"></span>6개월</div>
-        <div class="pill" onclick="qs(12,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-12m)"></span>12개월</div>
-        <div class="pill" onclick="qs(24,'m')" tabindex="0" role="button"><span class="cd" style="background:var(--age-24m)"></span>24개월</div>
-        <div class="pill" onclick="qs(4,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-preschool)"></span>유아 4세</div>
-        <div class="pill" onclick="qs(8,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-school)"></span>학령기 8세</div>
-        <div class="pill" onclick="qs(13,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-teen)"></span>청소년 13세</div>
-        <div class="pill" onclick="qs(20,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-young)"></span>청년 20세</div>
-        <div class="pill" onclick="qs(35,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-adult)"></span>성인 35세</div>
-        <div class="pill" onclick="qs(50,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-middle)"></span>중년 50세</div>
-        <div class="pill" onclick="qs(65,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-senior)"></span>노년 65세</div>
-        <div class="pill" onclick="qs(78,'y')" tabindex="0" role="button"><span class="cd" style="background:var(--age-late-senior)"></span>후기 노년 78세</div>
+        <button class="pill" onclick="qs(0,'m')"><span class="cd" style="background:var(--age-newborn)"></span>신생아</button>
+        <button class="pill" onclick="qs(3,'m')"><span class="cd" style="background:var(--age-3m)"></span>3개월</button>
+        <button class="pill" onclick="qs(6,'m')"><span class="cd" style="background:var(--age-6m)"></span>6개월</button>
+        <button class="pill" onclick="qs(12,'m')"><span class="cd" style="background:var(--age-12m)"></span>12개월</button>
+        <button class="pill" onclick="qs(24,'m')"><span class="cd" style="background:var(--age-24m)"></span>24개월</button>
+        <button class="pill" onclick="qs(4,'y')"><span class="cd" style="background:var(--age-preschool)"></span>유아 4세</button>
+        <button class="pill" onclick="qs(8,'y')"><span class="cd" style="background:var(--age-school)"></span>학령기 8세</button>
+        <button class="pill" onclick="qs(13,'y')"><span class="cd" style="background:var(--age-teen)"></span>청소년 13세</button>
+        <button class="pill" onclick="qs(20,'y')"><span class="cd" style="background:var(--age-young)"></span>청년 20세</button>
+        <button class="pill" onclick="qs(35,'y')"><span class="cd" style="background:var(--age-adult)"></span>성인 35세</button>
+        <button class="pill" onclick="qs(50,'y')"><span class="cd" style="background:var(--age-middle)"></span>중년 50세</button>
+        <button class="pill" onclick="qs(65,'y')"><span class="cd" style="background:var(--age-senior)"></span>노년 65세</button>
+        <button class="pill" onclick="qs(78,'y')"><span class="cd" style="background:var(--age-late-senior)"></span>후기 노년 78세</button>
       </div>
 
       <div id="medical-disclaimer" class="medical-disclaimer" style="display:none">
@@ -788,14 +796,14 @@
           아이의 나이에 따라 아빠만의 육아 방법이 달라요.<br>
           성장 가이드에서 <strong>아빠 탭</strong>을 선택하면 연령별 맞춤 가이드를 볼 수 있어요.
         </p>
-        <div onclick="showPage('growth');setMTab('growth')" tabindex="0" role="button" style="display:flex;align-items:center;gap:14px;background:var(--white);border:1.5px solid rgba(123,174,203,.18);border-radius:16px;padding:18px 20px;cursor:pointer;transition:all .22s cubic-bezier(.34,1.2,.64,1);">
+        <button onclick="showPage('growth');setMTab('growth')" style="display:flex;align-items:center;gap:14px;background:var(--white);border:none;border-radius:16px;padding:18px 20px;cursor:pointer;transition:all .22s cubic-bezier(.34,1.2,.64,1);width:100%;text-align:left;font:inherit;color:inherit;box-shadow:0 1px 4px rgba(0,0,0,.06);outline:1.5px solid rgba(123,174,203,.18);">
           <span style="font-size:28px;">👶</span>
           <div style="flex:1;">
             <div style="font-size:14px;font-weight:700;color:var(--peach-d);margin-bottom:3px;">성장 가이드에서 아빠 탭 보기</div>
             <div style="font-size:12px;color:var(--ink-l);">아이 나이를 입력하면 맞춤 가이드가 나와요</div>
           </div>
           <span style="font-size:16px;color:var(--ink-l);">→</span>
-        </div>
+        </button>
       </div>
       <div class="step-section">
         <div class="step-label">아빠 육아, 이것만은 기억하세요</div>
@@ -868,6 +876,14 @@
         <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
       </div>
       <div id="journal-content" class="jn-page-content"></div>
+    </div>
+
+    <!-- ══════════════ PAGE: 다문화 가정 가이드 ══════════════ -->
+    <div class="page-view" id="page-multicultural" style="display:none">
+      <div class="page-header" style="min-height:0;padding:0;">
+        <button class="page-back" onclick="goHome()" style="padding:14px 18px;">← 홈으로</button>
+      </div>
+      <div id="multicultural-content"></div>
     </div>
 
     <!-- 출처 드로어 -->
@@ -1190,6 +1206,7 @@
 <script defer src="js/elder-care.js"></script>
 <script defer src="js/grief-page.js"></script>
 <script defer src="js/sleep-page.js"></script>
+<script defer src="js/multicultural-page.js"></script>
 <script defer src="js/app.js"></script>
 <script defer src="js/onboard.js"></script>
 <script defer src="js/share.js"></script>

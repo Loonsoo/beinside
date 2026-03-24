@@ -6,6 +6,18 @@
 /* ── 8px 기반 간격 시스템 ── */
 /* --sp-1:8px  --sp-2:16px  --sp-3:24px  --sp-4:32px  --sp-6:48px  --sp-8:64px */
 
+/* ── 시맨틱 버튼 리셋 — div role="button"에서 전환된 요소 ── */
+button.sit-card,
+button.pill,
+button.logo,
+button.theme-toggle,
+button.emergency-quiet{
+  border:none;font:inherit;color:inherit;
+  background:none;padding:0;margin:0;
+  text-align:left;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+}
+
 :root{
   /* ── 배경 & 서피스 ── */
   --cream:#F7F3EE;           /* Warm Neutral Beige — 기본 배경 */
@@ -5380,6 +5392,80 @@ a:focus:not(:focus-visible){
     font-size:11px;
   }
 }
+
+/* ══════════════════════════════════════════
+   MULTICULTURAL PAGE — 다문화 가정 가이드
+══════════════════════════════════════════ */
+.mc-hero{text-align:center;}
+.mc-lang-selector{
+  display:flex;gap:var(--sp-1);justify-content:center;flex-wrap:wrap;
+  padding:0 var(--sp-2) var(--sp-3);
+}
+.mc-lang-btn{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:14px 20px;border-radius:14px;cursor:pointer;
+  background:var(--white);border:1.5px solid var(--line);
+  font:inherit;color:var(--ink);
+  transition:all .2s ease;min-width:100px;
+  -webkit-appearance:none;appearance:none;
+}
+.mc-lang-btn.on{
+  border-color:var(--peach);background:rgba(123,174,203,.08);
+  box-shadow:0 2px 12px rgba(123,174,203,.15);
+}
+.mc-lang-flag{font-size:24px;}
+.mc-lang-label{font-size:14px;font-weight:700;}
+.mc-lang-sub{font-size:11px;color:var(--ink-l);}
+
+.mc-section{
+  padding:0 var(--sp-2) var(--sp-3);
+  max-width:640px;margin:0 auto;
+}
+.mc-section-title{
+  font-size:16px;font-weight:700;color:var(--ink);
+  margin-bottom:var(--sp-2);padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+.mc-crisis-msg{
+  font-size:13.5px;line-height:1.75;color:var(--ink-m);
+  margin-bottom:var(--sp-2);word-break:keep-all;
+}
+.mc-emer-list{display:flex;flex-direction:column;gap:var(--sp-1);}
+.mc-emer-item{
+  display:flex;align-items:center;gap:var(--sp-2);
+  padding:14px 16px;border-radius:14px;
+  background:var(--white);border:1px solid var(--line);
+  text-decoration:none;color:var(--ink);
+  transition:all .2s ease;
+  min-height:44px;
+}
+.mc-emer-item:active{transform:scale(.98);}
+.mc-emer-num{font-size:18px;font-weight:800;min-width:64px;text-align:center;}
+.mc-emer-info{flex:1;min-width:0;}
+.mc-emer-name{display:block;font-size:13px;font-weight:700;}
+.mc-emer-desc{display:block;font-size:11.5px;color:var(--ink-l);line-height:1.5;margin-top:2px;}
+
+.mc-guide-list{display:flex;flex-direction:column;gap:var(--sp-2);}
+.mc-guide-card{
+  display:flex;gap:var(--sp-2);
+  padding:var(--sp-2);border-radius:14px;
+  background:var(--white);border:1px solid var(--line);
+}
+.mc-guide-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
+.mc-guide-body{flex:1;min-width:0;}
+.mc-guide-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.mc-guide-text{font-size:13px;line-height:1.75;color:var(--ink-m);word-break:keep-all;}
+
+.mc-footer{
+  text-align:center;padding:var(--sp-3) var(--sp-2);
+  font-size:14px;color:var(--ink-m);
+}
+
+/* dark mode */
+[data-theme="dark"] .mc-lang-btn{background:var(--white);border-color:rgba(255,255,255,.08);}
+[data-theme="dark"] .mc-lang-btn.on{background:rgba(123,174,203,.12);border-color:var(--peach);}
+[data-theme="dark"] .mc-emer-item,
+[data-theme="dark"] .mc-guide-card{background:var(--white);border-color:rgba(255,255,255,.06);}
 
 /* ── 접근성: 모션 감소 ── */
 @media(prefers-reduced-motion:reduce){

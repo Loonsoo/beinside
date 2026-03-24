@@ -17,6 +17,7 @@
     { "source": "/menopause", "destination": "/index.html" },
     { "source": "/emergency", "destination": "/index.html" },
     { "source": "/journal", "destination": "/index.html" },
-    { "source": "/mental", "destination": "/index.html" }
+    { "source": "/mental", "destination": "/index.html" },
+    { "source": "/multicultural", "destination": "/index.html" }
   ]
 }

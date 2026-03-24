@@ -220,7 +220,7 @@ function buildMoodHistory(moods) {
         </div>
       </div>
       ${m.memo ? `<div class="jn-history-memo">${esc(m.memo)}</div>` : ''}
-      <button class="jn-delete-btn" onclick="deleteMoodEntry('${m.date}',this)" aria-label="삭제">
+      <button class="jn-delete-btn" onclick="deleteMoodEntry('${esc(m.date)}',this)" aria-label="삭제">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4.5 3V2.5C4.5 1.67 5.17 1 6 1h4c.83 0 1.5.67 1.5 1.5V3m2 0H2.5m2 0v9.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>`;
@@ -429,7 +429,7 @@ function buildJournalList(container) {
         </div>
         <div class="jn-journal-body">
           <p>${esc(e.text)}</p>
-          <button class="jn-delete-btn" onclick="deleteJournalEntry('${e.id}',this)" aria-label="이 기록 삭제">
+          <button class="jn-delete-btn" onclick="deleteJournalEntry('${esc(e.id)}',this)" aria-label="이 기록 삭제">
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4.5 3V2.5C4.5 1.67 5.17 1 6 1h4c.83 0 1.5.67 1.5 1.5V3m2 0H2.5m2 0v9.5c0 .83.67 1.5 1.5 1.5h4c.83 0 1.5-.67 1.5-1.5V3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             삭제
           </button>
