@@ -1900,7 +1900,7 @@ footer{
 
 /* 이모지 아이콘 — 글로우 오브 */
 .sit-icon {
-  font-size: 26px; flex-shrink: 0; line-height: 1;
+  font-size: 28px; flex-shrink: 0; line-height: 1;
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
@@ -3221,8 +3221,8 @@ footer{
   .section-title{ font-size:15px; }
   .situation-grid{ gap:10px; margin-bottom:0; }
   .sit-card{ padding:16px; gap:12px; border-radius:16px; }
-  .sit-icon{ width:40px; height:40px; font-size:22px; }
-  .sit-title{ font-size:12.5px; }
+  .sit-icon{ width:40px; height:40px; font-size:24px; }
+  .sit-title{ font-size:13px; }
   .sit-sub{ font-size:10.5px; }
   .sit-arrow{ bottom:10px; right:12px; font-size:11px; }
   .mood-section{ padding:var(--sp-2) 0; margin:0; }
