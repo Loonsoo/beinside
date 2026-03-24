@@ -2263,6 +2263,48 @@
   .step-section{ padding:0 18px; }
 }
 
+/* ── 인식 목록 (Recognition) ── */
+.recognition-list{
+  background:var(--warm);
+  border-radius:14px;
+  padding:var(--sp-2) 18px;
+}
+.recognition-item{
+  display:flex;gap:8px;align-items:flex-start;
+  margin-bottom:8px;
+  font-size:13px;color:var(--ink-m);line-height:1.7;
+  word-break:keep-all;
+}
+.recognition-dot{
+  color:var(--peach-d);flex-shrink:0;
+}
+.recognition-hint{
+  font-size:12px;color:var(--ink-l);
+  margin-top:8px;line-height:1.6;
+}
+
+/* ── 기법 카드 (Technique) ── */
+.technique-item{
+  margin-bottom:12px;
+}
+.technique-name{
+  font-size:13px;font-weight:700;
+  color:var(--peach-d);
+  margin-bottom:4px;
+}
+.technique-desc{
+  font-size:12.5px;color:var(--ink-m);
+  line-height:1.75;word-break:keep-all;
+  margin:0;
+}
+
+/* ── 심리학 설명 텍스트 ── */
+.psychology-text{
+  font-size:13px;color:var(--ink-m);
+  line-height:1.8;word-break:keep-all;
+  margin:0;
+}
+
 /* ══════════════════════════════════════════
    CHECK TOOL — 상황 판단 컴포넌트
 ══════════════════════════════════════════ */
@@ -3877,6 +3919,311 @@ a:focus:not(:focus-visible){
 }
 .ninput input:focus-visible{
   outline:none; /* parent .ninput:focus-within handles this */
+}
+
+/* ══════════════════════════════════════════
+   GUIDE PAGE — 가이드 콘텐츠 공통 컴포넌트
+   ADHD · 중독 · 금융 · 향후 신규 가이드 공통
+══════════════════════════════════════════ */
+
+/* ── 가이드 히어로 ── */
+.guide-hero{
+  text-align:center;
+  padding:var(--sp-6) var(--sp-3) var(--sp-4);
+}
+.guide-hero h1{
+  font-family:'Gowun Batang',serif;
+  font-size:clamp(22px,5vw,28px);
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 var(--sp-1);
+  line-height:1.35;
+  letter-spacing:-.3px;
+  word-break:keep-all;
+}
+.guide-hero p{
+  font-size:14px;
+  color:var(--ink-m);
+  line-height:1.72;
+  margin:0 0 var(--sp-2);
+  word-break:keep-all;
+}
+.guide-stat{
+  display:inline-block;
+  padding:var(--sp-1) var(--sp-2);
+  border-radius:16px;
+  background:var(--peach-p);
+  font-size:12px;
+  color:var(--peach-d);
+  line-height:1.5;
+}
+.guide-stat strong{
+  font-weight:700;
+  font-size:13px;
+}
+
+/* ── 가이드 섹션 ── */
+.guide-section{
+  padding:0 var(--sp-3);
+  margin-bottom:var(--sp-4);
+}
+.guide-section h2{
+  font-size:17px;
+  font-weight:700;
+  color:var(--ink);
+  margin:0 0 var(--sp-2);
+  line-height:1.35;
+  letter-spacing:-.2px;
+}
+.guide-section p{
+  font-size:14px;
+  color:var(--ink-m);
+  line-height:1.75;
+  word-break:keep-all;
+  margin:0;
+}
+.guide-section ul{
+  padding-left:20px;
+  font-size:14px;
+  color:var(--ink);
+  line-height:1.85;
+  word-break:keep-all;
+}
+.guide-section ul li{
+  margin-bottom:6px;
+}
+
+/* ── 가이드 카드 (정보 카드) ── */
+.guide-cards{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.guide-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:var(--sp-2);
+  transition:border-color .2s, box-shadow .2s;
+}
+.guide-card:hover{
+  border-color:var(--peach-l);
+  box-shadow:0 4px 16px rgba(123,174,203,.08);
+}
+.guide-card-inner{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.guide-card-icon{
+  font-size:22px;
+  flex-shrink:0;
+  line-height:1;
+  margin-top:2px;
+}
+.guide-card-body{
+  min-width:0;
+}
+.guide-card-title{
+  display:block;
+  font-size:14.5px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:4px;
+}
+.guide-card-text{
+  font-size:13.5px;
+  color:var(--ink-m);
+  line-height:1.65;
+  word-break:keep-all;
+  margin:0;
+}
+
+/* ── 가이드 체크도구 (자가진단) ── */
+.guide-check{
+  background:var(--white);
+  border:1.5px solid rgba(123,174,203,.14);
+  border-radius:18px;
+  padding:22px var(--sp-3);
+  margin:0 var(--sp-3) var(--sp-3);
+}
+.guide-check-title{
+  font-size:14.5px;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:var(--sp-2);
+}
+.guide-check-item{
+  display:flex;
+  align-items:flex-start;
+  gap:11px;
+  padding:11px 14px;
+  border-radius:12px;
+  margin-bottom:7px;
+  cursor:pointer;
+  transition:background .15s;
+  font-size:13.5px;
+  color:var(--ink-m);
+  line-height:1.6;
+  word-break:keep-all;
+}
+.guide-check-item:hover{ background:rgba(123,174,203,.06); }
+.guide-check-item.checked{
+  background:linear-gradient(135deg,rgba(123,174,203,.10),rgba(107,168,133,.06));
+  color:var(--ink);
+  font-weight:600;
+}
+.guide-check-box{
+  width:22px;height:22px;
+  border-radius:6px;
+  border:2px solid rgba(123,174,203,.30);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s var(--calm-ease);
+  margin-top:1px;
+}
+.guide-check-item.checked .guide-check-box{
+  background:var(--peach-d);
+  border-color:var(--peach-d);
+  color:white;
+  font-size:13px;font-weight:700;
+  box-shadow:0 2px 8px rgba(74,140,170,.30);
+}
+.guide-check-result{
+  margin-top:var(--sp-2);
+  padding:var(--sp-2) 18px;
+  border-radius:16px;
+  font-size:13.5px;
+  line-height:1.65;
+  word-break:keep-all;
+}
+.guide-check-result strong{
+  display:block;
+  font-size:15px;
+  margin-bottom:6px;
+}
+.guide-check-result p{
+  font-size:13.5px;
+  color:var(--ink-m);
+  margin:0;
+}
+
+/* ── 가이드 비교표 ── */
+.guide-compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  font-size:13px;
+  line-height:1.65;
+}
+.guide-compare-col{
+  padding:var(--sp-2);
+  border-radius:14px;
+  word-break:keep-all;
+}
+.guide-compare-col strong{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+}
+.guide-compare-note{
+  font-size:13px;
+  color:var(--ink-m);
+  margin-top:12px;
+  line-height:1.65;
+  word-break:keep-all;
+}
+
+/* ── 가이드 아코디언 (유형별 펼침) ── */
+.guide-accordion{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:var(--sp-2);
+  margin-bottom:10px;
+  transition:border-color .2s;
+}
+.guide-accordion:hover{ border-color:var(--peach-l); }
+.guide-accordion summary{
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  color:var(--ink);
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.guide-accordion summary::-webkit-details-marker{ display:none; }
+.guide-accordion summary::after{
+  content:'›';
+  margin-left:auto;
+  font-size:18px;
+  color:var(--ink-l);
+  transition:transform .25s var(--calm-ease);
+}
+.guide-accordion[open] summary::after{
+  transform:rotate(90deg);
+}
+.guide-accordion ul{
+  padding:12px 0 0 20px;
+  font-size:13.5px;
+  color:var(--ink-m);
+  line-height:1.8;
+}
+
+/* ── 모바일 반응형 ── */
+@media(max-width:640px){
+  .guide-hero{ padding:var(--sp-4) 18px var(--sp-3); }
+  .guide-section{ padding:0 18px; }
+  .guide-check{ margin:0 18px 18px; padding:18px; }
+  .guide-compare{ grid-template-columns:1fr; }
+}
+
+/* ── 가이드 진입 애니메이션 (stagger) ── */
+.guide-section,
+.guide-check,
+.guide-hero{
+  animation:up .45s var(--calm-ease) both;
+}
+.guide-hero{ animation-delay:0ms; }
+.guide-section:nth-of-type(1){ animation-delay:60ms; }
+.guide-section:nth-of-type(2){ animation-delay:120ms; }
+.guide-section:nth-of-type(3){ animation-delay:180ms; }
+.guide-section:nth-of-type(4){ animation-delay:240ms; }
+.guide-section:nth-of-type(5){ animation-delay:300ms; }
+.guide-section:nth-of-type(6){ animation-delay:360ms; }
+.guide-check{ animation-delay:100ms; }
+
+.guide-card{
+  animation:up .4s var(--calm-ease) both;
+}
+.guide-card:nth-child(1){ animation-delay:0ms; }
+.guide-card:nth-child(2){ animation-delay:50ms; }
+.guide-card:nth-child(3){ animation-delay:100ms; }
+.guide-card:nth-child(4){ animation-delay:150ms; }
+
+/* ── 포커스 & 접근성 ── */
+.guide-check-item:focus-visible{
+  outline:2px solid var(--peach);
+  outline-offset:2px;
+}
+.guide-card:focus-within{
+  border-color:var(--peach);
+  box-shadow:0 0 0 3px var(--peach-glow);
+}
+.guide-accordion:focus-within{
+  border-color:var(--peach);
+}
+
+/* ── Reduced Motion ── */
+@media(prefers-reduced-motion:reduce){
+  .guide-section,
+  .guide-check,
+  .guide-hero,
+  .guide-card{
+    animation:none;
+  }
 }
 
 /* ── 공공기관 연결 섹션 ── */

@@ -90,9 +90,9 @@ function renderBurnoutPage(container) {
   const d = BURNOUT_DATA;
 
   const techHTML = d.techniques ? d.techniques.map(t =>
-    `<div style="margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
-      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    `<div class="technique-item">
+      <div class="technique-name">${esc(t.name)}</div>
+      <p class="technique-desc">${esc(t.desc)}</p>
     </div>`
   ).join('') : '';
 
@@ -107,13 +107,13 @@ function renderBurnoutPage(container) {
 
     <div class="step-section">
       <div class="step-label">${esc(d.recognition.title)}</div>
-      <div style="background:var(--warm);border-radius:14px;padding:16px 18px;">
+      <div class="recognition-list">
         ${d.recognition.items.map(item =>
-          `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">
-            <span style="color:var(--peach-d);flex-shrink:0;">•</span><span>${esc(item)}</span>
+          `<div class="recognition-item">
+            <span class="recognition-dot">•</span><span>${esc(item)}</span>
           </div>`
         ).join('')}
-        <p style="font-size:12px;color:var(--ink-l);margin-top:8px;line-height:1.6;">하나라도 해당된다면, 아래 내용을 천천히 살펴보세요.</p>
+        <p class="recognition-hint">하나라도 해당된다면, 아래 내용을 천천히 살펴보세요.</p>
       </div>
     </div>
 
@@ -124,7 +124,7 @@ function renderBurnoutPage(container) {
           <span>🧠 번아웃, 뇌에서 무슨 일이 일어나고 있는 걸까?</span><span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body"><div class="accordion-body-inner">
-          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+          <p class="psychology-text">${esc(d.psychology)}</p>
         </div></div>
       </div>` : ''}
 
@@ -349,9 +349,9 @@ function buildRelationDetail(container, id) {
   if (!d || !meta) return;
 
   const techHTML = d.techniques ? d.techniques.map(t =>
-    `<div style="margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
-      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    `<div class="technique-item">
+      <div class="technique-name">${esc(t.name)}</div>
+      <p class="technique-desc">${esc(t.desc)}</p>
     </div>`
   ).join('') : '';
 
@@ -375,7 +375,7 @@ function buildRelationDetail(container, id) {
           <span>🧠 왜 이렇게 힘든 걸까?</span><span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body"><div class="accordion-body-inner">
-          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+          <p class="psychology-text">${esc(d.psychology)}</p>
         </div></div>
       </div>` : ''}
 
@@ -590,9 +590,9 @@ function buildTransitionDetail(container, id) {
   if (!d || !meta) return;
 
   const techHTML = d.techniques ? d.techniques.map(t =>
-    `<div style="margin-bottom:12px;">
-      <div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:4px;">${esc(t.name)}</div>
-      <p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;">${esc(t.desc)}</p>
+    `<div class="technique-item">
+      <div class="technique-name">${esc(t.name)}</div>
+      <p class="technique-desc">${esc(t.desc)}</p>
     </div>`
   ).join('') : '';
 
@@ -616,7 +616,7 @@ function buildTransitionDetail(container, id) {
           <span>🧠 왜 이렇게 힘든 걸까?</span><span class="accordion-arrow">▼</span>
         </div>
         <div class="accordion-body"><div class="accordion-body-inner">
-          <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">${esc(d.psychology)}</p>
+          <p class="psychology-text">${esc(d.psychology)}</p>
         </div></div>
       </div>` : ''}
 
