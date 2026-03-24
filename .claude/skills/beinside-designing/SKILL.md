@@ -19,22 +19,33 @@ description: >
 BeInside의 사용자는 심리적으로 취약한 상태에 있다.
 디자인의 모든 결정은 이 전제에서 출발한다.
 
-### 3가지 디자인 원칙
+**영감의 원천**: Calm App × 일본 디자인 철학 (間 · 余白 · 侘寂)
 
-**1. Clarity (명료함) — Apple HIG에서 차용**
-- 모든 요소는 한 눈에 목적을 알 수 있어야 한다
-- 텍스트는 어떤 크기에서든 읽을 수 있어야 한다
-- 장식은 최소화하고, 콘텐츠가 주인공이 되게 한다
-- 시각적 위계를 통해 사용자의 시선을 자연스럽게 안내한다
+### 4가지 디자인 원칙
 
-**2. Calm (안정감) — Emotional Design에서 차용**
+**1. 間 Ma (여백은 숨이다) — 일본 공간 철학**
+- 여백은 "비어 있는 것"이 아니라 "의미가 머무는 곳"이다
+- 콘텐츠 간 충분한 수직 여백으로 사용자가 읽은 내용을 소화할 시간을 준다
+- 화면의 40~60%는 의도적으로 비워둔다
+- 한 화면에 하나의 핵심 메시지만 전달한다
+- 콘텐츠:여백 비율 목표 = 약 50:50 (절대 70:30을 초과하지 않는다)
+- 무거운 감정 콘텐츠 뒤에는 반드시 추가 여백을 삽입한다
+
+**2. 静けさ Shizukesa (고요한 안심) — Calm App 철학**
+- "기쁨(delight)"이 아니라 "안심(relief)"을 디자인한다
 - 화면이 "정보를 쏟아붓는" 것이 아니라 "조용히 옆에 앉아 건네는" 느낌
-- 넉넉한 여백이 숨 쉴 공간을 만든다
-- 색상은 따뜻하지만 자극적이지 않게
-- 애니메이션은 부드럽고 자연스러운 이징(easing)만 사용
+- 애니메이션은 호흡처럼 — 나타남(300~500ms) → 멈춤 → 사라짐
+- 색상은 자연에서 온 낮은 채도, 부드러운 전환
 - 절대 사용자를 놀라게 하거나 급하게 느끼게 하지 않는다
+- "아무것도 안 해도 괜찮다"를 여백과 톤으로 표현한다
 
-**3. Safety (안전) — Crisis UX에서 차용**
+**3. 侘寂 Wabi-sabi (불완전함의 따뜻함)**
+- 지나치게 매끈한 UI보다 "사람이 있는 느낌"의 온기를 추구한다
+- 완벽한 기하학적 그리드를 고집하지 않는다 — 자연스러운 흐름을 존중
+- 사용자의 불완전한 입력(짧은 답변, 중도 이탈)을 자연스럽게 수용하는 흐름
+- Gowun Batang 서체의 붓글씨 같은 질감이 이 원칙을 체현한다
+
+**4. Safety (안전) — Crisis UX**
 - 위기 상황의 사용자는 인지 능력이 급격히 저하된 상태
 - 긴급 페이지: 글씨 크게, 선택지 적게, 여백 넉넉히
 - 모든 전화번호는 한 번의 터치로 연결
@@ -107,13 +118,19 @@ See `references/design-tokens.md` for the complete token table.
 - Emergency colors are the only place where saturated reds are permitted
 - Hover states lighten or shift toward the primary blue
 
-## Animation & Motion
+## Animation & Motion — "호흡하는 모션"
 
 See `references/motion-system.md` for keyframes and timing.
 
-- Page entry: staggered `@keyframes up` (translateY 16px -> 0, opacity 0 -> 1)
-- Card hover: `cubic-bezier(.34,1.56,.64,1)` (slight overshoot)
-- Modal: `cubic-bezier(.34,1.2,.64,1)` (slide up)
+### 핵심 원칙: 페이드 > 슬라이드, 느림 > 빠름
+- 요소가 "밀려오는" 것보다 "서서히 드러나는" 느낌을 선호한다
+- 서구 표준(200~300ms)보다 약간 느린 300~500ms 트랜지션으로 "여유" 부여
+- 순차적 등장: 요소들이 한꺼번에 나타나지 않고 50~80ms 간격으로 stagger
+
+### 타이밍
+- Page entry: staggered `@keyframes up` (translateY 16px -> 0, opacity 0 -> 1), 50ms stagger
+- Card hover: `cubic-bezier(.34,1.2,.64,1)` — 과도한 바운스 금지, 자연스러운 감속만
+- Modal: `cubic-bezier(.34,1.2,.64,1)` (slide up), 300ms
 - Accordion body: `max-height` transition 0.35s ease
 - **Always** respect `prefers-reduced-motion: reduce`
 
