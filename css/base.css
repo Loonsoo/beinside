@@ -285,7 +285,7 @@ header{
 }
 .logo{
   font-family:'Gowun Batang',serif;font-size:18px;font-weight:700;
-  color:var(--peach-d);
+  color:var(--ink);
   display:flex;align-items:center;gap:5px;
   letter-spacing:-.3px;
   justify-content:center;
