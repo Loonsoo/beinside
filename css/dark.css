@@ -198,10 +198,27 @@
   background:var(--cream);
 }
 [data-theme="dark"] .pill{
-  background:var(--white);
+  background:rgba(255,255,255,.08);
+  border-color:rgba(255,255,255,.12);
+  color:rgba(255,255,255,.75);
+  box-shadow:0 1px 4px rgba(0,0,0,.25);
+}
+[data-theme="dark"] .pill:hover,
+[data-theme="dark"] .pill:focus-visible{
+  background:rgba(123,174,203,.18);
+  border-color:rgba(123,174,203,.35);
+  color:rgba(255,255,255,.95);
+}
+[data-theme="dark"] .pills{
+  background:rgba(0,0,0,.15);
+}
+[data-theme="dark"] .cd{
+  box-shadow:0 0 4px currentColor;
+}
+[data-theme="dark"] .medical-disclaimer{
+  background:rgba(255,255,255,.04);
   border-color:rgba(255,255,255,.08);
-  color:var(--ink-m);
-  box-shadow:0 1px 4px rgba(0,0,0,.15);
+  color:rgba(255,255,255,.5);
 }
 [data-theme="dark"] .summary-panel{
   background:linear-gradient(135deg,#2A2822,#2E2824);

@@ -461,39 +461,55 @@ nav button.on{
 .hint b{background:var(--peach-p);color:var(--peach-d);padding:2px 8px;border-radius:8px;font-size:11px;}
 
 /* ── QUICK PILLS ── */
-.pills{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;padding:16px 48px 20px;background:var(--section-alt);}
+/* ── 시기별 선택 필(pill) ── */
+.pills{
+  display:flex;gap:10px;
+  padding:20px 24px;
+  background:var(--section-alt);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.pills::-webkit-scrollbar{display:none;}
 .pill{
   background:var(--white);
   border:1.5px solid rgba(123,174,203,.18);
-  border-radius:24px;padding:6px 15px;
-  font-size:12px;font-weight:600;color:var(--ink-m);
+  border-radius:28px;
+  padding:10px 18px;
+  font-size:13px;font-weight:600;color:var(--ink-m);
   cursor:pointer;
-  transition:all .22s cubic-bezier(.34,1.56,.64,1);
-  display:flex;align-items:center;gap:6px;
+  transition:all .22s var(--calm-ease);
+  display:flex;align-items:center;gap:8px;
   font-family:'Noto Sans KR',sans-serif;
   box-shadow:0 1px 4px rgba(40,40,40,.06);
   letter-spacing:-.2px;
+  white-space:nowrap;
+  min-height:44px;
 }
-.pill:hover{
+.pill:hover,.pill:focus-visible{
   border-color:var(--peach);color:var(--peach-d);
-  transform:translateY(-1px);
-  box-shadow:0 4px 14px rgba(123,174,203,.15);
   background:var(--peach-p);
   transform:translateY(-2px);
   box-shadow:0 5px 14px rgba(123,174,203,.18);
 }
-.cd{width:7px;height:7px;border-radius:50%;}
+.pill:active{
+  transform:translateY(0);
+  box-shadow:0 1px 4px rgba(123,174,203,.12);
+}
+.cd{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 
 /* ── 의학적 면책 조항 ── */
 .medical-disclaimer{
-  margin:0 48px 16px;
+  margin:0 24px 16px;
   background:var(--disclaimer-bg);
   border:1px solid var(--disclaimer-border);
-  border-radius:16px;
-  padding:16px 20px;
-  font-size:13px;
+  border-radius:14px;
+  padding:12px 16px;
+  font-size:12px;
   color:var(--disclaimer-ink);
-  line-height:1.65;
+  line-height:1.6;
 }
 
 /* ── RESULT ── */
@@ -508,8 +524,8 @@ nav button.on{
 }
 .rhead::before{content:'';position:absolute;right:-40px;top:-40px;width:220px;height:220px;background:rgba(255,255,255,.08);border-radius:50%;}
 .rhead::after{content:'';position:absolute;right:60px;bottom:-50px;width:150px;height:150px;background:rgba(255,255,255,.05);border-radius:50%;}
-.r-age{font-family:'Gowun Batang',serif;font-size:56px;font-weight:700;line-height:1;margin-bottom:8px;letter-spacing:-.5px;}
-.r-age sub{font-size:16px;font-family:'Noto Sans KR',sans-serif;font-weight:400;opacity:.75;vertical-align:baseline;}
+.r-age{font-family:'Gowun Batang',serif;font-size:clamp(36px,8vw,56px);font-weight:700;line-height:1;margin-bottom:8px;letter-spacing:-.5px;}
+.r-age sub{font-size:clamp(13px,2.5vw,16px);font-family:'Noto Sans KR',sans-serif;font-weight:400;opacity:.75;vertical-align:baseline;}
 .r-stg{font-size:13px;font-weight:700;letter-spacing:.06em;opacity:.8;}
 .r-qt{font-family:'Gowun Batang',serif;font-size:15px;line-height:1.8;opacity:.9;max-width:340px;text-align:right;font-style:italic;position:relative;z-index:1;}
 
@@ -1134,11 +1150,13 @@ footer{
   :root{--tl-w:0px;}
   header{padding:0 18px;}nav{display:none;}
   .hero{padding:52px 18px 32px;}
-  #page-growth .pills,#result{padding-left:18px;padding-right:18px;}
+  #page-growth .pills{padding:16px 18px;}
+  #result{padding-left:18px;padding-right:18px;}
   .sit-bar,#sp-result{padding-left:18px;padding-right:18px;}
   .grid{grid-template-columns:1fr;}.card.full{grid-column:span 1;}
   .tgrid{grid-template-columns:1fr 1fr;}.fgrid,.hgrid{grid-column:1fr;}
-  .rhead{flex-direction:column;gap:12px;}.r-qt{text-align:left;}
+  .rhead{flex-direction:column;gap:12px;padding:20px 22px;}.r-qt{text-align:left;font-size:14px;}
+  .medical-disclaimer{margin:0 18px 14px;padding:10px 14px;font-size:11px;}
   .tl-sidebar{display:none;}
   .sp-grid{grid-template-columns:1fr;}.sp-card.full{grid-column:span 1;}
   .sp-header{flex-direction:column;align-items:flex-start;gap:10px;}
