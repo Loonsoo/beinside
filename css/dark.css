@@ -295,7 +295,7 @@
   box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .logo{
-  color:var(--peach-d);
+  color:rgba(255,238,226,.75);
 }
 [data-theme="dark"] .guide-finder-btn{
   color:var(--ink-l);
