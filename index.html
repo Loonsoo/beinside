@@ -62,7 +62,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/dark.css">
 
   <!-- Analytics: Umami (프라이버시 우선, 쿠키 없음) -->
   <script defer src="https://cloud.umami.is/script.js" data-website-id="b089900e-0e7d-4ee3-a2ff-19686edfc487" data-auto-track="false" data-domains="beinside.kr"></script>
@@ -87,12 +89,23 @@
   </div>
   <button class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</button>
   <div class="hdr-right">
+    <button class="hdr-search-btn" onclick="openSearch()" aria-label="검색">🔍</button>
     <button class="hdr-sos" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움">SOS</button>
     <button class="menu-btn" onclick="toggleHeaderMenu()" aria-label="메뉴 열기">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>
+
+<!-- ── 검색 모달 ── -->
+<div class="search-overlay" id="search-overlay" onclick="closeSearch()"></div>
+<div class="search-modal" id="search-modal" role="dialog" aria-label="검색">
+  <div class="search-modal-inner">
+    <input type="text" id="search-input" class="search-modal-input" placeholder="어떤 도움이 필요하세요?" autocomplete="off" aria-label="검색어 입력">
+    <button class="search-modal-close" onclick="closeSearch()" aria-label="검색 닫기">✕</button>
+  </div>
+  <div id="search-results" class="search-results"></div>
+</div>
 
 <!-- ── 헤더 드롭다운 메뉴 ── -->
 <div class="hdr-menu-overlay" id="hdr-menu-overlay" onclick="closeHeaderMenu()"></div>
@@ -1239,6 +1252,8 @@
 <script defer src="js/app.js"></script>
 <script defer src="js/onboard.js"></script>
 <script defer src="js/share.js"></script>
+<script defer src="js/search.js"></script>
+<script defer src="js/vitals.js"></script>
 
 <!-- Structured Data (JSON-LD) -->
 <script type="application/ld+json">

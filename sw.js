@@ -12,7 +12,9 @@ const PRECACHE = [
   '/',
   '/index.html',
   '/offline.html',
-  '/css/styles.css',
+  '/css/base.css',
+  '/css/pages.css',
+  '/css/dark.css',
   '/js/app.js',
   '/js/data.js',
   '/js/render.js',
@@ -28,7 +30,9 @@ const PRECACHE = [
   '/js/elder-care.js',
   '/js/grief-page.js',
   '/js/sleep-page.js',
-  '/js/multicultural-page.js'
+  '/js/multicultural-page.js',
+  '/js/search.js',
+  '/js/vitals.js'
 ];
 
 /* ── Install: 정적 자산 프리캐시 ── */
