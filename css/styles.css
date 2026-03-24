@@ -1833,8 +1833,8 @@ footer{
 /* ── 상황 카드 — 감성 리디자인 ── */
 .sit-card {
   display: flex; flex-direction: column; align-items: center;
-  gap: 10px;
-  padding: 22px 16px 18px;
+  gap: 14px;
+  padding: 28px 20px 24px;
   border-radius: 20px;
   cursor: pointer;
   transition: all .32s cubic-bezier(.34,1.2,.64,1);
@@ -1875,8 +1875,8 @@ footer{
 
 /* 이모지 아이콘 — 글로우 오브 */
 .sit-icon {
-  font-size: 32px; flex-shrink: 0; line-height: 1;
-  width: 56px; height: 56px;
+  font-size: 26px; flex-shrink: 0; line-height: 1;
+  width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 50%;
   border: none;
@@ -1888,12 +1888,12 @@ footer{
 
 .sit-card-body { flex: 1; min-width: 0; }
 .sit-title {
-  font-size: 13.5px; font-weight: 700; color: var(--ink);
+  font-size: 14px; font-weight: 700; color: var(--ink);
   line-height: 1.45; letter-spacing: -.2px;
   margin-bottom: 4px; word-break: keep-all;
 }
 .sit-sub {
-  font-size: 11.5px; color: var(--ink-l);
+  font-size: 12px; color: var(--ink-l);
   line-height: 1.55; word-break: keep-all;
 }
 .sit-arrow {
@@ -3198,8 +3198,8 @@ footer{
   .section-header{ margin-bottom:var(--sp-2); }
   .section-title{ font-size:15px; }
   .situation-grid{ gap:10px; margin-bottom:0; }
-  .sit-card{ padding:16px 12px 14px; gap:8px; border-radius:16px; }
-  .sit-icon{ width:44px; height:44px; font-size:24px; }
+  .sit-card{ padding:20px 14px 18px; gap:10px; border-radius:16px; }
+  .sit-icon{ width:40px; height:40px; font-size:22px; }
   .sit-title{ font-size:12.5px; }
   .sit-sub{ font-size:10.5px; }
   .sit-arrow{ bottom:8px; right:10px; font-size:11px; }
