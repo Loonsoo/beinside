@@ -54,5 +54,94 @@
     "backToList": "← Back to list",
     "photo": "Photo"
   },
-  "greeting": "Hello, {name}"
+  "greeting": "Hello, {name}",
+  "home": {
+    "title": "What's going on right now?",
+    "care": {
+      "title": "If you're caring for a child or family",
+      "sub": "You don't have to figure it out alone"
+    },
+    "self": {
+      "title": "If you're struggling right now",
+      "sub": "One small step is enough"
+    },
+    "card": {
+      "growth": {
+        "title": "I'm worried about my child's growth",
+        "sub": "Let's check together if they're okay"
+      },
+      "sp": {
+        "title": "I'm raising my child alone",
+        "sub": "You're not alone — let's walk together"
+      },
+      "birth": {
+        "title": "Recovering alone after childbirth",
+        "sub": "Postpartum body and mind care, support programs"
+      },
+      "dad": {
+        "title": "I don't know how to be a dad",
+        "sub": "A parenting guide just for dads"
+      },
+      "elder": {
+        "title": "Caring for aging parents is hard",
+        "sub": "Caregiver burnout, dementia care, welfare guide"
+      },
+      "grief": {
+        "title": "I lost someone dear to me",
+        "sub": "Walking through grief together"
+      },
+      "multicultural": {
+        "title": "Multicultural family guide",
+        "sub": "Vietnamese · Chinese · English support"
+      },
+      "emotion": {
+        "title": "I don't know what to do with my feelings",
+        "sub": "Notice them slowly, and learn to hold them"
+      },
+      "burnout": {
+        "title": "I think I'm burned out",
+        "sub": "Check how you're doing, and rest"
+      },
+      "relation": {
+        "title": "My relationships have become hard",
+        "sub": "When your heart hurts, take it slow"
+      },
+      "sleep": {
+        "title": "I can't sleep",
+        "sub": "Insomnia, nightmares, oversleeping — when sleep breaks down"
+      },
+      "transition": {
+        "title": "I've lost my direction in life",
+        "sub": "Finding stability during change"
+      },
+      "teen": {
+        "title": "I've been holding on alone (Youth)",
+        "sub": "No judgment — we're on your side"
+      },
+      "workplace": {
+        "title": "I met a toxic person at work",
+        "sub": "Dealing with narcissists and gaslighters"
+      },
+      "postpartum": {
+        "title": "Something feels wrong after giving birth",
+        "sub": "Postpartum depression self-check and recovery"
+      },
+      "menopause": {
+        "title": "My body and mind are changing",
+        "sub": "Menopause mood, hormones, and self-care"
+      },
+      "adhd": {
+        "title": "I'm not lazy",
+        "sub": "Adult ADHD self-check and management"
+      },
+      "addiction": {
+        "title": "I want to stop but I can't",
+        "sub": "Phone, gaming, alcohol, gambling recovery guide"
+      },
+      "finance": {
+        "title": "Money worries keep me up at night",
+        "sub": "Financial stress, mental health, and real support"
+      }
+    }
+  }
 }

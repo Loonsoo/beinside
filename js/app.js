@@ -593,6 +593,18 @@ document.addEventListener('keydown', e => {
     if (editMode) return;
     editMode = true;
     document.body.classList.add('card-edit-mode');
+    // 숨겨진 "더 보기" 카드 모두 표시
+    document.querySelectorAll('.sit-card--more-care, .sit-card--more-self').forEach(function(c) {
+      c.style.display = '';
+    });
+    // "더 보기" 버튼 숨기기
+    document.querySelectorAll('.show-more-btn').forEach(function(b) {
+      b.style.display = 'none';
+    });
+    // 홈으로 이동 (다른 페이지에서 편집 누른 경우)
+    if (typeof showPage === 'function' && typeof curPage !== 'undefined' && curPage !== 'home') {
+      showPage('home');
+    }
     // 햅틱 피드백 (지원 시)
     if (navigator.vibrate) navigator.vibrate(30);
   };
@@ -601,6 +613,19 @@ document.addEventListener('keydown', e => {
     if (!editMode) return;
     editMode = false;
     document.body.classList.remove('card-edit-mode');
+    // "더 보기" 카드 다시 숨기기 (expanded 상태가 아닌 경우)
+    var careBtn = document.getElementById('show-more-care');
+    var selfBtn = document.getElementById('show-more-self');
+    if (careBtn && !careBtn.classList.contains('expanded')) {
+      document.querySelectorAll('.sit-card--more-care').forEach(function(c) { c.style.display = 'none'; });
+    }
+    if (selfBtn && !selfBtn.classList.contains('expanded')) {
+      document.querySelectorAll('.sit-card--more-self').forEach(function(c) { c.style.display = 'none'; });
+    }
+    // "더 보기" 버튼 복원
+    document.querySelectorAll('.show-more-btn').forEach(function(b) {
+      b.style.display = '';
+    });
     saveOrder();
   };
 

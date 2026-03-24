@@ -54,5 +54,94 @@
     "backToList": "← Quay lại danh sách",
     "photo": "Ảnh"
   },
-  "greeting": "Xin chào, {name}"
+  "greeting": "Xin chào, {name}",
+  "home": {
+    "title": "Bạn đang trong tình trạng nào?",
+    "care": {
+      "title": "Nếu bạn đang chăm sóc con hoặc gia đình",
+      "sub": "Bạn không phải lo lắng một mình"
+    },
+    "self": {
+      "title": "Nếu bạn đang gặp khó khăn",
+      "sub": "Một bước nhỏ là đủ rồi"
+    },
+    "card": {
+      "growth": {
+        "title": "Tôi lo lắng về sự phát triển của con",
+        "sub": "Hãy cùng kiểm tra xem con có ổn không"
+      },
+      "sp": {
+        "title": "Tôi nuôi con một mình",
+        "sub": "Bạn không đơn độc, hãy cùng bước đi"
+      },
+      "birth": {
+        "title": "Đang hồi phục một mình sau sinh",
+        "sub": "Chăm sóc cơ thể và tinh thần sau sinh"
+      },
+      "dad": {
+        "title": "Tôi không biết làm bố thế nào",
+        "sub": "Hướng dẫn nuôi dạy con dành cho bố"
+      },
+      "elder": {
+        "title": "Chăm sóc cha mẹ già rất khó",
+        "sub": "Kiệt sức khi chăm sóc, hướng dẫn phúc lợi"
+      },
+      "grief": {
+        "title": "Tôi đã mất đi người thân yêu",
+        "sub": "Cùng bước qua nỗi đau mất mát"
+      },
+      "multicultural": {
+        "title": "Hướng dẫn gia đình đa văn hóa",
+        "sub": "Hỗ trợ tiếng Việt · Trung · Anh"
+      },
+      "emotion": {
+        "title": "Tôi không biết xử lý cảm xúc",
+        "sub": "Từ từ nhận ra và học cách đối mặt"
+      },
+      "burnout": {
+        "title": "Tôi nghĩ mình bị kiệt sức",
+        "sub": "Hãy kiểm tra và nghỉ ngơi"
+      },
+      "relation": {
+        "title": "Các mối quan hệ trở nên khó khăn",
+        "sub": "Khi trái tim đau, hãy từ từ"
+      },
+      "sleep": {
+        "title": "Tôi không ngủ được",
+        "sub": "Mất ngủ, ác mộng, ngủ quá nhiều"
+      },
+      "transition": {
+        "title": "Tôi đã mất phương hướng sống",
+        "sub": "Tìm lại sự ổn định trong thay đổi"
+      },
+      "teen": {
+        "title": "Tôi đã một mình chịu đựng (Thanh thiếu niên)",
+        "sub": "Không phán xét, đứng về phía bạn"
+      },
+      "workplace": {
+        "title": "Gặp người độc hại ở công ty",
+        "sub": "Đối phó với kẻ thao túng tâm lý"
+      },
+      "postpartum": {
+        "title": "Cảm thấy bất thường sau sinh",
+        "sub": "Tự kiểm tra trầm cảm sau sinh"
+      },
+      "menopause": {
+        "title": "Cơ thể và tâm trí đang thay đổi",
+        "sub": "Mãn kinh, hormone và chăm sóc bản thân"
+      },
+      "adhd": {
+        "title": "Tôi không lười biếng",
+        "sub": "Tự kiểm tra và quản lý ADHD người lớn"
+      },
+      "addiction": {
+        "title": "Muốn dừng nhưng không thể",
+        "sub": "Hướng dẫn phục hồi nghiện"
+      },
+      "finance": {
+        "title": "Lo tiền không ngủ được",
+        "sub": "Stress tài chính và sức khỏe tâm thần"
+      }
+    }
+  }
 }

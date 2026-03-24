@@ -255,7 +255,7 @@
         </div>
       </div>
 
-      <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
+      <h1 data-i18n="home.title">지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
         잘 모르겠어요..
       </button>
@@ -264,39 +264,39 @@
       <!-- 영역 1: 돌봄 & 양육 -->
       <div class="section-care">
         <div class="section-header">
-          <h2 class="section-title">아이와 가족을 돌보고 있다면</h2>
-          <p class="section-sub">혼자 고민하지 않아도 돼요</p>
+          <h2 class="section-title" data-i18n="home.care.title">아이와 가족을 돌보고 있다면</h2>
+          <p class="section-sub" data-i18n="home.care.sub">혼자 고민하지 않아도 돼요</p>
         </div>
         <div class="situation-grid">
           <button class="sit-card" data-card-id="growth" onclick="showPage('growth');setMTab('growth')">
             <div class="sit-icon">🌱</div>
             <div class="sit-card-body">
-              <div class="sit-title">아이 성장이 불안해요</div>
-              <div class="sit-sub">괜찮은 건지, 함께 살펴봐요</div>
+              <div class="sit-title" data-i18n="home.card.growth.title">아이 성장이 불안해요</div>
+              <div class="sit-sub" data-i18n="home.card.growth.sub">괜찮은 건지, 함께 살펴봐요</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card" data-card-id="sp" onclick="showPage('sp')">
             <div class="sit-icon">🫂</div>
             <div class="sit-card-body">
-              <div class="sit-title">혼자 아이를 키워요</div>
-              <div class="sit-sub">혼자가 아니에요, 함께 걸어가요</div>
+              <div class="sit-title" data-i18n="home.card.sp.title">혼자 아이를 키워요</div>
+              <div class="sit-sub" data-i18n="home.card.sp.sub">혼자가 아니에요, 함께 걸어가요</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card" data-card-id="birth" onclick="showPage('birth')">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
-              <div class="sit-title">출산 후 혼자 회복 중이에요</div>
-              <div class="sit-sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
+              <div class="sit-title" data-i18n="home.card.birth.title">출산 후 혼자 회복 중이에요</div>
+              <div class="sit-sub" data-i18n="home.card.birth.sub">산후 몸과 마음 돌봄, 지원 제도 안내</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card" data-card-id="dad" onclick="showPage('dad');setMTab('growth')">
             <div class="sit-icon">🧸</div>
             <div class="sit-card-body">
-              <div class="sit-title">아빠로서 어떻게 해야 할지 모르겠어요</div>
-              <div class="sit-sub">아빠 전용 육아 가이드</div>
+              <div class="sit-title" data-i18n="home.card.dad.title">아빠로서 어떻게 해야 할지 모르겠어요</div>
+              <div class="sit-sub" data-i18n="home.card.dad.sub">아빠 전용 육아 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
@@ -304,24 +304,24 @@
           <button class="sit-card sit-card--more-care" data-card-id="elder" onclick="showPage('elder');setMTab('home')" style="display:none">
             <div class="sit-icon">🍵</div>
             <div class="sit-card-body">
-              <div class="sit-title">부모님 돌봄이 힘들어요</div>
-              <div class="sit-sub">간병 번아웃, 치매 돌봄, 복지 연결 가이드</div>
+              <div class="sit-title" data-i18n="home.card.elder.title">부모님 돌봄이 힘들어요</div>
+              <div class="sit-sub" data-i18n="home.card.elder.sub">간병 번아웃, 치매 돌봄, 복지 연결 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card sit-card--more-care" data-card-id="grief" onclick="showPage('grief');setMTab('home')" style="display:none">
             <div class="sit-icon">🕊️</div>
             <div class="sit-card-body">
-              <div class="sit-title">소중한 사람을 떠나보냈어요</div>
-              <div class="sit-sub">사별의 아픔 속에서 함께 걸어가는 가이드</div>
+              <div class="sit-title" data-i18n="home.card.grief.title">소중한 사람을 떠나보냈어요</div>
+              <div class="sit-sub" data-i18n="home.card.grief.sub">사별의 아픔 속에서 함께 걸어가는 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card sit-card--more-care" data-card-id="multicultural" onclick="showPage('multicultural');setMTab('home')" style="display:none">
             <div class="sit-icon">🌍</div>
             <div class="sit-card-body">
-              <div class="sit-title">다문화 가정 가이드</div>
-              <div class="sit-sub">베트남어·중국어·영어 다국어 지원</div>
+              <div class="sit-title" data-i18n="home.card.multicultural.title">다문화 가정 가이드</div>
+              <div class="sit-sub" data-i18n="home.card.multicultural.sub">베트남어·중국어·영어 다국어 지원</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
@@ -335,39 +335,39 @@
       <!-- 영역 2: 나 자신을 돌보고 있다면 -->
       <div class="section-self">
         <div class="section-header">
-          <h2 class="section-title">지금 나 자신이 힘들다면</h2>
-          <p class="section-sub">작은 한 걸음이면 충분해요</p>
+          <h2 class="section-title" data-i18n="home.self.title">지금 나 자신이 힘들다면</h2>
+          <p class="section-sub" data-i18n="home.self.sub">작은 한 걸음이면 충분해요</p>
         </div>
         <div class="situation-grid">
           <button class="sit-card self-area" data-card-id="emotion" onclick="showPage('emotion');setMTab('mind')">
             <div class="sit-icon">🌊</div>
             <div class="sit-card-body">
-              <div class="sit-title">감정을 어떻게 해야 할지 모르겠어요</div>
-              <div class="sit-sub">천천히 알아차리고, 다뤄봐요</div>
+              <div class="sit-title" data-i18n="home.card.emotion.title">감정을 어떻게 해야 할지 모르겠어요</div>
+              <div class="sit-sub" data-i18n="home.card.emotion.sub">천천히 알아차리고, 다뤄봐요</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area" data-card-id="burnout" onclick="showPage('burnout');setMTab('mind')">
             <div class="sit-icon">🫠</div>
             <div class="sit-card-body">
-              <div class="sit-title">번아웃인 것 같아요</div>
-              <div class="sit-sub">지금 상태를 살펴보고, 쉬어가요</div>
+              <div class="sit-title" data-i18n="home.card.burnout.title">번아웃인 것 같아요</div>
+              <div class="sit-sub" data-i18n="home.card.burnout.sub">지금 상태를 살펴보고, 쉬어가요</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area" data-card-id="relation" onclick="showPage('relation');setMTab('mind')">
             <div class="sit-icon">💔</div>
             <div class="sit-card-body">
-              <div class="sit-title">관계가 힘들어졌어요</div>
-              <div class="sit-sub">마음이 아플 때, 천천히</div>
+              <div class="sit-title" data-i18n="home.card.relation.title">관계가 힘들어졌어요</div>
+              <div class="sit-sub" data-i18n="home.card.relation.sub">마음이 아플 때, 천천히</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area" data-card-id="sleep" onclick="showPage('sleep');setMTab('mind')">
             <div class="sit-icon">🛏️</div>
             <div class="sit-card-body">
-              <div class="sit-title">잠을 못 자겠어요</div>
-              <div class="sit-sub">불면, 악몽, 과수면 — 수면이 무너졌을 때</div>
+              <div class="sit-title" data-i18n="home.card.sleep.title">잠을 못 자겠어요</div>
+              <div class="sit-sub" data-i18n="home.card.sleep.sub">불면, 악몽, 과수면 — 수면이 무너졌을 때</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
@@ -375,64 +375,64 @@
           <button class="sit-card self-area sit-card--more-self" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌀</div>
             <div class="sit-card-body">
-              <div class="sit-title">삶의 방향을 잃었어요</div>
-              <div class="sit-sub">변화 속 심리적 안정을 되찾는 방법</div>
+              <div class="sit-title" data-i18n="home.card.transition.title">삶의 방향을 잃었어요</div>
+              <div class="sit-sub" data-i18n="home.card.transition.sub">변화 속 심리적 안정을 되찾는 방법</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card sit-card--teen self-area sit-card--more-self" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌙</div>
             <div class="sit-card-body">
-              <div class="sit-title">나 혼자 버텨왔어 (청소년·청년)</div>
-              <div class="sit-sub">판단 없이, 네 편에서 이야기합니다</div>
+              <div class="sit-title" data-i18n="home.card.teen.title">나 혼자 버텨왔어 (청소년·청년)</div>
+              <div class="sit-sub" data-i18n="home.card.teen.sub">판단 없이, 네 편에서 이야기합니다</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" style="display:none">
             <div class="sit-icon">🏢</div>
             <div class="sit-card-body">
-              <div class="sit-title">회사에서 이상한 사람을 만났어요</div>
-              <div class="sit-sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
+              <div class="sit-title" data-i18n="home.card.workplace.title">회사에서 이상한 사람을 만났어요</div>
+              <div class="sit-sub" data-i18n="home.card.workplace.sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
-              <div class="sit-title">출산 후 마음이 이상해요</div>
-              <div class="sit-sub">산후우울증 자가진단과 회복 가이드</div>
+              <div class="sit-title" data-i18n="home.card.postpartum.title">출산 후 마음이 이상해요</div>
+              <div class="sit-sub" data-i18n="home.card.postpartum.sub">산후우울증 자가진단과 회복 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="menopause" onclick="showPage('menopause');setMTab('mind')" style="display:none">
             <div class="sit-icon">🍂</div>
             <div class="sit-card-body">
-              <div class="sit-title">몸도 마음도 변하고 있어요</div>
-              <div class="sit-sub">갱년기 우울, 호르몬 변화와 마음 돌봄</div>
+              <div class="sit-title" data-i18n="home.card.menopause.title">몸도 마음도 변하고 있어요</div>
+              <div class="sit-sub" data-i18n="home.card.menopause.sub">갱년기 우울, 호르몬 변화와 마음 돌봄</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="adhd" onclick="showPage('adhd');setMTab('mind')" style="display:none">
             <div class="sit-icon">🧩</div>
             <div class="sit-card-body">
-              <div class="sit-title">게으른 게 아니에요</div>
-              <div class="sit-sub">성인 ADHD 자가체크와 관리법</div>
+              <div class="sit-title" data-i18n="home.card.adhd.title">게으른 게 아니에요</div>
+              <div class="sit-sub" data-i18n="home.card.adhd.sub">성인 ADHD 자가체크와 관리법</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="addiction" onclick="showPage('addiction');setMTab('mind')" style="display:none">
             <div class="sit-icon">🔄</div>
             <div class="sit-card-body">
-              <div class="sit-title">멈추고 싶은데 멈출 수 없어요</div>
-              <div class="sit-sub">스마트폰·게임·알코올·도박 중독 회복 가이드</div>
+              <div class="sit-title" data-i18n="home.card.addiction.title">멈추고 싶은데 멈출 수 없어요</div>
+              <div class="sit-sub" data-i18n="home.card.addiction.sub">스마트폰·게임·알코올·도박 중독 회복 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="finance" onclick="showPage('finance');setMTab('mind')" style="display:none">
             <div class="sit-icon">💰</div>
             <div class="sit-card-body">
-              <div class="sit-title">돈 걱정에 잠이 안 와요</div>
-              <div class="sit-sub">금융 스트레스와 정신건강, 실제 지원 제도</div>
+              <div class="sit-title" data-i18n="home.card.finance.title">돈 걱정에 잠이 안 와요</div>
+              <div class="sit-sub" data-i18n="home.card.finance.sub">금융 스트레스와 정신건강, 실제 지원 제도</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>

@@ -3510,7 +3510,8 @@
   overflow:visible;
 }
 .card-edit-mode .sit-card{
-  animation:wiggle .28s ease-in-out infinite;
+  animation:wiggle .28s ease-in-out infinite !important;
+  transition:none !important;
   cursor:grab;
   user-select:none;
   -webkit-user-select:none;
