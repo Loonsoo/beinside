@@ -22,7 +22,7 @@ button.emergency-quiet{
   -webkit-appearance:none;appearance:none;
 }
 button.logo{
-  border:none;color:inherit;
+  border:none;
   background:none;padding:0;margin:0;
   text-align:left;cursor:pointer;
   -webkit-appearance:none;appearance:none;
