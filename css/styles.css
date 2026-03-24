@@ -1815,10 +1815,10 @@ footer{
 /* ── 인사말 — 심리적 안전감 프라이밍 ── */
 .hero-greeting{
   font-family:'Gowun Batang',serif;
-  font-size:14px;
+  font-size:13px;
   color:var(--ink-l);
   letter-spacing:-.1px;
-  margin-bottom:var(--sp-3);
+  margin-bottom:var(--sp-1);
   animation:up .5s .06s cubic-bezier(.22,1,.36,1) both;
   word-break:keep-all;
 }
@@ -1833,7 +1833,7 @@ footer{
 
 /* ── 무드→가이드 브릿지 텍스트 ── */
 .mood-bridge{
-  padding:var(--sp-6) 0 var(--sp-3);
+  padding:var(--sp-3) 0 var(--sp-2);
   text-align:center;
 }
 .bridge-text{
@@ -2080,7 +2080,7 @@ footer{
   font-size:14px;font-weight:400;font-style:italic;
   color:var(--ink-l);
   cursor:pointer;
-  padding:8px 0;margin-top:4px;margin-bottom:var(--sp-4);
+  padding:8px 0;margin-top:0;margin-bottom:var(--sp-2);
   letter-spacing:-.2px;
   transition:color .25s, transform .25s;
   animation:up .5s .10s cubic-bezier(.22,1,.36,1) both;
@@ -3212,8 +3212,8 @@ footer{
    MOBILE COMPACT (≤640px)
 ══════════════════════════════════════════ */
 @media(max-width:640px){
-  .hero{ padding:var(--sp-4) var(--sp-2) var(--sp-2); }
-  .hero h1{ font-size:18px; margin-bottom:var(--sp-2); }
+  .hero{ padding:var(--sp-2) var(--sp-2) var(--sp-1); }
+  .hero h1{ font-size:18px; margin-bottom:4px; }
   .hero .hero-sub{ font-size:13px; margin-bottom:var(--sp-2); }
   .section-care,
   .section-self{ padding:var(--sp-2) 0; }
