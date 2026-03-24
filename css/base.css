@@ -279,7 +279,7 @@ header{
   transition:background var(--calm-dur) var(--calm-ease);
 }
 .logo{
-  font-family:'Gowun Batang',serif;font-size:19px;font-weight:700;
+  font-family:'Gowun Batang',serif;font-size:18px;font-weight:700;
   color:var(--peach-d);
   display:flex;align-items:center;gap:5px;
   letter-spacing:-.3px;
