@@ -283,6 +283,7 @@ header{
   padding:0 16px;
   transition:background var(--calm-dur) var(--calm-ease);
 }
+button.logo,
 .logo{
   font-family:'Gowun Batang',serif;font-size:18px;font-weight:700;
   color:var(--ink);
