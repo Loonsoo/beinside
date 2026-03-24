@@ -186,29 +186,10 @@
         </div>
       </div>
 
-      <p class="hero-greeting">여기까지 와줘서 고마워요.</p>
       <h1>지금, 어떤 상황이세요?<span class="hl"></span></h1>
       <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
         잘 모르겠어요..
       </button>
-
-      <!-- 감정 체크인 (최상단) — 5단계 -->
-      <div class="mood-section" id="mood-section">
-        <div class="mood-label">오늘 기분이 어때요?</div>
-        <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
-        <div class="mood-btns mood-btns--5">
-          <button class="mood-btn" data-mood="great" onclick="selectMood('great')"><span class="mood-btn-emoji">😊</span><span>좋아요</span></button>
-          <button class="mood-btn" data-mood="okay" onclick="selectMood('okay')"><span class="mood-btn-emoji">🙂</span><span>괜찮아요</span></button>
-          <button class="mood-btn" data-mood="soso" onclick="selectMood('soso')"><span class="mood-btn-emoji">😐</span><span>그저 그래요</span></button>
-          <button class="mood-btn" data-mood="hard" onclick="selectMood('hard')"><span class="mood-btn-emoji">😔</span><span>힘들어요</span></button>
-          <button class="mood-btn" data-mood="veryhard" onclick="selectMood('veryhard')"><span class="mood-btn-emoji">😢</span><span>많이 힘들어요</span></button>
-        </div>
-        <div class="mood-result" id="mood-result" style="display:none"></div>
-      </div>
-
-      <div class="mood-bridge">
-        <p class="bridge-text">당신의 상황에 맞는 이야기를 준비했어요</p>
-      </div>
 
       <div class="hero-sections">
       <!-- 영역 1: 돌봄 & 양육 -->
@@ -375,6 +356,20 @@
         <span class="eq-text">지금 당장 도움이 필요하다면</span>
         <span class="eq-arrow">→</span>
       </button>
+
+      <!-- 감정 체크인 — 카드 아래 배치 -->
+      <div class="mood-section" id="mood-section">
+        <div class="mood-label">오늘 기분이 어때요?</div>
+        <div class="mood-sub">하루 한 번, 나를 돌아보는 시간</div>
+        <div class="mood-btns mood-btns--5">
+          <button class="mood-btn" data-mood="great" onclick="selectMood('great')"><span class="mood-btn-emoji">😊</span><span>좋아요</span></button>
+          <button class="mood-btn" data-mood="okay" onclick="selectMood('okay')"><span class="mood-btn-emoji">🙂</span><span>괜찮아요</span></button>
+          <button class="mood-btn" data-mood="soso" onclick="selectMood('soso')"><span class="mood-btn-emoji">😐</span><span>그저 그래요</span></button>
+          <button class="mood-btn" data-mood="hard" onclick="selectMood('hard')"><span class="mood-btn-emoji">😔</span><span>힘들어요</span></button>
+          <button class="mood-btn" data-mood="veryhard" onclick="selectMood('veryhard')"><span class="mood-btn-emoji">😢</span><span>많이 힘들어요</span></button>
+        </div>
+        <div class="mood-result" id="mood-result" style="display:none"></div>
+      </div>
 
       <!-- 한 줄 위로 -->
       <div class="home-quote">
