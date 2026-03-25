@@ -1883,12 +1883,12 @@
   border-radius:16px;
 }
 .section-care{
-  background:var(--surface-section-care);
-  border:none;
+  background:rgba(180,160,140,.06);
+  border:1px solid rgba(180,160,140,.08);
 }
 .section-self{
-  background:var(--surface-section-self);
-  border:none;
+  background:rgba(140,120,170,.05);
+  border:1px solid rgba(140,120,170,.06);
 }
 .section-header{
   margin-bottom:16px;
@@ -1910,32 +1910,28 @@
   color:var(--text-secondary);
   line-height:1.6;
 }
-/* ── 라이트 모드: 카드가 섹션 색조를 이어받음 ── */
-/* 돌봄 영역 카드 — 따뜻한 녹색 틴트 */
-.section-care .sit-card{
-  background:rgba(255,255,255,.65);
-  border-color:rgba(90,154,106,.10);
-}
-@media (hover: hover) {
-  .section-care .sit-card:hover{
-    background:rgba(255,255,255,.90);
-    border-color:rgba(90,154,106,.25);
-    box-shadow:0 4px 16px rgba(90,154,106,.10);
-  }
-}
-/* 나 자신 영역 카드 — 부드러운 라벤더 틴트 */
-.sit-card.self-area{
-  background:rgba(255,255,255,.65);
-  border-color:rgba(138,106,184,.10);
+/* ── 라이트 모드: Liquid Glass 카드 ── */
+.section-care .sit-card,
+.section-self .sit-card{
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(255,255,255,.60);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.80),
+    0 1px 3px rgba(0,0,0,.04);
+  backdrop-filter:blur(12px) saturate(1.2);
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);
 }
 .sit-card.self-area .sit-icon{
   background:none;
 }
 @media (hover: hover) {
-  .sit-card.self-area:hover{
-    background:rgba(255,255,255,.90);
-    border-color:rgba(138,106,184,.25);
-    box-shadow:0 4px 16px rgba(138,106,184,.10);
+  .section-care .sit-card:hover,
+  .section-self .sit-card:hover{
+    background:rgba(255,255,255,.75);
+    border-color:rgba(255,255,255,.80);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.90),
+      0 4px 16px rgba(0,0,0,.06);
   }
 }
 /* 모바일 section 패딩은 MOBILE COMPACT 섹션에서 통합 관리 */
@@ -2127,34 +2123,28 @@
 .hero .eq-arrow{color:var(--calm-text-3);}
 .hero .home-quote p{font-size:14px;color:var(--calm-text-2);line-height:1.8;}
 
-/* ── 다크모드: 카드가 섹션 색조를 이어받음 ── */
-/* 돌봄 영역 카드 — 숲 녹색 틴트 */
-[data-theme="dark"] .section-care .sit-card{
-  background:rgba(106,170,122,.06);
-  border-color:rgba(106,170,122,.10);
-  box-shadow:none;
-}
-@media(hover:hover){
-  [data-theme="dark"] .section-care .sit-card:hover{
-    background:rgba(106,170,122,.12);
-    border-color:rgba(106,170,122,.20);
-  }
-}
-/* 나 자신 영역 카드 — 라벤더 틴트 */
-[data-theme="dark"] .section-self .sit-card{
-  background:rgba(154,122,200,.06);
-  border-color:rgba(154,122,200,.10);
-  box-shadow:none;
-}
-@media(hover:hover){
-  [data-theme="dark"] .section-self .sit-card:hover{
-    background:rgba(154,122,200,.12);
-    border-color:rgba(154,122,200,.20);
-  }
-}
-/* 기타 영역 카드 폴백 */
+/* ── 다크모드: Liquid Glass 카드 ── */
+[data-theme="dark"] .section-care .sit-card,
+[data-theme="dark"] .section-self .sit-card,
 [data-theme="dark"] .hero .sit-card{
-  box-shadow:none;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.04),
+    inset 0 -1px 0 rgba(0,0,0,.08);
+  backdrop-filter:blur(12px) saturate(1.1);
+  -webkit-backdrop-filter:blur(12px) saturate(1.1);
+}
+@media(hover:hover){
+  [data-theme="dark"] .section-care .sit-card:hover,
+  [data-theme="dark"] .section-self .sit-card:hover,
+  [data-theme="dark"] .hero .sit-card:hover{
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.10);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      0 4px 20px rgba(0,0,0,.15);
+  }
 }
 
 /* 모바일 calm */

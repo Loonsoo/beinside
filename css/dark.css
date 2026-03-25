@@ -571,13 +571,18 @@
   color:var(--ink-l);
 }
 /* (journal-entry 스타일은 jn-* 시스템으로 이동) */
+/* ── Liquid Glass 섹션 ── */
 [data-theme="dark"] .section-care{
-  background:rgba(106,170,122,.04);
-  border:1px solid rgba(106,170,122,.06);
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.04);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
 }
 [data-theme="dark"] .section-self{
-  background:rgba(154,122,200,.04);
-  border:1px solid rgba(154,122,200,.06);
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.04);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
 }
 [data-theme="dark"] .toolkit-btn{
   border-color:rgba(232,144,106,.25);
