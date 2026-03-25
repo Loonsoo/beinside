@@ -613,6 +613,12 @@ document.addEventListener('keydown', e => {
     if (!editMode) return;
     editMode = false;
     document.body.classList.remove('card-edit-mode');
+    // 진행 중인 드래그 정리
+    if (drag) {
+      if (drag.clone) drag.clone.remove();
+      drag.card.classList.remove('dragging');
+      drag = null;
+    }
     // "더 보기" 카드 다시 숨기기 (expanded 상태가 아닌 경우)
     var careBtn = document.getElementById('show-more-care');
     var selfBtn = document.getElementById('show-more-self');
@@ -632,16 +638,16 @@ document.addEventListener('keydown', e => {
   /* ── 롱프레스 감지 ── */
   function onPointerDown(e) {
     if (editMode) return;
-    const card = e.target.closest('.sit-card[data-card-id]');
+    var card = e.target.closest('.sit-card[data-card-id]');
     if (!card) return;
-    const startX = e.clientX || (e.touches && e.touches[0].clientX);
-    const startY = e.clientY || (e.touches && e.touches[0].clientY);
-    longPressTimer = setTimeout(() => { enterCardEdit(); }, 600);
+    var t = e.touches ? e.touches[0] : e;
+    var startX = t.clientX;
+    var startY = t.clientY;
+    longPressTimer = setTimeout(function() { enterCardEdit(); }, 600);
     // 움직이면 취소
-    const cancel = (ev) => {
-      const cx = ev.clientX || (ev.touches && ev.touches[0] && ev.touches[0].clientX) || 0;
-      const cy = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || 0;
-      if (Math.abs(cx - startX) > 8 || Math.abs(cy - startY) > 8) {
+    var cancel = function(ev) {
+      var p = ev.touches ? (ev.touches[0] || ev.changedTouches[0]) : ev;
+      if (Math.abs(p.clientX - startX) > 8 || Math.abs(p.clientY - startY) > 8) {
         clearTimeout(longPressTimer);
         document.removeEventListener('touchmove', cancel);
         document.removeEventListener('mousemove', cancel);
@@ -649,7 +655,7 @@ document.addEventListener('keydown', e => {
     };
     document.addEventListener('touchmove', cancel, { passive: true });
     document.addEventListener('mousemove', cancel);
-    const up = () => {
+    var up = function() {
       clearTimeout(longPressTimer);
       document.removeEventListener('touchmove', cancel);
       document.removeEventListener('mousemove', cancel);
@@ -660,18 +666,49 @@ document.addEventListener('keydown', e => {
     document.addEventListener('mouseup', up, { once: true });
   }
 
+  /* ── 가장 가까운 삽입 위치 계산 (2열 그리드 대응) ── */
+  function findClosestInsertPos(grid, card, cx, cy) {
+    var siblings = [];
+    var children = grid.querySelectorAll('.sit-card[data-card-id]');
+    for (var i = 0; i < children.length; i++) {
+      if (children[i] !== card) siblings.push(children[i]);
+    }
+    if (siblings.length === 0) return null;
+
+    var best = null;
+    var bestDist = Infinity;
+    for (var j = 0; j < siblings.length; j++) {
+      var r = siblings[j].getBoundingClientRect();
+      var midX = r.left + r.width / 2;
+      var midY = r.top + r.height / 2;
+      var dist = Math.sqrt((cx - midX) * (cx - midX) + (cy - midY) * (cy - midY));
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = siblings[j];
+      }
+    }
+
+    if (!best) return null;
+
+    // 드래그 포인터가 가장 가까운 카드의 중심보다 위에 있으면 앞에, 아래면 뒤에 삽입
+    var br = best.getBoundingClientRect();
+    var beforeTarget = cy < br.top + br.height / 2;
+    return { target: best, before: beforeTarget };
+  }
+
   /* ── 드래그 시작 ── */
   function onDragStart(e) {
     if (!editMode) return;
-    const card = e.target.closest('.sit-card[data-card-id]');
+    var card = e.target.closest('.sit-card[data-card-id]');
     if (!card) return;
 
-    const touch = e.touches ? e.touches[0] : e;
-    const rect = card.getBoundingClientRect();
-    const grid = card.closest('.situation-grid');
+    var touch = e.touches ? e.touches[0] : e;
+    var rect = card.getBoundingClientRect();
+    var grid = card.closest('.situation-grid');
 
     drag = {
-      card, grid,
+      card: card,
+      grid: grid,
       clone: null,
       offsetX: touch.clientX - rect.left,
       offsetY: touch.clientY - rect.top,
@@ -680,22 +717,22 @@ document.addEventListener('keydown', e => {
       moved: false
     };
 
-    // 편집 모드에서 카드 클릭 차단
+    // 편집 모드에서 카드 클릭 및 텍스트 선택 차단
     e.preventDefault();
   }
 
   /* ── 드래그 이동 ── */
   function onDragMove(e) {
     if (!drag) return;
-    const touch = e.touches ? e.touches[0] : e;
-    const dx = Math.abs(touch.clientX - drag.startX);
-    const dy = Math.abs(touch.clientY - drag.startY);
+    var touch = e.touches ? e.touches[0] : e;
+    var dx = Math.abs(touch.clientX - drag.startX);
+    var dy = Math.abs(touch.clientY - drag.startY);
 
     if (!drag.moved) {
       if (dx < 4 && dy < 4) return;
       drag.moved = true;
       // 고스트 생성
-      const rect = drag.card.getBoundingClientRect();
+      var rect = drag.card.getBoundingClientRect();
       drag.clone = drag.card.cloneNode(true);
       drag.clone.className = 'sit-card drag-ghost';
       drag.clone.style.width = rect.width + 'px';
@@ -710,19 +747,19 @@ document.addEventListener('keydown', e => {
     drag.clone.style.left = (touch.clientX - drag.offsetX) + 'px';
     drag.clone.style.top = (touch.clientY - drag.offsetY) + 'px';
 
-    // 삽입 위치 계산
-    const siblings = [...drag.grid.querySelectorAll('.sit-card[data-card-id]:not(.dragging)')];
-    let inserted = false;
-    for (const sib of siblings) {
-      const r = sib.getBoundingClientRect();
-      if (touch.clientY < r.top + r.height / 2) {
-        drag.grid.insertBefore(drag.card, sib);
-        inserted = true;
-        break;
+    // 2열 그리드 대응: 가장 가까운 카드 기준으로 삽입
+    var pos = findClosestInsertPos(drag.grid, drag.card, touch.clientX, touch.clientY);
+    if (pos) {
+      if (pos.before) {
+        drag.grid.insertBefore(drag.card, pos.target);
+      } else {
+        // target 다음에 삽입
+        if (pos.target.nextSibling) {
+          drag.grid.insertBefore(drag.card, pos.target.nextSibling);
+        } else {
+          drag.grid.appendChild(drag.card);
+        }
       }
-    }
-    if (!inserted && siblings.length > 0) {
-      siblings[siblings.length - 1].after(drag.card);
     }
   }
 
@@ -747,9 +784,14 @@ document.addEventListener('keydown', e => {
   document.addEventListener('touchmove', onDragMove, { passive: false });
   document.addEventListener('touchend', onDragEnd);
   document.addEventListener('mousedown', function(e) {
-    if (editMode) onDragStart(e);
+    if (editMode) {
+      onDragStart(e);
+    }
   });
-  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mousemove', function(e) {
+    if (drag) e.preventDefault();
+    onDragMove(e);
+  });
   document.addEventListener('mouseup', onDragEnd);
 
   // 편집 모드: 카드 클릭 차단 + 카드 외 영역 클릭 시 종료
@@ -757,6 +799,8 @@ document.addEventListener('keydown', e => {
     if (!editMode) return;
     // 완료 버튼은 onclick으로 처리되므로 통과
     if (e.target.closest('.card-edit-done')) return;
+    // 편집바 내부 클릭 → 무시
+    if (e.target.closest('.card-edit-bar')) return;
     // 카드 위 클릭 → 차단 (드래그용)
     if (e.target.closest('.sit-card[data-card-id]')) {
       e.preventDefault();
@@ -764,10 +808,15 @@ document.addEventListener('keydown', e => {
       return;
     }
     // 카드·편집바 외 영역 클릭 → 편집 종료
-    if (!e.target.closest('.card-edit-bar')) {
+    exitCardEdit();
+  }, true);
+
+  // Escape 키로 편집 종료
+  document.addEventListener('keydown', function(e) {
+    if (editMode && e.key === 'Escape') {
       exitCardEdit();
     }
-  }, true);
+  });
 
   /* ── 초기 로드 ── */
   loadOrder();

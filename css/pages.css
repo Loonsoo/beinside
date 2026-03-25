@@ -3517,6 +3517,10 @@
   -webkit-user-select:none;
   -webkit-touch-callout:none;
 }
+.card-edit-mode{
+  user-select:none;
+  -webkit-user-select:none;
+}
 /* 홈 화면 전체 텍스트 선택 방지 */
 .hero, .hero *{
   -webkit-user-select:none;
