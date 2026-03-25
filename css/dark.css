@@ -89,6 +89,19 @@
 
   --sos:rgba(200,60,60,.15);
   --sos-shadow:rgba(200,60,60,.10);
+
+  /* ── SP 태그·불릿 다크모드 ── */
+  --tag-rose:rgba(224,112,112,.16);
+  --tag-rose-ink:#E08080;
+  --tag-blue:rgba(100,140,220,.16);
+  --tag-blue-ink:#80A8E0;
+  --tag-green:rgba(80,180,110,.16);
+  --tag-green-ink:#70C090;
+  --tag-gold:rgba(220,180,80,.16);
+  --tag-gold-ink:#D0B060;
+  --sp-bullet-blue:#6090D0;
+  --sp-bullet-gold:#C0A050;
+  --sp-bullet-green:#60B878;
 }
 
 /* 다크 모드 컴포넌트 오버라이드 */
@@ -273,6 +286,78 @@
 }
 [data-theme="dark"] .content-hero{
   box-shadow:inset 0 -30px 50px -25px rgba(0,0,0,.12);
+}
+
+/* ── SP (한부모 가이드) 다크모드 ── */
+[data-theme="dark"] .sp-card{
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .sp-card.rose{
+  background:linear-gradient(135deg,#2E2420,#2A201C);
+  border-color:rgba(184,92,66,.20);
+}
+[data-theme="dark"] .sp-card.blue{
+  background:linear-gradient(135deg,#1E2430,#1A2028);
+  border-color:rgba(100,140,220,.18);
+}
+[data-theme="dark"] .sp-card.gold{
+  background:linear-gradient(135deg,#2E2820,#2A2418);
+  border-color:rgba(200,150,50,.20);
+}
+[data-theme="dark"] .sp-card.green{
+  background:linear-gradient(135deg,#1E2A22,#1A2820);
+  border-color:rgba(60,140,90,.18);
+}
+[data-theme="dark"] .sp-card.plum{
+  background:linear-gradient(135deg,#28222E,#241E2A);
+  border-color:rgba(154,123,90,.18);
+}
+[data-theme="dark"] .sp-card h4{
+  color:var(--ink);
+}
+[data-theme="dark"] .sp-card ul li{
+  color:var(--ink-m);
+}
+[data-theme="dark"] .sp-card ul li strong{
+  color:var(--ink);
+}
+[data-theme="dark"] .sp-age-tab{
+  background:var(--calm-bg-surface);
+  border-color:rgba(255,255,255,.08);
+  color:var(--ink-m);
+}
+[data-theme="dark"] .sp-age-tab:hover{
+  background:var(--peach-p);
+  border-color:var(--peach);
+  color:var(--peach-d);
+}
+[data-theme="dark"] .sp-age-tab.on{
+  background:rgba(123,174,203,.15);
+  border-color:var(--peach-d);
+  color:var(--peach-d);
+}
+[data-theme="dark"] .sp-header{
+  color:#F5F5F7;
+}
+[data-theme="dark"] .sp-htitle p{
+  color:rgba(255,255,255,.75);
+}
+[data-theme="dark"] .sp-section-title{
+  color:var(--ink-m);
+  border-bottom-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .sp-script{
+  background:rgba(123,174,203,.08);
+  border-left-color:rgba(123,174,203,.40);
+}
+[data-theme="dark"] .sp-warn{
+  background:linear-gradient(135deg,#2E2820,#2A2418);
+  border-color:rgba(212,160,84,.25);
+  color:var(--ink-m);
+}
+[data-theme="dark"] .em-p{
+  background:rgba(184,144,80,.16);
+  color:#D0B070;
 }
 [data-theme="dark"] .search-modal{
   background:rgba(42,42,46,.95);
