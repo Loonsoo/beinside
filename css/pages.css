@@ -899,13 +899,14 @@
   border-color: rgba(180,140,90,.10);
 }
 
-/* ── 카드 진입 스태거 — Calm breathing ── */
-.situation-grid .sit-card:nth-child(1) { animation: cardUp .55s .14s var(--calm-ease-out) both; }
-.situation-grid .sit-card:nth-child(2) { animation: cardUp .55s .20s var(--calm-ease-out) both; }
-.situation-grid .sit-card:nth-child(3) { animation: cardUp .55s .26s var(--calm-ease-out) both; }
-.situation-grid .sit-card:nth-child(4) { animation: cardUp .55s .32s var(--calm-ease-out) both; }
-.situation-grid .sit-card:nth-child(5) { animation: cardUp .55s .38s var(--calm-ease-out) both; }
-.situation-grid .sit-card:nth-child(6) { animation: cardUp .55s .44s var(--calm-ease-out) both; }
+/* ── 카드 진입 스태거 (초기 로드 전용) ── */
+.situation-grid .sit-card:nth-child(1) { animation: cardUp .45s .08s ease both; }
+.situation-grid .sit-card:nth-child(2) { animation: cardUp .45s .12s ease both; }
+.situation-grid .sit-card:nth-child(3) { animation: cardUp .45s .16s ease both; }
+.situation-grid .sit-card:nth-child(4) { animation: cardUp .45s .20s ease both; }
+/* "더 보기" 카드 — 토글 시 opacity 깜빡임 방지 */
+.sit-card--more-care,
+.sit-card--more-self { animation: none !important; }
 @keyframes cardUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
