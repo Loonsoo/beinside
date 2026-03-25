@@ -560,6 +560,7 @@ document.addEventListener('keydown', e => {
 (function initCardEdit() {
   const ORDER_KEY = 'beinside_card_order_v1';
   let editMode = false;
+  let editModeAt = 0;        // 편집 모드 진입 시각 (click 디바운스용)
   let longPressTimer = null;
   let drag = null;
 
@@ -592,6 +593,7 @@ document.addEventListener('keydown', e => {
   window.enterCardEdit = function() {
     if (editMode) return;
     editMode = true;
+    editModeAt = Date.now();
     document.body.classList.add('card-edit-mode');
     // 숨겨진 "더 보기" 카드 모두 표시
     document.querySelectorAll('.sit-card--more-care, .sit-card--more-self').forEach(function(c) {
@@ -825,6 +827,12 @@ document.addEventListener('keydown', e => {
   // 편집 모드: 카드 클릭 차단 + 카드 외 영역 클릭 시 종료
   document.addEventListener('click', function(e) {
     if (!editMode) return;
+    // 진입 직후 500ms 이내 click은 무시 (롱프레스 → mouseup → click 연쇄 방지)
+    if (Date.now() - editModeAt < 500) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
     // 완료 버튼은 onclick으로 처리되므로 통과
     if (e.target.closest('.card-edit-done')) return;
     // 편집바 내부 클릭 → 무시
