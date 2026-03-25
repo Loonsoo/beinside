@@ -609,43 +609,51 @@
       <div id="dad-result" style="display:none"></div>
 
       <input type="hidden" id="ai" value="0">
-      <div class="life-journey">
-        <p class="life-journey-intro">우리 아이는 지금 어디쯤일까요?</p>
+      <div class="life-timeline" role="group" aria-label="생애 시기 선택">
+        <p class="life-timeline-intro">우리 아이는 지금 어디쯤일까요?</p>
 
-        <div class="life-stage">
-          <div class="life-stage-label">🌱 첫 걸음</div>
-          <div class="life-stage-pills">
-            <button class="pill pill--baby" onclick="qs(0,'m')" aria-label="신생아 발달 가이드">신생아</button>
-            <button class="pill pill--baby" onclick="qs(3,'m')" aria-label="3개월 발달 가이드">3개월</button>
-            <button class="pill pill--baby" onclick="qs(6,'m')" aria-label="6개월 발달 가이드">6개월</button>
-            <button class="pill pill--baby" onclick="qs(12,'m')" aria-label="12개월 발달 가이드">12개월</button>
-            <button class="pill pill--baby" onclick="qs(24,'m')" aria-label="24개월 발달 가이드">24개월</button>
+        <!-- 🌱 첫 걸음 -->
+        <div class="lt-group">
+          <div class="lt-label">🌱 첫 걸음</div>
+          <div class="lt-track lt-track--baby">
+            <div class="lt-line"></div>
+            <button class="lt-node" onclick="qs(0,'m')" aria-label="신생아 발달 가이드"><span class="lt-dot"></span><span class="lt-text">신생아</span></button>
+            <button class="lt-node" onclick="qs(3,'m')" aria-label="3개월 발달 가이드"><span class="lt-dot"></span><span class="lt-text">3개월</span></button>
+            <button class="lt-node" onclick="qs(6,'m')" aria-label="6개월 발달 가이드"><span class="lt-dot"></span><span class="lt-text">6개월</span></button>
+            <button class="lt-node" onclick="qs(12,'m')" aria-label="12개월 발달 가이드"><span class="lt-dot"></span><span class="lt-text">12개월</span></button>
+            <button class="lt-node" onclick="qs(24,'m')" aria-label="24개월 발달 가이드"><span class="lt-dot"></span><span class="lt-text">24개월</span></button>
           </div>
         </div>
 
-        <div class="life-stage">
-          <div class="life-stage-label">🌿 자라는 중</div>
-          <div class="life-stage-pills">
-            <button class="pill pill--child" onclick="qs(4,'y')" aria-label="유아 4세 발달 가이드">유아 4세</button>
-            <button class="pill pill--child" onclick="qs(8,'y')" aria-label="학령기 8세 발달 가이드">학령기 8세</button>
-            <button class="pill pill--child" onclick="qs(13,'y')" aria-label="청소년 13세 발달 가이드">청소년 13세</button>
+        <!-- 🌿 자라는 중 -->
+        <div class="lt-group">
+          <div class="lt-label">🌿 자라는 중</div>
+          <div class="lt-track lt-track--child">
+            <div class="lt-line"></div>
+            <button class="lt-node" onclick="qs(4,'y')" aria-label="유아 4세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">유아 4세</span></button>
+            <button class="lt-node" onclick="qs(8,'y')" aria-label="학령기 8세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">학령기 8세</span></button>
+            <button class="lt-node" onclick="qs(13,'y')" aria-label="청소년 13세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">청소년 13세</span></button>
           </div>
         </div>
 
-        <div class="life-stage">
-          <div class="life-stage-label">🌻 어른이 되어</div>
-          <div class="life-stage-pills">
-            <button class="pill pill--adult" onclick="qs(20,'y')" aria-label="청년 20세 발달 가이드">청년 20세</button>
-            <button class="pill pill--adult" onclick="qs(35,'y')" aria-label="성인 35세 발달 가이드">성인 35세</button>
-            <button class="pill pill--adult" onclick="qs(50,'y')" aria-label="중년 50세 발달 가이드">중년 50세</button>
+        <!-- 🌻 어른이 되어 -->
+        <div class="lt-group">
+          <div class="lt-label">🌻 어른이 되어</div>
+          <div class="lt-track lt-track--adult">
+            <div class="lt-line"></div>
+            <button class="lt-node" onclick="qs(20,'y')" aria-label="청년 20세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">청년 20세</span></button>
+            <button class="lt-node" onclick="qs(35,'y')" aria-label="성인 35세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">성인 35세</span></button>
+            <button class="lt-node" onclick="qs(50,'y')" aria-label="중년 50세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">중년 50세</span></button>
           </div>
         </div>
 
-        <div class="life-stage">
-          <div class="life-stage-label">🍂 깊어지는 계절</div>
-          <div class="life-stage-pills">
-            <button class="pill pill--senior" onclick="qs(65,'y')" aria-label="노년 65세 발달 가이드">노년 65세</button>
-            <button class="pill pill--senior" onclick="qs(78,'y')" aria-label="후기 노년 78세 발달 가이드">후기 노년 78세</button>
+        <!-- 🍂 깊어지는 계절 -->
+        <div class="lt-group">
+          <div class="lt-label">🍂 깊어지는 계절</div>
+          <div class="lt-track lt-track--senior">
+            <div class="lt-line"></div>
+            <button class="lt-node" onclick="qs(65,'y')" aria-label="노년 65세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">노년 65세</span></button>
+            <button class="lt-node" onclick="qs(78,'y')" aria-label="후기 노년 78세 발달 가이드"><span class="lt-dot"></span><span class="lt-text">후기 노년 78세</span></button>
           </div>
         </div>
       </div>

@@ -506,106 +506,125 @@ nav button.on{
 .hint{font-size:11.5px;color:var(--ink-l);margin-top:6px;text-align:center;transition:opacity .3s;}
 .hint b{background:var(--peach-p);color:var(--peach-d);padding:2px 8px;border-radius:8px;font-size:11px;}
 
-/* ── 생애 여정 시기 선택 ── */
-.life-journey{
-  padding:16px 0 12px;
+/* ══════════════════════════════════════════
+   생애 타임라인 — 시각적 시간 흐름
+══════════════════════════════════════════ */
+.life-timeline{
+  padding:16px 0 8px;
 }
-.life-journey-intro{
+.life-timeline-intro{
   font-family:'Gowun Batang',serif;
   font-size:15px;
   color:var(--text-secondary);
   text-align:left;
-  margin:0 0 14px;
+  margin:0 0 16px;
   line-height:1.6;
-  letter-spacing:-.2px;
 }
-.life-stage{
-  margin-bottom:8px;
+.lt-group{
+  margin-bottom:20px;
 }
-.life-stage-label{
-  font-size:11px;
+.lt-label{
+  font-size:12px;
   font-weight:700;
-  color:var(--text-muted);
-  letter-spacing:.02em;
-  margin-bottom:6px;
+  color:var(--text-secondary);
+  margin-bottom:8px;
   padding-left:2px;
 }
-.life-stage-pills{
-  display:flex;gap:6px;
-  flex-wrap:wrap;
-}
-
-/* ── 시기 칩 — Filled Glass (Apple Health + MD3 + Liquid Glass) ── */
-/* 핵심: "투명"이 아니라 "반투명 채움". 다크에서도 확실히 보이는 버튼. */
-.pills{
-  display:flex;gap:10px;
-  padding:16px 0;
-  flex-wrap:wrap;
-}
-.pill{
-  background:rgba(212,121,94,.06);
-  border:1.5px solid rgba(180,160,140,.18);
-  border-radius:22px;
-  padding:10px 20px;
-  font-size:15px;font-weight:600;
-  color:var(--text-body);
-  cursor:pointer;
-  transition:all .2s var(--ease);
-  display:flex;align-items:center;gap:0;
-  font-family:'Noto Sans KR',sans-serif;
-  letter-spacing:-.3px;
-  white-space:nowrap;
-  min-height:44px;
+/* ── 타임라인 트랙 ── */
+.lt-track{
+  display:flex;
+  align-items:center;
   position:relative;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
+  padding:4px 0;
 }
-.pill:hover{
-  background:rgba(212,121,94,.12);
-  border-color:var(--accent-primary);
-  color:var(--accent-hover);
-  box-shadow:0 2px 12px rgba(212,121,94,.15);
-  transform:translateY(-1px);
+/* 연결선 */
+.lt-line{
+  position:absolute;
+  top:50%;left:16px;right:16px;
+  height:2px;
+  background:var(--border-hover);
+  transform:translateY(-50%);
+  border-radius:1px;
+  z-index:0;
 }
-.pill:active{
-  transform:scale(0.97);
-  box-shadow:none;
-}
+/* 단계별 연결선 색상 */
+.lt-track--baby .lt-line{ background:linear-gradient(90deg,rgba(90,154,106,.3),rgba(90,154,106,.15)); }
+.lt-track--child .lt-line{ background:linear-gradient(90deg,rgba(180,140,60,.3),rgba(180,140,60,.15)); }
+.lt-track--adult .lt-line{ background:linear-gradient(90deg,rgba(212,121,94,.3),rgba(212,121,94,.15)); }
+.lt-track--senior .lt-line{ background:linear-gradient(90deg,rgba(100,80,160,.3),rgba(100,80,160,.15)); }
 
-/* ── 단계별 Filled Glass 색조 ── */
-.pill--baby{ background:rgba(90,154,106,.06); }
-.pill--child{ background:rgba(180,140,60,.06); }
-.pill--adult{ background:rgba(212,121,94,.06); }
-.pill--senior{ background:rgba(100,80,160,.06); }
-.pill--baby:hover{ border-color:rgba(90,154,106,.5); background:rgba(90,154,106,.12); color:#3A6A40; box-shadow:0 2px 12px rgba(90,154,106,.12); }
-.pill--child:hover{ border-color:rgba(180,140,60,.5); background:rgba(180,140,60,.12); color:#6A4A10; box-shadow:0 2px 12px rgba(180,140,60,.12); }
-.pill--adult:hover{ border-color:rgba(212,121,94,.5); background:rgba(212,121,94,.12); color:#7A3A20; box-shadow:0 2px 12px rgba(212,121,94,.12); }
-.pill--senior:hover{ border-color:rgba(100,80,160,.5); background:rgba(100,80,160,.12); color:#3A3060; box-shadow:0 2px 12px rgba(100,80,160,.12); }
+/* ── 노드 (터치 영역) ── */
+.lt-node{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:none;border:none;
+  cursor:pointer;
+  padding:8px 12px;
+  position:relative;z-index:1;
+  min-width:44px;min-height:44px;
+  transition:all .15s ease;
+  -webkit-appearance:none;appearance:none;
+  font:inherit;
+}
+.lt-node:active{ transform:scale(0.94); }
 
-/* ── 다크 모드: 고요한 숲 위의 글로우 칩 ── */
-[data-theme="dark"] .pill{
-  background:rgba(232,228,223,.07);
-  border-color:rgba(232,228,223,.15);
+/* ── 도트 ── */
+.lt-dot{
+  width:14px;height:14px;
+  border-radius:50%;
+  border:2.5px solid var(--surface-base);
+  background:var(--border-hover);
+  flex-shrink:0;
+  transition:all .15s ease;
+  box-shadow:0 0 0 2px var(--border-hover);
+}
+/* 단계별 도트 색상 */
+.lt-track--baby .lt-dot{ background:rgba(90,154,106,.6); box-shadow:0 0 0 2px rgba(90,154,106,.25); }
+.lt-track--child .lt-dot{ background:rgba(180,140,60,.6); box-shadow:0 0 0 2px rgba(180,140,60,.25); }
+.lt-track--adult .lt-dot{ background:rgba(212,121,94,.6); box-shadow:0 0 0 2px rgba(212,121,94,.25); }
+.lt-track--senior .lt-dot{ background:rgba(100,80,160,.6); box-shadow:0 0 0 2px rgba(100,80,160,.25); }
+
+/* ── 텍스트 라벨 ── */
+.lt-text{
+  font-size:12px;
+  font-weight:600;
   color:var(--text-body);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
+  white-space:nowrap;
+  letter-spacing:-.2px;
 }
-[data-theme="dark"] .pill:hover{
-  background:rgba(232,144,106,.15);
-  border-color:var(--accent-primary);
-  color:#F0D0C0;
-  box-shadow:0 0 16px rgba(232,144,106,.12);
-}
-[data-theme="dark"] .pill--baby{ background:rgba(106,170,122,.10); border-color:rgba(106,170,122,.20); }
-[data-theme="dark"] .pill--baby:hover{ background:rgba(106,170,122,.18); border-color:#6AAA7A; color:#B8E0C4; box-shadow:0 0 16px rgba(106,170,122,.12); }
-[data-theme="dark"] .pill--child{ background:rgba(208,168,80,.10); border-color:rgba(208,168,80,.20); }
-[data-theme="dark"] .pill--child:hover{ background:rgba(208,168,80,.18); border-color:#D0A850; color:#F0E0B8; box-shadow:0 0 16px rgba(208,168,80,.12); }
-[data-theme="dark"] .pill--adult{ background:rgba(232,144,106,.10); border-color:rgba(232,144,106,.20); }
-[data-theme="dark"] .pill--adult:hover{ background:rgba(232,144,106,.18); border-color:#E8906A; color:#F5D0C0; box-shadow:0 0 16px rgba(232,144,106,.12); }
-[data-theme="dark"] .pill--senior{ background:rgba(140,120,200,.10); border-color:rgba(140,120,200,.20); }
-[data-theme="dark"] .pill--senior:hover{ background:rgba(140,120,200,.18); border-color:#8C78C8; color:#D0C8F0; box-shadow:0 0 16px rgba(140,120,200,.12); }
 
-/* ── 색상 도트 숨김 ── */
+/* ── 호버/포커스 ── */
+.lt-node:hover .lt-dot,
+.lt-node:focus-visible .lt-dot{
+  transform:scale(1.4);
+}
+.lt-track--baby .lt-node:hover .lt-dot{ background:#5A9A6A; box-shadow:0 0 0 4px rgba(90,154,106,.2), 0 0 12px rgba(90,154,106,.2); }
+.lt-track--child .lt-node:hover .lt-dot{ background:#B48C3C; box-shadow:0 0 0 4px rgba(180,140,60,.2), 0 0 12px rgba(180,140,60,.2); }
+.lt-track--adult .lt-node:hover .lt-dot{ background:#D4795E; box-shadow:0 0 0 4px rgba(212,121,94,.2), 0 0 12px rgba(212,121,94,.2); }
+.lt-track--senior .lt-node:hover .lt-dot{ background:#6450A0; box-shadow:0 0 0 4px rgba(100,80,160,.2), 0 0 12px rgba(100,80,160,.2); }
+
+.lt-node:hover .lt-text{
+  color:var(--text-primary);
+}
+
+/* ── 다크 모드 ── */
+[data-theme="dark"] .lt-dot{
+  border-color:var(--surface-base);
+}
+[data-theme="dark"] .lt-track--baby .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(106,170,122,.2), 0 0 16px rgba(106,170,122,.15); }
+[data-theme="dark"] .lt-track--child .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(208,168,80,.2), 0 0 16px rgba(208,168,80,.15); }
+[data-theme="dark"] .lt-track--adult .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(232,144,106,.2), 0 0 16px rgba(232,144,106,.15); }
+[data-theme="dark"] .lt-track--senior .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(140,120,200,.2), 0 0 16px rgba(140,120,200,.15); }
+
+/* ── 모바일: 노드 축소 ── */
+@media(max-width:640px){
+  .lt-node{ padding:6px 8px; }
+  .lt-text{ font-size:11px; }
+  .lt-dot{ width:12px; height:12px; }
+}
+
+/* pill 클래스는 타임라인(.lt-node)으로 대체됨 — 하위 호환 유지 */
+.pills{ display:flex;gap:10px;padding:12px 0;flex-wrap:wrap; }
+.pill{ display:none; } /* 타임라인 사용 시 숨김 */
 .cd{width:0;height:0;display:none;}
 
 /* ── 의학적 면책 조항 ── */
