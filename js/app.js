@@ -1244,7 +1244,7 @@ function setTheme(mode) {
   var tc = document.querySelector('meta[name="theme-color"]');
   if (tc) {
     var isDark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    tc.setAttribute('content', isDark ? '#1C1614' : '#D4795E');
+    tc.setAttribute('content', isDark ? '#161B19' : '#D4795E');
   }
 }
 
