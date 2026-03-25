@@ -459,7 +459,74 @@ function accSection(icon, title, sub, bodyHTML, openByDefault) {
   </div>`;
 }
 
-/* ── 결과 렌더링 (2단계 정보 공개) ── */
+/* ── 긍정-먼저 체크리스트 데이터 생성 ── */
+/* 심리학 근거: 사용자가 "확인받는 경험"을 먼저 해야
+   콘텐츠에 머무른다. 문제점만 나열하면 "해당없네" → 이탈 */
+function buildPositiveChecklist(d, months) {
+  var items = [];
+  var y = months / 12;
+
+  // 체크포인트(mile)에서 긍정 문장 추출
+  if (d.mile && d.mile.length > 0) {
+    d.mile.forEach(function(m) {
+      // 체크포인트 설명을 쉼표로 분리해 개별 항목으로
+      var parts = m.dc.split(/[,，]/).map(function(s) { return s.trim(); });
+      parts.forEach(function(p) {
+        if (p.length > 3) items.push(p);
+      });
+    });
+  }
+
+  // 발달 데이터에서 긍정적 표현 추출 (처음 몇 개만)
+  if (items.length < 3 && d.emo && d.emo[0]) {
+    items.push(stripTags(d.emo[0]));
+  }
+  if (items.length < 3 && d.brain && d.brain[0]) {
+    items.push(stripTags(d.brain[0]));
+  }
+
+  // 최대 5개로 제한
+  return items.slice(0, 5);
+}
+
+/* ── 긍정 체크리스트 인터랙션 ── */
+function togglePC(el) {
+  el.classList.toggle('checked');
+  var isChecked = el.classList.contains('checked');
+  el.setAttribute('aria-checked', isChecked ? 'true' : 'false');
+
+  // 결과 계산
+  var container = el.closest('.positive-check');
+  var allItems = container.querySelectorAll('.pc-item');
+  var checkedItems = container.querySelectorAll('.pc-item.checked');
+  var resultEl = container.querySelector('.pc-result');
+
+  if (checkedItems.length === 0) {
+    resultEl.className = 'pc-result';
+    resultEl.textContent = '';
+    return;
+  }
+
+  var ratio = checkedItems.length / allItems.length;
+  resultEl.className = 'pc-result on';
+
+  if (ratio >= 0.8) {
+    resultEl.className += ' great';
+    resultEl.textContent = checkedItems.length + '/' + allItems.length + ' 아주 잘 자라고 있어요! 👏';
+  } else if (ratio >= 0.5) {
+    resultEl.className += ' good';
+    resultEl.textContent = checkedItems.length + '/' + allItems.length + ' 잘하고 있어요! 아래에서 더 살펴볼까요?';
+  } else {
+    resultEl.className += ' concern';
+    resultEl.textContent = checkedItems.length + '/' + allItems.length + ' 이 부분만 함께 살펴보면 좋겠어요';
+  }
+
+  // 스크린리더 알림
+  var sr = document.getElementById('sr-announce');
+  if (sr) sr.textContent = resultEl.textContent;
+}
+
+/* ── 결과 렌더링 (긍정-먼저 + 2단계 정보 공개) ── */
 function render(d,months){
   const y=months/12;
   let numStr,unitStr;
@@ -498,6 +565,23 @@ function render(d,months){
     const audClass=months/12<=18?'aud-parent':'aud-self';
     parentHTML=`<div class="card full cbg-s" style="animation:none"><div class="card-audience ${audClass}">${audLabel}</div><h3>👨‍👩‍👧 ${d.role}의 역할과 마음가짐</h3><div class="tgrid">${d.parent.map(p=>`<div class="tip"><span class="te">${p.e}</span><p>${p.t}</p></div>`).join('')}</div></div>`;
   }
+
+  // ── 긍정-먼저 체크리스트 (가장 먼저 표시) ──
+  // 심리학: "확인받는 경험"을 먼저 제공 → 머무름 → 관심 있는 것만 펼침
+  const pcItems = buildPositiveChecklist(d, months);
+  const positiveHTML = `
+    <div class="positive-check" role="group" aria-label="잘 자라고 있어요 체크리스트">
+      <div class="positive-check-title">✅ 이것들을 하고 있다면 잘 자라고 있는 거예요</div>
+      <div class="pc-items" id="pc-items-${months}">
+        ${pcItems.map(function(item, i) {
+          return '<div class="pc-item" onclick="togglePC(this)" role="checkbox" aria-checked="false" tabindex="0">'
+            + '<div class="pc-checkbox"></div>'
+            + '<span class="pc-label">' + item + '</span>'
+            + '</div>';
+        }).join('')}
+      </div>
+      <div class="pc-result" id="pc-result-${months}"></div>
+    </div>`;
 
   // ── 핵심 요약 (항상 보임) ──
   const sum1 = stripTags(d.brain[0] || '');
@@ -546,6 +630,7 @@ function render(d,months){
       <div><div class="r-age">${numStr}<sub>${unitStr}</sub></div><div class="r-stg">${d.em}&nbsp;${d.stg}</div></div>
       <div class="r-qt">"${d.qt}"</div>
     </div>
+    ${positiveHTML}
     ${summaryHTML}
     ${accHTML}`;
 }
