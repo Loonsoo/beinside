@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>긍정 체크리스트 — BeInside 디자인 시스템 예제</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── CSS Variables ── */
+:root {
+  --cream: #FFF8F2;
+  --warm: #FFF2E8;
+  --white: #FFFCFA;
+  --peach: #E07B5A;
+  --peach-d: #B85030;
+  --peach-p: #FEEDE6;
+  --ink: #2C1E14;
+  --ink-m: #6A4C3C;
+  --ink-l: #B09080;
+  --line: rgba(232,137,106,.12);
+
+  --positive: #3A8A50;
+  --caution: #C89040;
+  --danger: #C05050;
+  --action: var(--peach-d);
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 32px;
+  --space-2xl: 40px;
+
+  --text-scale: 0;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(15px, calc(15px + var(--text-scale) * 2px), 21px);
+  line-height: 1.75;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: var(--space-lg);
+}
+
+/* ── Layout ── */
+.container {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── Hero Title ── */
+.hero-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: var(--space-sm);
+  line-height: 1.4;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--ink-m);
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+}
+
+/* ── Positive Checklist Card ── */
+.positive-check {
+  background: var(--white);
+  border-radius: 14px;
+  padding: var(--space-lg);
+  border: 1px solid rgba(60,140,90,.12);
+  box-shadow: 0 1px 3px rgba(44,30,20,.04);
+}
+
+.positive-check-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.positive-check-title .icon {
+  font-size: 18px;
+}
+
+/* ── Check Item ── */
+.pc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 6px;
+  transition: background 0.12s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 44px;
+}
+
+.pc-item:hover {
+  background: rgba(60,140,90,.04);
+}
+
+.pc-item:active {
+  transform: scale(0.98);
+}
+
+.pc-item:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 2px;
+}
+
+.pc-item.checked {
+  background: rgba(60,140,90,.06);
+}
+
+/* ── Checkbox Circle ── */
+.pc-checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid rgba(60,140,90,.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.12s ease;
+}
+
+.pc-item.checked .pc-checkbox {
+  background: var(--positive);
+  border-color: var(--positive);
+}
+
+.pc-item.checked .pc-checkbox::after {
+  content: "\2713";
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ── Item Text ── */
+.pc-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+}
+
+.pc-item.checked .pc-text {
+  color: var(--positive);
+}
+
+/* ── Counter ── */
+.pc-counter {
+  text-align: center;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(60,140,90,.08);
+  font-size: 13px;
+  color: var(--ink-l);
+  transition: color 0.2s ease;
+}
+
+.pc-counter .count {
+  font-weight: 700;
+  color: var(--positive);
+  font-size: 15px;
+}
+
+/* ── Result Box ── */
+.pc-result {
+  margin-top: var(--space-md);
+  padding: var(--space-md);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  animation: fadeUp 0.25s ease;
+  display: none;
+  line-height: 1.6;
+}
+
+.pc-result.visible {
+  display: block;
+}
+
+.pc-result.great {
+  background: rgba(60,140,90,.08);
+  color: #2A5A30;
+}
+
+.pc-result.good {
+  background: rgba(60,140,90,.06);
+  color: #3A6A40;
+}
+
+.pc-result.partial {
+  background: rgba(200,150,50,.08);
+  color: #7A5010;
+}
+
+.pc-result .result-icon {
+  font-size: 28px;
+  display: block;
+  margin-bottom: var(--space-sm);
+}
+
+.pc-result .result-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink-m);
+  margin-top: var(--space-sm);
+  line-height: 1.6;
+}
+
+/* ── Reset Button ── */
+.pc-reset {
+  display: none;
+  margin-top: var(--space-md);
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink-m);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  transition: all 0.12s ease;
+}
+
+.pc-reset.visible {
+  display: block;
+}
+
+.pc-reset:hover {
+  background: var(--warm);
+  border-color: var(--peach);
+  color: var(--ink);
+}
+
+.pc-reset:active {
+  transform: scale(0.98);
+}
+
+.pc-reset:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 2px;
+}
+
+/* ── Animation ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Guidance Link ── */
+.pc-guidance-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: var(--space-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--peach-d);
+  text-decoration: none;
+  padding: 4px 0;
+  min-height: 44px;
+}
+
+.pc-guidance-link:hover {
+  text-decoration: underline;
+}
+
+.pc-guidance-link:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="hero-title">이 시기에 이런 걸 하고 있다면<br>잘 자라고 있어요</h1>
+  <p class="hero-subtitle">
+    아이의 작은 행동 하나하나가 건강한 발달의 신호예요.<br>
+    해당하는 항목을 체크해 보세요.
+  </p>
+
+  <div class="positive-check" role="group" aria-label="긍정 발달 체크리스트">
+    <div class="positive-check-title">
+      <span class="icon" aria-hidden="true">🌱</span>
+      우리 아이, 잘 자라고 있는 신호
+    </div>
+
+    <button class="pc-item" role="checkbox" aria-checked="false" data-index="0" aria-label="아이와 하루 한 번 이상 눈을 맞추며 이야기해요">
+      <span class="pc-checkbox" aria-hidden="true"></span>
+      <span class="pc-text">아이와 하루 한 번 이상 눈을 맞추며 이야기해요</span>
+    </button>
+
+    <button class="pc-item" role="checkbox" aria-checked="false" data-index="1" aria-label="아이의 감정을 말로 표현해줘요">
+      <span class="pc-checkbox" aria-hidden="true"></span>
+      <span class="pc-text">아이의 감정을 말로 표현해줘요</span>
+    </button>
+
+    <button class="pc-item" role="checkbox" aria-checked="false" data-index="2" aria-label="아이가 궁금한 걸 물어볼 때 함께 찾아봐요">
+      <span class="pc-checkbox" aria-hidden="true"></span>
+      <span class="pc-text">아이가 궁금한 걸 물어볼 때 함께 찾아봐요</span>
+    </button>
+
+    <button class="pc-item" role="checkbox" aria-checked="false" data-index="3" aria-label="잠자리 전에 오늘 있었던 일을 이야기 나눠요">
+      <span class="pc-checkbox" aria-hidden="true"></span>
+      <span class="pc-text">잠자리 전에 오늘 있었던 일을 이야기 나눠요</span>
+    </button>
+
+    <button class="pc-item" role="checkbox" aria-checked="false" data-index="4" aria-label="아이가 실수해도 다시 해볼 수 있게 기다려줘요">
+      <span class="pc-checkbox" aria-hidden="true"></span>
+      <span class="pc-text">아이가 실수해도 다시 해볼 수 있게 기다려줘요</span>
+    </button>
+
+    <div class="pc-counter" aria-live="polite">
+      <span class="count">0</span> / 5 체크됨
+    </div>
+
+    <div class="pc-result" id="pc-result" aria-live="polite"></div>
+
+    <button class="pc-reset" id="pc-reset" aria-label="체크리스트 초기화">
+      다시 체크하기
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const items = document.querySelectorAll('.pc-item');
+  const counterEl = document.querySelector('.pc-counter .count');
+  const resultEl = document.getElementById('pc-result');
+  const resetBtn = document.getElementById('pc-reset');
+  const total = items.length;
+  let checked = new Set();
+
+  function updateResult() {
+    const count = checked.size;
+    counterEl.textContent = count;
+
+    if (count === 0) {
+      resultEl.classList.remove('visible', 'great', 'good', 'partial');
+      resetBtn.classList.remove('visible');
+      return;
+    }
+
+    resetBtn.classList.add('visible');
+
+    if (count === total) {
+      resultEl.className = 'pc-result visible great';
+      resultEl.innerHTML =
+        '<span class="result-icon" aria-hidden="true">&#x1F44F;</span>' +
+        '5/5 아주 잘하고 있어요!' +
+        '<span class="result-sub">이 모든 걸 하고 계시다니, 정말 대단해요.<br>아이는 충분히 사랑받고 있어요.</span>';
+    } else if (count >= 3) {
+      resultEl.className = 'pc-result visible good';
+      resultEl.innerHTML =
+        '<span class="result-icon" aria-hidden="true">&#x1F331;</span>' +
+        count + '/5 잘 하고 있어요!' +
+        '<span class="result-sub">이미 많은 걸 해주고 계시네요.<br>체크하지 않은 항목도 천천히 시도해 보세요.</span>';
+    } else {
+      resultEl.className = 'pc-result visible partial';
+      resultEl.innerHTML =
+        '<span class="result-icon" aria-hidden="true">&#x1F49B;</span>' +
+        count + '/5 시작이 반이에요!' +
+        '<span class="result-sub">하나라도 하고 있다면 충분히 노력하고 있는 거예요.<br>나머지도 조금씩, 부담 없이 해보세요.</span>' +
+        '<a href="#" class="pc-guidance-link" aria-label="발달 가이드 더 보기">발달 가이드 살펴보기 &rarr;</a>';
+    }
+  }
+
+  function toggleItem(item) {
+    var idx = parseInt(item.getAttribute('data-index'), 10);
+    var isChecked = checked.has(idx);
+
+    if (isChecked) {
+      checked.delete(idx);
+      item.classList.remove('checked');
+      item.setAttribute('aria-checked', 'false');
+    } else {
+      checked.add(idx);
+      item.classList.add('checked');
+      item.setAttribute('aria-checked', 'true');
+    }
+
+    updateResult();
+  }
+
+  items.forEach(function (item) {
+    item.addEventListener('click', function () {
+      toggleItem(item);
+    });
+
+    item.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleItem(item);
+      }
+    });
+  });
+
+  resetBtn.addEventListener('click', function () {
+    checked.clear();
+    items.forEach(function (item) {
+      item.classList.remove('checked');
+      item.setAttribute('aria-checked', 'false');
+    });
+    updateResult();
+    items[0].focus();
+  });
+})();
+</script>
+</body>
+</html>

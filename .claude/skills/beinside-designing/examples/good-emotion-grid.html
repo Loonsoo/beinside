@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>감정 선택 그리드 — BeInside 디자인 예시</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF8F2;
+    --peach: #E07B5A;
+    --peach-d: #B85030;
+    --peach-p: #FEEDE6;
+    --ink: #2C1E14;
+    --ink-m: #6A4C3C;
+    --white: #FFFCFA;
+    --line: rgba(232, 137, 106, .12);
+    --positive: #3A8A50;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: var(--ink-m);
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  /* ── Emotion Grid ── */
+  .emotion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .emotion-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 88px;
+    padding: 16px 8px;
+    background: var(--white);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, background-color 0.15s, transform 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .emotion-btn:hover {
+    border-color: var(--peach);
+    background: var(--peach-p);
+  }
+
+  .emotion-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(224, 123, 90, .35);
+    border-color: var(--peach);
+  }
+
+  .emotion-btn[aria-pressed="true"] {
+    border-color: var(--peach);
+    background: var(--peach-p);
+    transform: scale(0.97);
+  }
+
+  .emotion-btn .emoji {
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .emotion-btn .label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ── Result Panel ── */
+  .result-panel {
+    display: none;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 20px;
+    animation: fadeUp 0.25s ease-out;
+  }
+
+  .result-panel.visible {
+    display: block;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-validation {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--peach-d);
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+
+  .result-guidance {
+    font-size: 15px;
+    color: var(--ink);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  .result-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .result-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.15s, transform 0.15s;
+  }
+
+  .result-link:active {
+    transform: scale(0.98);
+  }
+
+  .result-link--guide {
+    background: var(--peach-p);
+    color: var(--peach-d);
+  }
+
+  .result-link--guide:hover {
+    background: #fde0d3;
+  }
+
+  .result-link--tel {
+    background: #e8f5ec;
+    color: var(--positive);
+  }
+
+  .result-link--tel:hover {
+    background: #d5eddb;
+  }
+
+  .result-link .link-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>지금 기분이 어떠세요?</h1>
+  <p class="subtitle">가장 가까운 감정을 골라 보세요</p>
+
+  <div class="emotion-grid" role="radiogroup" aria-label="감정 선택">
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="편안해요" data-emotion="comfort">
+      <span class="emoji" aria-hidden="true">😌</span>
+      <span class="label">편안해요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="불안해요" data-emotion="anxiety">
+      <span class="emoji" aria-hidden="true">😰</span>
+      <span class="label">불안해요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="지쳐있어요" data-emotion="exhaustion">
+      <span class="emoji" aria-hidden="true">😮‍💨</span>
+      <span class="label">지쳐있어요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="외로워요" data-emotion="loneliness">
+      <span class="emoji" aria-hidden="true">🥺</span>
+      <span class="label">외로워요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="화가나요" data-emotion="anger">
+      <span class="emoji" aria-hidden="true">😤</span>
+      <span class="label">화가나요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="슬퍼요" data-emotion="sadness">
+      <span class="emoji" aria-hidden="true">😢</span>
+      <span class="label">슬퍼요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="걱정돼요" data-emotion="worry">
+      <span class="emoji" aria-hidden="true">😟</span>
+      <span class="label">걱정돼요</span>
+    </button>
+    <button class="emotion-btn" role="radio" aria-pressed="false" aria-label="모르겠어요" data-emotion="unsure">
+      <span class="emoji" aria-hidden="true">🤔</span>
+      <span class="label">모르겠어요</span>
+    </button>
+  </div>
+
+  <div class="result-panel" id="resultPanel" aria-live="polite"></div>
+</div>
+
+<script>
+const DATA = {
+  comfort: {
+    validation: "편안한 지금 이 순간, 참 소중해요.",
+    guidance: "마음이 편안할 때 주변을 돌아보면 감사한 것들이 보여요. 이 느낌을 기억해 두면 힘든 날에 작은 힘이 될 수 있어요. 오늘 하루도 잘 보내고 계시네요.",
+    guide: { text: "마음 돌봄 가이드 보기", href: "#guide-comfort" },
+    tel: { text: "정신건강 위기상담 1577-0199", href: "tel:1577-0199", desc: "24시간 정신건강 위기상담" }
+  },
+  anxiety: {
+    validation: "불안한 마음이 드는 건 자연스러운 거예요.",
+    guidance: "불안은 우리를 보호하려는 마음의 신호예요. 지금 느끼는 감정을 부정하지 않아도 괜찮아요. 천천히 숨을 고르며 지금 이 순간에 집중해 보세요.",
+    guide: { text: "불안 다루기 가이드 보기", href: "#guide-anxiety" },
+    tel: { text: "정신건강 위기상담 1577-0199", href: "tel:1577-0199", desc: "24시간 정신건강 위기상담" }
+  },
+  exhaustion: {
+    validation: "지치셨군요. 여기까지 오신 것만으로도 대단해요.",
+    guidance: "쉬고 싶다는 마음은 몸과 마음이 보내는 중요한 신호예요. 잠깐이라도 아무것도 하지 않는 시간을 가져 보세요. 쉬는 것도 용기 있는 선택이에요.",
+    guide: { text: "번아웃 회복 가이드 보기", href: "#guide-exhaustion" },
+    tel: { text: "근로자 심리상담 1588-6497", href: "tel:1588-6497", desc: "근로복지넷 근로자 심리상담" }
+  },
+  loneliness: {
+    validation: "외롭다고 느끼는 건 연결을 원하는 마음이에요.",
+    guidance: "혼자라고 느끼는 순간에도, 당신 곁에 닿을 수 있는 손길은 있어요. 작은 대화 하나가 큰 위로가 될 수 있어요. 지금 이 페이지를 열어본 것도 첫 걸음이에요.",
+    guide: { text: "고립감 다루기 가이드 보기", href: "#guide-loneliness" },
+    tel: { text: "자살예방 상담 1393", href: "tel:1393", desc: "24시간 자살예방 상담전화" }
+  },
+  anger: {
+    validation: "화가 나는 건 당연한 감정이에요.",
+    guidance: "분노는 '이건 나에게 중요해'라는 신호예요. 감정을 느끼는 것과 행동하는 것은 다르니까, 지금은 감정을 있는 그대로 인정해 보세요. 잠시 깊은 숨을 쉬어 보는 것도 도움이 돼요.",
+    guide: { text: "감정 조절 가이드 보기", href: "#guide-anger" },
+    tel: { text: "정신건강 위기상담 1577-0199", href: "tel:1577-0199", desc: "24시간 정신건강 위기상담" }
+  },
+  sadness: {
+    validation: "슬플 때 슬프다고 느끼는 건 건강한 거예요.",
+    guidance: "슬픔을 억누르지 않아도 돼요. 울고 싶을 때 우는 것도 마음을 돌보는 방법이에요. 누군가에게 이야기를 나누는 것만으로도 마음이 한결 가벼워질 수 있어요.",
+    guide: { text: "우울감 다루기 가이드 보기", href: "#guide-sadness" },
+    tel: { text: "자살예방 상담 1393", href: "tel:1393", desc: "24시간 자살예방 상담전화" }
+  },
+  worry: {
+    validation: "걱정이 많다는 건 책임감이 있다는 뜻이기도 해요.",
+    guidance: "걱정은 미래를 준비하려는 마음에서 오지만, 너무 많으면 지금을 놓치게 돼요. 지금 당장 할 수 있는 아주 작은 것 하나에 집중해 보세요. 한 걸음씩이면 충분해요.",
+    guide: { text: "걱정 줄이기 가이드 보기", href: "#guide-worry" },
+    tel: { text: "정신건강 위기상담 1577-0199", href: "tel:1577-0199", desc: "24시간 정신건강 위기상담" }
+  },
+  unsure: {
+    validation: "지금 감정을 잘 모르겠어도 괜찮아요.",
+    guidance: "감정에 이름을 붙이기 어려울 때가 있어요. 그것도 하나의 상태이고 자연스러운 거예요. 지금은 그냥 '뭔가 느끼고 있구나'라고만 인정해 주세요.",
+    guide: { text: "마음 알아가기 가이드 보기", href: "#guide-unsure" },
+    tel: { text: "정신건강 위기상담 1577-0199", href: "tel:1577-0199", desc: "24시간 정신건강 위기상담" }
+  }
+};
+
+const buttons = document.querySelectorAll('.emotion-btn');
+const panel = document.getElementById('resultPanel');
+
+function selectEmotion(emotion) {
+  buttons.forEach(btn => btn.setAttribute('aria-pressed', 'false'));
+  const active = document.querySelector('[data-emotion="' + emotion + '"]');
+  if (active) active.setAttribute('aria-pressed', 'true');
+
+  const d = DATA[emotion];
+  if (!d) return;
+
+  panel.innerHTML =
+    '<p class="result-validation">' + d.validation + '</p>' +
+    '<p class="result-guidance">' + d.guidance + '</p>' +
+    '<div class="result-links">' +
+      '<a class="result-link result-link--guide" href="' + d.guide.href + '" aria-label="' + d.guide.text + '">' +
+        '<span class="link-icon" aria-hidden="true">📖</span>' +
+        d.guide.text +
+      '</a>' +
+      '<a class="result-link result-link--tel" href="' + d.tel.href + '" aria-label="' + d.tel.desc + '">' +
+        '<span class="link-icon" aria-hidden="true">📞</span>' +
+        d.tel.text +
+      '</a>' +
+    '</div>';
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+buttons.forEach(function(btn) {
+  btn.addEventListener('click', function() { selectEmotion(btn.dataset.emotion); });
+});
+
+/* Keyboard navigation: arrow keys within the radiogroup */
+var grid = document.querySelector('.emotion-grid');
+grid.addEventListener('keydown', function(e) {
+  var btns = Array.from(buttons);
+  var idx = btns.indexOf(document.activeElement);
+  if (idx === -1) return;
+
+  var next = -1;
+  var cols = 2;
+
+  switch (e.key) {
+    case 'ArrowRight': next = idx + 1; break;
+    case 'ArrowLeft':  next = idx - 1; break;
+    case 'ArrowDown':  next = idx + cols; break;
+    case 'ArrowUp':    next = idx - cols; break;
+    default: return;
+  }
+
+  if (next >= 0 && next < btns.length) {
+    e.preventDefault();
+    btns[next].focus();
+    btns[next].click();
+  }
+});
+</script>
+
+</body>
+</html>
