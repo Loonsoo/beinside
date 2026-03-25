@@ -117,6 +117,10 @@
 <!-- ── 헤더 드롭다운 메뉴 ── -->
 <div class="hdr-menu-overlay" id="hdr-menu-overlay" onclick="closeHeaderMenu()"></div>
 <div class="hdr-menu" id="hdr-menu" role="menu" aria-label="메뉴">
+  <button class="hdr-menu-item" onclick="closeHeaderMenu();setTimeout(openSearch,150)" role="menuitem">
+    <span class="hdr-menu-icon">🔍</span>
+    <span>검색</span>
+  </button>
   <button class="hdr-menu-item" onclick="closeHeaderMenu();setTimeout(openSourceDrawer,150)" role="menuitem">
     <span class="hdr-menu-icon">📚</span>
     <span>출처</span>
