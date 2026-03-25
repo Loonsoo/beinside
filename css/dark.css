@@ -572,12 +572,12 @@
 }
 /* (journal-entry 스타일은 jn-* 시스템으로 이동) */
 [data-theme="dark"] .section-care{
-  background:var(--surface-section-care);
-  border:none;
+  background:rgba(106,170,122,.04);
+  border:1px solid rgba(106,170,122,.06);
 }
 [data-theme="dark"] .section-self{
-  background:var(--surface-section-self);
-  border:none;
+  background:rgba(154,122,200,.04);
+  border:1px solid rgba(154,122,200,.06);
 }
 [data-theme="dark"] .toolkit-btn{
   border-color:rgba(232,144,106,.25);

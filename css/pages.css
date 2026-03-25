@@ -1910,20 +1910,32 @@
   color:var(--text-secondary);
   line-height:1.6;
 }
-/* self-area 카드 색조 (라벤더 기반) */
+/* ── 라이트 모드: 카드가 섹션 색조를 이어받음 ── */
+/* 돌봄 영역 카드 — 따뜻한 녹색 틴트 */
+.section-care .sit-card{
+  background:rgba(255,255,255,.65);
+  border-color:rgba(90,154,106,.10);
+}
+@media (hover: hover) {
+  .section-care .sit-card:hover{
+    background:rgba(255,255,255,.90);
+    border-color:rgba(90,154,106,.25);
+    box-shadow:0 4px 16px rgba(90,154,106,.10);
+  }
+}
+/* 나 자신 영역 카드 — 부드러운 라벤더 틴트 */
 .sit-card.self-area{
-  border-color:rgba(138,106,184,.16);
+  background:rgba(255,255,255,.65);
+  border-color:rgba(138,106,184,.10);
 }
 .sit-card.self-area .sit-icon{
-  background:var(--lavender-p);
-  border-color:rgba(138,106,184,.18);
+  background:none;
 }
 @media (hover: hover) {
   .sit-card.self-area:hover{
-    border-color:rgba(138,106,184,.45);
-    box-shadow:
-      0 0 8px rgba(138,106,184,.18),
-      0 0 20px rgba(138,106,184,.10);
+    background:rgba(255,255,255,.90);
+    border-color:rgba(138,106,184,.25);
+    box-shadow:0 4px 16px rgba(138,106,184,.10);
   }
 }
 /* 모바일 section 패딩은 MOBILE COMPACT 섹션에서 통합 관리 */
@@ -2115,19 +2127,34 @@
 .hero .eq-arrow{color:var(--calm-text-3);}
 .hero .home-quote p{font-size:14px;color:var(--calm-text-2);line-height:1.8;}
 
-/* 다크모드 calm */
-[data-theme="dark"] .hero .sit-card,
-[data-theme="dark"] .hero .sit-card[data-card-id]{
-  background:var(--calm-bg-surface);
-  border-color:var(--calm-border);
-  box-shadow:0 1px 6px rgba(0,0,0,.20);
+/* ── 다크모드: 카드가 섹션 색조를 이어받음 ── */
+/* 돌봄 영역 카드 — 숲 녹색 틴트 */
+[data-theme="dark"] .section-care .sit-card{
+  background:rgba(106,170,122,.06);
+  border-color:rgba(106,170,122,.10);
+  box-shadow:none;
 }
 @media(hover:hover){
-  [data-theme="dark"] .hero .sit-card:hover{
-    background:var(--calm-bg-elevated);
-    border-color:rgba(212,121,94,.12);
-    box-shadow:0 4px 16px rgba(0,0,0,.25);
+  [data-theme="dark"] .section-care .sit-card:hover{
+    background:rgba(106,170,122,.12);
+    border-color:rgba(106,170,122,.20);
   }
+}
+/* 나 자신 영역 카드 — 라벤더 틴트 */
+[data-theme="dark"] .section-self .sit-card{
+  background:rgba(154,122,200,.06);
+  border-color:rgba(154,122,200,.10);
+  box-shadow:none;
+}
+@media(hover:hover){
+  [data-theme="dark"] .section-self .sit-card:hover{
+    background:rgba(154,122,200,.12);
+    border-color:rgba(154,122,200,.20);
+  }
+}
+/* 기타 영역 카드 폴백 */
+[data-theme="dark"] .hero .sit-card{
+  box-shadow:none;
 }
 
 /* 모바일 calm */
