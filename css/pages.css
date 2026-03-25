@@ -778,22 +778,24 @@
   word-break:keep-all;
 }
 
-/* ── 상황 카드 그리드 ── */
+/* ── 상황 카드 그리드 — 모바일도 2열 ── */
+/* 심리학: 2열이면 8개 카드를 2~3스크롤 이내에 전부 볼 수 있음 */
 .situation-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  width: 100%; max-width: 480px;
-  margin: 0 auto var(--sp-3);
-  animation: up .5s .18s cubic-bezier(.22,1,.36,1) both;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+  margin: 0 auto;
+  animation: up .3s .1s var(--ease-out) both;
 }
 
-/* ── 상황 카드 — 감성 리디자인 ── */
+/* ── 상황 카드 — 2열 컴팩트 ── */
 .sit-card {
-  display: flex; flex-direction: row; align-items: center;
-  gap: 16px;
-  padding: 20px;
-  border-radius: 18px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  min-height: 88px;
   cursor: pointer;
   transition: all var(--calm-dur) var(--calm-ease);
   text-align: left;
@@ -829,30 +831,27 @@
   .sit-card:hover .sit-arrow { opacity: .6; transform: translateX(2px); }
 }
 
-/* 이모지 아이콘 — 배경 없이 순수 이모지 */
+/* 이모지 아이콘 */
 .sit-icon {
-  font-size: 28px; flex-shrink: 0; line-height: 1;
-  width: 40px; height: 40px;
+  font-size: 24px; flex-shrink: 0; line-height: 1;
   display: flex; align-items: center; justify-content: center;
   border: none;
   background: none;
-  transition: transform var(--calm-dur) var(--calm-ease);
+  transition: transform .15s ease;
 }
 
 .sit-card-body { flex: 1; min-width: 0; }
 .sit-title {
-  font-size: 14px; font-weight: 700; color: var(--ink);
-  line-height: 1.45; letter-spacing: -.2px;
-  margin-bottom: 4px; word-break: keep-all;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  line-height: 1.4; letter-spacing: -.2px;
+  word-break: keep-all;
 }
 .sit-sub {
-  font-size: 12px; color: var(--ink-l);
-  line-height: 1.55; word-break: keep-all;
+  font-size: 11px; color: var(--ink-l);
+  line-height: 1.5; word-break: keep-all;
 }
 .sit-arrow {
-  font-size: 14px; color: var(--ink-l);
-  flex-shrink: 0; transition: all var(--calm-dur) var(--calm-ease);
-  opacity: .25;
+  display:none; /* 2열 컴팩트에서 화살표 제거 — 카드 전체가 터치 영역 */
 }
 
 /* ── 카드별 개성 컬러 ── */
@@ -1491,9 +1490,9 @@
 
 /* ── 반응형 ── */
 @media(max-width:640px){
-  .situation-grid { grid-template-columns: 1fr; }
-  .sit-card { padding: 14px; }
-  .sit-icon { font-size: 22px; width: 40px; height: 40px; border-radius: 10px; }
+  .situation-grid { grid-template-columns: 1fr 1fr; gap:8px; } /* 모바일 2열 유지 */
+  .sit-card { padding: 12px 14px; }
+  .sit-icon { font-size: 20px; }
   .sit-title { font-size: 13px; }
   .page-header { padding: 14px 18px 12px; }
   .page-title { font-size: 16px; }
@@ -2101,15 +2100,15 @@
 .hero .section-sub{font-size:13px;color:var(--text-secondary);}
 .hero .section-header{margin-bottom:16px;}
 
-/* 심리학: 카드 12px, 영역 40px */
-.hero .situation-grid{gap:10px;}
-.hero .hero-sections{gap:40px;}
+/* 심리학: 카드 8~10px, 영역 32~40px */
+.hero .situation-grid{gap:8px;}
+.hero .hero-sections{gap:32px;}
 
 /* 보조 요소 */
 .hero .guide-finder-btn{
   color:var(--calm-text-3);font-size:13.5px;
-  margin-bottom:24px;
-  transition:color var(--calm-dur) var(--calm-ease);
+  margin-bottom:12px;
+  transition:color .15s ease;
 }
 .hero .guide-finder-btn:hover{color:var(--calm-warm);}
 .hero .show-more-btn{
@@ -2256,12 +2255,11 @@
   .section-self{ padding:16px; border-radius:14px; }
   .section-header{ margin-bottom:12px; }
   .section-title{ font-size:16px; }
-  .situation-grid{ gap:10px; margin-bottom:0; }
-  .sit-card{ padding:14px 16px; gap:12px; border-radius:14px; min-height:88px; }
-  .sit-icon{ width:32px; height:32px; font-size:22px; }
-  .sit-title{ font-size:13px; }
-  .sit-sub{ font-size:10.5px; }
-  .sit-arrow{ bottom:10px; right:12px; font-size:11px; }
+  .situation-grid{ grid-template-columns:1fr 1fr; gap:8px; margin-bottom:0; }
+  .sit-card{ padding:12px 14px; gap:6px; border-radius:12px; min-height:80px; }
+  .sit-icon{ font-size:20px; }
+  .sit-title{ font-size:12.5px; }
+  .sit-sub{ font-size:10px; }
   .mood-section{ padding:16px; margin:0; }
   .mood-label{ font-size:14px; margin-bottom:var(--sp-1); }
   .mood-btn{ min-width:64px; min-height:56px; padding:8px 6px; font-size:20px; }
