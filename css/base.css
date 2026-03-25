@@ -521,67 +521,74 @@ nav button.on{
   line-height:1.6;
 }
 .lt-group{
-  margin-bottom:20px;
+  margin-bottom:14px;
 }
 .lt-label{
   font-size:12px;
   font-weight:700;
   color:var(--text-secondary);
-  margin-bottom:8px;
+  margin-bottom:6px;
   padding-left:2px;
 }
 /* ── 타임라인 트랙 ── */
 .lt-track{
-  display:flex;
-  align-items:center;
+  display:inline-flex;
+  align-items:flex-start;
   position:relative;
   padding:4px 0;
 }
-/* 연결선 */
+/* 연결선 — 첫 도트~마지막 도트 사이만 */
 .lt-line{
   position:absolute;
-  top:50%;left:16px;right:16px;
+  top:11px;
+  left:0;right:0;
   height:2px;
   background:var(--border-hover);
-  transform:translateY(-50%);
+  border-radius:1px;
+  z-index:0;
+  margin:0 calc(50% / var(--lt-count, 5));  /* 폴백 */
+}
+/* JS 없이도 작동하도록 트랙 자체가 inline-flex → 선이 노드 범위만큼만 */
+.lt-track::before{
+  content:'';
+  position:absolute;
+  top:11px;left:24px;right:24px;
+  height:2px;
   border-radius:1px;
   z-index:0;
 }
-/* 단계별 연결선 색상 */
-.lt-track--baby .lt-line{ background:linear-gradient(90deg,rgba(90,154,106,.3),rgba(90,154,106,.15)); }
-.lt-track--child .lt-line{ background:linear-gradient(90deg,rgba(180,140,60,.3),rgba(180,140,60,.15)); }
-.lt-track--adult .lt-line{ background:linear-gradient(90deg,rgba(212,121,94,.3),rgba(212,121,94,.15)); }
-.lt-track--senior .lt-line{ background:linear-gradient(90deg,rgba(100,80,160,.3),rgba(100,80,160,.15)); }
+.lt-line{ display:none; } /* ::before로 대체 */
+.lt-track--baby::before{ background:rgba(90,154,106,.25); }
+.lt-track--child::before{ background:rgba(180,140,60,.25); }
+.lt-track--adult::before{ background:rgba(212,121,94,.25); }
+.lt-track--senior::before{ background:rgba(100,80,160,.25); }
 
 /* ── 노드 (터치 영역) ── */
 .lt-node{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
   background:none;border:none;
   cursor:pointer;
-  padding:8px 12px;
+  padding:4px 14px;
   position:relative;z-index:1;
   min-width:44px;min-height:44px;
   transition:all .15s ease;
   -webkit-appearance:none;appearance:none;
-  font:inherit;
+  font:inherit;color:inherit;
 }
 .lt-node:active{ transform:scale(0.94); }
 
 /* ── 도트 ── */
 .lt-dot{
-  width:14px;height:14px;
+  width:18px;height:18px;
   border-radius:50%;
-  border:2.5px solid var(--surface-base);
-  background:var(--border-hover);
+  border:3px solid var(--surface-base);
   flex-shrink:0;
-  transition:all .15s ease;
-  box-shadow:0 0 0 2px var(--border-hover);
+  transition:all .2s ease;
 }
-/* 단계별 도트 색상 */
-.lt-track--baby .lt-dot{ background:rgba(90,154,106,.6); box-shadow:0 0 0 2px rgba(90,154,106,.25); }
-.lt-track--child .lt-dot{ background:rgba(180,140,60,.6); box-shadow:0 0 0 2px rgba(180,140,60,.25); }
-.lt-track--adult .lt-dot{ background:rgba(212,121,94,.6); box-shadow:0 0 0 2px rgba(212,121,94,.25); }
-.lt-track--senior .lt-dot{ background:rgba(100,80,160,.6); box-shadow:0 0 0 2px rgba(100,80,160,.25); }
+.lt-track--baby .lt-dot{ background:#5A9A6A; box-shadow:0 0 0 2px rgba(90,154,106,.3); }
+.lt-track--child .lt-dot{ background:#B48C3C; box-shadow:0 0 0 2px rgba(180,140,60,.3); }
+.lt-track--adult .lt-dot{ background:#D4795E; box-shadow:0 0 0 2px rgba(212,121,94,.3); }
+.lt-track--senior .lt-dot{ background:#6A5AA0; box-shadow:0 0 0 2px rgba(100,80,160,.3); }
 
 /* ── 텍스트 라벨 ── */
 .lt-text{
@@ -592,34 +599,29 @@ nav button.on{
   letter-spacing:-.2px;
 }
 
-/* ── 호버/포커스 ── */
-.lt-node:hover .lt-dot,
-.lt-node:focus-visible .lt-dot{
-  transform:scale(1.4);
+/* ── 호버 ── */
+.lt-node:hover .lt-dot{
+  transform:scale(1.3);
 }
-.lt-track--baby .lt-node:hover .lt-dot{ background:#5A9A6A; box-shadow:0 0 0 4px rgba(90,154,106,.2), 0 0 12px rgba(90,154,106,.2); }
-.lt-track--child .lt-node:hover .lt-dot{ background:#B48C3C; box-shadow:0 0 0 4px rgba(180,140,60,.2), 0 0 12px rgba(180,140,60,.2); }
-.lt-track--adult .lt-node:hover .lt-dot{ background:#D4795E; box-shadow:0 0 0 4px rgba(212,121,94,.2), 0 0 12px rgba(212,121,94,.2); }
-.lt-track--senior .lt-node:hover .lt-dot{ background:#6450A0; box-shadow:0 0 0 4px rgba(100,80,160,.2), 0 0 12px rgba(100,80,160,.2); }
-
-.lt-node:hover .lt-text{
-  color:var(--text-primary);
-}
+.lt-track--baby .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(90,154,106,.25), 0 0 12px rgba(90,154,106,.2); }
+.lt-track--child .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(180,140,60,.25), 0 0 12px rgba(180,140,60,.2); }
+.lt-track--adult .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(212,121,94,.25), 0 0 12px rgba(212,121,94,.2); }
+.lt-track--senior .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(100,80,160,.25), 0 0 12px rgba(100,80,160,.2); }
+.lt-node:hover .lt-text{ color:var(--text-primary); }
 
 /* ── 다크 모드 ── */
-[data-theme="dark"] .lt-dot{
-  border-color:var(--surface-base);
-}
-[data-theme="dark"] .lt-track--baby .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(106,170,122,.2), 0 0 16px rgba(106,170,122,.15); }
-[data-theme="dark"] .lt-track--child .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(208,168,80,.2), 0 0 16px rgba(208,168,80,.15); }
-[data-theme="dark"] .lt-track--adult .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(232,144,106,.2), 0 0 16px rgba(232,144,106,.15); }
-[data-theme="dark"] .lt-track--senior .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(140,120,200,.2), 0 0 16px rgba(140,120,200,.15); }
+[data-theme="dark"] .lt-dot{ border-color:var(--surface-base); }
+[data-theme="dark"] .lt-track--baby .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(106,170,122,.25), 0 0 16px rgba(106,170,122,.2); }
+[data-theme="dark"] .lt-track--child .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(208,168,80,.25), 0 0 16px rgba(208,168,80,.2); }
+[data-theme="dark"] .lt-track--adult .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(232,144,106,.25), 0 0 16px rgba(232,144,106,.2); }
+[data-theme="dark"] .lt-track--senior .lt-node:hover .lt-dot{ box-shadow:0 0 0 4px rgba(140,120,200,.25), 0 0 16px rgba(140,120,200,.2); }
 
-/* ── 모바일: 노드 축소 ── */
+/* ── 모바일 ── */
 @media(max-width:640px){
-  .lt-node{ padding:6px 8px; }
+  .lt-node{ padding:4px 10px; }
   .lt-text{ font-size:11px; }
-  .lt-dot{ width:12px; height:12px; }
+  .lt-dot{ width:14px; height:14px; border-width:2.5px; }
+  .lt-track::before{ top:9px; left:20px; right:20px; }
 }
 
 /* pill 클래스는 타임라인(.lt-node)으로 대체됨 — 하위 호환 유지 */
