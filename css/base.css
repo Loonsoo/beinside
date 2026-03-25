@@ -821,12 +821,8 @@ nav button.on{
   border-bottom:1px solid var(--line);
 }
 .sp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
-.sp-card{border-radius:16px;padding:18px 20px;border:1px solid transparent;}
-.sp-card.rose{background:linear-gradient(135deg,#F5EDE4,#ECDDD0);border-color:rgba(184,92,66,.13);}
-.sp-card.blue{background:linear-gradient(135deg,#F3F7FF,#EBF1FF);border-color:rgba(60,100,200,.13);}
-.sp-card.gold{background:linear-gradient(135deg,#FFFAF0,#FFF4DC);border-color:rgba(200,150,50,.13);}
-.sp-card.green{background:linear-gradient(135deg,#F3FAF5,#E7F5EC);border-color:rgba(60,140,90,.13);}
-.sp-card.plum{background:var(--plum-p);border-color:rgba(154,123,90,.13);}
+.sp-card{border-radius:14px;padding:16px 18px;border:1px solid var(--border-default);background:var(--surface-card);}
+/* SP 카드 색상 변형 — 통합 시스템에서 관리 (pages.css 상단) */
 .sp-card.full{grid-column:span 2;}
 .sp-card h4{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:9px;display:flex;align-items:center;gap:7px;}
 .sp-card h4 em{font-size:10.5px;font-style:normal;font-weight:700;padding:2px 8px;border-radius:12px;letter-spacing:.04em;white-space:nowrap;}
@@ -838,11 +834,7 @@ nav button.on{
 .sp-card ul{list-style:none;display:flex;flex-direction:column;gap:6px;}
 .sp-card ul li{font-size:12.5px;color:var(--ink-m);line-height:1.7;padding-left:14px;position:relative;}
 .sp-card ul li::before{content:'·';position:absolute;left:2px;font-size:18px;line-height:1.3;font-weight:700;}
-.sp-card.rose ul li::before{color:var(--rust);}
-.sp-card.blue ul li::before{color:var(--sp-bullet-blue);}
-.sp-card.gold ul li::before{color:var(--sp-bullet-gold);}
-.sp-card.green ul li::before{color:var(--sp-bullet-green);}
-.sp-card.plum ul li::before{color:var(--plum);}
+.sp-card ul li::before{color:var(--accent-primary);}
 .sp-card ul li strong{color:var(--ink);font-weight:700;}
 
 .sp-scripts{display:flex;flex-direction:column;gap:10px;margin-bottom:14px;}

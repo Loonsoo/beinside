@@ -3,6 +3,152 @@
    피쳐 CSS, 페이지별 스타일, 컴포넌트
 ══════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════════
+   통합 컴포넌트 시스템 — 모든 페이지 공통
+   버튼, 탭, 칩, 카드를 일원화
+══════════════════════════════════════════════════ */
+
+/* ── 통합 탭/칩 버튼 (sp-age-tab, birth-tab, toolkit-btn 공통) ── */
+.sp-age-tab,
+.birth-tab,
+.toolkit-btn,
+.mc-lang-btn{
+  min-height:44px;
+  padding:9px 16px;
+  background:var(--surface-card);
+  border:1.5px solid var(--border-default);
+  border-radius:12px;
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-body);
+  cursor:pointer;
+  transition:all .15s ease;
+  word-break:keep-all;
+}
+.sp-age-tab:hover,
+.birth-tab:hover,
+.toolkit-btn:hover,
+.mc-lang-btn:hover{
+  background:var(--accent-subtle);
+  border-color:var(--accent-primary);
+  color:var(--accent-hover);
+}
+.sp-age-tab.on,
+.birth-tab.on,
+.toolkit-btn.on,
+.mc-lang-btn.on{
+  background:var(--accent-subtle);
+  border-color:var(--accent-primary);
+  color:var(--accent-hover);
+  box-shadow:0 2px 8px rgba(212,121,94,.12);
+}
+
+/* ── 통합 예/아니요 버튼 ── */
+.sym-yes,
+.sym-no{
+  padding:6px 18px;
+  min-height:36px;
+  border-radius:10px;
+  border:1.5px solid var(--border-default);
+  font-family:'Noto Sans KR',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.sym-yes{
+  background:rgba(184,84,84,.08);
+  color:var(--semantic-danger);
+  border-color:rgba(184,84,84,.20);
+}
+.sym-yes:hover{
+  background:rgba(184,84,84,.15);
+  border-color:var(--semantic-danger);
+}
+.sym-no{
+  background:var(--surface-card);
+  color:var(--text-body);
+}
+.sym-no:hover{
+  background:rgba(90,154,106,.08);
+  color:var(--semantic-positive);
+  border-color:rgba(90,154,106,.20);
+}
+
+/* ── 통합 CTA 버튼 ── */
+.birth-postpartum-link,
+.cta-link{
+  display:block;
+  padding:14px 18px;
+  background:var(--accent-subtle);
+  border:1px solid rgba(212,121,94,.15);
+  border-radius:14px;
+  margin:16px 0;
+  transition:all .15s ease;
+}
+.birth-postpartum-link:hover,
+.cta-link:hover{
+  background:rgba(212,121,94,.12);
+  border-color:var(--accent-primary);
+}
+
+/* ── 통합 SP 상황 카드 (알록달록 → 통일 글라스) ── */
+.sp-card.rose,
+.sp-card.blue,
+.sp-card.gold,
+.sp-card.green,
+.sp-card.plum{
+  background:var(--surface-card);
+  border:1px solid var(--border-default);
+}
+
+/* ── 다크 모드 통합 ── */
+[data-theme="dark"] .sp-age-tab,
+[data-theme="dark"] .birth-tab,
+[data-theme="dark"] .toolkit-btn{
+  background:var(--surface-card);
+  border-color:var(--border-default);
+  color:var(--text-body);
+}
+[data-theme="dark"] .sp-age-tab:hover,
+[data-theme="dark"] .birth-tab:hover,
+[data-theme="dark"] .toolkit-btn:hover,
+[data-theme="dark"] .sp-age-tab.on,
+[data-theme="dark"] .birth-tab.on,
+[data-theme="dark"] .toolkit-btn.on{
+  background:rgba(232,144,106,.10);
+  border-color:var(--accent-primary);
+  color:var(--accent-hover);
+}
+[data-theme="dark"] .sym-yes{
+  background:rgba(208,112,112,.10);
+  color:#E08080;
+  border-color:rgba(208,112,112,.25);
+}
+[data-theme="dark"] .sym-no{
+  background:var(--surface-card);
+  color:var(--text-body);
+  border-color:var(--border-default);
+}
+[data-theme="dark"] .sym-no:hover{
+  background:rgba(106,170,122,.10);
+  color:#80C0A0;
+  border-color:rgba(106,170,122,.25);
+}
+[data-theme="dark"] .sp-card.rose,
+[data-theme="dark"] .sp-card.blue,
+[data-theme="dark"] .sp-card.gold,
+[data-theme="dark"] .sp-card.green,
+[data-theme="dark"] .sp-card.plum{
+  background:var(--surface-card);
+  border-color:var(--border-default);
+}
+[data-theme="dark"] .birth-postpartum-link{
+  background:rgba(232,144,106,.08);
+  border-color:rgba(232,144,106,.15);
+}
+
 /* ══════════════════════════════════════════
    FEATURE CSS: MEMO + MENTAL + ALONE + STATS + FIRST-AID
 ══════════════════════════════════════════ */
@@ -221,14 +367,7 @@
   display:flex;gap:8px;flex-wrap:wrap;
   padding:20px 0 0;margin-bottom:20px;
 }
-.birth-tab{
-  padding:8px 18px;border-radius:24px;
-  border:1.5px solid var(--line);background:var(--white);
-  font-family:'Noto Sans KR',sans-serif;font-size:13px;font-weight:700;
-  color:var(--ink-m);cursor:pointer;transition:all .2s;
-}
-.birth-tab:hover{border-color:var(--peach);color:var(--peach-d);background:var(--peach-p);}
-.birth-tab.on{border-color:var(--peach-d);color:var(--peach-d);background:var(--peach-p);box-shadow:0 2px 10px rgba(212,121,94,.15);}
+/* birth-tab — 통합 시스템에서 관리 (상단) */
 
 .birth-stage{display:none;}
 .birth-stage.on{display:block;animation:up .3s ease both;}
@@ -1179,15 +1318,7 @@
 .symptom-item { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .symptom-q { font-size: 13px; color: var(--ink-m); font-weight: 600; flex: 1; min-width: 200px; line-height: 1.5; }
 .symptom-btns { display: flex; gap: 6px; }
-.sym-yes, .sym-no {
-  padding: 5px 16px; border-radius: 20px;
-  font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 700;
-  cursor: pointer; border: 1.5px solid transparent; transition: all .18s;
-}
-.sym-yes { background: rgba(200,60,60,.08); color: #A02020; border-color: rgba(200,60,60,.22); }
-.sym-yes:hover { background: rgba(200,60,60,.15); }
-.sym-no { background: var(--warm); color: var(--ink-m); border-color: var(--line); }
-.sym-no:hover { background: rgba(60,160,100,.08); color: #2A7A50; }
+/* sym-yes/sym-no — 통합 시스템에서 관리 (상단) */
 .symptom-result {
   width: 100%; padding: 10px 14px; border-radius: 10px;
   font-size: 13px; font-weight: 600; line-height: 1.6;
@@ -1546,27 +1677,7 @@
   flex-wrap: wrap;
   gap: 8px;
 }
-.toolkit-btn {
-  min-height: 44px;
-  padding: 9px 16px;
-  background: var(--white);
-  border: 1.5px solid rgba(212,121,94,.18);
-  border-radius: 12px;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--ink);
-  cursor: pointer;
-  transition: all 0.22s;
-  word-break: keep-all;
-}
-.toolkit-btn:hover, .toolkit-btn.on {
-  background: var(--peach-p);
-  border-color: var(--peach);
-  color: var(--peach-d);
-  transform: translateY(-1px);
-  box-shadow: var(--calm-shadow-hover);
-}
+/* toolkit-btn — 통합 시스템에서 관리 (상단) */
 .toolkit-panel {
   display: none;
   margin-top: 14px;
