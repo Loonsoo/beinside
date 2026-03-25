@@ -636,6 +636,9 @@ document.addEventListener('keydown', e => {
   };
 
   /* ── 롱프레스 감지 ── */
+  var longPressCard = null;   // 롱프레스 중인 카드 참조
+  var longPressPos = null;    // 롱프레스 시작 좌표
+
   function onPointerDown(e) {
     if (editMode) return;
     var card = e.target.closest('.sit-card[data-card-id]');
@@ -643,12 +646,35 @@ document.addEventListener('keydown', e => {
     var t = e.touches ? e.touches[0] : e;
     var startX = t.clientX;
     var startY = t.clientY;
-    longPressTimer = setTimeout(function() { enterCardEdit(); }, 600);
+    longPressCard = card;
+    longPressPos = { x: startX, y: startY };
+
+    longPressTimer = setTimeout(function() {
+      enterCardEdit();
+      // 편집 모드 진입 직후 — 롱프레스한 카드를 즉시 드래그 상태로 전환
+      if (longPressCard) {
+        var rect = longPressCard.getBoundingClientRect();
+        var grid = longPressCard.closest('.situation-grid');
+        drag = {
+          card: longPressCard,
+          grid: grid,
+          clone: null,
+          offsetX: longPressPos.x - rect.left,
+          offsetY: longPressPos.y - rect.top,
+          startX: longPressPos.x,
+          startY: longPressPos.y,
+          moved: false
+        };
+      }
+    }, 600);
+
     // 움직이면 취소
     var cancel = function(ev) {
       var p = ev.touches ? (ev.touches[0] || ev.changedTouches[0]) : ev;
       if (Math.abs(p.clientX - startX) > 8 || Math.abs(p.clientY - startY) > 8) {
         clearTimeout(longPressTimer);
+        longPressCard = null;
+        longPressPos = null;
         document.removeEventListener('touchmove', cancel);
         document.removeEventListener('mousemove', cancel);
       }
@@ -657,6 +683,8 @@ document.addEventListener('keydown', e => {
     document.addEventListener('mousemove', cancel);
     var up = function() {
       clearTimeout(longPressTimer);
+      longPressCard = null;
+      longPressPos = null;
       document.removeEventListener('touchmove', cancel);
       document.removeEventListener('mousemove', cancel);
       document.removeEventListener('touchend', up);
