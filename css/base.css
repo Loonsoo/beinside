@@ -508,92 +508,82 @@ nav button.on{
 
 /* ── 생애 여정 시기 선택 ── */
 .life-journey{
-  padding:20px 0 16px;
+  padding:16px 0 12px;
 }
 .life-journey-intro{
   font-family:'Gowun Batang',serif;
   font-size:15px;
   color:var(--text-secondary);
   text-align:left;
-  margin:0 0 20px;
+  margin:0 0 14px;
   line-height:1.6;
   letter-spacing:-.2px;
 }
 .life-stage{
-  margin-bottom:12px;
-  background:var(--surface-card);
-  border-radius:14px;
-  padding:14px 16px;
-  border:1px solid var(--border-default);
+  margin-bottom:8px;
 }
 .life-stage-label{
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
-  color:var(--text-secondary);
-  letter-spacing:-.1px;
-  margin-bottom:10px;
+  color:var(--text-muted);
+  letter-spacing:.02em;
+  margin-bottom:6px;
+  padding-left:2px;
 }
 .life-stage-pills{
-  display:flex;gap:8px;
+  display:flex;gap:6px;
   flex-wrap:wrap;
 }
 
-/* ── 시기 버튼 ── */
+/* ── 시기 칩 — 투명 아웃라인 ── */
 .pills{
-  display:flex;gap:8px;
-  padding:16px 0;
+  display:flex;gap:6px;
+  padding:12px 0;
   flex-wrap:wrap;
 }
 .pill{
-  border:none;
-  border-radius:10px;
-  padding:9px 16px;
-  font-size:14px;font-weight:600;
+  background:transparent;
+  border:1.5px solid var(--border-hover);
+  border-radius:20px;
+  padding:7px 14px;
+  font-size:13px;font-weight:600;
+  color:var(--text-body);
   cursor:pointer;
   transition:all .15s ease;
   display:flex;align-items:center;gap:0;
   font-family:'Noto Sans KR',sans-serif;
   letter-spacing:-.2px;
   white-space:nowrap;
-  min-height:44px;
+  min-height:38px;
   position:relative;
+}
+.pill:hover{
+  background:var(--accent-subtle);
+  border-color:var(--accent-primary);
+  color:var(--accent-hover);
 }
 .pill:active{
   transform:scale(0.96);
 }
 
-/* ── 단계별 색상 — 따뜻한 배경 틴트 ── */
-.pill--baby{
-  background:linear-gradient(135deg,#E4F2E8,#D4EADA);
-  color:#2A5A35;
+/* ── 단계별 보더 색조 (호버 시 미세 배경) ── */
+.pill--baby,.pill--child,.pill--adult,.pill--senior{
+  color:var(--text-body);
 }
-.pill--baby:hover{
-  background:linear-gradient(135deg,#D0EAD6,#B8DCC0);
-  box-shadow:0 2px 10px rgba(60,140,90,.15);
+.pill--baby:hover{ border-color:rgba(90,154,106,.5); background:rgba(90,154,106,.06); color:#3A6A40; }
+.pill--child:hover{ border-color:rgba(180,140,60,.5); background:rgba(180,140,60,.06); color:#6A4A10; }
+.pill--adult:hover{ border-color:rgba(212,121,94,.5); background:rgba(212,121,94,.06); color:#7A3A20; }
+.pill--senior:hover{ border-color:rgba(100,80,160,.5); background:rgba(100,80,160,.06); color:#3A3060; }
+
+/* 다크 모드 pill */
+[data-theme="dark"] .pill{
+  border-color:rgba(200,200,200,.12);
+  color:var(--text-body);
 }
-.pill--child{
-  background:linear-gradient(135deg,#FAF0DC,#F2E4C4);
-  color:#6A4A10;
-}
-.pill--child:hover{
-  background:linear-gradient(135deg,#F2E4C0,#E8D4A0);
-  box-shadow:0 2px 10px rgba(180,140,60,.15);
-}
-.pill--adult{
-  background:linear-gradient(135deg,#F8E4DA,#F0D4C6);
-  color:#7A3A20;
-}
-.pill--adult:hover{
-  background:linear-gradient(135deg,#F0D4C2,#E8C4AE);
-  box-shadow:0 2px 10px rgba(200,120,80,.15);
-}
-.pill--senior{
-  background:linear-gradient(135deg,#E4E0F0,#D8D0EA);
-  color:#3A3060;
-}
-.pill--senior:hover{
-  background:linear-gradient(135deg,#D8D0EA,#CCC0E0);
-  box-shadow:0 2px 10px rgba(100,80,160,.15);
+[data-theme="dark"] .pill:hover{
+  background:rgba(232,144,106,.08);
+  border-color:var(--accent-primary);
+  color:var(--accent-hover);
 }
 
 /* ── 색상 도트 숨김 ── */

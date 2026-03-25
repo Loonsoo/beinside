@@ -382,42 +382,7 @@
 [data-theme="dark"] .life-stage-label{
   color:rgba(255,255,255,.35);
 }
-[data-theme="dark"] .life-stage{
-  background:var(--surface-card);
-  border-color:var(--border-default);
-}
-[data-theme="dark"] .pill--baby{
-  background:rgba(106,170,122,.12);
-  color:#90D0A0;
-}
-[data-theme="dark"] .pill--baby:hover{
-  background:rgba(106,170,122,.20);
-  box-shadow:0 2px 10px rgba(106,170,122,.15);
-}
-[data-theme="dark"] .pill--child{
-  background:rgba(212,170,80,.10);
-  color:#E0C070;
-}
-[data-theme="dark"] .pill--child:hover{
-  background:rgba(212,170,80,.18);
-  box-shadow:0 2px 10px rgba(212,170,80,.15);
-}
-[data-theme="dark"] .pill--adult{
-  background:rgba(232,144,106,.10);
-  color:#F0B090;
-}
-[data-theme="dark"] .pill--adult:hover{
-  background:rgba(232,144,106,.18);
-  box-shadow:0 2px 10px rgba(232,144,106,.15);
-}
-[data-theme="dark"] .pill--senior{
-  background:rgba(160,140,200,.10);
-  color:#C0B0E0;
-}
-[data-theme="dark"] .pill--senior:hover{
-  background:rgba(160,140,200,.18);
-  box-shadow:0 2px 10px rgba(160,140,200,.15);
-}
+/* pill 다크모드 — base.css에서 통합 관리 */
 [data-theme="dark"] .medical-disclaimer{
   background:rgba(255,255,255,.04);
   border-color:rgba(255,255,255,.08);
