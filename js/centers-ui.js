@@ -28,11 +28,13 @@
     // 최대 6개 표시
     var shown = centers.slice(0, 6);
 
+    var uid = 'centers-' + Math.random().toString(36).substr(2, 6);
     var html = '<div class="centers-section">'
-      + '<div class="centers-header">'
-      + '<span class="centers-icon">📞</span>'
-      + '<span class="centers-title">도움받을 수 있는 곳</span>'
-      + '</div>'
+      + '<button class="guide-help-toggle" onclick="this.classList.toggle(\'open\');document.getElementById(\'' + uid + '\').classList.toggle(\'open\')" aria-expanded="false" aria-controls="' + uid + '">'
+      + '<span>📞 도움받을 수 있는 곳 <span class="guide-help-count">' + shown.length + '곳</span></span>'
+      + '<span class="guide-help-arrow">▸</span>'
+      + '</button>'
+      + '<div class="guide-help-body" id="' + uid + '">'
       + '<div class="centers-list">';
 
     shown.forEach(function (c) {
@@ -48,7 +50,7 @@
         + '</a>';
     });
 
-    html += '</div></div>';
+    html += '</div></div></div>';
 
     // 페이지 콘텐츠 마지막에 삽입
     var wrapper = document.createElement('div');

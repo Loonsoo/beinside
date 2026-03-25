@@ -59,18 +59,25 @@ function _guideCheck(check) {
 
 function _guideHelp(helplines) {
   if (!helplines || !helplines.length) return '';
-  return _guideSection('도움받을 수 있는 곳',
-    '<div class="help-cards">'
+  var uid = 'help-acc-' + Math.random().toString(36).substr(2, 6);
+  return '<section class="guide-section guide-help-section">'
+    + '<button class="guide-help-toggle" onclick="this.classList.toggle(\'open\');document.getElementById(\'' + uid + '\').classList.toggle(\'open\')" aria-expanded="false" aria-controls="' + uid + '">'
+    + '<span>📞 도움받을 수 있는 곳 <span class="guide-help-count">' + helplines.length + '곳</span></span>'
+    + '<span class="guide-help-arrow">▸</span>'
+    + '</button>'
+    + '<div class="guide-help-body" id="' + uid + '">'
+    + '<div class="help-cards">'
     + helplines.map(function(h) {
       var num = h.number.replace(/-/g, '');
       return '<a href="tel:' + num + '" class="help-card" aria-label="' + _esc(h.name) + ' ' + h.number + '">'
-        + '<div class="help-card-num">📞 ' + h.number + '</div>'
         + '<div class="help-card-info">'
         + '<div class="help-card-name">' + _esc(h.name) + '</div>'
         + '<div class="help-card-desc">' + _esc(h.desc) + '</div>'
-        + '</div></a>';
+        + '</div>'
+        + '<div class="help-card-num">' + h.number + '</div>'
+        + '</a>';
     }).join('')
-    + '</div>');
+    + '</div></div></section>';
 }
 
 /* ── 체크 이벤트 (클릭 + 키보드) ── */
