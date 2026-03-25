@@ -511,31 +511,34 @@ nav button.on{
 ══════════════════════════════════════════ */
 .life-timeline{
   padding:16px 0 8px;
+  text-align:center;
 }
 .life-timeline-intro{
   font-family:'Gowun Batang',serif;
   font-size:15px;
   color:var(--text-secondary);
-  text-align:left;
-  margin:0 0 16px;
+  text-align:center;
+  margin:0 0 20px;
   line-height:1.6;
 }
 .lt-group{
-  margin-bottom:14px;
+  margin-bottom:18px;
 }
 .lt-label{
   font-size:12px;
   font-weight:700;
   color:var(--text-secondary);
-  margin-bottom:6px;
-  padding-left:2px;
+  margin-bottom:10px;
+  text-align:center;
 }
 /* ── 타임라인 트랙 ── */
 .lt-track{
   display:inline-flex;
   align-items:flex-start;
+  justify-content:center;
   position:relative;
   padding:4px 0;
+  width:100%;
 }
 /* 연결선 — 첫 도트~마지막 도트 사이만 */
 .lt-line{
@@ -548,16 +551,19 @@ nav button.on{
   z-index:0;
   margin:0 calc(50% / var(--lt-count, 5));  /* 폴백 */
 }
-/* JS 없이도 작동하도록 트랙 자체가 inline-flex → 선이 노드 범위만큼만 */
+/* 연결선: 첫 도트 중심 ~ 마지막 도트 중심 */
 .lt-track::before{
   content:'';
   position:absolute;
-  top:11px;left:24px;right:24px;
+  top:12px;
+  left:0;right:0;
   height:2px;
   border-radius:1px;
   z-index:0;
+  /* 노드 패딩(14px) + 도트반지름(9px) = 23px 양쪽 인셋 */
+  margin:0 23px;
 }
-.lt-line{ display:none; } /* ::before로 대체 */
+.lt-line{ display:none; }
 .lt-track--baby::before{ background:rgba(90,154,106,.25); }
 .lt-track--child::before{ background:rgba(180,140,60,.25); }
 .lt-track--adult::before{ background:rgba(212,121,94,.25); }
@@ -565,15 +571,16 @@ nav button.on{
 
 /* ── 노드 (터치 영역) ── */
 .lt-node{
-  display:flex;flex-direction:column;align-items:center;gap:5px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
   background:none;border:none;
   cursor:pointer;
-  padding:4px 14px;
+  padding:2px 14px 4px;
   position:relative;z-index:1;
   min-width:44px;min-height:44px;
   transition:all .15s ease;
   -webkit-appearance:none;appearance:none;
   font:inherit;color:inherit;
+  flex:1;
 }
 .lt-node:active{ transform:scale(0.94); }
 
@@ -618,10 +625,15 @@ nav button.on{
 
 /* ── 모바일 ── */
 @media(max-width:640px){
-  .lt-node{ padding:4px 10px; }
+  .lt-node{ padding:2px 8px 4px; }
   .lt-text{ font-size:11px; }
   .lt-dot{ width:14px; height:14px; border-width:2.5px; }
-  .lt-track::before{ top:9px; left:20px; right:20px; }
+  .lt-track::before{ top:9px; margin:0 17px; }
+  .lt-group{ margin-bottom:14px; }
+}
+/* ── 데스크톱: 트랙 최대 너비 제한 ── */
+@media(min-width:960px){
+  .life-timeline{ max-width:640px; margin:0 auto; }
 }
 
 /* pill 클래스는 타임라인(.lt-node)으로 대체됨 — 하위 호환 유지 */
