@@ -259,7 +259,7 @@ function ppdAnswer(qIdx, val) {
     } else {
       cls = 'res-ok';
       msg = '🌸 지금은 비교적 안정적인 상태예요.';
-      action = '하지만 감정 변화가 생기면 언제든 다시 확인해 보세요. 당신의 마음도 소중해요.';
+      action = '증상이 나타나면 언제든 다시 확인하세요.';
     }
     res.className = 'ppd-result ' + cls;
     res.innerHTML = `<div style="font-size:14px;font-weight:600;margin-bottom:8px;">${msg}</div><div style="font-size:13px;line-height:1.7;">${action}</div><div class="ppd-disclaimer">이 결과는 의학적 진단이 아닌 참고용이에요. 정확한 진단은 전문의와 상담하세요.</div>`;
@@ -268,12 +268,12 @@ function ppdAnswer(qIdx, val) {
 
 /* ── 청소년 감정 선택 ── */
 const EMO_DATA = {
-  angry:  { msg: '화가 많이 났구나 😡', sub: '그 화, 충분히 이해해. 화는 정상 감정이야.', action: '지금 잠깐 밖으로 나가거나, 베개에 소리 질러봐. 그리고 뭐 때문에 화가 났는지 적어봐.', color: '#E05A3A' },
-  sad:    { msg: '많이 슬프구나 😢', sub: '울어도 돼. 슬픔을 꺼내는 게 용감한 거야.', action: '좋아하는 음악 틀어놓고 그냥 울어봐. 감정을 꺼내야 가벼워져.', color: '#5A7AC8' },
-  scared: { msg: '불안하고 무섭구나 😰', sub: '그 느낌, 진짜 힘들지. 네가 약한 게 아니야.', action: '손을 주먹 쥐었다가 천천히 펴봐. 4초 들이쉬고 6초 내쉬기 — 불안이 조금 가라앉아.', color: '#7A5AC8' },
-  lonely: { msg: '외롭구나 🥺', sub: '혼자 감당해왔다는 거, 정말 힘들었을 거야.', action: '지금 1388에 문자 보내봐. 전화 아니어도 돼. 그냥 "힘들어요"라고만 해도 돼.', color: '#C8874A' },
-  empty:  { msg: '뭔지 모르겠구나 😶', sub: '감정이 뭔지 모를 때도 있어. 그것도 괜찮아.', action: '지금 눈 감고 1분만 있어봐. 몸에 느껴지는 게 있어? 무겁거나, 답답하거나? 그게 감정이야.', color: '#8A8A8A' },
-  tired:  { msg: '많이 지쳤구나 😞', sub: '오래 버텨온 거야. 지친 게 당연해.', action: '오늘 하루는 아무것도 안 해도 돼. 그냥 쉬어. 쉬는 것도 용기야.', color: '#5A9A7A' },
+  angry:  { msg: '화가 났어 😡', sub: '화는 뇌가 보내는 경고 신호야.', action: '지금 잠깐 밖으로 나가거나, 베개에 소리 질러봐. 그리고 뭐 때문에 화가 났는지 적어봐.', color: '#E05A3A' },
+  sad:    { msg: '슬퍼 😢', sub: '슬플 때 우는 건 자연스러운 반응이야.', action: '좋아하는 음악 틀어놓고 울어봐. 감정을 꺼내면 좀 가벼워져.', color: '#5A7AC8' },
+  scared: { msg: '불안해 😰', sub: '불안은 몸의 생존 반응이야.', action: '손을 주먹 쥐었다가 천천히 펴봐. 4초 들이쉬고 6초 내쉬기 — 불안이 좀 가라앉아.', color: '#7A5AC8' },
+  lonely: { msg: '외로워 🥺', sub: '사람과의 연결이 필요한 상태야.', action: '1388에 문자 보내봐. 전화 아니어도 돼. "힘들어요"라고만 해도 돼.', color: '#C8874A' },
+  empty:  { msg: '잘 모르겠어 😶', sub: '감정이 뭔지 모를 때도 있어.', action: '눈 감고 1분만 있어봐. 몸에 느껴지는 게 있어? 무겁거나, 답답하거나? 그게 감정 신호야.', color: '#8A8A8A' },
+  tired:  { msg: '지쳤어 😞', sub: '에너지가 바닥난 상태야.', action: '오늘은 쉬어. 아무것도 안 해도 돼.', color: '#5A9A7A' },
 };
 
 function showEmoResult(key) {

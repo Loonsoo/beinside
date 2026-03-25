@@ -148,7 +148,7 @@ function buildMoodWidget(container) {
       <span class="jn-card-icon">🌤</span>
       <div>
         <div class="jn-card-title">오늘 기분이 어때요?</div>
-        <div class="jn-card-sub">하루 한 번, 나의 마음을 기록해요</div>
+        <div class="jn-card-sub">하루 한 번 기분을 기록하세요</div>
       </div>
     </div>
     <div class="mood-btns mood-btns--5">
@@ -184,7 +184,7 @@ function buildMoodWidget(container) {
   if (hardDays >= 5) {
     timelineMsg = `힘든 날이 7일 중 ${hardDays}일이에요. 혼자 감당하기 어렵다면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700">1577-0199</a>(정신건강위기상담, 무료·24시간)에 전화해 보세요.`;
   } else if (hardDays >= 3) {
-    timelineMsg = `최근 7일 중 ${hardDays}일은 힘들었어요. 괜찮아요, 파도처럼 오르내리는 거예요.`;
+    timelineMsg = `최근 7일 중 ${hardDays}일은 힘든 날이었어요. 추이를 계속 관찰해 보세요.`;
   }
 
   html += `<div class="jn-timeline-card">
@@ -310,7 +310,7 @@ function buildJournalForm(container) {
         <span class="jn-card-icon">✏️</span>
         <div>
           <div class="jn-card-title">오늘 있었던 일</div>
-          <div class="jn-card-sub">마음속에 담아두지 않아도 괜찮아요</div>
+          <div class="jn-card-sub">생각을 글로 정리하세요</div>
         </div>
       </div>
       <div class="jn-tag-row" id="journal-tag-row">
@@ -459,7 +459,7 @@ function renderJournalPage() {
     <div class="jn-hero">
       <div class="jn-hero-icon">📝</div>
       <h2 class="jn-hero-title">나의 기록</h2>
-      <p class="jn-hero-sub">기록은 나를 이해하는 첫걸음이에요</p>
+      <p class="jn-hero-sub">기록을 통해 감정과 상황을 객관적으로 살펴보세요</p>
     </div>
     <div class="jn-tabs" role="tablist">
       <button class="jn-tab on" id="jtab-mood" onclick="switchJournalTab('mood',this)" role="tab" aria-selected="true">
