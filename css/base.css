@@ -535,56 +535,75 @@ nav button.on{
   flex-wrap:wrap;
 }
 
-/* ── 시기 칩 — 투명 아웃라인 ── */
+/* ── 시기 칩 — Filled Glass (Apple Health + MD3 + Liquid Glass) ── */
+/* 핵심: "투명"이 아니라 "반투명 채움". 다크에서도 확실히 보이는 버튼. */
 .pills{
-  display:flex;gap:6px;
-  padding:12px 0;
+  display:flex;gap:10px;
+  padding:16px 0;
   flex-wrap:wrap;
 }
 .pill{
-  background:transparent;
-  border:1.5px solid var(--border-hover);
-  border-radius:20px;
-  padding:7px 14px;
-  font-size:13px;font-weight:600;
+  background:rgba(212,121,94,.06);
+  border:1.5px solid rgba(180,160,140,.18);
+  border-radius:22px;
+  padding:10px 20px;
+  font-size:15px;font-weight:600;
   color:var(--text-body);
   cursor:pointer;
-  transition:all .15s ease;
+  transition:all .2s var(--ease);
   display:flex;align-items:center;gap:0;
   font-family:'Noto Sans KR',sans-serif;
-  letter-spacing:-.2px;
+  letter-spacing:-.3px;
   white-space:nowrap;
-  min-height:38px;
+  min-height:44px;
   position:relative;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
 }
 .pill:hover{
-  background:var(--accent-subtle);
+  background:rgba(212,121,94,.12);
   border-color:var(--accent-primary);
   color:var(--accent-hover);
+  box-shadow:0 2px 12px rgba(212,121,94,.15);
+  transform:translateY(-1px);
 }
 .pill:active{
-  transform:scale(0.96);
+  transform:scale(0.97);
+  box-shadow:none;
 }
 
-/* ── 단계별 보더 색조 (호버 시 미세 배경) ── */
-.pill--baby,.pill--child,.pill--adult,.pill--senior{
-  color:var(--text-body);
-}
-.pill--baby:hover{ border-color:rgba(90,154,106,.5); background:rgba(90,154,106,.06); color:#3A6A40; }
-.pill--child:hover{ border-color:rgba(180,140,60,.5); background:rgba(180,140,60,.06); color:#6A4A10; }
-.pill--adult:hover{ border-color:rgba(212,121,94,.5); background:rgba(212,121,94,.06); color:#7A3A20; }
-.pill--senior:hover{ border-color:rgba(100,80,160,.5); background:rgba(100,80,160,.06); color:#3A3060; }
+/* ── 단계별 Filled Glass 색조 ── */
+.pill--baby{ background:rgba(90,154,106,.06); }
+.pill--child{ background:rgba(180,140,60,.06); }
+.pill--adult{ background:rgba(212,121,94,.06); }
+.pill--senior{ background:rgba(100,80,160,.06); }
+.pill--baby:hover{ border-color:rgba(90,154,106,.5); background:rgba(90,154,106,.12); color:#3A6A40; box-shadow:0 2px 12px rgba(90,154,106,.12); }
+.pill--child:hover{ border-color:rgba(180,140,60,.5); background:rgba(180,140,60,.12); color:#6A4A10; box-shadow:0 2px 12px rgba(180,140,60,.12); }
+.pill--adult:hover{ border-color:rgba(212,121,94,.5); background:rgba(212,121,94,.12); color:#7A3A20; box-shadow:0 2px 12px rgba(212,121,94,.12); }
+.pill--senior:hover{ border-color:rgba(100,80,160,.5); background:rgba(100,80,160,.12); color:#3A3060; box-shadow:0 2px 12px rgba(100,80,160,.12); }
 
-/* 다크 모드 pill */
+/* ── 다크 모드: 고요한 숲 위의 글로우 칩 ── */
 [data-theme="dark"] .pill{
-  border-color:rgba(200,200,200,.12);
+  background:rgba(232,228,223,.07);
+  border-color:rgba(232,228,223,.15);
   color:var(--text-body);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
 }
 [data-theme="dark"] .pill:hover{
-  background:rgba(232,144,106,.08);
+  background:rgba(232,144,106,.15);
   border-color:var(--accent-primary);
-  color:var(--accent-hover);
+  color:#F0D0C0;
+  box-shadow:0 0 16px rgba(232,144,106,.12);
 }
+[data-theme="dark"] .pill--baby{ background:rgba(106,170,122,.10); border-color:rgba(106,170,122,.20); }
+[data-theme="dark"] .pill--baby:hover{ background:rgba(106,170,122,.18); border-color:#6AAA7A; color:#B8E0C4; box-shadow:0 0 16px rgba(106,170,122,.12); }
+[data-theme="dark"] .pill--child{ background:rgba(208,168,80,.10); border-color:rgba(208,168,80,.20); }
+[data-theme="dark"] .pill--child:hover{ background:rgba(208,168,80,.18); border-color:#D0A850; color:#F0E0B8; box-shadow:0 0 16px rgba(208,168,80,.12); }
+[data-theme="dark"] .pill--adult{ background:rgba(232,144,106,.10); border-color:rgba(232,144,106,.20); }
+[data-theme="dark"] .pill--adult:hover{ background:rgba(232,144,106,.18); border-color:#E8906A; color:#F5D0C0; box-shadow:0 0 16px rgba(232,144,106,.12); }
+[data-theme="dark"] .pill--senior{ background:rgba(140,120,200,.10); border-color:rgba(140,120,200,.20); }
+[data-theme="dark"] .pill--senior:hover{ background:rgba(140,120,200,.18); border-color:#8C78C8; color:#D0C8F0; box-shadow:0 0 16px rgba(140,120,200,.12); }
 
 /* ── 색상 도트 숨김 ── */
 .cd{width:0;height:0;display:none;}
