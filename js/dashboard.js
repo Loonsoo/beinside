@@ -23,7 +23,7 @@ function getDashColor(name) {
 
 function categoryColor(cat) {
   if (cat === 'good')   return getDashColor('--amber')    || '#6BA885';
-  if (cat === 'normal') return getDashColor('--peach')    || '#7BAECB';
+  if (cat === 'normal') return getDashColor('--peach')    || '#D4795E';
   if (cat === 'bad')    return getDashColor('--sit-rose') || '#E09090';
   return '#ccc';
 }
@@ -208,7 +208,7 @@ function renderWeeklyChart(moods) {
     // 곡선 그리기 (catmull-rom 스플라인)
     ctx.beginPath();
     drawSmoothLine(ctx, validPoints);
-    ctx.strokeStyle = getDashColor('--peach') || '#7BAECB';
+    ctx.strokeStyle = getDashColor('--peach') || '#D4795E';
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -255,7 +255,7 @@ function renderWeeklyChart(moods) {
     const dayLabel = dayNames[d.dateObj.getDay()];
     const isToday = i === 6;
     if (isToday) {
-      ctx.fillStyle = getDashColor('--peach-d') || '#4A8CAA';
+      ctx.fillStyle = getDashColor('--peach-d') || '#C06A50';
       ctx.font = 'bold 11px "Noto Sans KR", sans-serif';
     }
     ctx.fillText(dayLabel, x, h - 8);
@@ -471,7 +471,7 @@ function renderHeatmap(moods) {
 
     // 오늘 표시
     if (day === todayDate) {
-      ctx.strokeStyle = getDashColor('--peach-d') || '#4A8CAA';
+      ctx.strokeStyle = getDashColor('--peach-d') || '#C06A50';
       ctx.lineWidth = 1.5;
       ctx.stroke();
     }
@@ -481,7 +481,7 @@ function renderHeatmap(moods) {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = cat ? '#fff' : (getDashColor('--ink-m') || '#6B6B6B');
-    if (day === todayDate && !cat) ctx.fillStyle = getDashColor('--peach-d') || '#4A8CAA';
+    if (day === todayDate && !cat) ctx.fillStyle = getDashColor('--peach-d') || '#C06A50';
     ctx.fillText(String(day), x + cellSize / 2, y + cellSize / 2);
 
     col++;
