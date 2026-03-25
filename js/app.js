@@ -1293,6 +1293,32 @@ if (window.matchMedia) {
   }
 })();
 
+/* ── 글씨 크기 조절 (Dynamic Type) ── */
+var TEXT_SCALE_KEY = 'beinside_text_scale';
+
+function setTextScale(level) {
+  document.documentElement.style.setProperty('--text-scale', level);
+  localStorage.setItem(TEXT_SCALE_KEY, level);
+  // 활성 버튼 표시
+  document.querySelectorAll('.text-scale-btn').forEach(function(btn) {
+    btn.classList.toggle('active', parseInt(btn.getAttribute('data-scale')) === level);
+  });
+}
+
+(function initTextScale() {
+  var saved = localStorage.getItem(TEXT_SCALE_KEY);
+  if (saved !== null) {
+    document.documentElement.style.setProperty('--text-scale', saved);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.text-scale-btn').forEach(function(btn) {
+          btn.classList.toggle('active', btn.getAttribute('data-scale') === saved);
+        });
+      });
+    }
+  }
+})();
+
 /* ══════════════════════════════════════════════════════
    SEO: 페이지별 동적 메타태그 + URL 라우팅
 ══════════════════════════════════════════════════════ */

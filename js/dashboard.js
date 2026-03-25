@@ -175,7 +175,7 @@ function renderWeeklyChart(moods) {
     const y = pad.top + plotH - (i / 2) * plotH;
     ctx.fillText(label, pad.left + plotW + 16, y + 3);
     // 가이드 라인
-    ctx.strokeStyle = getDashColor('--line') || 'rgba(123,174,203,.15)';
+    ctx.strokeStyle = getDashColor('--line') || 'rgba(212,121,94,.15)';
     ctx.lineWidth = 0.5;
     ctx.beginPath();
     ctx.moveTo(pad.left, y);

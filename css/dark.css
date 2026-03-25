@@ -499,7 +499,7 @@
   color:var(--peach-d);
 }
 [data-theme="dark"] .sp-header{
-  color:#F5F5F7;
+  color:#F0E8E0;
 }
 [data-theme="dark"] .sp-htitle p{
   color:rgba(255,255,255,.75);
@@ -552,11 +552,11 @@
 }
 /* (journal-entry 스타일은 jn-* 시스템으로 이동) */
 [data-theme="dark"] .section-care{
-  background:transparent;
+  background:var(--surface-section-care);
   border:none;
 }
 [data-theme="dark"] .section-self{
-  background:transparent;
+  background:var(--surface-section-self);
   border:none;
 }
 [data-theme="dark"] .toolkit-btn{
@@ -589,7 +589,7 @@
 }
 [data-theme="dark"] .birth-header{
   background:linear-gradient(135deg,#6A3A28,#8A6030);
-  color:#F5F5F7;
+  color:#F0E8E0;
 }
 [data-theme="dark"] .birth-header p{
   color:rgba(255,255,255,.75);
@@ -668,7 +668,7 @@
 
 /* ── 성장 가이드 결과 헤더 ── */
 [data-theme="dark"] .rhead{
-  color:#F5F5F7;
+  color:#F0E8E0;
 }
 
 /* ── 카드 확장 색상 (cbg-*) ── */
@@ -694,7 +694,7 @@
   border-color:rgba(255,255,255,.06);
 }
 [data-theme="dark"] .memo-save-btn{
-  color:#F5F5F7;
+  color:#F0E8E0;
 }
 [data-theme="dark"] .memo-item-del:hover{
   background:rgba(200,60,60,.15);
@@ -739,7 +739,7 @@
 
 /* ── 저장 버튼 ── */
 [data-theme="dark"] .form-save-btn{
-  color:#F5F5F7;
+  color:#F0E8E0;
 }
 
 /* ── 삭제 호버 ── */

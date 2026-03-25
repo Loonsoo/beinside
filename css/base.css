@@ -609,7 +609,7 @@ nav button.on{
 .r-qt{font-family:'Gowun Batang',serif;font-size:15px;line-height:1.8;opacity:.9;max-width:340px;text-align:right;font-style:italic;position:relative;z-index:1;}
 
 /* ── CARD GRID ── */
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-2);}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;} /* 심리학: 같은 그룹의 "가까운 관계" */
 .card{
   background:var(--surface-card);
   border-radius:14px;padding:16px 18px;

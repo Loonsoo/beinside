@@ -542,6 +542,30 @@
 .theme-toggle-thumb{display:none;}
 .theme-toggle-label{display:none;}
 
+/* 글씨 크기 조절 */
+.text-scale-control{
+  display:flex;gap:4px;
+  background:var(--section-alt);
+  border:1px solid var(--border-default);
+  border-radius:12px;
+  padding:3px;
+}
+.text-scale-btn{
+  width:36px;height:32px;border-radius:9px;
+  border:none;background:none;
+  font-family:'Noto Sans KR',sans-serif;
+  font-weight:700;color:var(--text-body);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .15s ease;
+  -webkit-appearance:none;appearance:none;
+}
+.text-scale-btn:hover{background:rgba(212,121,94,.08);}
+.text-scale-btn.active{
+  background:var(--surface-card);
+  box-shadow:var(--shadow-sm);
+  color:var(--accent-primary);
+}
+
 /* 설정 액션 버튼 */
 .settings-action-btn{
   padding:8px 16px;
