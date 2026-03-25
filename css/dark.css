@@ -504,6 +504,88 @@
   color:var(--ink-l);
 }
 
+/* ── 성장 가이드 결과 헤더 ── */
+[data-theme="dark"] .rhead{
+  color:#F5F5F7;
+}
+
+/* ── 카드 확장 색상 (cbg-*) ── */
+[data-theme="dark"] .card.cbg-mint{
+  background:linear-gradient(145deg,#1E2A22,#1A2820);
+  border-color:rgba(60,160,100,.15);
+}
+[data-theme="dark"] .card.cbg-mint ul li::before{ color:#60C080; }
+[data-theme="dark"] .card.cbg-rose{
+  background:linear-gradient(145deg,#2E2420,#2A201A);
+  border-color:rgba(184,92,66,.15);
+}
+[data-theme="dark"] .card.cbg-rose ul li::before{ color:var(--relation-d); }
+[data-theme="dark"] .card.cbg-teal{
+  background:linear-gradient(145deg,#1E2628,#1A2426);
+  border-color:rgba(50,140,160,.15);
+}
+[data-theme="dark"] .card.cbg-teal ul li::before{ color:#60C0D0; }
+
+/* ── 메모장 ── */
+[data-theme="dark"] .memo-wrap{
+  background:var(--calm-bg-surface);
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .memo-save-btn{
+  color:#F5F5F7;
+}
+[data-theme="dark"] .memo-item-del:hover{
+  background:rgba(200,60,60,.15);
+  color:#E07070;
+}
+
+/* ── 혼자 자라는 아이 카드 ── */
+[data-theme="dark"] .alone-card{
+  background:linear-gradient(135deg,#2E2520,#2A2028);
+  border-color:rgba(220,140,160,.15);
+}
+
+/* ── 데이터 출처 바 ── */
+[data-theme="dark"] .data-source-bar{
+  background:var(--calm-bg-surface);
+  border-top-color:rgba(255,255,255,.06);
+  color:var(--ink-l);
+}
+[data-theme="dark"] .data-source-bar strong{
+  color:var(--relation-d);
+}
+
+/* ── 출처 노트 ── */
+[data-theme="dark"] .source-note{
+  background:rgba(255,255,255,.04);
+  color:var(--ink-l);
+}
+
+/* ── 산후우울증 체커 ── */
+[data-theme="dark"] .ppd-checker{
+  background:linear-gradient(135deg,#26202E,#221A2A);
+  border-color:rgba(160,80,200,.20);
+}
+[data-theme="dark"] .ppd-q-item{
+  background:var(--calm-bg-surface);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .ppd-q-item.critical{
+  background:rgba(200,40,40,.10);
+  border-color:rgba(200,40,40,.25);
+}
+
+/* ── 저장 버튼 ── */
+[data-theme="dark"] .form-save-btn{
+  color:#F5F5F7;
+}
+
+/* ── 삭제 호버 ── */
+[data-theme="dark"] .pi-btn.del:hover{
+  background:rgba(200,60,60,.15);
+  color:#E07070;
+}
+
 /* ── 긴급 허브 다크모드 ── */
 [data-theme="dark"] .page-view--emergency{
   background:var(--cream);
