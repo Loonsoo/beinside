@@ -2150,42 +2150,55 @@
 
 /* ══════════════════════════════════════════
    DESKTOP LAYOUT (960px+)
-   히어로 풀와이드 → 섹션 2컬럼 나란히
+   히어로 중앙 → 섹션 세로 스택 → 카드 2열 그리드
 ══════════════════════════════════════════ */
 @media(min-width:960px){
   .hero{
-    padding:48px 60px 32px;
-    max-width:1120px;
+    padding:48px 48px 32px;
+    max-width:880px;
     margin:0 auto;
+    align-items:center;
+    text-align:center;
   }
   .hero h1{
-    font-size:clamp(24px,2.5vw,32px);
+    font-size:clamp(26px,2.8vw,34px);
   }
-  /* 감정 체크인: 섹션 위, 가로 정렬 */
+  .hero .hero-sub{
+    text-align:center;
+    max-width:480px;
+  }
+  .hero .guide-finder-btn{
+    align-self:center;
+  }
+  /* 감정 체크인 */
   .mood-section{
-    background:transparent;
-    border:none;
-    margin-bottom:var(--sp-4);
+    max-width:640px;
+    margin:0 auto var(--sp-4);
   }
   .mood-btns{ gap:var(--sp-2); }
-  /* 데스크톱: 두 섹션 나란히 (돌봄 | 마음 빠른 선택) */
+  /* 데스크톱: 섹션 세로 스택, 카드 2열 그리드 */
   .hero-sections{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:var(--sp-4);
-    max-width:960px;
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+    max-width:100%;
   }
   .section-care,
   .section-self{
-    padding:0;
+    padding:24px;
+    border-radius:16px;
+  }
+  .section-header{
+    text-align:left;
   }
   .situation-grid{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr 1fr;
     max-width:100%;
     gap:12px;
   }
   .emergency-quiet{
     margin-top:12px;
+    text-align:center;
   }
   .page-view{
     max-width:680px;
@@ -2200,15 +2213,18 @@
 /* 태블릿 (641–959px) */
 @media(min-width:641px) and (max-width:959px){
   .hero{
-    padding:var(--sp-6) var(--sp-4) var(--sp-3);
+    padding:32px 32px 24px;
+    max-width:720px;
+    margin:0 auto;
   }
   .situation-grid{
-    max-width:480px;
-    margin:0 auto;
+    grid-template-columns:1fr 1fr;
+    max-width:100%;
   }
   .section-care,
   .section-self{
-    padding:var(--sp-3) 0;
+    padding:20px;
+    border-radius:16px;
   }
 }
 
