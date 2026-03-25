@@ -427,6 +427,25 @@
 }
 [data-theme="dark"] .birth-header{
   background:linear-gradient(135deg,#6A3A28,#8A6030);
+  color:#F5F5F7;
+}
+[data-theme="dark"] .birth-header p{
+  color:rgba(255,255,255,.75);
+}
+[data-theme="dark"] .birth-tab{
+  background:var(--calm-bg-surface);
+  border-color:rgba(255,255,255,.08);
+  color:var(--ink-m);
+}
+[data-theme="dark"] .birth-tab:hover{
+  background:var(--peach-p);
+  border-color:var(--peach);
+  color:var(--peach-d);
+}
+[data-theme="dark"] .birth-tab.on{
+  background:rgba(123,174,203,.15);
+  border-color:var(--peach-d);
+  color:var(--peach-d);
 }
 [data-theme="dark"] .birth-card{
   background:var(--white);
