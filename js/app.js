@@ -578,6 +578,7 @@ document.addEventListener('keydown', e => {
       applyOrder('.section-care .situation-grid', saved.care);
       applyOrder('.section-self .situation-grid', saved.self);
     } catch (e) { /* ignore */ }
+    pushMoreCardsToEnd();
   }
 
   function applyOrder(sel, order) {
@@ -586,6 +587,14 @@ document.addEventListener('keydown', e => {
     order.forEach(id => {
       const card = grid.querySelector('[data-card-id="' + id + '"]');
       if (card) grid.appendChild(card);
+    });
+  }
+
+  function pushMoreCardsToEnd() {
+    document.querySelectorAll('.situation-grid').forEach(function(grid) {
+      grid.querySelectorAll('.sit-card--more-care, .sit-card--more-self').forEach(function(c) {
+        grid.appendChild(c);
+      });
     });
   }
 
@@ -635,6 +644,7 @@ document.addEventListener('keydown', e => {
       b.style.display = '';
     });
     saveOrder();
+    pushMoreCardsToEnd();
   };
 
   /* ── 롱프레스 감지 ── */
