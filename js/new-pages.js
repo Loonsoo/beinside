@@ -163,8 +163,9 @@ function initAddictionPage() {
     + _guideSection('유형별 위험 신호', typesHtml)
     + _guideCheck(d.check)
     + _guideSection('중독은 어떻게 생기나요?', '<p>' + _esc(d.psychology) + '</p>')
-    + _guideSection('회복 단계', _guideCards(d.recovery))
-    + _guideSection('가족이 볼 때', _guideCards(d.family))
+    + _guideSection('회복을 위한 방법', _guideCards(d.techniques))
+    + _guideSection('지금 바로 해볼 수 있는 것', _guideCards(d.actions.immediate))
+    + _guideSection(d.family.title, _guideCards(d.family.items))
     + _guideHelp(d.help);
 }
 
@@ -175,10 +176,12 @@ function initFinancePage() {
   var d = FINANCE_DATA;
 
   el.innerHTML = _guideHero(d.intro)
-    + _guideSection('경제적 위기가 마음에 미치는 영향',
-        '<ul>' + d.impact.map(function(i) { return '<li>' + _esc(i) + '</li>'; }).join('') + '</ul>')
+    + _guideSection(d.recognition.title,
+        '<ul>' + d.recognition.items.map(function(i) { return '<li>' + _esc(i) + '</li>'; }).join('') + '</ul>')
     + _guideCheck(d.check)
+    + _guideSection('금융 스트레스의 심리학', '<p>' + _esc(d.psychology) + '</p>')
+    + _guideSection('마음 돌보기', _guideCards(d.techniques))
     + _guideSection('지금 바로 할 수 있는 것', _guideCards(d.actions.immediate))
-    + _guideSection('실제 지원 제도', _guideCards(d.support))
+    + _guideSection(d.systems.title, _guideCards(d.systems.items))
     + _guideHelp(d.help);
 }
