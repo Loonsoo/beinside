@@ -163,7 +163,7 @@ function buildSleepDetail(container, id) {
 
   container.innerHTML = `
     <button class="page-back" onclick="renderSleepPage(document.getElementById('sleep-content'))">← 수면 가이드로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#2A3545,#4A5565)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-sleep-from),var(--hero-sleep-to))">
       <span class="content-hero-icon">${meta.icon}</span>
       <h1>${esc(meta.label)}</h1>
       <p>${esc(meta.sub)}</p>
@@ -242,7 +242,7 @@ function renderSleepPage(container) {
   if (!container) return;
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#2A3545,#4A5565)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-sleep-from),var(--hero-sleep-to))">
       <span class="content-hero-icon">🛏️</span>
       <h1>잠을 못 자겠어요</h1>
       <p>밤이 두렵고, 아침이 무겁고, 낮이 흐릿할 때.<br>수면은 회복할 수 있어요.</p>

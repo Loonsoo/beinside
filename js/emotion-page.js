@@ -255,7 +255,7 @@ function buildCrisisScreen(container) {
       </a>
       <p style="font-size:13px;color:var(--ink-m);margin-bottom:24px;">전화하면 상담사가 이야기를 들어줘요. 무료, 24시간.<br>자세한 내용(비밀보장 범위 등)은 전화 시 확인해 주세요.</p>
       <a href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener"
-         class="emergency-call-big" style="background:linear-gradient(135deg,#3A1F6E,#6A3CB8);"
+         class="emergency-call-big" style="background:linear-gradient(135deg,var(--hero-emergency-call-from),var(--hero-emergency-call-to));"
          aria-label="카카오톡 마들랜 자살예방 상담">
         💬 카카오톡으로 상담하기 (마들랜)
       </a>

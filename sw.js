@@ -39,7 +39,9 @@ const PRECACHE = [
   '/js/i18n.js',
   '/js/notify.js',
   '/js/search.js',
-  '/js/vitals.js'
+  '/js/vitals.js',
+  '/icons/icon-192.png',
+  '/icons/icon-512.png'
 ];
 
 /* ── Install: 정적 자산 프리캐시 ── */

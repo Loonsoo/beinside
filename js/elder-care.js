@@ -365,7 +365,7 @@ function renderElderPage(container) {
 
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#4A5A4A,#6A7A68)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-elder-from),var(--hero-elder-to))">
       <span class="content-hero-icon">🧓</span>
       <h1>${esc(d.intro.title)}</h1>
       <p>${esc(d.intro.sub)}</p>

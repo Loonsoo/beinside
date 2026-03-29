@@ -330,7 +330,7 @@ function buildGriefDetail(container, id) {
 
   container.innerHTML = `
     <button class="page-back" onclick="renderGriefPage(document.getElementById('grief-content'))">← 사별 가이드로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#4A5060,#6A7080)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-grief-from),var(--hero-grief-to))">
       <span class="content-hero-icon">${meta.icon}</span>
       <h1>${esc(meta.label)}</h1>
       <p>${esc(meta.sub)}</p>
@@ -440,7 +440,7 @@ function renderGriefPage(container) {
   if (!container) return;
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#4A5060,#6A7080)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-grief-from),var(--hero-grief-to))">
       <span class="content-hero-icon">🕊️</span>
       <h1>떠나보낸 사람을 위한 가이드</h1>
       <p>사랑하는 사람을 보내는 건, 삶에서 가장 무거운 일이에요.<br>여기서 잠깐 쉬어가도 괜찮아요.</p>

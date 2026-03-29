@@ -1128,7 +1128,10 @@ function getRecommendedGuides(topic, duration, daily) {
     sleep:       { page: 'sleep',      tab: 'mind',  icon: '🛏️', title: '수면 가이드',           sub: '불면, 악몽, 과수면 대처법' },
     postpartum:  { page: 'postpartum', tab: 'mind', icon: '🌸', title: '산후우울증 가이드',     sub: '출산 후 마음이 이상할 때' },
     menopause:   { page: 'menopause',  tab: 'mind', icon: '🍂', title: '갱년기 우울증 가이드',   sub: '몸도 마음도 변하고 있을 때' },
-    emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' }
+    emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' },
+    adhd:        { page: 'adhd',       tab: 'mind', icon: '🧩', title: '성인 ADHD 가이드',      sub: '게으른 게 아니라 뇌가 다른 거예요' },
+    addiction:   { page: 'addiction',  tab: 'mind', icon: '🔄', title: '중독 회복 가이드',       sub: '멈추고 싶은데 멈출 수 없을 때' },
+    finance:     { page: 'finance',   tab: 'mind', icon: '💰', title: '금융 스트레스 가이드',    sub: '돈 걱정이 마음까지 무너뜨릴 때' }
   };
 
   let picks = [];
@@ -1157,7 +1160,18 @@ function getRecommendedGuides(topic, duration, daily) {
       break;
     case 'life':
       picks.push(all.transition);
+      picks.push(all.finance);
       picks.push(all.emotion);
+      break;
+    case 'habits':
+      picks.push(all.addiction);
+      picks.push(all.adhd);
+      picks.push(all.emotion);
+      break;
+    case 'money':
+      picks.push(all.finance);
+      if (daily === 'cant') picks.push(all.emotion);
+      else picks.push(all.burnout);
       break;
     case 'unknown':
     default:

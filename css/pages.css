@@ -4457,6 +4457,28 @@ a:focus:not(:focus-visible){
   color:var(--ink-m);
   margin:0;
 }
+.guide-check-cta{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+  padding:10px 18px;
+  border-radius:12px;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  min-height:44px;
+}
+.guide-check-cta--high{
+  background:var(--semantic-danger);
+  color:#fff;
+}
+.guide-check-cta--mid{
+  background:var(--accent-subtle);
+  color:var(--accent-primary);
+}
 
 /* ── 가이드 비교표 ── */
 .guide-compare{

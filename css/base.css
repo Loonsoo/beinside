@@ -153,6 +153,15 @@ button.logo{
   --transition-d:#2E6060;
   --transition-p:#DFF0EE;
 
+  /* ── 가이드 히어로 그라디언트 ── */
+  --hero-workplace-from:#3A5060;  --hero-workplace-to:#5A7078;
+  --hero-postpartum-from:#7A5A70; --hero-postpartum-to:#9A7A8A;
+  --hero-menopause-from:#5A4A3A;  --hero-menopause-to:#7A6A55;
+  --hero-sleep-from:#2A3545;      --hero-sleep-to:#4A5565;
+  --hero-grief-from:#4A5060;      --hero-grief-to:#6A7080;
+  --hero-elder-from:#4A5A4A;      --hero-elder-to:#6A7A68;
+  --hero-emergency-call-from:#3A1F6E; --hero-emergency-call-to:#6A3CB8;
+
   /* ── 연령 단계 색상 ── */
   --age-newborn:#A8D5BA;
   --age-3m:#7FC49A;

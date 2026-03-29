@@ -118,8 +118,25 @@ function _handleCheckToggle(e) {
   resultEl.style.display = '';
   var bg = count >= r.high.threshold ? 'var(--mental-risk-bg)' : count >= r.mid.threshold ? 'var(--burnout-p)' : 'var(--lavender-p)';
   resultEl.style.background = bg;
+
+  var cta = '';
+  var helpSection = resultEl.closest('.page-view') ? resultEl.closest('.page-view').querySelector('.guide-help-section') : null;
+  if (count >= r.high.threshold) {
+    if (data.help && data.help.length) {
+      var first = data.help[0];
+      cta = '<a href="tel:' + first.number.replace(/-/g, '') + '" class="guide-check-cta guide-check-cta--high" aria-label="' + _esc(first.name) + ' 전화하기">'
+        + '📞 ' + _esc(first.name) + ' ' + first.number + '</a>';
+    }
+  } else if (count >= r.mid.threshold) {
+    if (helpSection) {
+      cta = '<button class="guide-check-cta guide-check-cta--mid" onclick="var s=this.closest(\'.page-view\').querySelector(\'.guide-help-section\');if(s){s.scrollIntoView({behavior:\'smooth\',block:\'start\'});var t=s.querySelector(\'.guide-help-toggle\');if(t&&!t.classList.contains(\'open\'))t.click()}">'
+        + '아래 도움 연결 보기 ↓</button>';
+    }
+  }
+
   resultEl.innerHTML = '<strong>' + _esc(result.label) + '</strong>'
-    + (result.action ? '<p>' + _esc(result.action) + '</p>' : '');
+    + (result.action ? '<p>' + _esc(result.action) + '</p>' : '')
+    + cta;
 }
 
 /* ═══════ ADHD 페이지 ═══════ */

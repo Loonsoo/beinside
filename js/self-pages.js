@@ -845,7 +845,7 @@ function renderWorkplacePage(container) {
     </div>`).join('');
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#3A5060,#5A7078)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-workplace-from),var(--hero-workplace-to))">
       <span class="content-hero-icon">🏢</span>
       <h1>직장에서 어려운 사람 대처 가이드</h1>
       <p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>
@@ -1035,7 +1035,7 @@ function renderPostpartumPage(container) {
 
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#7A5A70,#9A7A8A)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">
       <span class="content-hero-icon">🌸</span>
       <h1>${esc(d.intro.title)}</h1>
       <p>${esc(d.intro.sub)}</p>
@@ -1270,7 +1270,7 @@ function renderMenopausePage(container) {
 
   container.innerHTML = `
     <button class="page-back" onclick="goHome()">← 홈으로</button>
-    <div class="content-hero" style="background:linear-gradient(135deg,#5A4A3A,#7A6A55)">
+    <div class="content-hero" style="background:linear-gradient(135deg,var(--hero-menopause-from),var(--hero-menopause-to))">
       <span class="content-hero-icon">🍂</span>
       <h1>${esc(d.intro.title)}</h1>
       <p>${esc(d.intro.sub)}</p>
