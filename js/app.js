@@ -765,9 +765,15 @@ document.addEventListener('keydown', e => {
     if (targetIdx < currentIdx) {
       return { target: children[targetIdx], before: true };
     } else {
-      // 뒤로 이동: 타겟 위치 다음 요소 앞에 삽입
-      var afterEl = children[targetIdx];
-      return { target: afterEl, before: false };
+      // 뒤로 이동: 타겟 다음 요소 앞에 삽입 (드래그 카드 자체는 건너뜀)
+      var nextIdx = targetIdx + 1;
+      while (nextIdx < children.length && children[nextIdx] === card) nextIdx++;
+      if (nextIdx < children.length) {
+        return { target: children[nextIdx], before: true };
+      } else {
+        // 맨 끝으로 이동
+        return { target: grid, before: false, append: true };
+      }
     }
   }
 
@@ -806,10 +812,12 @@ document.addEventListener('keydown', e => {
     if (!drag.moved) {
       if (dx < 4 && dy < 4) return;
       drag.moved = true;
-      // 고스트 생성
+      // 고스트 생성: 원본 클래스 유지 + drag-ghost 추가
       var rect = drag.card.getBoundingClientRect();
       drag.clone = drag.card.cloneNode(true);
-      drag.clone.className = 'sit-card drag-ghost';
+      drag.clone.classList.add('drag-ghost');
+      drag.clone.removeAttribute('onclick');
+      drag.clone.removeAttribute('data-card-id');
       drag.clone.style.width = rect.width + 'px';
       drag.clone.style.height = rect.height + 'px';
       drag.clone.style.left = rect.left + 'px';
@@ -822,13 +830,14 @@ document.addEventListener('keydown', e => {
     drag.clone.style.left = (touch.clientX - drag.offsetX) + 'px';
     drag.clone.style.top = (touch.clientY - drag.offsetY) + 'px';
 
-    // 2열 그리드 대응: 가장 가까운 카드 기준으로 삽입
+    // 슬롯 기반 삽입
     var pos = findClosestInsertPos(drag.grid, drag.card, touch.clientX, touch.clientY);
     if (pos) {
-      if (pos.before) {
+      if (pos.append) {
+        drag.grid.appendChild(drag.card);
+      } else if (pos.before) {
         drag.grid.insertBefore(drag.card, pos.target);
       } else {
-        // target 다음에 삽입
         if (pos.target.nextSibling) {
           drag.grid.insertBefore(drag.card, pos.target.nextSibling);
         } else {
