@@ -400,8 +400,8 @@ const RELATIONSHIP_DATA = {
       emergencyMsg: '지금 당장 이야기를 들어줄 사람이 있어요. <a href="tel:109" style="color:inherit;font-weight:700">📞 109</a>(자살예방상담, 무료·24시간). 자세한 내용은 전화 시 확인해 주세요.',
       results: {
         high: { label: '지금 많이 힘든 상태예요', threshold: 2, action: '오늘 하나만: 가장 급한 것(주거, 재정) 하나를 정리해 보세요. 한부모가족지원센터나 정신건강복지센터(무료)도 함께 힘이 돼요.' },
-        mid:  { label: '힘든 시기예요. 지지 체계가 필요해요.', threshold: 1 },
-        low:  { label: '아래 가이드를 따라가 보세요.', threshold: 0 }
+        mid:  { label: '혼자 감당하기엔 버거운 시기예요.', threshold: 1, action: '오늘 할 수 있는 것: 한부모가족지원센터(1644-6621)에 전화해서 "이혼 후 어떤 지원을 받을 수 있는지"만 물어보세요. 법률·양육·경제 지원을 한 곳에서 안내받을 수 있어요.' },
+        low:  { label: '지금 느끼는 감정은 정상적인 반응이에요.', threshold: 0 }
       }
     },
     actions: [
@@ -429,8 +429,8 @@ const RELATIONSHIP_DATA = {
       questions: ['가족 이야기가 나올 때마다 불안하거나 슬프다','주변에 가족 대신 의지할 사람이 없다','과거 가족 관계로 인한 상처가 일상에 영향을 준다'],
       results: {
         high: { label: '트라우마 치료나 상담이 도움이 될 수 있어요.', threshold: 2, action: '정신건강복지센터(무료)에서 상담을 받을 수 있어요.' },
-        mid:  { label: '지지 체계 만들기가 중요한 시점이에요.', threshold: 1 },
-        low:  { label: '아래 방법으로 조금씩 나아갈 수 있어요.', threshold: 0 }
+        mid:  { label: '가족 밖의 연결이 필요한 시점이에요.', threshold: 1, action: '오늘 할 수 있는 것: 관심 있는 모임(동네 도서관 프로그램, 운동 소모임, 온라인 커뮤니티)을 하나 검색해 보세요. 혈연이 아니어도 나를 이해하는 사람은 만들 수 있어요.' },
+        low:  { label: '지금 하고 있는 거리두기는 자기 보호예요.', threshold: 0 }
       }
     },
     actions: [
@@ -456,8 +456,8 @@ const RELATIONSHIP_DATA = {
       questions: ['연락할 수 있는 친구가 없다','외로움이 2주 이상 지속됐다','사람들과 있어도 외롭다 (만성적 고립감)'],
       results: {
         high: { label: '만성적 고립은 건강에 영향을 줄 수 있어요. 상담을 통해 도움을 받을 수 있어요.', threshold: 2, action: '정신건강복지센터(무료)에서 지원 프로그램도 운영해요.' },
-        mid:  { label: '연결이 필요한 시점이에요.', threshold: 1 },
-        low:  { label: '작은 연결부터 시작해 보세요.', threshold: 0 }
+        mid:  { label: '외로움이 쌓이고 있는 상태예요.', threshold: 1, action: '오늘 할 수 있는 것: 관심사 기반 모임(독서, 러닝, 보드게임 등)을 하나 검색해서 날짜를 캘린더에 넣어보세요. 첫 참석이 가장 어렵고, 두 번째부터는 훨씬 쉬워져요.' },
+        low:  { label: '외로움을 인식한 것 자체가 첫 걸음이에요.', threshold: 0 }
       }
     },
     actions: [
