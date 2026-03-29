@@ -484,7 +484,7 @@
   color:var(--peach-d);
 }
 [data-theme="dark"] .sp-header{
-  color:#F0E8E0;
+  color:var(--dark-warm-text);
 }
 [data-theme="dark"] .sp-htitle p{
   color:rgba(255,255,255,.75);
@@ -564,7 +564,7 @@
 }
 [data-theme="dark"] .sym-yes{
   background:rgba(200,60,60,.15);
-  color:#E07070;
+  color:var(--dark-danger-text);
   border-color:rgba(200,60,60,.30);
 }
 [data-theme="dark"] .sym-no{
@@ -575,11 +575,11 @@
 [data-theme="dark"] .symptom-result{
   background:linear-gradient(135deg,#3A2228,#2E1A1E);
   border-color:rgba(200,60,60,.25);
-  color:#F0A0A0;
+  color:var(--dark-danger-soft);
 }
 [data-theme="dark"] .birth-header{
   background:linear-gradient(135deg,#6A3A28,#8A6030);
-  color:#F0E8E0;
+  color:var(--dark-warm-text);
 }
 [data-theme="dark"] .birth-header p{
   color:rgba(255,255,255,.75);
@@ -627,7 +627,7 @@
 [data-theme="dark"] .birth-alert{
   background:linear-gradient(135deg,#3A2228,#2E1A1E);
   border-color:rgba(200,60,60,.25);
-  color:#F0A0A0;
+  color:var(--dark-danger-soft);
 }
 [data-theme="dark"] .birth-reality{
   background:var(--white);
@@ -658,7 +658,7 @@
 
 /* ── 성장 가이드 결과 헤더 ── */
 [data-theme="dark"] .rhead{
-  color:#F0E8E0;
+  color:var(--dark-warm-text);
 }
 
 /* ── 카드 확장 색상 (cbg-*) ── */
@@ -684,11 +684,11 @@
   border-color:rgba(255,255,255,.06);
 }
 [data-theme="dark"] .memo-save-btn{
-  color:#F0E8E0;
+  color:var(--dark-warm-text);
 }
 [data-theme="dark"] .memo-item-del:hover{
   background:rgba(200,60,60,.15);
-  color:#E07070;
+  color:var(--dark-danger-text);
 }
 
 /* ── 혼자 자라는 아이 카드 ── */
@@ -729,13 +729,13 @@
 
 /* ── 저장 버튼 ── */
 [data-theme="dark"] .form-save-btn{
-  color:#F0E8E0;
+  color:var(--dark-warm-text);
 }
 
 /* ── 삭제 호버 ── */
 [data-theme="dark"] .pi-btn.del:hover{
   background:rgba(200,60,60,.15);
-  color:#E07070;
+  color:var(--dark-danger-text);
 }
 
 /* ── 긴급 허브 다크모드 ── */
@@ -812,7 +812,7 @@
 }
 [data-theme="dark"] .urg-911{
   background:rgba(200,60,60,.18);
-  color:#E07070;
+  color:var(--dark-danger-text);
 }
 [data-theme="dark"] .urg-now{
   background:rgba(200,140,50,.18);

@@ -283,6 +283,37 @@ button.logo{
   --result-low:var(--semantic-positive);
   --result-low-ink:#1E5A30;
 
+  /* ── 위험/경고 (Danger) ── */
+  --danger-ink-dark:#8A2020;
+  --danger-ink-medium:#C04040;
+  --danger-bg-light:#FFECEC;
+  --danger-bg-from:#FFF2F2;
+  --result-concern:#C85050;
+  --result-critical:#C05050;
+
+  /* ── 아빠 가이드 (Dad) ── */
+  --dad-accent:#4A7AAA;
+
+  /* ── 청소년 확장 (Teen extended) ── */
+  --teen-accent-bright:#5B7CFA;
+  --teen-text-title:#C0CAFF;
+  --teen-text-muted:#9AA8D8;
+  --teen-text-accent:#A0B0F0;
+  --teen-text-purple:#9A8AE0;
+  --teen-danger:#E06060;
+
+  /* ── 감정 (Emotion) ── */
+  --emo-accent:#9B8EC4;
+  --emo-text:#A090C8;
+
+  /* ── 유틸리티 ── */
+  --warm-text-light:#F7F3EE;
+
+  /* ── 다크모드 시맨틱 (Dark semantic) ── */
+  --dark-warm-text:#F0E8E0;
+  --dark-danger-text:#E07070;
+  --dark-danger-soft:#F0A0A0;
+
   /* ── Dynamic Type ── */
   --text-scale:0;
 }
@@ -601,9 +632,9 @@ nav button.on{
   flex-shrink:0;
   transition:all .2s ease;
 }
-.lt-track--baby .lt-dot{ background:#5A9A6A; box-shadow:0 0 0 2px rgba(90,154,106,.3); }
+.lt-track--baby .lt-dot{ background:var(--semantic-positive); box-shadow:0 0 0 2px rgba(90,154,106,.3); }
 .lt-track--child .lt-dot{ background:#B48C3C; box-shadow:0 0 0 2px rgba(180,140,60,.3); }
-.lt-track--adult .lt-dot{ background:#D4795E; box-shadow:0 0 0 2px rgba(212,121,94,.3); }
+.lt-track--adult .lt-dot{ background:var(--accent-primary); box-shadow:0 0 0 2px rgba(212,121,94,.3); }
 .lt-track--senior .lt-dot{ background:#6A5AA0; box-shadow:0 0 0 2px rgba(100,80,160,.3); }
 
 /* ── 텍스트 라벨 ── */
@@ -1011,7 +1042,7 @@ nav button.on{
   color:var(--ink-m);transition:all .2s;
 }
 .pi-btn:hover{background:rgba(212,121,94,.15);}
-.pi-btn.del:hover{background:#FFECEC;color:#C04040;}
+.pi-btn.del:hover{background:var(--danger-bg-light);color:var(--danger-ink-medium);}
 
 .add-prof-btn{
   display:flex;align-items:center;justify-content:center;gap:8px;
