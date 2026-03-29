@@ -998,6 +998,10 @@ function initMenopausePage() {
   const el = document.getElementById('menopause-content');
   if (el && typeof renderMenopausePage === 'function') renderMenopausePage(el);
 }
+function initGriefPage() {
+  const el = document.getElementById('grief-content');
+  if (el && typeof renderGriefPage === 'function') renderGriefPage(el);
+}
 function initJournalPage() {
   if (typeof renderJournalPage === 'function') renderJournalPage();
 }
@@ -1018,6 +1022,7 @@ function toggleCheckItem(el) {
 /* ── 액션 아이템 토글 ── */
 function toggleAction(el) {
   el.classList.toggle('done');
+  el.setAttribute('aria-checked', el.classList.contains('done') ? 'true' : 'false');
   el.style.transform = 'scale(1.02)';
   setTimeout(() => { el.style.transform = ''; }, 150);
   const check = el.querySelector('.action-check');
