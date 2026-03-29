@@ -707,54 +707,68 @@ document.addEventListener('keydown', e => {
   }
 
   /* ── 가장 가까운 삽입 위치 계산 (2열 그리드 대응) ── */
+  /**
+   * 그리드 슬롯 기반 드롭 위치 계산
+   * 카드의 실제 위치 대신 그리드 기하학(열 수, 셀 크기)으로 슬롯 인덱스를 계산해
+   * 리플로우에 의한 진동을 방지한다.
+   */
   function findClosestInsertPos(grid, card, cx, cy) {
-    var children = grid.querySelectorAll('.sit-card[data-card-id]');
+    var children = [].slice.call(grid.querySelectorAll('.sit-card[data-card-id]'));
     if (children.length < 2) return null;
 
-    // 각 카드(드래그 중인 카드 제외)의 슬롯 중심점을 DOM 순서대로 수집
-    var slots = [];
+    // 드래그 카드의 현재 DOM 인덱스
+    var currentIdx = children.indexOf(card);
+
+    // 그리드 기하학: 첫 번째 비-드래그 카드에서 셀 크기 추출
+    var ref = null;
     for (var i = 0; i < children.length; i++) {
-      if (children[i] === card) continue;
-      var r = children[i].getBoundingClientRect();
-      slots.push({
-        el: children[i],
-        cx: r.left + r.width / 2,
-        cy: r.top + r.height / 2,
-        left: r.left,
-        top: r.top,
-        right: r.right,
-        bottom: r.bottom
-      });
+      if (children[i] !== card) { ref = children[i]; break; }
     }
-    if (slots.length === 0) return null;
+    if (!ref) return null;
 
-    // 커서가 속한 행 찾기 (Y 범위가 겹치는 슬롯들)
-    var rowSlots = slots.filter(function(s) { return cy >= s.top && cy <= s.bottom; });
-    // 행에 매칭 안 되면 가장 가까운 행
-    if (rowSlots.length === 0) {
-      var bestRowDist = Infinity;
-      slots.forEach(function(s) {
-        var dy = cy < s.top ? s.top - cy : cy > s.bottom ? cy - s.bottom : 0;
-        if (dy < bestRowDist) bestRowDist = dy;
-      });
-      rowSlots = slots.filter(function(s) {
-        var dy = cy < s.top ? s.top - cy : cy > s.bottom ? cy - s.bottom : 0;
-        return dy <= bestRowDist + 5;
-      });
+    var gridRect = grid.getBoundingClientRect();
+    var refRect = ref.getBoundingClientRect();
+    var cols = 2;
+    var cellW = refRect.width;
+    var cellH = refRect.height;
+    // gap 추정: 그리드 너비에서 셀 2개를 빼면 gap
+    var gapX = Math.max(0, (gridRect.width - cellW * cols) / (cols - 1));
+    // Y gap: 같은 열의 연속 카드 간 거리로 추정
+    var gapY = gapX; // 기본값 (동일 gap 가정)
+    for (var k = 0; k < children.length - cols; k++) {
+      if (children[k] !== card && children[k + cols] !== card) {
+        var r1 = children[k].getBoundingClientRect();
+        var r2 = children[k + cols].getBoundingClientRect();
+        gapY = r2.top - r1.bottom;
+        break;
+      }
     }
 
-    // 행 내에서 X 위치로 가장 가까운 카드 선택
-    var best = null;
-    var bestDist = Infinity;
-    rowSlots.forEach(function(s) {
-      var d = Math.abs(cx - s.cx);
-      if (d < bestDist) { bestDist = d; best = s; }
-    });
-    if (!best) return null;
+    var stepX = cellW + gapX;
+    var stepY = cellH + Math.max(0, gapY);
 
-    // 2열 그리드: 커서가 카드 중심의 왼쪽이면 앞에, 오른쪽이면 뒤에 삽입
-    var beforeTarget = cx < best.cx;
-    return { target: best.el, before: beforeTarget };
+    // 커서 → 슬롯 인덱스 (그리드 왼쪽 상단 기준, 셀 중앙 보정)
+    var relX = cx - gridRect.left;
+    var relY = cy - gridRect.top;
+    var col = Math.floor((relX + stepX * 0.5) / stepX);
+    col = Math.max(0, Math.min(col, cols - 1));
+    var row = Math.floor((relY + stepY * 0.3) / stepY);
+    row = Math.max(0, row);
+
+    var targetIdx = row * cols + col;
+    targetIdx = Math.max(0, Math.min(targetIdx, children.length - 1));
+
+    // 같은 위치면 이동 불필요
+    if (targetIdx === currentIdx) return null;
+
+    // 타겟 인덱스의 DOM 요소를 기준으로 삽입
+    if (targetIdx < currentIdx) {
+      return { target: children[targetIdx], before: true };
+    } else {
+      // 뒤로 이동: 타겟 위치 다음 요소 앞에 삽입
+      var afterEl = children[targetIdx];
+      return { target: afterEl, before: false };
+    }
   }
 
   /* ── 드래그 시작 ── */
