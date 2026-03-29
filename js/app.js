@@ -708,32 +708,53 @@ document.addEventListener('keydown', e => {
 
   /* ── 가장 가까운 삽입 위치 계산 (2열 그리드 대응) ── */
   function findClosestInsertPos(grid, card, cx, cy) {
-    var siblings = [];
     var children = grid.querySelectorAll('.sit-card[data-card-id]');
-    for (var i = 0; i < children.length; i++) {
-      if (children[i] !== card) siblings.push(children[i]);
-    }
-    if (siblings.length === 0) return null;
+    if (children.length < 2) return null;
 
+    // 각 카드(드래그 중인 카드 제외)의 슬롯 중심점을 DOM 순서대로 수집
+    var slots = [];
+    for (var i = 0; i < children.length; i++) {
+      if (children[i] === card) continue;
+      var r = children[i].getBoundingClientRect();
+      slots.push({
+        el: children[i],
+        cx: r.left + r.width / 2,
+        cy: r.top + r.height / 2,
+        left: r.left,
+        top: r.top,
+        right: r.right,
+        bottom: r.bottom
+      });
+    }
+    if (slots.length === 0) return null;
+
+    // 커서가 속한 행 찾기 (Y 범위가 겹치는 슬롯들)
+    var rowSlots = slots.filter(function(s) { return cy >= s.top && cy <= s.bottom; });
+    // 행에 매칭 안 되면 가장 가까운 행
+    if (rowSlots.length === 0) {
+      var bestRowDist = Infinity;
+      slots.forEach(function(s) {
+        var dy = cy < s.top ? s.top - cy : cy > s.bottom ? cy - s.bottom : 0;
+        if (dy < bestRowDist) bestRowDist = dy;
+      });
+      rowSlots = slots.filter(function(s) {
+        var dy = cy < s.top ? s.top - cy : cy > s.bottom ? cy - s.bottom : 0;
+        return dy <= bestRowDist + 5;
+      });
+    }
+
+    // 행 내에서 X 위치로 가장 가까운 카드 선택
     var best = null;
     var bestDist = Infinity;
-    for (var j = 0; j < siblings.length; j++) {
-      var r = siblings[j].getBoundingClientRect();
-      var midX = r.left + r.width / 2;
-      var midY = r.top + r.height / 2;
-      var dist = Math.sqrt((cx - midX) * (cx - midX) + (cy - midY) * (cy - midY));
-      if (dist < bestDist) {
-        bestDist = dist;
-        best = siblings[j];
-      }
-    }
-
+    rowSlots.forEach(function(s) {
+      var d = Math.abs(cx - s.cx);
+      if (d < bestDist) { bestDist = d; best = s; }
+    });
     if (!best) return null;
 
-    // 드래그 포인터가 가장 가까운 카드의 중심보다 위에 있으면 앞에, 아래면 뒤에 삽입
-    var br = best.getBoundingClientRect();
-    var beforeTarget = cy < br.top + br.height / 2;
-    return { target: best, before: beforeTarget };
+    // 2열 그리드: 커서가 카드 중심의 왼쪽이면 앞에, 오른쪽이면 뒤에 삽입
+    var beforeTarget = cx < best.cx;
+    return { target: best.el, before: beforeTarget };
   }
 
   /* ── 드래그 시작 ── */
@@ -823,6 +844,7 @@ document.addEventListener('keydown', e => {
   }, { passive: false });
   document.addEventListener('touchmove', onDragMove, { passive: false });
   document.addEventListener('touchend', onDragEnd);
+  document.addEventListener('touchcancel', onDragEnd);
   document.addEventListener('mousedown', function(e) {
     if (editMode) {
       onDragStart(e);
