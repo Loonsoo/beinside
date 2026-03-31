@@ -856,52 +856,75 @@ function initIndependencePage() {
 
   // 긴급 배너
   var emergencyBanner = '<div style="background:var(--warm);border-radius:14px;padding:14px 16px;margin-bottom:20px;text-align:center;font-size:13px;line-height:1.6;">'
-    + '지금 급하면: <a href="tel:1388" style="font-weight:700;color:inherit;">📞 1388</a>(청소년) · '
-    + '<a href="tel:109" style="font-weight:700;color:inherit;">📞 109</a>(위기) · '
-    + '<a href="tel:112" style="font-weight:700;color:inherit;">📞 112</a>(경찰)'
+    + '지금 급하면: <a href="tel:1388" style="font-weight:700;color:inherit;">1388</a>(청소년) · '
+    + '<a href="tel:109" style="font-weight:700;color:inherit;">109</a>(위기) · '
+    + '<a href="tel:112" style="font-weight:700;color:inherit;">112</a>(경찰)'
     + '</div>';
 
-  // 면책 고지
+  // 면책
   var disclaimer = d.intro.disclaimer
     ? '<p style="font-size:12px;color:var(--ink-l);text-align:center;margin-bottom:24px;">' + esc(d.intro.disclaimer) + '</p>'
     : '';
 
-  // 3단계 + 상시 접근 구성
+  // 3단계별 상황 그룹핑
   var stageMap = {};
   d.situations.forEach(function(s) {
     if (!stageMap[s.stage]) stageMap[s.stage] = [];
     stageMap[s.stage].push(s);
   });
 
+  // 각 단계별 섹션 (emotion-btn 클래스 사용)
   var stagesHTML = d.stages.map(function(stage) {
     var items = stageMap[stage.id] || [];
-    var itemsHTML = items.map(function(s) {
-      return '<div class="situation-card" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" role="button" tabindex="0" aria-label="' + esc(s.label) + '">'
-        + '<span class="situation-icon">' + s.icon + '</span>'
-        + '<div><strong>' + esc(s.label) + '</strong><br><span style="font-size:13px;color:var(--ink-m);">' + esc(s.sub) + '</span></div>'
-        + '</div>';
+    var btns = items.map(function(s) {
+      return '<button class="emotion-btn" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '">'
+        + '<span class="emotion-btn-icon">' + s.icon + '</span>'
+        + '<div>'
+        + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
+        + '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>'
+        + '</div>'
+        + '</button>';
     }).join('');
-    return '<div style="margin-bottom:28px;">'
-      + '<h2 style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">' + stage.icon + ' ' + esc(stage.label) + ' <span style="font-weight:400;color:var(--ink-m);font-size:13px;">— ' + esc(stage.sub) + '</span></h2>'
-      + itemsHTML
+
+    return '<div class="step-section" style="margin-bottom:28px;">'
+      + '<div class="step-label">' + stage.icon + ' ' + esc(stage.label) + ' <span style="font-weight:400;color:var(--ink-m);font-size:13px;">\u2014 ' + esc(stage.sub) + '</span></div>'
+      + '<div class="emotion-grid">' + btns + '</div>'
       + '</div>';
   }).join('');
 
   // 상시 접근 섹션
-  var alwaysHTML = d.always.map(function(s) {
-    return '<div class="situation-card" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" role="button" tabindex="0" aria-label="' + esc(s.label) + '" style="border-left:3px solid var(--accent);">'
-      + '<span class="situation-icon">' + s.icon + '</span>'
-      + '<div><strong>' + esc(s.label) + '</strong><br><span style="font-size:13px;color:var(--ink-m);">' + esc(s.sub) + '</span></div>'
-      + '</div>';
+  var alwaysBtns = d.always.map(function(s) {
+    return '<button class="emotion-btn" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '" style="border-left:3px solid var(--accent);">'
+      + '<span class="emotion-btn-icon">' + s.icon + '</span>'
+      + '<div>'
+      + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
+      + '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>'
+      + '</div>'
+      + '</button>';
   }).join('');
-  var alwaysSection = '<div style="margin-bottom:28px;">'
-    + '<h2 style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">⚡ 언제든 <span style="font-weight:400;color:var(--ink-m);font-size:13px;">— 단계 상관없이</span></h2>'
-    + alwaysHTML
+
+  var alwaysSection = '<div class="step-section">'
+    + '<div class="step-label">⚡ 언제든 <span style="font-weight:400;color:var(--ink-m);font-size:13px;">\u2014 단계 상관없이</span></div>'
+    + '<div class="emotion-grid">' + alwaysBtns + '</div>'
     + '</div>';
 
-  el.innerHTML = _guideHero(d.intro)
+  // 히어로
+  var heroHTML = '<button class="page-back" onclick="goHome()" aria-label="홈으로 돌아가기">\u2190 홈으로</button>'
+    + '<div class="content-hero">'
+    + '<span class="content-hero-icon">' + (d.intro.icon || '') + '</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<p>' + esc(d.intro.sub) + '</p>'
+    + (d.intro.stat ? '<div class="guide-stat"><strong>' + esc(d.intro.stat.pct) + '</strong> ' + esc(d.intro.stat.label) + '</div>' : '')
+    + '</div>';
+
+  var stageNote = d.stageNote
+    ? '<p style="font-size:13px;color:var(--ink-m);text-align:center;margin-bottom:20px;">' + esc(d.stageNote) + '</p>'
+    : '';
+
+  el.innerHTML = heroHTML
     + emergencyBanner
     + disclaimer
+    + stageNote
     + stagesHTML
     + alwaysSection;
 }
@@ -915,18 +938,17 @@ function buildIndependenceDetail(container, id) {
     ? '<div class="guide-recognition"><p>' + esc(d.recognition) + '</p></div>'
     : '';
 
-  var actionsHTML = d.actions
-    ? '<div class="action-checklist">' + _guideActions(d.actions) + '</div>'
+  var actionsHTML = d.actions && d.actions.length
+    ? '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">행동 가이드</div>'
+      + '<div class="action-checklist" style="margin-bottom:16px;">' + _guideActions(d.actions) + '</div>'
     : '';
 
-  var helpHTML = d.help ? _guideHelp(d.help) : '';
+  var helpHTML = d.help && d.help.length ? _guideHelp(d.help) : '';
 
-  container.innerHTML = '<div class="guide-detail">'
-    + '<button class="guide-back" onclick="initIndependencePage()" style="margin-bottom:16px;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 16px;font-size:13px;color:var(--ink-l);cursor:pointer;">← 목록으로</button>'
+  container.innerHTML = '<button class="page-back" onclick="initIndependencePage()" style="margin-bottom:16px;" aria-label="목록으로 돌아가기">\u2190 목록으로</button>'
     + recognitionHTML
     + actionsHTML
-    + helpHTML
-    + '</div>';
+    + helpHTML;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
