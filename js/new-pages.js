@@ -845,4 +845,88 @@ function _renderElderPracticalGuide(guides) {
   }).join('');
 }
 
+/* ══════════════════════════════════════════════════════
+   3-5. 내 생활 시작하기 — 자립 청소년 가이드
+══════════════════════════════════════════════════════ */
 
+function initIndependencePage() {
+  var el = document.getElementById('independence-content');
+  if (!el || typeof INDEPENDENCE_DATA === 'undefined') return;
+  var d = INDEPENDENCE_DATA;
+
+  // 긴급 배너
+  var emergencyBanner = '<div style="background:var(--warm);border-radius:14px;padding:14px 16px;margin-bottom:20px;text-align:center;font-size:13px;line-height:1.6;">'
+    + '지금 급하면: <a href="tel:1388" style="font-weight:700;color:inherit;">📞 1388</a>(청소년) · '
+    + '<a href="tel:109" style="font-weight:700;color:inherit;">📞 109</a>(위기) · '
+    + '<a href="tel:112" style="font-weight:700;color:inherit;">📞 112</a>(경찰)'
+    + '</div>';
+
+  // 면책 고지
+  var disclaimer = d.intro.disclaimer
+    ? '<p style="font-size:12px;color:var(--ink-l);text-align:center;margin-bottom:24px;">' + esc(d.intro.disclaimer) + '</p>'
+    : '';
+
+  // 3단계 + 상시 접근 구성
+  var stageMap = {};
+  d.situations.forEach(function(s) {
+    if (!stageMap[s.stage]) stageMap[s.stage] = [];
+    stageMap[s.stage].push(s);
+  });
+
+  var stagesHTML = d.stages.map(function(stage) {
+    var items = stageMap[stage.id] || [];
+    var itemsHTML = items.map(function(s) {
+      return '<div class="situation-card" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" role="button" tabindex="0" aria-label="' + esc(s.label) + '">'
+        + '<span class="situation-icon">' + s.icon + '</span>'
+        + '<div><strong>' + esc(s.label) + '</strong><br><span style="font-size:13px;color:var(--ink-m);">' + esc(s.sub) + '</span></div>'
+        + '</div>';
+    }).join('');
+    return '<div style="margin-bottom:28px;">'
+      + '<h2 style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">' + stage.icon + ' ' + esc(stage.label) + ' <span style="font-weight:400;color:var(--ink-m);font-size:13px;">— ' + esc(stage.sub) + '</span></h2>'
+      + itemsHTML
+      + '</div>';
+  }).join('');
+
+  // 상시 접근 섹션
+  var alwaysHTML = d.always.map(function(s) {
+    return '<div class="situation-card" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" role="button" tabindex="0" aria-label="' + esc(s.label) + '" style="border-left:3px solid var(--accent);">'
+      + '<span class="situation-icon">' + s.icon + '</span>'
+      + '<div><strong>' + esc(s.label) + '</strong><br><span style="font-size:13px;color:var(--ink-m);">' + esc(s.sub) + '</span></div>'
+      + '</div>';
+  }).join('');
+  var alwaysSection = '<div style="margin-bottom:28px;">'
+    + '<h2 style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:12px;">⚡ 언제든 <span style="font-weight:400;color:var(--ink-m);font-size:13px;">— 단계 상관없이</span></h2>'
+    + alwaysHTML
+    + '</div>';
+
+  el.innerHTML = _guideHero(d.intro)
+    + emergencyBanner
+    + disclaimer
+    + stagesHTML
+    + alwaysSection;
+}
+
+function buildIndependenceDetail(container, id) {
+  if (!container || typeof INDEPENDENCE_DATA === 'undefined') return;
+  var d = INDEPENDENCE_DATA[id];
+  if (!d) return;
+
+  var recognitionHTML = d.recognition
+    ? '<div class="guide-recognition"><p>' + esc(d.recognition) + '</p></div>'
+    : '';
+
+  var actionsHTML = d.actions
+    ? '<div class="action-checklist">' + _guideActions(d.actions) + '</div>'
+    : '';
+
+  var helpHTML = d.help ? _guideHelp(d.help) : '';
+
+  container.innerHTML = '<div class="guide-detail">'
+    + '<button class="guide-back" onclick="initIndependencePage()" style="margin-bottom:16px;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 16px;font-size:13px;color:var(--ink-l);cursor:pointer;">← 목록으로</button>'
+    + recognitionHTML
+    + actionsHTML
+    + helpHTML
+    + '</div>';
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}

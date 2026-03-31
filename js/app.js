@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural', 'adhd', 'addiction', 'finance'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural', 'adhd', 'addiction', 'finance', 'independence'];
 
 /* ── 페이지 전환 ── */
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
@@ -54,6 +54,7 @@ function showPage(id) {
         if (id === 'adhd') initAdhdPage();
         if (id === 'addiction') initAddictionPage();
         if (id === 'finance') initFinancePage();
+        if (id === 'independence') initIndependencePage();
       }
     }
 
@@ -1181,7 +1182,8 @@ function getRecommendedGuides(topic, duration, daily) {
     emergency:   { page: 'emergency',  tab: 'emergency', icon: '🚨', title: '긴급 도움',        sub: '지금 당장 도움이 필요할 때' },
     adhd:        { page: 'adhd',       tab: 'mind', icon: '🧩', title: '성인 ADHD 가이드',      sub: '게으른 게 아니라 뇌가 다른 거예요' },
     addiction:   { page: 'addiction',  tab: 'mind', icon: '🔄', title: '중독 회복 가이드',       sub: '멈추고 싶은데 멈출 수 없을 때' },
-    finance:     { page: 'finance',   tab: 'mind', icon: '💰', title: '금융 스트레스 가이드',    sub: '돈 걱정이 마음까지 무너뜨릴 때' }
+    finance:     { page: 'finance',   tab: 'mind', icon: '💰', title: '금융 스트레스 가이드',    sub: '돈 걱정이 마음까지 무너뜨릴 때' },
+    independence: { page: 'independence', tab: 'mind', icon: '🚀', title: '내 생활 시작하기', sub: '아무도 안 알려줬던 것들' }
   };
 
   let picks = [];
@@ -1419,7 +1421,8 @@ const PAGE_META = {
   multicultural: { title: '다문화 가정 가이드 — BeInside', desc: '다문화 가정을 위한 다국어(베트남어·중국어·영어) 양육·정신건강 가이드. 긴급상담 연결.', keywords: '다문화 가정, 다국어 가이드, 베트남어, 중국어, 이민자 가정, 외국인 육아, multicultural family' },
   adhd:          { title: 'ADHD 가이드 — BeInside', desc: '게으른 게 아니에요. 성인 ADHD 자가체크, 치료법, 직장·학업 관리 팁.', keywords: 'ADHD, 성인 ADHD, 집중력, 주의력결핍, ADHD 자가진단, ADHD 치료' },
   addiction:     { title: '중독 회복 가이드 — BeInside', desc: '스마트폰·게임·알코올·도박 중독 자가체크와 단계별 회복 가이드.', keywords: '중독, 스마트폰 중독, 게임 중독, 알코올 중독, 도박 중독, 중독 상담' },
-  finance:       { title: '금융 스트레스 가이드 — BeInside', desc: '부채·파산·경제적 위기 속 정신건강 돌봄과 실제 지원 제도 안내.', keywords: '금융 스트레스, 부채, 파산, 경제적 위기, 신용회복, 서민금융' }
+  finance:       { title: '금융 스트레스 가이드 — BeInside', desc: '부채·파산·경제적 위기 속 정신건강 돌봄과 실제 지원 제도 안내.', keywords: '금융 스트레스, 부채, 파산, 경제적 위기, 신용회복, 서민금융' },
+  independence:  { title: '내 생활 시작하기 — BeInside', desc: '보호종료·자립 청소년을 위한 실용 가이드. 집, 돈, 행정, 건강, 관계 — 아무도 안 알려줬던 것들.', keywords: '자립 청소년, 보호종료, 자립준비청년, 자립 가이드, 독립, 원룸 계약, 자립정착금' }
 };
 
 function updatePageMeta(id) {
