@@ -161,6 +161,9 @@ button.logo{
   --hero-grief-from:#4A5060;      --hero-grief-to:#6A7080;
   --hero-elder-from:#4A5A4A;      --hero-elder-to:#6A7A68;
   --hero-emergency-call-from:#3A1F6E; --hero-emergency-call-to:#6A3CB8;
+  --hero-senior-from:#7C9885;        --hero-senior-to:#A8C4B0;
+  --senior-border:rgba(124,152,133,.15);
+  --senior-bg-light:rgba(124,152,133,.08);
 
   /* ── 연령 단계 색상 ── */
   --age-newborn:#A8D5BA;

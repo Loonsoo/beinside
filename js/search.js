@@ -27,7 +27,8 @@
     multicultural: '다문화 베트남 중국 영어 이민 외국인',
     adhd:          'ADHD 주의력 집중 산만 과잉행동 성인ADHD 집중력',
     addiction:     '중독 스마트폰 게임 알코올 도박 술 의존',
-    finance:       '금융 돈 부채 빚 파산 경제 서민 신용회복'
+    finance:       '금융 돈 부채 빚 파산 경제 서민 신용회복',
+    senior:        '노인 어르신 고령 독거 외로움 고립 고독 은퇴 치매 기억 재산 학대 노인돌봄 부모님 혼자'
   };
 
   /* ── 검색 인덱스 빌드 ── */
@@ -43,7 +44,7 @@
       transition:'🔄', workplace:'🏢', teen:'🌙', sleep:'😴',
       postpartum:'🤱', menopause:'🌸', emergency:'🆘', journal:'📝',
       mental:'🧠', multicultural:'🌍',
-      adhd:'🧩', addiction:'🔄', finance:'💰'
+      adhd:'🧩', addiction:'🔄', finance:'💰', senior:'🤲'
     };
 
     for (var id in PAGE_META) {

@@ -952,3 +952,136 @@ function buildIndependenceDetail(container, id) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+
+/* ═══════ 노인 정서 돌봄 페이지 ═══════ */
+function renderSeniorPage(container) {
+  if (!container || typeof SENIOR_ISOLATION_DATA === 'undefined') return;
+  var d = SENIOR_ISOLATION_DATA;
+
+  /* 면책 고지 */
+  var disclaimerHTML = '<div class="guide-disclaimer">'
+    + '<p>' + esc(d.disclaimer) + '</p>'
+    + '<div class="help-cards" style="margin-top:8px;">'
+    + '<a href="tel:109" class="help-card" aria-label="자살예방상담전화 109"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간</div></div></a>'
+    + '<a href="tel:15770199" class="help-card" aria-label="정신건강위기상담전화 1577-0199"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담전화</div><div class="help-card-desc">무료, 24시간</div></div></a>'
+    + '</div></div>';
+
+  /* 자녀/보호자 안내 */
+  var familyHTML = d.forFamily.items.map(function(item) {
+    return '<div class="action-item" role="listitem">'
+      + '<span class="action-icon" aria-hidden="true">' + item.icon + '</span>'
+      + '<div class="action-text"><strong>' + esc(item.title) + '</strong><br>' + esc(item.text) + '</div>'
+      + '</div>';
+  }).join('');
+
+  container.innerHTML =
+    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
+    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-senior-from),var(--hero-senior-to))">'
+    + '<span class="content-hero-icon">🤲</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<p>' + esc(d.intro.sub) + '</p>'
+    + '</div>'
+    + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
+    + disclaimerHTML
+    + '<div class="step-section">'
+    + '<div class="step-label">어떤 상황이 가장 가까우세요?</div>'
+    + '<p style="font-size:13px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 점검과 행동 가이드를 확인할 수 있어요.</p>'
+    + '<div class="accordion-group">'
+    + d.situations.map(function(s) {
+      return '<div class="accordion-item" data-sit-id="' + s.id + '">'
+        + '<div class="accordion-header" onclick="toggleSeniorSituation(this)" tabindex="0" aria-expanded="false">'
+        + '<span>' + s.icon + ' ' + esc(s.label) + '</span><span class="accordion-arrow">▼</span>'
+        + '</div>'
+        + '<div class="accordion-body"><div class="accordion-body-inner">'
+        + _renderSeniorSituationContent(s.id)
+        + '</div></div></div>';
+    }).join('')
+    + '</div></div>'
+    + '<div class="step-section">'
+    + '<div class="step-label">👨‍👩‍👧 ' + esc(d.forFamily.title) + '</div>'
+    + '<p style="font-size:13px;color:var(--ink-l);margin-bottom:14px;">자녀분이 읽고 계시다면, 이것만 기억해 주세요.</p>'
+    + '<div class="action-checklist">' + familyHTML + '</div>'
+    + '</div>'
+    + '<div class="step-section">'
+    + '<div class="step-label">📞 주요 연락처</div>'
+    + '<div class="help-cards">'
+    + '<a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간. 삶이 힘들 때 언제든.</div></div></a>'
+    + '<a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담전화</div><div class="help-card-desc">무료, 24시간. 외로움, 우울 모두 상담 가능.</div></div></a>'
+    + '<a href="tel:15771389" class="help-card"><div class="help-card-num">📞 1577-1389</div><div class="help-card-info"><div class="help-card-name">노인보호전문기관</div><div class="help-card-desc">노인 학대 상담·신고. 경제적 학대도 상담 가능.</div></div></a>'
+    + '<a href="tel:132" class="help-card"><div class="help-card-num">📞 132</div><div class="help-card-info"><div class="help-card-name">대한법률구조공단</div><div class="help-card-desc">재산·상속 무료 법률상담. 65세 이상 우선.</div></div></a>'
+    + '<a href="tel:129" class="help-card"><div class="help-card-num">📞 129</div><div class="help-card-info"><div class="help-card-name">정부 복지상담센터</div><div class="help-card-desc">노인 복지 혜택 통합 안내. 무료.</div></div></a>'
+    + '<a href="tel:18999988" class="help-card"><div class="help-card-num">📞 1899-9988</div><div class="help-card-info"><div class="help-card-name">중앙치매센터</div><div class="help-card-desc">치매 무료 검진·상담. 기억이 걱정될 때.</div></div></a>'
+    + '</div></div>'
+    + '<div class="guide-disclaimer" style="margin-top:24px;">'
+    + '<p>이 가이드는 정보 제공 목적이며, 의료·법률 전문가의 상담을 대체하지 않습니다. 법률 정보는 2026년 기준이며, 법령 개정에 따라 달라질 수 있습니다.</p>'
+    + '</div>';
+}
+
+/* ── 상황별 콘텐츠 렌더 ── */
+function _renderSeniorSituationContent(id) {
+  var d = SENIOR_ISOLATION_DATA[id];
+  if (!d) return '';
+
+  var mindsetHTML = '';
+  if (d.mindset) {
+    mindsetHTML = '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;margin-top:16px;">💡 알아두면 좋을 것들</div>'
+      + d.mindset.map(function(m) {
+        return '<div style="background:var(--white);border-radius:12px;border:1px solid var(--senior-border);padding:14px 16px;margin-bottom:8px;">'
+          + '<strong style="font-size:13px;color:var(--ink);display:block;margin-bottom:4px;">' + esc(m.title) + '</strong>'
+          + '<p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;margin:0;">' + esc(m.text) + '</p>'
+          + '</div>';
+      }).join('');
+  }
+
+  var legalHTML = '';
+  if (d.legal) {
+    legalHTML = '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;margin-top:16px;">⚖️ 법적으로 보호받을 수 있어요</div>'
+      + d.legal.map(function(l) {
+        return '<div style="background:var(--white);border-radius:12px;border:1px solid var(--senior-border);padding:14px 16px;margin-bottom:8px;">'
+          + '<strong style="font-size:13px;color:var(--ink);display:block;margin-bottom:4px;">' + esc(l.title) + '</strong>'
+          + '<p style="font-size:12.5px;color:var(--ink-m);line-height:1.75;margin:0;">' + esc(l.text) + '</p>'
+          + '</div>';
+      }).join('');
+  }
+
+  return '<div style="padding-top:4px;">'
+    + '<div style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;margin-bottom:16px;">' + esc(d.recognition) + '</div>'
+    + '<div id="senior-check-' + id + '" style="margin-bottom:16px;">'
+    + '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">📋 상황 점검</div>'
+    + '</div>'
+    + (d.psychology ? '<div style="background:var(--senior-bg-light);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:12.5px;color:var(--ink-m);line-height:1.75;">' + esc(d.psychology) + '</div>' : '')
+    + mindsetHTML
+    + legalHTML
+    + '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;margin-top:16px;">✅ 행동 가이드</div>'
+    + '<div class="action-checklist" style="margin-bottom:16px;">' + _guideActions(d.actions) + '</div>'
+    + '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">📞 도움 연결</div>'
+    + '<div class="help-cards">'
+    + d.help.map(function(h) {
+      return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
+        + '<div class="help-card-num">📞 ' + h.number + '</div>'
+        + '<div class="help-card-info"><div class="help-card-name">' + esc(h.name) + '</div><div class="help-card-desc">' + esc(h.desc) + '</div></div></a>';
+    }).join('')
+    + '</div></div>';
+}
+
+/* ── 체크도구 lazy init ── */
+function _initSeniorCheck(id) {
+  var wrap = document.getElementById('senior-check-' + id);
+  if (!wrap || wrap.dataset.init) return;
+  wrap.dataset.init = '1';
+  var d = SENIOR_ISOLATION_DATA[id];
+  if (d && d.check && typeof renderCheckTool === 'function') {
+    renderCheckTool(wrap, d.check);
+  }
+}
+
+function toggleSeniorSituation(header) {
+  var item = header.closest('.accordion-item');
+  if (!item) return;
+  var id = item.dataset.sitId;
+  toggleAccordion(header);
+  if (id && item.classList.contains('open')) {
+    _initSeniorCheck(id);
+  }
+}

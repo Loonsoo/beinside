@@ -4347,6 +4347,17 @@ a:focus:not(:focus-visible){
   margin-bottom:6px;
 }
 
+/* ── 면책 고지 ── */
+.guide-disclaimer{
+  background:rgba(124,152,133,.06);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:20px;
+  font-size:12.5px;
+  color:var(--ink-m);
+  line-height:1.75;
+}
+
 /* ── 가이드 카드 (정보 카드) ── */
 .guide-cards{
   display:flex;

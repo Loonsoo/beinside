@@ -6,7 +6,7 @@
 let curSit  = 0;
 let curPage = 'home'; // home | growth | sp | birth | mental | teen | emergency
 
-const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural', 'adhd', 'addiction', 'finance', 'independence'];
+const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emotion', 'burnout', 'relation', 'transition', 'workplace', 'dad', 'elder', 'grief', 'sleep', 'postpartum', 'menopause', 'journal', 'multicultural', 'adhd', 'addiction', 'finance', 'independence', 'senior'];
 
 /* ── 페이지 전환 ── */
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
@@ -55,6 +55,7 @@ function showPage(id) {
         if (id === 'addiction') initAddictionPage();
         if (id === 'finance') initFinancePage();
         if (id === 'independence') initIndependencePage();
+        if (id === 'senior') initSeniorPage();
       }
     }
 
@@ -1010,6 +1011,10 @@ function initMulticulturalPage() {
   const el = document.getElementById('multicultural-content');
   if (el && typeof renderMulticulturalPage === 'function') renderMulticulturalPage(el);
 }
+function initSeniorPage() {
+  const el = document.getElementById('senior-content');
+  if (el && typeof renderSeniorPage === 'function') renderSeniorPage(el);
+}
 
 /* ── 체크 아이템 토글 ── */
 function toggleCheckItem(el) {
@@ -1422,7 +1427,8 @@ const PAGE_META = {
   adhd:          { title: 'ADHD 가이드 — BeInside', desc: '게으른 게 아니에요. 성인 ADHD 자가체크, 치료법, 직장·학업 관리 팁.', keywords: 'ADHD, 성인 ADHD, 집중력, 주의력결핍, ADHD 자가진단, ADHD 치료' },
   addiction:     { title: '중독 회복 가이드 — BeInside', desc: '스마트폰·게임·알코올·도박 중독 자가체크와 단계별 회복 가이드.', keywords: '중독, 스마트폰 중독, 게임 중독, 알코올 중독, 도박 중독, 중독 상담' },
   finance:       { title: '금융 스트레스 가이드 — BeInside', desc: '부채·파산·경제적 위기 속 정신건강 돌봄과 실제 지원 제도 안내.', keywords: '금융 스트레스, 부채, 파산, 경제적 위기, 신용회복, 서민금융' },
-  independence:  { title: '내 생활 시작하기 — BeInside', desc: '보호종료·자립 청소년을 위한 실용 가이드. 집, 돈, 행정, 건강, 관계 — 아무도 안 알려줬던 것들.', keywords: '자립 청소년, 보호종료, 자립준비청년, 자립 가이드, 독립, 원룸 계약, 자립정착금' }
+  independence:  { title: '내 생활 시작하기 — BeInside', desc: '보호종료·자립 청소년을 위한 실용 가이드. 집, 돈, 행정, 건강, 관계 — 아무도 안 알려줬던 것들.', keywords: '자립 청소년, 보호종료, 자립준비청년, 자립 가이드, 독립, 원룸 계약, 자립정착금' },
+  senior:         { title: '노인 정서 돌봄 가이드 — BeInside', desc: '외로움, 무기력, 가족 단절 — 혼자 감당하지 않아도 돼요. 무료 상담 전화와 복지 서비스 안내.', keywords: '노인 외로움, 노인 우울증, 독거노인 지원, 노인 정서 돌봄, 부모님 우울증, 노인 고독, 노인 상담' }
 };
 
 function updatePageMeta(id) {
