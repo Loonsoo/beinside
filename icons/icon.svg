@@ -1,4 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#F7F3EE"/>
-  <text x="256" y="320" font-size="280" text-anchor="middle" font-family="serif">🌻</text>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F7F3EE"/>
+      <stop offset="100%" stop-color="#F0EBE4"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- Stem -->
+  <path d="M256 280 L256 400" stroke="#6B8E5A" stroke-width="14" stroke-linecap="round"/>
+  <!-- Leaves -->
+  <ellipse cx="228" cy="360" rx="32" ry="14" transform="rotate(-35 228 360)" fill="#7BA368"/>
+  <ellipse cx="284" cy="370" rx="30" ry="13" transform="rotate(30 284 370)" fill="#7BA368"/>
+  <!-- Petals -->
+  <g fill="#F4C542">
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(0 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(30 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(60 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(90 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(120 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(150 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(180 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(210 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(240 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(270 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(300 256 220)"/>
+    <ellipse cx="256" cy="168" rx="22" ry="48" transform="rotate(330 256 220)"/>
+  </g>
+  <!-- Center -->
+  <circle cx="256" cy="220" r="42" fill="#8B6914"/>
+  <circle cx="256" cy="220" r="34" fill="#A07818"/>
+  <!-- Center dots -->
+  <g fill="#7A5A10" opacity=".5">
+    <circle cx="245" cy="210" r="3"/>
+    <circle cx="260" cy="208" r="3"/>
+    <circle cx="252" cy="225" r="3"/>
+    <circle cx="268" cy="220" r="3"/>
+    <circle cx="243" cy="228" r="3"/>
+    <circle cx="258" cy="236" r="2.5"/>
+    <circle cx="270" cy="232" r="2.5"/>
+    <circle cx="248" cy="215" r="2.5"/>
+  </g>
 </svg>
