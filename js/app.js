@@ -1318,69 +1318,34 @@ function closeSettings() {
   document.body.style.overflow = '';
 }
 
-/* ── 테마 (라이트/시스템/다크) ── */
+/* ── 테마 (라이트/다크) ── */
 const THEME_KEY = 'beinside_theme';
-const THEME_LABELS = { light: '라이트', system: '시스템', dark: '다크' };
-const THEME_ICONS = { light: '☀️', system: '🔄', dark: '🌙' };
 
 function getTheme() {
-  return localStorage.getItem(THEME_KEY) || 'system';
+  var saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light' || saved === 'dark') return saved;
+  return 'light';
 }
 
 function setTheme(mode) {
-  if (mode === 'system') {
-    document.documentElement.removeAttribute('data-theme');
-  } else {
-    document.documentElement.setAttribute('data-theme', mode);
-  }
+  document.documentElement.setAttribute('data-theme', mode);
   localStorage.setItem(THEME_KEY, mode);
   updateThemeToggleUI();
-  // theme-color 메타 업데이트
   var tc = document.querySelector('meta[name="theme-color"]');
-  if (tc) {
-    var isDark = mode === 'dark' || (mode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    tc.setAttribute('content', isDark ? '#161B19' : '#D4795E');
-  }
-}
-
-function cycleTheme() {
-  var order = ['light', 'system', 'dark'];
-  var idx = order.indexOf(getTheme());
-  setTheme(order[(idx + 1) % 3]);
+  if (tc) tc.setAttribute('content', mode === 'dark' ? '#161B19' : '#D4795E');
 }
 
 function updateThemeToggleUI() {
   var mode = getTheme();
-  var label = document.getElementById('theme-toggle-label');
-  if (label) label.textContent = THEME_LABELS[mode] || '시스템';
-  var icon = document.getElementById('theme-toggle-icon');
-  if (icon) icon.textContent = THEME_ICONS[mode] || '🔄';
-  // 3단 토글 버튼 활성화
   document.querySelectorAll('.theme-mode-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
   });
 }
 
-// 시스템 테마 변경 감지
-if (window.matchMedia) {
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
-    if (getTheme() === 'system') {
-      // system 모드일 때 토글 UI만 갱신 (CSS가 자동 대응)
-      updateThemeToggleUI();
-    }
-  });
-}
-
-// 초기 테마 적용 — "flash of wrong theme" 방지
+// 초기 테마 적용
 (function initTheme() {
   var saved = getTheme();
-  if (saved === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
-  } else if (saved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
-  // 'system'이면 data-theme 없음 → CSS prefers-color-scheme이 처리
-  // DOM 준비 후 토글 UI 갱신
+  document.documentElement.setAttribute('data-theme', saved);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
   } else {

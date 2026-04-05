@@ -66,7 +66,7 @@
   <script>
   (function(){
     var s = localStorage.getItem('beinside_theme');
-    if (s && s !== 'system') document.documentElement.setAttribute('data-theme', s);
+    document.documentElement.setAttribute('data-theme', s === 'dark' ? 'dark' : 'light');
   })();
   </script>
   <link rel="stylesheet" href="css/base.css">
@@ -147,12 +147,11 @@
         <span>🌓</span>
         <div>
           <div class="settings-item-title" data-i18n="settings.themeMode">화면 모드</div>
-          <div class="settings-item-sub" data-i18n="settings.themeSub">라이트 / 시스템 / 다크 모드</div>
+          <div class="settings-item-sub" data-i18n="settings.themeSub">라이트 / 다크 모드</div>
         </div>
       </div>
       <div class="theme-toggle-group" role="radiogroup" aria-label="화면 모드">
         <button class="theme-mode-btn" onclick="setTheme('light')" aria-label="라이트 모드" data-mode="light">☀️</button>
-        <button class="theme-mode-btn" onclick="setTheme('system')" aria-label="시스템 설정" data-mode="system">🔄</button>
         <button class="theme-mode-btn" onclick="setTheme('dark')" aria-label="다크 모드" data-mode="dark">🌙</button>
       </div>
     </div>
