@@ -968,7 +968,7 @@ function renderSeniorPage(container) {
   var familyHTML = d.forFamily.items.map(function(item) {
     return '<div class="action-item" role="listitem">'
       + '<span class="action-icon" aria-hidden="true">' + item.icon + '</span>'
-      + '<div class="action-text"><strong>' + esc(item.title) + '</strong><br>' + esc(item.text) + '</div>'
+      + '<div class="action-text" style="display:block;"><strong>' + esc(item.title) + '</strong>' + esc(item.text) + '</div>'
       + '</div>';
   }).join('');
 

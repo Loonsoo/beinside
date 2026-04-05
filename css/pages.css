@@ -2447,6 +2447,8 @@
   font-size:14px;
   font-weight:700;
   color:var(--accent-hover);
+  flex-shrink:0;
+  white-space:nowrap;
 }
 /* 4단계 섹션 — 본문 → 다음 섹션 간격 32px */
 .step-section{
@@ -2716,6 +2718,13 @@
   font-weight:700;
   box-shadow:0 2px 8px rgba(107,168,133,.30);
 }
+.action-icon{
+  flex-shrink:0;
+  width:28px;
+  font-size:20px;
+  line-height:1;
+  margin-top:2px;
+}
 .action-text{
   font-size:13.5px;
   color:var(--ink-m);
@@ -2723,6 +2732,11 @@
   display:flex;
   gap:8px;
   align-items:flex-start;
+}
+.action-text strong{
+  display:block;
+  color:var(--ink);
+  margin-bottom:2px;
 }
 .action-emoji{ flex-shrink:0; }
 

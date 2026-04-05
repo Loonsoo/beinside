@@ -436,13 +436,22 @@
 }
 
 /* ── Senior (노인 돌봄) 다크모드 ── */
+[data-theme="dark"]{
+  --hero-senior-from:#2A3830;
+  --hero-senior-to:#344038;
+  --senior-border:rgba(160,180,170,.12);
+  --senior-bg-light:rgba(124,152,133,.10);
+}
 [data-theme="dark"] .guide-disclaimer{
   background:rgba(124,152,133,.10);
   border:1px solid rgba(124,152,133,.12);
 }
 [data-theme="dark"] .stat-badge{
-  background:linear-gradient(135deg,rgba(140,110,80,.12),rgba(120,90,60,.10));
-  border-color:rgba(200,160,100,.15);
+  background:rgba(255,255,255,.06);
+  border-color:rgba(180,200,190,.12);
+}
+[data-theme="dark"] .action-item{
+  border-color:rgba(180,200,190,.08);
 }
 
 /* ── SP (한부모 가이드) 다크모드 ── */
