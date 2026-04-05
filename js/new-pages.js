@@ -959,13 +959,10 @@ function renderSeniorPage(container) {
   if (!container || typeof SENIOR_ISOLATION_DATA === 'undefined') return;
   var d = SENIOR_ISOLATION_DATA;
 
-  /* 면책 고지 */
+  /* 면책 고지 (전화번호는 하단 주요 연락처에 통합) */
   var disclaimerHTML = '<div class="guide-disclaimer">'
     + '<p>' + esc(d.disclaimer) + '</p>'
-    + '<div class="help-cards" style="margin-top:8px;">'
-    + '<a href="tel:109" class="help-card" aria-label="자살예방상담전화 109"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간</div></div></a>'
-    + '<a href="tel:15770199" class="help-card" aria-label="정신건강위기상담전화 1577-0199"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담전화</div><div class="help-card-desc">무료, 24시간</div></div></a>'
-    + '</div></div>';
+    + '</div>';
 
   /* 자녀/보호자 안내 */
   var familyHTML = d.forFamily.items.map(function(item) {
@@ -983,7 +980,6 @@ function renderSeniorPage(container) {
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
-    + disclaimerHTML
     + '<div class="step-section">'
     + '<div class="step-label">어떤 상황이 가장 가까우세요?</div>'
     + '<p style="font-size:13px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 점검과 행동 가이드를 확인할 수 있어요.</p>'
@@ -1003,6 +999,7 @@ function renderSeniorPage(container) {
     + '<p style="font-size:13px;color:var(--ink-l);margin-bottom:14px;">자녀분이 읽고 계시다면, 이것만 기억해 주세요.</p>'
     + '<div class="action-checklist">' + familyHTML + '</div>'
     + '</div>'
+    + disclaimerHTML
     + '<div class="step-section">'
     + '<div class="step-label">📞 주요 연락처</div>'
     + '<div class="help-cards">'
