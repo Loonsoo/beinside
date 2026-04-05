@@ -53,7 +53,7 @@ function _guideHelp(helplines) {
   return '<section class="guide-section guide-help-section">'
     + '<button class="guide-help-toggle" onclick="this.classList.toggle(\'open\');this.setAttribute(\'aria-expanded\',this.classList.contains(\'open\'));document.getElementById(\'' + uid + '\').classList.toggle(\'open\')" aria-expanded="false" aria-controls="' + uid + '">'
     + '<span>📞 도움받을 수 있는 곳 <span class="guide-help-count">' + helplines.length + '곳</span></span>'
-    + '<span class="guide-help-arrow">▸</span>'
+    + '<span class="guide-help-arrow"></span>'
     + '</button>'
     + '<div class="guide-help-body" id="' + uid + '">'
     + '<div class="help-cards">'

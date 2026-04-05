@@ -453,7 +453,7 @@ function accSection(icon, title, sub, bodyHTML, openByDefault) {
       <span class="acc-h-icon">${icon}</span>
       <span class="acc-h-title">${title}</span>
       ${sub ? `<span class="acc-h-sub">${sub}</span>` : ''}
-      <span class="acc-arrow">▾</span>
+      <span class="acc-arrow"></span>
     </button>
     <div class="acc-body${bodyStyle}">${bodyHTML}</div>
   </div>`;
