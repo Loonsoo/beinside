@@ -155,8 +155,8 @@ function _guideSituationPicker(cfg) {
   }).join('');
 
   return '<div class="content-hero"' + heroStyle + '>'
-    + '<span class="content-hero-icon">' + (cfg.heroIcon || '') + '</span>'
-    + '<h1>' + esc(cfg.heroTitle) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">' + (cfg.heroIcon || '') + '</span>'
+    + '<h1>' + esc(cfg.heroTitle) + '</h1></div>'
     + '<p>' + (cfg.heroSub || '') + '</p>'
     + '</div>'
     + '<div class="step-section">'
@@ -317,8 +317,8 @@ function renderBurnoutPage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--burnout-d),var(--burnout))">'
-    + '<span class="content-hero-icon">🫠</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🫠</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1></div>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
@@ -377,8 +377,8 @@ function renderPostpartumPage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">'
-    + '<span class="content-hero-icon">🌸</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🌸</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1></div>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
@@ -443,8 +443,8 @@ function renderMenopausePage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-menopause-from),var(--hero-menopause-to))">'
-    + '<span class="content-hero-icon">🍂</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🍂</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1></div>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
@@ -527,8 +527,8 @@ function renderWorkplacePage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-workplace-from),var(--hero-workplace-to))">'
-    + '<span class="content-hero-icon">🏢</span>'
-    + '<h1>직장에서 어려운 사람 대처 가이드</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🏢</span>'
+    + '<h1>직장에서 어려운 사람 대처 가이드</h1></div>'
     + '<p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>73.6%</strong>&nbsp;직장인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024)</div>'
@@ -728,8 +728,8 @@ function renderElderPage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-elder-from),var(--hero-elder-to))">'
-    + '<span class="content-hero-icon">🧓</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🧓</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1></div>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
@@ -1059,8 +1059,8 @@ function renderSeniorPage(container) {
 
   container.innerHTML =
     '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-senior-from),var(--hero-senior-to))">'
-    + '<span class="content-hero-icon">🤲</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<div class="content-hero-title"><span class="content-hero-icon">🤲</span>'
+    + '<h1>' + esc(d.intro.title) + '</h1></div>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'

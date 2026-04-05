@@ -2407,7 +2407,7 @@
 }
 .content-hero{
   border-radius:16px;
-  padding:20px 24px 16px;
+  padding:16px 20px 14px;
   margin:0 24px 16px;
   color:white;
   position:relative;
@@ -2416,20 +2416,29 @@
 }
 .content-hero h1{
   font-family:'Gowun Batang',serif;
-  font-size:20px;
+  font-size:19px;
   font-weight:700;
-  margin-bottom:var(--sp-1);
-  line-height:1.4;
+  line-height:1.3;
 }
 .content-hero p{
-  font-size:13.5px;
-  opacity:.88;
-  line-height:1.7;
+  font-size:12.5px;
+  opacity:.85;
+  line-height:1.6;
+  margin-top:6px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.content-hero-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
 .content-hero-icon{
-  display:block;
-  font-size:28px;
-  margin-bottom:10px;
+  font-size:26px;
+  line-height:1;
+  flex-shrink:0;
 }
 .stat-badge{
   display:inline-flex;
@@ -2471,7 +2480,7 @@
   margin-top:1.2em;
 }
 @media(max-width:640px){
-  .content-hero{ margin:0 18px 14px; padding:20px 20px; }
+  .content-hero{ margin:0 18px 12px; padding:16px 16px 12px; }
   .page-view > .page-back:first-child,
   .page-view > div > .page-back:first-child{ margin:10px 18px 8px; }
   .stat-badge{ margin:0 18px 16px; }
