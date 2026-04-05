@@ -3744,11 +3744,16 @@
 }
 .accordion-header:hover{ background:linear-gradient(135deg, rgba(212,121,94,.05), rgba(107,168,133,.03)); }
 .accordion-arrow{
-  font-size:12px;
+  width:12px;height:12px;
+  border-right:2px solid var(--ink-l);
+  border-bottom:2px solid var(--ink-l);
+  transform:rotate(45deg);
   transition:transform .3s ease;
-  color:var(--ink-l);
+  flex-shrink:0;
 }
-.accordion-item.open .accordion-arrow{ transform:rotate(180deg); }
+.accordion-item.open .accordion-arrow{
+  transform:rotate(-135deg);
+}
 .accordion-body{
   max-height:0;
   overflow:hidden;

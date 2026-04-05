@@ -111,7 +111,7 @@ function _guideRecognition(data) {
 function _guideAccordion(title, html) {
   return '<div class="accordion-item">'
     + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
-    + '<span>' + title + '</span><span class="accordion-arrow">▼</span>'
+    + '<span>' + title + '</span><span class="accordion-arrow"></span>'
     + '</div>'
     + '<div class="accordion-body"><div class="accordion-body-inner">'
     + html
@@ -494,7 +494,7 @@ function renderWorkplacePage(container) {
       + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span style="font-size:20px">' + t.icon + '</span>'
       + '<span style="font-weight:700;font-size:14px;">' + esc(t.name) + '</span>'
-      + '<span class="accordion-arrow">▾</span>'
+      + '<span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '<div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px;">이런 특징이 보여요</div>'
@@ -718,7 +718,7 @@ function renderElderPage(container) {
   var welfareHTML = d.welfare.items.map(function(w) {
     return '<div class="accordion-item">'
       + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
-      + '<span>' + w.icon + ' ' + esc(w.name) + '</span><span class="accordion-arrow">▼</span>'
+      + '<span>' + w.icon + ' ' + esc(w.name) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '<p style="font-size:13px;color:var(--ink-m);line-height:1.75;margin-bottom:10px;">' + esc(w.desc) + '</p>'
@@ -740,7 +740,7 @@ function renderElderPage(container) {
     + d.situations.map(function(s) {
       return '<div class="accordion-item" data-sit-id="' + s.id + '">'
         + '<div class="accordion-header" onclick="toggleElderSituation(this)" tabindex="0" aria-expanded="false">'
-        + '<span>' + s.icon + ' ' + esc(s.label) + '</span><span class="accordion-arrow">▼</span>'
+        + '<span>' + s.icon + ' ' + esc(s.label) + '</span><span class="accordion-arrow"></span>'
         + '</div>'
         + '<div class="accordion-body"><div class="accordion-body-inner">'
         + _renderElderSituationContent(s.id)
@@ -822,7 +822,7 @@ function _renderElderPracticalGuide(guides) {
 
     return '<div class="accordion-item">'
       + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
-      + '<span>' + g.icon + ' ' + esc(g.title) + '</span><span class="accordion-arrow">▼</span>'
+      + '<span>' + g.icon + ' ' + esc(g.title) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '<div style="display:inline-block;padding:3px 10px;background:var(--peach-p);color:var(--peach-d);border-radius:20px;font-size:10.5px;font-weight:600;margin-bottom:10px;">' + esc(g.badge) + '</div>'
@@ -978,7 +978,7 @@ function initIndependencePage() {
         + '<span><span style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</span>'
         + '<br><span style="font-size:11.5px;color:var(--ink-l);font-weight:400;">' + esc(s.sub) + '</span></span>'
         + '</span>'
-        + '<span class="accordion-arrow">\u25BC</span>'
+        + '<span class="accordion-arrow"></span>'
         + '</div>'
         + '<div class="accordion-body"><div class="accordion-body-inner">'
         + '</div></div></div>';
@@ -995,7 +995,7 @@ function initIndependencePage() {
       + '<span><span style="font-size:15px;font-weight:700;">' + esc(stage.label) + '</span>'
       + '<br><span style="font-size:12px;color:var(--ink-m);font-weight:400;">' + esc(stage.sub) + '</span></span>'
       + '</span>'
-      + '<span class="accordion-arrow">\u25BC</span>'
+      + '<span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"' + (idx === 0 ? ' style="max-height:2000px;"' : '') + '><div class="accordion-body-inner">'
       + innerAccordions
@@ -1011,7 +1011,7 @@ function initIndependencePage() {
       + '<span><span style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</span>'
       + '<br><span style="font-size:11.5px;color:var(--ink-l);font-weight:400;">' + esc(s.sub) + '</span></span>'
       + '</span>'
-      + '<span class="accordion-arrow">\u25BC</span>'
+      + '<span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '</div></div></div>';
@@ -1024,7 +1024,7 @@ function initIndependencePage() {
     + '<span><span style="font-size:15px;font-weight:700;">언제든</span>'
     + '<br><span style="font-size:12px;color:var(--ink-m);font-weight:400;">단계 상관없이</span></span>'
     + '</span>'
-    + '<span class="accordion-arrow">\u25BC</span>'
+    + '<span class="accordion-arrow"></span>'
     + '</div>'
     + '<div class="accordion-body"><div class="accordion-body-inner">'
     + alwaysInner
@@ -1071,7 +1071,7 @@ function renderSeniorPage(container) {
     + d.situations.map(function(s) {
       return '<div class="accordion-item" data-sit-id="' + s.id + '">'
         + '<div class="accordion-header" onclick="toggleSeniorSituation(this)" tabindex="0" aria-expanded="false">'
-        + '<span>' + s.icon + ' ' + esc(s.label) + '</span><span class="accordion-arrow">▼</span>'
+        + '<span>' + s.icon + ' ' + esc(s.label) + '</span><span class="accordion-arrow"></span>'
         + '</div>'
         + '<div class="accordion-body"><div class="accordion-body-inner">'
         + _renderSeniorSituationContent(s.id)
