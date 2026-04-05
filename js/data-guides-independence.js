@@ -15,9 +15,9 @@ const INDEPENDENCE_DATA = {
   stageNote: '순서대로 안 해도 돼. 지금 필요한 것부터 봐.',
 
   stages: [
-    { id: 'now', icon: '⚡', label: '지금 당장', sub: '뭐부터 해?' },
-    { id: 'settle', icon: '🏗️', label: '자리 잡기', sub: '한 달 지났어. 그 다음은?' },
-    { id: 'live', icon: '🌱', label: '살아가기', sub: '이제 좀 익숙해졌어' }
+    { id: 'now', icon: '⚡', label: '지금 당장', sub: '이것만 해두면 일단 괜찮아' },
+    { id: 'settle', icon: '🏗️', label: '자리 잡기', sub: '급하진 않아, 하나씩 해보면 돼' },
+    { id: 'live', icon: '🌱', label: '살아가기', sub: '여기까지 왔으면 이미 잘하고 있는 거야' }
   ],
 
   situations: [

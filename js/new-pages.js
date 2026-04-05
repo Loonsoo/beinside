@@ -847,23 +847,101 @@ function _renderElderPracticalGuide(guides) {
 
 /* ══════════════════════════════════════════════════════
    3-5. 내 생활 시작하기 — 자립 청소년 가이드
+   아코디언 기반: 단계 → 항목 → 상세 (중첩)
 ══════════════════════════════════════════════════════ */
+
+/* ── 자립 가이드 전용: tel 링크를 허용하는 행동 체크리스트 ── */
+function _indepActions(actions) {
+  if (!actions || !actions.length) return '';
+  return '<div class="action-checklist">'
+    + actions.map(function(a) {
+      // text에 <a href="tel:..."> 포함 — 안전한 태그만 허용
+      var safeText = a.text.replace(/<(?!\/?a\b)[^>]*>/gi, function(m) {
+        return esc(m);
+      });
+      return '<div class="action-item" onclick="toggleAction(this)" role="checkbox" aria-checked="false" tabindex="0">'
+        + '<div class="action-check" aria-hidden="true"></div>'
+        + '<div class="action-text"><span class="action-emoji">' + (a.icon || '') + '</span><span>' + safeText + '</span></div>'
+        + '</div>';
+    }).join('')
+    + '</div>';
+}
+
+/* ── 상황별 상세 콘텐츠 렌더 (아코디언 body 내부용) ── */
+function _renderIndependenceContent(id) {
+  var d = INDEPENDENCE_DATA[id];
+  if (!d) return '';
+
+  var recognitionHTML = d.recognition
+    ? '<div style="font-size:13.5px;color:var(--ink-m);line-height:1.75;word-break:keep-all;margin-bottom:16px;">' + esc(d.recognition) + '</div>'
+    : '';
+
+  var actionsHTML = d.actions && d.actions.length
+    ? '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">✅ 행동 가이드</div>'
+      + '<div style="margin-bottom:16px;">' + _indepActions(d.actions) + '</div>'
+    : '';
+
+  var helpHTML = d.help && d.help.length
+    ? '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">📞 도움 연결</div>'
+      + '<div class="help-cards">'
+      + d.help.map(function(h) {
+        return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
+          + '<div class="help-card-num">📞 ' + h.number + '</div>'
+          + '<div class="help-card-info"><div class="help-card-name">' + esc(h.name) + '</div><div class="help-card-desc">' + esc(h.desc) + '</div></div></a>';
+      }).join('')
+      + '</div>'
+    : '';
+
+  return '<div style="padding-top:4px;">'
+    + recognitionHTML
+    + actionsHTML
+    + helpHTML
+    + '</div>';
+}
+
+/* ── 아코디언 토글 + lazy load ── */
+function toggleIndependenceItem(header) {
+  var item = header.closest('.accordion-item');
+  if (!item) return;
+  var id = item.dataset.sitId;
+  toggleAccordion(header);
+  // lazy load: 처음 열릴 때만 콘텐츠 렌더
+  if (id && item.classList.contains('open')) {
+    var inner = item.querySelector('.accordion-body-inner');
+    if (inner && !inner.dataset.loaded) {
+      inner.innerHTML = _renderIndependenceContent(id);
+      inner.dataset.loaded = '1';
+    }
+  }
+}
 
 function initIndependencePage() {
   var el = document.getElementById('independence-content');
   if (!el || typeof INDEPENDENCE_DATA === 'undefined') return;
   var d = INDEPENDENCE_DATA;
 
+  // 히어로 (홈 버튼 1개만)
+  var heroHTML = '<button class="page-back" onclick="goHome()" aria-label="홈으로 돌아가기">\u2190 홈으로</button>'
+    + '<div class="content-hero">'
+    + '<h1>' + esc(d.intro.title) + '</h1>'
+    + '<p>' + esc(d.intro.sub) + '</p>'
+    + (d.intro.stat ? '<div class="guide-stat"><strong>' + esc(d.intro.stat.pct) + '</strong> ' + esc(d.intro.stat.label) + '</div>' : '')
+    + '</div>';
+
   // 긴급 배너
-  var emergencyBanner = '<div style="background:var(--warm);border-radius:14px;padding:14px 16px;margin-bottom:20px;text-align:center;font-size:13px;line-height:1.6;">'
-    + '지금 급하면: <a href="tel:1388" style="font-weight:700;color:inherit;">1388</a>(청소년) · '
-    + '<a href="tel:109" style="font-weight:700;color:inherit;">109</a>(위기) · '
-    + '<a href="tel:112" style="font-weight:700;color:inherit;">112</a>(경찰)'
+  var emergencyBanner = '<div class="indep-emergency">'
+    + '지금 급하면: <a href="tel:1388" aria-label="1388 청소년전화">1388</a>(청소년) · '
+    + '<a href="tel:109" aria-label="109 자살예방상담전화">109</a>(위기) · '
+    + '<a href="tel:112" aria-label="112 경찰">112</a>(경찰)'
     + '</div>';
 
   // 면책
   var disclaimer = d.intro.disclaimer
-    ? '<p style="font-size:12px;color:var(--ink-l);text-align:center;margin-bottom:24px;">' + esc(d.intro.disclaimer) + '</p>'
+    ? '<p style="font-size:12px;color:var(--ink-l);text-align:center;margin-bottom:16px;">' + esc(d.intro.disclaimer) + '</p>'
+    : '';
+
+  var stageNote = d.stageNote
+    ? '<p style="font-size:13px;color:var(--ink-m);text-align:center;margin-bottom:16px;">' + esc(d.stageNote) + '</p>'
     : '';
 
   // 3단계별 상황 그룹핑
@@ -873,53 +951,68 @@ function initIndependencePage() {
     stageMap[s.stage].push(s);
   });
 
-  // 각 단계별 섹션 (emotion-btn 클래스 사용)
-  var stagesHTML = d.stages.map(function(stage) {
+  // 각 단계 = 외부 아코디언, 각 항목 = 내부 아코디언
+  var stagesHTML = d.stages.map(function(stage, idx) {
     var items = stageMap[stage.id] || [];
-    var btns = items.map(function(s) {
-      return '<button class="emotion-btn" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '">'
-        + '<span class="emotion-btn-icon">' + s.icon + '</span>'
-        + '<div>'
-        + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
-        + '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>'
+    var innerAccordions = items.map(function(s) {
+      return '<div class="accordion-item indep-item" data-sit-id="' + s.id + '">'
+        + '<div class="accordion-header indep-item-header" onclick="toggleIndependenceItem(this)" tabindex="0" aria-expanded="false" aria-label="' + esc(s.label) + '">'
+        + '<span class="indep-item-label">'
+        + '<span style="font-size:18px;">' + s.icon + '</span>'
+        + '<span><span style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</span>'
+        + '<br><span style="font-size:11.5px;color:var(--ink-l);font-weight:400;">' + esc(s.sub) + '</span></span>'
+        + '</span>'
+        + '<span class="accordion-arrow">\u25BC</span>'
         + '</div>'
-        + '</button>';
+        + '<div class="accordion-body"><div class="accordion-body-inner">'
+        + '</div></div></div>';
     }).join('');
 
-    return '<div class="step-section" style="margin-bottom:28px;">'
-      + '<div class="step-label">' + stage.icon + ' ' + esc(stage.label) + ' <span style="font-weight:400;color:var(--ink-m);font-size:13px;">\u2014 ' + esc(stage.sub) + '</span></div>'
-      + '<div class="emotion-grid">' + btns + '</div>'
-      + '</div>';
-  }).join('');
+    // 첫 번째 단계는 기본 펼침
+    var stageOpen = idx === 0 ? ' open' : '';
+    var stageExpanded = idx === 0 ? 'true' : 'false';
 
-  // 상시 접근 섹션
-  var alwaysBtns = d.always.map(function(s) {
-    return '<button class="emotion-btn" onclick="buildIndependenceDetail(document.getElementById(\'independence-content\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '" style="border-left:3px solid var(--accent);">'
-      + '<span class="emotion-btn-icon">' + s.icon + '</span>'
-      + '<div>'
-      + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
-      + '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>'
+    return '<div class="accordion-item indep-stage' + stageOpen + '">'
+      + '<div class="accordion-header indep-stage-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="' + stageExpanded + '">'
+      + '<span class="indep-stage-label">'
+      + '<span style="font-size:20px;">' + stage.icon + '</span>'
+      + '<span><span style="font-size:15px;font-weight:700;">' + esc(stage.label) + '</span>'
+      + '<br><span style="font-size:12px;color:var(--ink-m);font-weight:400;">' + esc(stage.sub) + '</span></span>'
+      + '</span>'
+      + '<span class="accordion-arrow">\u25BC</span>'
       + '</div>'
-      + '</button>';
+      + '<div class="accordion-body"' + (idx === 0 ? ' style="max-height:2000px;"' : '') + '><div class="accordion-body-inner">'
+      + innerAccordions
+      + '</div></div></div>';
   }).join('');
 
-  var alwaysSection = '<div class="step-section">'
-    + '<div class="step-label">⚡ 언제든 <span style="font-weight:400;color:var(--ink-m);font-size:13px;">\u2014 단계 상관없이</span></div>'
-    + '<div class="emotion-grid">' + alwaysBtns + '</div>'
-    + '</div>';
+  // 상시 접근 섹션 (always)
+  var alwaysInner = d.always.map(function(s) {
+    return '<div class="accordion-item indep-item" data-sit-id="' + s.id + '">'
+      + '<div class="accordion-header indep-item-header" onclick="toggleIndependenceItem(this)" tabindex="0" aria-expanded="false" aria-label="' + esc(s.label) + '">'
+      + '<span class="indep-item-label">'
+      + '<span style="font-size:18px;">' + s.icon + '</span>'
+      + '<span><span style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</span>'
+      + '<br><span style="font-size:11.5px;color:var(--ink-l);font-weight:400;">' + esc(s.sub) + '</span></span>'
+      + '</span>'
+      + '<span class="accordion-arrow">\u25BC</span>'
+      + '</div>'
+      + '<div class="accordion-body"><div class="accordion-body-inner">'
+      + '</div></div></div>';
+  }).join('');
 
-  // 히어로
-  var heroHTML = '<button class="page-back" onclick="goHome()" aria-label="홈으로 돌아가기">\u2190 홈으로</button>'
-    + '<div class="content-hero">'
-    + '<span class="content-hero-icon">' + (d.intro.icon || '') + '</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1>'
-    + '<p>' + esc(d.intro.sub) + '</p>'
-    + (d.intro.stat ? '<div class="guide-stat"><strong>' + esc(d.intro.stat.pct) + '</strong> ' + esc(d.intro.stat.label) + '</div>' : '')
-    + '</div>';
-
-  var stageNote = d.stageNote
-    ? '<p style="font-size:13px;color:var(--ink-m);text-align:center;margin-bottom:20px;">' + esc(d.stageNote) + '</p>'
-    : '';
+  var alwaysSection = '<div class="accordion-item indep-stage">'
+    + '<div class="accordion-header indep-stage-header indep-always-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+    + '<span class="indep-stage-label">'
+    + '<span style="font-size:20px;">\u26A1</span>'
+    + '<span><span style="font-size:15px;font-weight:700;">언제든</span>'
+    + '<br><span style="font-size:12px;color:var(--ink-m);font-weight:400;">단계 상관없이</span></span>'
+    + '</span>'
+    + '<span class="accordion-arrow">\u25BC</span>'
+    + '</div>'
+    + '<div class="accordion-body"><div class="accordion-body-inner">'
+    + alwaysInner
+    + '</div></div></div>';
 
   el.innerHTML = heroHTML
     + emergencyBanner
@@ -927,30 +1020,6 @@ function initIndependencePage() {
     + stageNote
     + stagesHTML
     + alwaysSection;
-}
-
-function buildIndependenceDetail(container, id) {
-  if (!container || typeof INDEPENDENCE_DATA === 'undefined') return;
-  var d = INDEPENDENCE_DATA[id];
-  if (!d) return;
-
-  var recognitionHTML = d.recognition
-    ? '<div class="guide-recognition"><p>' + esc(d.recognition) + '</p></div>'
-    : '';
-
-  var actionsHTML = d.actions && d.actions.length
-    ? '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">행동 가이드</div>'
-      + '<div class="action-checklist" style="margin-bottom:16px;">' + _guideActions(d.actions) + '</div>'
-    : '';
-
-  var helpHTML = d.help && d.help.length ? _guideHelp(d.help) : '';
-
-  container.innerHTML = '<button class="page-back" onclick="initIndependencePage()" style="margin-bottom:16px;" aria-label="목록으로 돌아가기">\u2190 목록으로</button>'
-    + recognitionHTML
-    + actionsHTML
-    + helpHTML;
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 

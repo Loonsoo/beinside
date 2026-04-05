@@ -3764,6 +3764,83 @@
 }
 
 /* ══════════════════════════════════════════
+   INDEPENDENCE — 아코디언 기반 자립 가이드
+══════════════════════════════════════════ */
+
+/* 긴급 배너 */
+.indep-emergency{
+  background:var(--warm);
+  border-radius:14px;
+  padding:14px 16px;
+  margin-bottom:16px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.6;
+}
+.indep-emergency a{
+  font-weight:700;
+  color:var(--peach-d);
+  text-decoration:none;
+  padding:2px 4px;
+  border-radius:4px;
+  min-height:44px;
+  min-width:44px;
+  display:inline-flex;
+  align-items:center;
+}
+.indep-emergency a:hover{ text-decoration:underline; }
+.indep-emergency a:active{ opacity:.7; }
+.indep-emergency a:focus{ outline:2px solid var(--peach); outline-offset:2px; }
+
+/* 단계 아코디언 (외부) */
+.indep-stage{
+  border:1px solid var(--line);
+  border-radius:14px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+.indep-stage-header{
+  padding:16px 18px;
+  min-height:56px;
+  gap:12px;
+}
+.indep-stage-label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.indep-always-header{
+  border-left:3px solid var(--peach);
+}
+
+/* 항목 아코디언 (내부) */
+.indep-item{
+  border:1px solid var(--line);
+  border-radius:12px;
+  margin-bottom:6px;
+}
+.indep-item-header{
+  padding:12px 16px;
+  min-height:48px;
+  gap:10px;
+}
+.indep-item-label{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* 내부 아코디언의 body 내부 여백 조정 */
+.indep-item .accordion-body-inner{
+  padding:0 16px 14px;
+}
+
+/* 단계 아코디언 body 안 inner — 항목들 담는 곳 */
+.indep-stage > .accordion-body > .accordion-body-inner{
+  padding:8px 14px 14px;
+}
+
+/* ══════════════════════════════════════════
    DISTINCTION CARD (번아웃 vs 우울증)
 ══════════════════════════════════════════ */
 .distinction-grid{

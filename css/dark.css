@@ -454,6 +454,19 @@
   border-color:rgba(180,200,190,.08);
 }
 
+/* ── Independence (자립 가이드) 다크모드 ── */
+[data-theme="dark"] .indep-emergency{
+  background:rgba(232,144,106,.08);
+  border:1px solid rgba(232,144,106,.12);
+}
+[data-theme="dark"] .indep-stage{
+  border-color:rgba(180,200,190,.10);
+  background:var(--surface-card);
+}
+[data-theme="dark"] .indep-item{
+  border-color:rgba(180,200,190,.08);
+}
+
 /* ── SP (한부모 가이드) 다크모드 ── */
 [data-theme="dark"] .sp-card{
   border-color:rgba(255,255,255,.06);
