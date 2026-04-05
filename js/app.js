@@ -20,6 +20,13 @@ function showPage(id) {
   if (mainCol) mainCol.classList.add('page-leaving');
 
   setTimeout(function() {
+    // 헤더 뒤로가기: body.subpage 클래스로 제어
+    if (id === 'home') {
+      document.body.classList.remove('subpage');
+    } else {
+      document.body.classList.add('subpage');
+    }
+
     if (id === 'home') {
       if (hero) hero.style.display = '';
       ALL_PAGES.forEach(function(p) {

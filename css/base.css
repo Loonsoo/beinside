@@ -368,6 +368,33 @@ button.logo,
 }
 .logo:hover{opacity:.7;}
 .logo-dot{width:7px;height:7px;background:var(--amber);border-radius:50%;}
+
+/* 헤더 왼쪽 영역 */
+.hdr-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+/* 헤더 뒤로가기 버튼 */
+.hdr-back{
+  display:none;
+  width:36px;height:36px;
+  border-radius:50%;
+  border:none;
+  background:var(--peach-p);
+  color:var(--ink);
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  align-items:center;justify-content:center;
+  transition:all .2s;
+  -webkit-appearance:none;
+  flex-shrink:0;
+}
+.hdr-back:hover{background:var(--peach);color:var(--white);}
+.hdr-back:active{transform:scale(.92);}
+body.subpage .hdr-back{display:flex;}
+body.subpage .prof-chip{display:none;}
 nav{display:flex;gap:4px;justify-content:flex-end;}
 nav button{
   background:none;border:none;

@@ -154,8 +154,7 @@ function _guideSituationPicker(cfg) {
       + '</button>';
   }).join('');
 
-  return '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero"' + heroStyle + '>'
+  return '<div class="content-hero"' + heroStyle + '>'
     + '<span class="content-hero-icon">' + (cfg.heroIcon || '') + '</span>'
     + '<h1>' + esc(cfg.heroTitle) + '</h1>'
     + '<p>' + (cfg.heroSub || '') + '</p>'
@@ -317,8 +316,7 @@ function renderBurnoutPage(container) {
   var checkWrapId = 'burnout-check-wrap';
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--burnout-d),var(--burnout))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--burnout-d),var(--burnout))">'
     + '<span class="content-hero-icon">🫠</span>'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
@@ -378,8 +376,7 @@ function renderPostpartumPage(container) {
   }).join('');
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">'
     + '<span class="content-hero-icon">🌸</span>'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
@@ -445,8 +442,7 @@ function renderMenopausePage(container) {
   }).join('');
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-menopause-from),var(--hero-menopause-to))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-menopause-from),var(--hero-menopause-to))">'
     + '<span class="content-hero-icon">🍂</span>'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
@@ -530,8 +526,7 @@ function renderWorkplacePage(container) {
   }).join('');
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-workplace-from),var(--hero-workplace-to))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-workplace-from),var(--hero-workplace-to))">'
     + '<span class="content-hero-icon">🏢</span>'
     + '<h1>직장에서 어려운 사람 대처 가이드</h1>'
     + '<p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>'
@@ -732,8 +727,7 @@ function renderElderPage(container) {
   }).join('');
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-elder-from),var(--hero-elder-to))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-elder-from),var(--hero-elder-to))">'
     + '<span class="content-hero-icon">🧓</span>'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
@@ -855,10 +849,19 @@ function _indepActions(actions) {
   if (!actions || !actions.length) return '';
   return '<div class="action-checklist">'
     + actions.map(function(a) {
-      // text에 <a href="tel:..."> 포함 — 안전한 태그만 허용
-      var safeText = a.text.replace(/<(?!\/?a\b)[^>]*>/gi, function(m) {
-        return esc(m);
-      });
+      // tel: 링크만 보존, 나머지 HTML 제거
+      var parts = [];
+      var raw = a.text;
+      var re = /<a\s+href="tel:[^"]*"[^>]*>[^<]*<\/a>/gi;
+      var last = 0;
+      var m;
+      while ((m = re.exec(raw)) !== null) {
+        if (m.index > last) parts.push(esc(raw.substring(last, m.index)));
+        parts.push(m[0]); // tel 링크 그대로
+        last = re.lastIndex;
+      }
+      if (last < raw.length) parts.push(esc(raw.substring(last)));
+      var safeText = parts.join('');
       return '<div class="action-item" onclick="toggleAction(this)" role="checkbox" aria-checked="false" tabindex="0">'
         + '<div class="action-check" aria-hidden="true"></div>'
         + '<div class="action-text"><span class="action-emoji">' + (a.icon || '') + '</span><span>' + safeText + '</span></div>'
@@ -920,9 +923,8 @@ function initIndependencePage() {
   if (!el || typeof INDEPENDENCE_DATA === 'undefined') return;
   var d = INDEPENDENCE_DATA;
 
-  // 히어로 (홈 버튼 1개만)
-  var heroHTML = '<button class="page-back" onclick="goHome()" aria-label="홈으로 돌아가기">\u2190 홈으로</button>'
-    + '<div class="content-hero">'
+  // 히어로 (홈 버튼은 헤더에서 처리)
+  var heroHTML = '<div class="content-hero">'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
     + (d.intro.stat ? '<div class="guide-stat"><strong>' + esc(d.intro.stat.pct) + '</strong> ' + esc(d.intro.stat.label) + '</div>' : '')
@@ -1042,8 +1044,7 @@ function renderSeniorPage(container) {
   }).join('');
 
   container.innerHTML =
-    '<button class="page-back" onclick="goHome()">← 홈으로</button>'
-    + '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-senior-from),var(--hero-senior-to))">'
+    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-senior-from),var(--hero-senior-to))">'
     + '<span class="content-hero-icon">🤲</span>'
     + '<h1>' + esc(d.intro.title) + '</h1>'
     + '<p>' + esc(d.intro.sub) + '</p>'
