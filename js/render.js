@@ -251,8 +251,9 @@ function renderSP(sitIdx){
 
   document.getElementById('sp-result').innerHTML=`
     <div class="sp-header" style="background:linear-gradient(135deg,${hdr.grad[0]} 0%,${hdr.grad[1]} 100%)">
-      <span class="sp-hicon">${hdr.icon}</span>
-      <div class="sp-htitle"><h2>${hdr.title}</h2><p>${hdr.sub}</p></div>
+      <div class="sp-hicon-row"><span class="sp-hicon">${hdr.icon}</span>
+      <div class="sp-htitle"><h2>${hdr.title}</h2></div></div>
+      <p style="font-size:12.5px;opacity:.85;line-height:1.6;margin-top:6px;position:relative;z-index:1">${hdr.sub}</p>
     </div>
     <div class="sp-age-tabs">${stageTabsHTML}</div>
     ${stagesHTML}`;

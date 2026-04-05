@@ -902,24 +902,26 @@ nav button.on{
 #sp-result.on{display:block;animation:up .4s ease both;}
 
 .sp-header{
-  border-radius:20px;padding:24px 30px;
+  border-radius:16px;padding:16px 20px 14px;
   color:var(--white);
-  display:flex;align-items:center;gap:16px;
-  margin-bottom:16px;
   position:relative;overflow:hidden;
+  margin-bottom:16px;
+  box-shadow:inset 0 -30px 50px -25px rgba(0,0,0,.04);
 }
 .sp-header::after{content:'';position:absolute;right:-30px;top:-30px;width:180px;height:180px;background:rgba(255,255,255,.08);border-radius:50%;}
-.sp-hicon{font-size:36px;position:relative;z-index:1;}
+.sp-hicon-row{display:flex;align-items:center;gap:8px;position:relative;z-index:1;}
+.sp-hicon{font-size:26px;line-height:1;flex-shrink:0;}
 .sp-htitle{position:relative;z-index:1;}
-.sp-htitle h2{font-family:'Gowun Batang',serif;font-size:20px;font-weight:700;margin-bottom:4px;}
-.sp-htitle p{font-size:13px;opacity:.85;line-height:1.65;}
+.sp-htitle h2{font-family:'Gowun Batang',serif;font-size:19px;font-weight:700;line-height:1.3;}
+.sp-htitle p{font-size:12.5px;opacity:.85;line-height:1.6;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 
-.sp-age-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.sp-age-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px;}
 .sp-age-tab{
-  padding:8px 16px;min-height:44px;border-radius:20px;
+  padding:8px 10px;min-height:44px;border-radius:20px;
   border:1.5px solid var(--line);background:var(--white);
   font-family:'Noto Sans KR',sans-serif;font-size:12px;font-weight:700;
   color:var(--ink-m);cursor:pointer;transition:all .2s;
+  text-align:center;display:flex;align-items:center;justify-content:center;
 }
 .sp-age-tab:hover{border-color:var(--peach);color:var(--peach-d);background:var(--peach-p);}
 .sp-age-tab.on{border-color:var(--peach-d);color:var(--peach-d);background:var(--peach-p);}
@@ -1376,7 +1378,6 @@ footer{
   .medical-disclaimer{margin:0 18px 14px;padding:10px 14px;font-size:11px;}
   .tl-sidebar{display:none;}
   .sp-grid{grid-template-columns:1fr;}.sp-card.full{grid-column:span 1;}
-  .sp-header{flex-direction:column;align-items:flex-start;gap:10px;}
 }
 
 /* ── 검색 버튼 — 헤더에서 숨기고 메뉴에서만 접근 ── */
