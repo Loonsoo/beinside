@@ -914,6 +914,20 @@ function toggleIndependenceItem(header) {
     if (inner && !inner.dataset.loaded) {
       inner.innerHTML = _renderIndependenceContent(id);
       inner.dataset.loaded = '1';
+      // lazy load 후 내부 높이가 바뀌므로 자신의 body 재계산
+      var body = item.querySelector('.accordion-body');
+      if (body) body.style.maxHeight = (inner.scrollHeight + 32) + 'px';
+    }
+  }
+  // 외부 stage 아코디언의 max-height 재계산
+  var stage = item.closest('.indep-stage');
+  if (stage && stage.classList.contains('open')) {
+    var stageBody = stage.querySelector(':scope > .accordion-body');
+    var stageInner = stageBody ? stageBody.querySelector(':scope > .accordion-body-inner') : null;
+    if (stageBody && stageInner) {
+      setTimeout(function() {
+        stageBody.style.maxHeight = (stageInner.scrollHeight + 32) + 'px';
+      }, 50);
     }
   }
 }

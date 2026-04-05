@@ -1049,10 +1049,11 @@ function toggleAccordion(el) {
   const header = item.querySelector('.accordion-header');
   const body = item.querySelector('.accordion-body');
   const isOpen = item.classList.contains('open');
-  // 같은 그룹 내 모두 닫기
+  // 같은 그룹 내 다른 아코디언 닫기 (accordion-group 안에 있을 때)
   const group = item.closest('.accordion-group');
   if (group) {
     group.querySelectorAll('.accordion-item.open').forEach(i => {
+      if (i === item) return;
       i.classList.remove('open');
       const h = i.querySelector('.accordion-header');
       if (h) h.setAttribute('aria-expanded', 'false');
@@ -1060,7 +1061,13 @@ function toggleAccordion(el) {
       if (b) b.style.maxHeight = '0';
     });
   }
-  if (!isOpen) {
+  if (isOpen) {
+    // 닫기
+    item.classList.remove('open');
+    if (header) header.setAttribute('aria-expanded', 'false');
+    if (body) body.style.maxHeight = '0';
+  } else {
+    // 열기
     item.classList.add('open');
     if (header) header.setAttribute('aria-expanded', 'true');
     const inner = body.querySelector('.accordion-body-inner');
