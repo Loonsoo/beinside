@@ -850,99 +850,85 @@
       <div class="page-header">
           <h2 class="page-title">긴급 도움</h2>
       </div>
+
       <div class="emergency-hero-area">
-        <p class="emergency-hero-text">지금 당장 도움이 필요하신가요?<br><span>버튼을 누르면 바로 전화가 연결돼요.</span></p>
+        <p class="emergency-hero-text">누르면 바로 전화가 연결돼요.</p>
       </div>
 
-      <div class="emergency-grid">
-        <a href="tel:119" class="emergency-btn-full" style="--ebf-color:var(--emer-119)" data-umami-event="emergency-call" data-umami-event-number="119">
-          <span class="ebf-icon" role="img" aria-label="구급차">🚑</span>
-          <div class="ebf-content">
-            <span class="ebf-number">119</span>
-            <span class="ebf-name">응급 · 구조</span>
-            <span class="ebf-desc">신체 응급·구급차 요청. 무료, 24시간</span>
-          </div>
+      <div class="emergency-list" role="list" aria-label="긴급 전화번호 목록">
+        <a href="tel:119" class="emer-row emer-row--primary" role="listitem" aria-label="119 응급구조로 전화하기" data-umami-event="emergency-call" data-umami-event-number="119">
+          <span class="emer-row-icon" role="img" aria-hidden="true">🚑</span>
+          <span class="emer-row-num" style="color:var(--emer-119)">119</span>
+          <span class="emer-row-name">응급 · 구조</span>
+          <span class="emer-row-desc">신체 응급 · 구급차. 24시간</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
-        <a href="tel:112" class="emergency-btn-full" style="--ebf-color:var(--emer-112)" data-umami-event="emergency-call" data-umami-event-number="112">
-          <span class="ebf-icon" role="img" aria-label="긴급 신고">🚨</span>
-          <div class="ebf-content">
-            <span class="ebf-number">112</span>
-            <span class="ebf-name">학대 · 범죄 신고</span>
-            <span class="ebf-desc">아동학대·가정폭력·범죄 신고. 24시간</span>
-          </div>
+        <a href="tel:109" class="emer-row emer-row--primary" role="listitem" aria-label="109 자살예방 상담전화로 전화하기" data-umami-event="emergency-call" data-umami-event-number="109">
+          <span class="emer-row-icon" role="img" aria-hidden="true">💜</span>
+          <span class="emer-row-num" style="color:var(--emer-109)">109</span>
+          <span class="emer-row-name">자살예방 상담</span>
+          <span class="emer-row-desc">무료 · 24시간 · 상담사 연결</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
-        <a href="tel:109" class="emergency-btn-full" style="--ebf-color:var(--emer-109)" data-umami-event="emergency-call" data-umami-event-number="109">
-          <span class="ebf-icon" role="img" aria-label="자살예방">💜</span>
-          <div class="ebf-content">
-            <span class="ebf-number">109</span>
-            <span class="ebf-name">자살예방 상담전화</span>
-            <span class="ebf-desc">무료, 24시간. 전화하면 상담사가 이야기 들어줘요</span>
-          </div>
+        <a href="tel:112" class="emer-row" role="listitem" aria-label="112 학대범죄 신고 전화하기" data-umami-event="emergency-call" data-umami-event-number="112">
+          <span class="emer-row-icon" role="img" aria-hidden="true">🚨</span>
+          <span class="emer-row-num" style="color:var(--emer-112)">112</span>
+          <span class="emer-row-name">학대 · 범죄 신고</span>
+          <span class="emer-row-desc">아동학대 · 가정폭력. 24시간</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
-        <a href="tel:1388" class="emergency-btn-full" style="--ebf-color:var(--emer-1388)" data-umami-event="emergency-call" data-umami-event-number="1388">
-          <span class="ebf-icon">💚</span>
-          <div class="ebf-content">
-            <span class="ebf-number">1388</span>
-            <span class="ebf-name">청소년 전화</span>
-            <span class="ebf-desc">무료, 24시간. 청소년이라면 부담 없이 전화해요</span>
-          </div>
+        <a href="tel:1388" class="emer-row" role="listitem" aria-label="1388 청소년 전화하기" data-umami-event="emergency-call" data-umami-event-number="1388">
+          <span class="emer-row-icon" role="img" aria-hidden="true">💚</span>
+          <span class="emer-row-num" style="color:var(--emer-1388)">1388</span>
+          <span class="emer-row-name">청소년 전화</span>
+          <span class="emer-row-desc">무료 · 24시간</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
-        <a href="tel:1366" class="emergency-btn-full" style="--ebf-color:var(--emer-1366)" data-umami-event="emergency-call" data-umami-event-number="1366">
-          <span class="ebf-icon">🌸</span>
-          <div class="ebf-content">
-            <span class="ebf-number">1366</span>
-            <span class="ebf-name">여성긴급전화</span>
-            <span class="ebf-desc">가정폭력·성폭력·성매매 피해 지원. 무료, 24시간</span>
-          </div>
+        <a href="tel:1366" class="emer-row" role="listitem" aria-label="1366 여성긴급전화로 전화하기" data-umami-event="emergency-call" data-umami-event-number="1366">
+          <span class="emer-row-icon" role="img" aria-hidden="true">🌸</span>
+          <span class="emer-row-num" style="color:var(--emer-1366)">1366</span>
+          <span class="emer-row-name">여성긴급전화</span>
+          <span class="emer-row-desc">가정폭력 · 성폭력. 24시간</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
-        <a href="tel:1577-0199" class="emergency-btn-full" style="--ebf-color:var(--emer-1577)" data-umami-event="emergency-call" data-umami-event-number="1577-0199">
-          <span class="ebf-icon">💙</span>
-          <div class="ebf-content">
-            <span class="ebf-number">1577-0199</span>
-            <span class="ebf-name">정신건강 위기상담</span>
-            <span class="ebf-desc">무료, 24시간. 비밀보장·기록 정책은 전화 시 확인</span>
-          </div>
+        <a href="tel:1577-0199" class="emer-row" role="listitem" aria-label="1577-0199 정신건강 위기상담 전화하기" data-umami-event="emergency-call" data-umami-event-number="1577-0199">
+          <span class="emer-row-icon" role="img" aria-hidden="true">💙</span>
+          <span class="emer-row-num" style="color:var(--emer-1577)">1577-0199</span>
+          <span class="emer-row-name">정신건강 위기상담</span>
+          <span class="emer-row-desc">무료 · 24시간</span>
+          <span class="emer-row-arrow" aria-hidden="true"></span>
         </a>
       </div>
 
       <!-- 전화가 어려울 때 대안 채널 -->
       <div class="emer-alt-channels">
         <div class="emer-alt-title">전화가 어려우시면</div>
-        <div class="emer-alt-sub">문자나 채팅으로도 상담받을 수 있어요</div>
-        <div class="emer-alt-grid">
-          <a href="sms:109" class="emer-alt-btn">
-            <span class="emer-alt-icon">💬</span>
-            <div class="emer-alt-info">
-              <span class="emer-alt-name">109 문자 상담</span>
-              <span class="emer-alt-desc">자살예방상담전화에 문자를 보낼 수 있어요</span>
-            </div>
+        <div class="emer-alt-list" role="list" aria-label="대안 상담 채널">
+          <a href="sms:109" class="emer-alt-row" role="listitem" aria-label="109 문자 상담">
+            <span class="emer-alt-row-icon">💬</span>
+            <span class="emer-alt-row-name">109 문자 상담</span>
+            <span class="emer-alt-row-desc">문자로 상담사에게 연결</span>
           </a>
-          <a href="https://www.suicide.or.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
-            <span class="emer-alt-icon">💻</span>
-            <div class="emer-alt-info">
-              <span class="emer-alt-name">온라인 채팅 상담</span>
-              <span class="emer-alt-desc">자살예방상담전화 홈페이지에서 채팅 상담 가능</span>
-            </div>
+          <a href="https://www.suicide.or.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="온라인 채팅 상담">
+            <span class="emer-alt-row-icon">💻</span>
+            <span class="emer-alt-row-name">온라인 채팅 상담</span>
+            <span class="emer-alt-row-desc">자살예방상담전화 홈페이지</span>
           </a>
-          <a href="https://www.cyber1388.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
-            <span class="emer-alt-icon">🧒</span>
-            <div class="emer-alt-info">
-              <span class="emer-alt-name">청소년 사이버상담</span>
-              <span class="emer-alt-desc">1388 온라인 채팅·카카오톡 상담</span>
-            </div>
+          <a href="https://www.cyber1388.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="청소년 사이버상담">
+            <span class="emer-alt-row-icon">🧒</span>
+            <span class="emer-alt-row-name">청소년 사이버상담</span>
+            <span class="emer-alt-row-desc">1388 채팅 · 카카오톡</span>
           </a>
-          <a href="https://www.women1366.kr" class="emer-alt-btn" target="_blank" rel="noopener noreferrer">
-            <span class="emer-alt-icon">🌸</span>
-            <div class="emer-alt-info">
-              <span class="emer-alt-name">여성긴급 온라인 상담</span>
-              <span class="emer-alt-desc">가정폭력·성폭력 온라인 상담 접수</span>
-            </div>
+          <a href="https://www.women1366.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="여성긴급 온라인 상담">
+            <span class="emer-alt-row-icon">🌸</span>
+            <span class="emer-alt-row-name">여성긴급 온라인 상담</span>
+            <span class="emer-alt-row-desc">가정폭력 · 성폭력 상담 접수</span>
           </a>
         </div>
       </div>
 
       <div class="emer-firstaid-wrap">
-        <div class="emer-firstaid-title">🩺 영유아 응급처치 가이드</div>
+        <div class="emer-firstaid-title">영유아 응급처치 가이드</div>
         <div id="emer-firstaid-content"></div>
       </div>
     </div>

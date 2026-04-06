@@ -698,48 +698,35 @@
 [data-theme="dark"] .page-view--emergency{
   background:var(--cream);
 }
-[data-theme="dark"] .emergency-btn-full{
-  background:rgba(255,255,255,.04);
+[data-theme="dark"] .emer-row{
+  background:var(--bg-elevated);
   border-color:rgba(255,255,255,.06);
-  border-top-color:var(--ebf-color, var(--peach));
-  box-shadow:0 1px 4px rgba(0,0,0,.15);
 }
-[data-theme="dark"] .emergency-btn-full:hover{
+[data-theme="dark"] .emer-row:hover{
   background:rgba(255,255,255,.07);
   border-color:rgba(255,255,255,.10);
-  border-top-color:var(--ebf-color, var(--peach));
-  box-shadow:0 8px 28px rgba(0,0,0,.25);
 }
-[data-theme="dark"] .ebf-number{
-  color:var(--ebf-color, var(--peach-d));
+[data-theme="dark"] .emer-row--primary{
+  border-color:rgba(255,255,255,.10);
+  box-shadow:0 1px 4px rgba(0,0,0,.20);
 }
-[data-theme="dark"] .ebf-name{
+[data-theme="dark"] .emer-row-name{
   color:var(--ink);
 }
-[data-theme="dark"] .ebf-desc{
+[data-theme="dark"] .emer-row-desc{
   color:var(--ink-l);
+}
+[data-theme="dark"] .emer-row-arrow{
+  border-color:var(--ink-l);
+}
+[data-theme="dark"] .emergency-hero-text{
+  color:var(--ink-m);
 }
 [data-theme="dark"] .emer-firstaid-wrap{
   border-top-color:rgba(255,255,255,.06);
 }
 [data-theme="dark"] .emer-firstaid-title{
   color:var(--ink);
-}
-[data-theme="dark"] .emer-notes{
-  background:rgba(255,255,255,.04);
-  border-color:rgba(255,255,255,.06);
-}
-[data-theme="dark"] .emergency-hero-msg h3{
-  color:var(--ink);
-}
-[data-theme="dark"] .emergency-hero-msg p{
-  color:var(--ink-m);
-}
-[data-theme="dark"] .emergency-hero-text{
-  color:var(--ink);
-}
-[data-theme="dark"] .emergency-hero-text span{
-  color:var(--ink-l);
 }
 /* ── 응급처치 카드 다크모드 ── */
 [data-theme="dark"]{
@@ -877,68 +864,67 @@
 /* ══════════════════════════════════════════
    P0: 긴급 허브 — 대안 상담 채널
 ══════════════════════════════════════════ */
+/* ── 대안 채널 (1열 리스트) ── */
 .emer-alt-channels{
-  padding:0 28px;margin-top:8px;
+  padding:0 var(--sp-4);margin-top:var(--sp-1);
 }
 .emer-alt-title{
-  font-family:'Gowun Batang',serif;
-  font-size:15px;font-weight:700;
-  color:var(--ink);
-  text-align:center;
-  margin-bottom:4px;
+  font-size:13px;font-weight:600;
+  color:var(--ink-m);
+  margin-bottom:var(--sp-1);
 }
-.emer-alt-sub{
-  font-size:12.5px;color:var(--ink-l);
-  text-align:center;
-  margin-bottom:16px;
-  line-height:1.5;
+.emer-alt-list{
+  display:flex;flex-direction:column;
+  gap:4px;
 }
-.emer-alt-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-.emer-alt-btn{
-  display:flex;align-items:center;gap:12px;
-  padding:14px 16px;
+.emer-alt-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;
+  min-height:44px;
   background:var(--white);
-  border:1.5px solid var(--line);
-  border-radius:14px;
+  border:1px solid var(--line);
+  border-radius:10px;
   text-decoration:none;color:var(--ink);
-  transition:all .22s cubic-bezier(.34,1.2,.64,1);
+  transition:all .15s ease;
   cursor:pointer;
 }
-.emer-alt-btn:hover{
-  border-color:var(--peach);
-  transform:translateY(-2px);
-  box-shadow:0 4px 16px rgba(0,0,0,.06);
-}
-.emer-alt-icon{
-  font-size:20px;flex-shrink:0;
-  width:36px;height:36px;
-  display:flex;align-items:center;justify-content:center;
+.emer-alt-row:hover{
   background:var(--warm);
-  border-radius:10px;
+  border-color:rgba(224,123,90,.15);
 }
-.emer-alt-info{flex:1;min-width:0;}
-.emer-alt-name{
-  font-size:13px;font-weight:700;color:var(--ink);
-  display:block;margin-bottom:2px;
+.emer-alt-row:active{
+  transform:scale(.98);
 }
-.emer-alt-desc{
-  font-size:11px;color:var(--ink-l);
-  line-height:1.45;display:block;
+.emer-alt-row:focus-visible{
+  outline:2px solid var(--peach);
+  outline-offset:2px;
+}
+.emer-alt-row-icon{
+  font-size:16px;flex-shrink:0;
+  width:24px;text-align:center;
+}
+.emer-alt-row-name{
+  font-size:13px;font-weight:600;color:var(--ink);
+  flex-shrink:0;
+}
+.emer-alt-row-desc{
+  font-size:11.5px;color:var(--ink-l);
+  flex:1;text-align:right;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 @media(max-width:640px){
-  .emer-alt-channels{padding:0 18px;margin-top:4px;}
-  .emer-alt-grid{grid-template-columns:1fr;}
+  .emer-alt-channels{padding:0 var(--sp-2);margin-top:var(--sp-1);}
+  .emer-alt-row-desc{display:none;}
 }
-[data-theme="dark"] .emer-alt-btn{
-  background:var(--white);
-  border-color:rgba(255,255,255,.08);
+[data-theme="dark"] .emer-alt-row{
+  background:var(--bg-elevated);
+  border-color:rgba(255,255,255,.06);
 }
-[data-theme="dark"] .emer-alt-icon{
-  background:rgba(255,255,255,.06);
+[data-theme="dark"] .emer-alt-row:hover{
+  background:rgba(255,255,255,.07);
+}
+[data-theme="dark"] .emer-alt-title{
+  color:var(--ink-l);
 }
 
 /* ══════════════════════════════════════════
@@ -1055,9 +1041,7 @@
   background:linear-gradient(135deg,var(--bg-elevated),rgba(200,60,60,.08));
 }
 /* elevated card 깊이감 */
-[data-theme="dark"] .sit-card,
-[data-theme="dark"] .emergency-btn-full,
-[data-theme="dark"] .emer-alt-btn{
+[data-theme="dark"] .sit-card{
   background:var(--bg-elevated);
 }
 [data-theme="dark"] .mood-btn{
@@ -1167,9 +1151,11 @@
     border-width:2px;
     border-color:rgba(0,0,0,.20);
   }
-  .emergency-btn-full{
+  .emer-row{
     border-width:2px;
-    border-top-width:4px;
+  }
+  .emer-row--primary{
+    border-width:2.5px;
   }
   .hdr-sos{
     border-width:2px;

@@ -1553,52 +1553,83 @@
 
 /* ── 긴급 허브 페이지 ── */
 .page-view--emergency { background: var(--cream); }
-.emergency-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: var(--sp-2); padding: var(--sp-3) var(--sp-4);
-}
-.emer-btn {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 6px; padding: 24px 12px;
-  border-radius: 18px; text-decoration: none;
-  transition: all var(--calm-dur) var(--calm-ease);
-  box-shadow: 0 2px 8px rgba(0,0,0,.06);
-  min-height: 100px;
-}
-.emer-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.10); }
-.emer-num {
-  font-family: 'Gowun Batang', serif;
-  font-size: 26px; font-weight: 700; line-height: 1;
-}
-.emer-label { font-size: 12px; font-weight: 700; opacity: .85; letter-spacing: -.1px; }
-.emer-red { background: var(--emer-red-grad); color: #fff; }
-.emer-purple { background: var(--emer-purple-grad); color: #fff; }
-.emer-green { background: var(--emer-green-grad); color: #fff; }
-.emer-blue { background: var(--emer-blue-grad); color: #fff; }
-.emer-notes {
-  margin: 0 28px 20px;
-  background: var(--white);
-  border: 1px solid rgba(0,0,0,.08);
-  border-radius: 16px; padding: 18px 20px;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.emer-note-item { font-size: 13px; color: var(--ink-m); line-height: 1.65; }
-.emer-note-item strong { color: var(--ink); font-weight: 700; }
-/* ── 긴급 허브 히어로 영역 ── */
+
+/* ── 긴급 히어로 영역 ── */
 .emergency-hero-area {
-  text-align: center; padding: var(--sp-4) var(--sp-4) var(--sp-1);
+  text-align: center;
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
 }
 .emergency-hero-text {
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 17px; font-weight: 700;
-  color: var(--ink); line-height: 1.8;
-  letter-spacing: -.3px;
+  font-size: 15px; font-weight: 500;
+  color: var(--ink-m); line-height: 1.6;
+  letter-spacing: -.2px;
 }
-.emergency-hero-text span {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 13px; font-weight: 400;
-  color: var(--ink-l); display: block;
-  margin-top: 4px;
+
+/* ── 긴급 전화 리스트 ── */
+.emergency-list {
+  display: flex; flex-direction: column;
+  gap: 6px;
+  padding: 0 var(--sp-4) var(--sp-3);
+}
+.emer-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  min-height: 56px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  text-decoration: none; color: var(--ink);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+.emer-row:hover {
+  background: var(--warm);
+  border-color: rgba(224,123,90,.18);
+}
+.emer-row:active {
+  transform: scale(0.98);
+}
+.emer-row:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 2px;
+}
+/* 119, 109 강조 행 */
+.emer-row--primary {
+  background: var(--white);
+  border-width: 1.5px;
+  border-color: rgba(224,123,90,.15);
+  box-shadow: 0 1px 4px rgba(44,30,20,.06);
+}
+.emer-row--primary .emer-row-num {
+  font-size: 22px;
+}
+.emer-row-icon {
+  font-size: 20px; flex-shrink: 0;
+  width: 32px; text-align: center;
+}
+.emer-row-num {
+  font-family: 'Gowun Batang', serif;
+  font-size: 18px; font-weight: 800;
+  min-width: 72px; letter-spacing: -.3px;
+  flex-shrink: 0;
+}
+.emer-row-name {
+  font-size: 14px; font-weight: 700;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.emer-row-desc {
+  font-size: 12px; color: var(--ink-l);
+  flex: 1; text-align: right;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.emer-row-arrow {
+  flex-shrink: 0; width: 6px; height: 6px;
+  border-top: 1.5px solid var(--ink-l);
+  border-right: 1.5px solid var(--ink-l);
+  transform: rotate(45deg);
+  opacity: .5;
 }
 
 .emer-firstaid-wrap {
@@ -1629,10 +1660,6 @@
   .page-title { font-size: 16px; }
   .summary-panel { margin-bottom: 14px; }
   .acc-container { margin: 0; }
-  .emergency-grid { padding: 16px 18px; gap: 8px; }
-  .emer-btn { padding: 18px 8px; min-height: 80px; }
-  .emer-num { font-size: 20px; }
-  .emer-notes { margin: 0 18px 16px; }
   .emer-firstaid-wrap { padding: 0 18px 80px; }
   .symptom-checker { margin: 12px 18px; }
   .mental-stage-tabs { padding: 12px 18px 0; }
@@ -1922,46 +1949,7 @@
   font-size: 11px; font-weight: 700;
 }
 
-/* ── 긴급 허브 개선된 버튼 ── */
-.emergency-btn-full {
-  display: flex; flex-direction: column; align-items: center;
-  gap: var(--sp-1); width: 100%;
-  padding: var(--sp-3) var(--sp-2);
-  background: var(--white);
-  border: 1px solid var(--calm-border);
-  border-top: 2px solid var(--ebf-color, var(--peach));
-  border-radius: 18px;
-  text-decoration: none; color: var(--ink);
-  transition: all var(--calm-dur) var(--calm-ease); cursor: pointer;
-  box-shadow: var(--calm-shadow);
-  text-align: center; min-height: 120px;
-}
-.emergency-btn-full:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--calm-shadow-hover);
-}
-.emergency-btn-full:active {
-  transform: translateY(-1px);
-}
-.ebf-icon { font-size: 24px; flex-shrink: 0; }
-.ebf-content { flex: 1; }
-.ebf-number { font-size: 22px; font-weight: 800; color: var(--ebf-color, var(--peach-d)); font-family: 'Gowun Batang', serif; display: block; letter-spacing: -.3px; }
-.ebf-name { font-size: 12.5px; font-weight: 700; color: var(--ink); display: block; margin-top: 2px; }
-.ebf-desc { font-size: 11px; color: var(--ink-l); line-height: 1.45; margin-top: 3px; display: block; }
-
-/* 긴급 허브 헤더 메시지 */
-.emergency-hero-msg {
-  text-align: center;
-  padding: 20px 48px 16px;
-}
-.emergency-hero-msg h3 {
-  font-size: 18px; font-weight: 800;
-  color: var(--ink); margin-bottom: 6px;
-}
-.emergency-hero-msg p {
-  font-size: 13.5px; color: var(--ink-m);
-  line-height: 1.65;
-}
+/* (emergency-btn-full 삭제됨 — emer-row로 교체) */
 
 /* ── 개인정보 없음 안내 (청소년) ── */
 .teen-privacy-notice {
@@ -1976,9 +1964,12 @@
   .ppd-checker { margin: 0 18px 14px; }
   .guide-tab-bar { margin: 0 18px 14px; }
   .emotion-grid { grid-template-columns: repeat(4, 1fr); }
-  .emergency-hero-msg { padding: 16px 18px 12px; }
-  .emergency-hero-area { padding: 20px 18px 4px; }
-  .emergency-hero-text { font-size: 16px; }
+  .emergency-hero-area { padding: 16px 18px 12px; }
+  .emergency-hero-text { font-size: 14px; }
+  .emergency-list { padding: 0 var(--sp-2) var(--sp-2); }
+  .emer-row { padding: 12px 14px; gap: 10px; }
+  .emer-row-desc { display: none; }
+  .emer-row-num { min-width: 60px; }
 }
 
 /* ══════════════════════════════════════════
@@ -2546,7 +2537,7 @@
   .mood-btn span{ font-size:11px; }
   .emergency-quiet{ padding:var(--sp-1) 0; }
   .content-hero{ padding:var(--sp-3); margin:0 var(--sp-2) var(--sp-2); }
-  .emergency-grid{ padding:var(--sp-2); gap:var(--sp-1); }
+  .emergency-list{ padding:0 var(--sp-1) var(--sp-2); gap:4px; }
   .emer-firstaid-wrap{ padding:var(--sp-2) var(--sp-2) var(--sp-6); }
   .hero-sections{gap:24px;}  /* 모바일에서 영역 간격 축소 */
 }
