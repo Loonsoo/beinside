@@ -68,5 +68,9 @@
     overlay.classList.remove('on');
     overlay.classList.add('out');
     setTimeout(() => { overlay.style.display = 'none'; }, 350);
+    // Umami: 온보딩 완료 추적
+    if (typeof umami !== 'undefined') {
+      try { umami.track('onboard_complete'); } catch(e) {}
+    }
   };
 })();

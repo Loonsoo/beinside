@@ -2127,8 +2127,79 @@
   color:var(--ink);
   animation:up .3s ease both;
 }
+
+/* 감정 체크인 → 가이드 추천 카드 */
+.mood-recommend{
+  margin-top:14px;
+  display:flex;flex-direction:column;
+  gap:8px;
+}
+.mood-recommend-label{
+  font-size:12px;
+  font-weight:600;
+  color:var(--text-secondary);
+  letter-spacing:-.2px;
+  margin-bottom:2px;
+}
+.mood-recommend-card{
+  display:flex;align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:var(--surface-card,#FAF7F4);
+  border:1px solid var(--border-default,rgba(0,0,0,.06));
+  cursor:pointer;
+  transition:all 180ms ease;
+  text-align:left;
+}
+.mood-recommend-card:active{transform:scale(.98);}
+@media(hover:hover){
+  .mood-recommend-card:hover{
+    border-color:var(--accent-primary,#D4795E);
+    box-shadow:0 2px 8px rgba(212,121,94,.10);
+  }
+}
+.mood-rec-icon{font-size:22px;flex-shrink:0;}
+.mood-rec-body{
+  display:flex;flex-direction:column;
+  gap:2px;flex:1;min-width:0;
+}
+.mood-rec-title{
+  font-size:13px;font-weight:600;
+  color:var(--text-primary,#2C1E14);
+}
+.mood-rec-sub{
+  font-size:11.5px;
+  color:var(--text-secondary,#8A7A6A);
+  line-height:1.4;
+}
+.mood-rec-arrow{
+  font-size:16px;
+  color:var(--text-secondary,#8A7A6A);
+  flex-shrink:0;
+}
+
+/* 다크모드 */
+[data-theme="dark"] .mood-recommend-card{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.06);
+}
+[data-theme="dark"] .mood-rec-title{
+  color:var(--text-primary,#E8E0D8);
+}
+@media(hover:hover){
+  [data-theme="dark"] .mood-recommend-card:hover{
+    background:rgba(255,255,255,.07);
+    border-color:rgba(212,121,94,.3);
+  }
+}
+
 @media(max-width:640px){
   .mood-section{ padding:20px 18px 24px; }
+  .mood-recommend-card{padding:10px 12px;gap:10px;}
+  .mood-rec-icon{font-size:20px;}
+  .mood-rec-title{font-size:12.5px;}
+  .mood-rec-sub{font-size:11px;}
 }
 
 /* ══════════════════════════════════════════

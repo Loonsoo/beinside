@@ -12,6 +12,10 @@ const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emot
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
 
 function showPage(id) {
+  // 애널리틱스: 홈 카드 클릭 추적
+  if (curPage === 'home' && id !== 'home' && typeof umami !== 'undefined') {
+    try { umami.track('home_card_click', { guide: id }); } catch(e) {}
+  }
   curPage = id;
   var hero = document.getElementById('hero');
   var mainCol = document.querySelector('.main-col');
@@ -977,7 +981,70 @@ function selectMood(mood) {
   };
   var m = msgs[mood];
   res.style.display = 'block';
-  res.innerHTML = '<strong>' + m.text + '</strong>' + (m.sub ? '<br><span style="font-weight:400;font-size:13px;">' + m.sub + '</span>' : '');
+
+  // 결과 메시지
+  var html = '<strong>' + m.text + '</strong>';
+  if (m.sub) html += '<br><span style="font-weight:400;font-size:13px;">' + m.sub + '</span>';
+
+  // 감정 → 가이드 추천 카드
+  var recommends = {
+    great:    [
+      { page:'growth', tab:'growth', icon:'🌱', title:'아이 성장 가이드', sub:'여유 있을 때 살펴보세요' },
+      { page:'relation', tab:'mind', icon:'💛', title:'관계 돌아보기', sub:'좋은 날, 가까운 사람을 떠올려 보세요' }
+    ],
+    okay:     [
+      { page:'sleep', tab:'mind', icon:'🛏️', title:'수면 점검', sub:'잘 자고 있는지 확인해 보세요' },
+      { page:'emotion', tab:'mind', icon:'🌊', title:'감정 이해하기', sub:'괜찮은 날에 읽으면 더 잘 와닿아요' }
+    ],
+    soso:     [
+      { page:'emotion', tab:'mind', icon:'🌊', title:'지금 감정 살펴보기', sub:'무뎌진 느낌도 하나의 신호예요' },
+      { page:'burnout', tab:'mind', icon:'🫠', title:'번아웃 체크', sub:'혹시 지쳐있는 건 아닌지' }
+    ],
+    hard:     [
+      { page:'burnout', tab:'mind', icon:'🫠', title:'번아웃일 수 있어요', sub:'지금 상태를 살펴보세요' },
+      { page:'emotion', tab:'mind', icon:'🌊', title:'감정 다루는 법', sub:'작은 대처법부터 시작해요' },
+      { page:'sleep', tab:'mind', icon:'🛏️', title:'수면부터 챙기기', sub:'잠이 무너지면 마음도 무너져요' }
+    ],
+    veryhard: [
+      { page:'emergency', tab:'emergency', icon:'📞', title:'지금 도움 받기', sub:'24시간 무료 상담 연결' },
+      { page:'emotion', tab:'mind', icon:'🌊', title:'감정 가이드', sub:'지금 할 수 있는 한 가지' }
+    ]
+  };
+
+  var guides = recommends[mood] || [];
+  if (guides.length > 0) {
+    html += '<div class="mood-recommend">';
+    html += '<div class="mood-recommend-label">이런 글이 도움이 될 수 있어요</div>';
+    guides.forEach(function(g) {
+      html += '<button class="mood-recommend-card" onclick="showPage(\'' + g.page + '\');setMTab(\'' + g.tab + '\')" data-recommend-page="' + g.page + '">'
+        + '<span class="mood-rec-icon">' + g.icon + '</span>'
+        + '<span class="mood-rec-body">'
+        + '<span class="mood-rec-title">' + g.title + '</span>'
+        + '<span class="mood-rec-sub">' + g.sub + '</span>'
+        + '</span>'
+        + '<span class="mood-rec-arrow">›</span>'
+        + '</button>';
+    });
+    html += '</div>';
+  }
+
+  res.innerHTML = html;
+
+  // Umami: 감정 체크인 추적
+  if (typeof umami !== 'undefined') {
+    try { umami.track('mood_checkin', { mood: mood }); } catch(e) {}
+  }
+
+  // 추천 카드 클릭 추적 (이벤트 위임)
+  res.addEventListener('click', function handler(e) {
+    var card = e.target.closest('.mood-recommend-card');
+    if (!card) return;
+    var page = card.getAttribute('data-recommend-page');
+    if (page && typeof umami !== 'undefined') {
+      try { umami.track('mood_to_guide_click', { mood: mood, guide: page }); } catch(ex) {}
+    }
+    res.removeEventListener('click', handler);
+  });
 }
 
 /* ── 신규 페이지 초기화 스텁 (각 파일에서 구현) ── */
