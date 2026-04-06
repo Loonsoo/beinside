@@ -1987,7 +1987,8 @@
 /* ── 심리학 기반 영역 설계 ── */
 /* 게슈탈트 근접성: 같은 영역 = 같은 배경, 다른 영역 = 40px 간격 */
 .section-care,
-.section-self{
+.section-self,
+.section-life{
   padding:20px;
   margin-bottom:0;
   border-radius:16px;
@@ -1999,6 +2000,10 @@
 .section-self{
   background:rgba(140,120,170,.05);
   border:1px solid rgba(140,120,170,.06);
+}
+.section-life{
+  background:rgba(120,160,140,.05);
+  border:1px solid rgba(120,160,140,.06);
 }
 .section-header{
   margin-bottom:16px;
@@ -2015,6 +2020,7 @@
 }
 .section-care .section-title{ color:var(--accent-hover); }
 .section-self .section-title{ color:var(--lavender-d); }
+.section-life .section-title{ color:#5A9A6A; }
 .section-sub{
   font-size:13px;
   color:var(--text-secondary);
@@ -2022,7 +2028,8 @@
 }
 /* ── 라이트 모드: Liquid Glass 카드 ── */
 .section-care .sit-card,
-.section-self .sit-card{
+.section-self .sit-card,
+.section-life .sit-card{
   background:rgba(255,255,255,.55);
   border:1px solid rgba(255,255,255,.60);
   box-shadow:
@@ -2036,7 +2043,8 @@
 }
 @media (hover: hover) {
   .section-care .sit-card:hover,
-  .section-self .sit-card:hover{
+  .section-self .sit-card:hover,
+  .section-life .sit-card:hover{
     background:rgba(255,255,255,.75);
     border-color:rgba(255,255,255,.80);
     box-shadow:
@@ -2208,6 +2216,7 @@
 }
 .hero .section-care .section-title{color:var(--accent-hover);}
 .hero .section-self .section-title{color:var(--lavender-d);}
+.hero .section-life .section-title{color:#5A9A6A;}
 .hero .section-sub{font-size:13px;color:var(--text-secondary);}
 .hero .section-header{margin-bottom:16px;}
 
@@ -2236,6 +2245,7 @@
 /* ── 다크모드: Liquid Glass 카드 ── */
 [data-theme="dark"] .section-care .sit-card,
 [data-theme="dark"] .section-self .sit-card,
+[data-theme="dark"] .section-life .sit-card,
 [data-theme="dark"] .hero .sit-card{
   background:rgba(255,255,255,.03);
   border:1px solid rgba(255,255,255,.06);
@@ -2248,6 +2258,7 @@
 @media(hover:hover){
   [data-theme="dark"] .section-care .sit-card:hover,
   [data-theme="dark"] .section-self .sit-card:hover,
+  [data-theme="dark"] .section-life .sit-card:hover,
   [data-theme="dark"] .hero .sit-card:hover{
     background:rgba(255,255,255,.06);
     border-color:rgba(255,255,255,.10);
@@ -2264,6 +2275,82 @@
   .hero .sit-sub{font-size:11px;}
   .hero .section-header{margin-bottom:16px;}
   .hero .hero-sections{gap:32px;}
+}
+
+/* ══════════════════════════════════════════
+   2단계 분기 진입 버튼
+══════════════════════════════════════════ */
+.branch-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  width:100%;
+  margin:16px 0 24px;
+}
+.branch-btn{
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:6px;
+  padding:16px 12px;
+  border-radius:16px;
+  border:1.5px solid var(--calm-border,rgba(0,0,0,.08));
+  background:var(--calm-bg-surface,rgba(255,255,255,.55));
+  backdrop-filter:blur(12px) saturate(1.2);
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);
+  cursor:pointer;
+  transition:all 200ms cubic-bezier(.32,.72,0,1);
+  min-height:80px;
+  touch-action:manipulation;
+}
+.branch-btn:active{transform:scale(.97);}
+.branch-btn.active{
+  border-color:var(--accent-primary,#D4795E);
+  background:var(--accent-subtle,#F0DDD4);
+  box-shadow:0 2px 12px rgba(212,121,94,.12);
+}
+.branch-icon{font-size:28px;line-height:1;}
+.branch-label{
+  font-size:13px;font-weight:600;
+  color:var(--text-body,#4A3A30);
+  text-align:center;line-height:1.4;
+}
+[data-theme="dark"] .branch-btn{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.08);
+}
+[data-theme="dark"] .branch-btn.active{
+  background:rgba(212,121,94,.12);
+  border-color:rgba(212,121,94,.4);
+}
+[data-theme="dark"] .branch-label{
+  color:var(--text-body,#d0c8c0);
+}
+
+/* 분기 접힘 상태: 카드 섹션 숨김 */
+.branch-collapsed [data-branch-section]{display:none;}
+
+/* 분기 펼침 애니메이션 */
+@keyframes branchIn{
+  from{opacity:0;transform:translateY(12px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* "다른 상황도 보기" 버튼 */
+.branch-show-all{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:1px dashed var(--calm-border,rgba(0,0,0,.10));
+  border-radius:12px;
+  background:none;
+  color:var(--text-secondary,#8A7A6A);
+  font-size:13px;font-weight:500;
+  cursor:pointer;
+  transition:color 200ms ease,border-color 200ms ease;
+}
+.branch-show-all:hover{
+  color:var(--accent-primary,#D4795E);
+  border-color:var(--accent-primary,#D4795E);
 }
 
 /* ══════════════════════════════════════════
@@ -2311,9 +2398,14 @@
     max-width:100%;
   }
   .section-care,
-  .section-self{
+  .section-self,
+  .section-life{
     padding:24px;
     border-radius:16px;
+  }
+  .branch-grid{
+    max-width:480px;
+    margin:16px auto 24px;
   }
   .section-header{
     text-align:left;
@@ -2349,7 +2441,8 @@
     max-width:100%;
   }
   .section-care,
-  .section-self{
+  .section-self,
+  .section-life{
     padding:20px;
     border-radius:16px;
   }
@@ -2363,7 +2456,12 @@
   .hero h1{ font-size:20px; margin-bottom:4px; }
   .hero .hero-sub{ font-size:13px; margin-bottom:var(--sp-2); }
   .section-care,
-  .section-self{ padding:16px; border-radius:14px; }
+  .section-self,
+  .section-life{ padding:16px; border-radius:14px; }
+  .branch-grid{ gap:8px; margin:12px 0 20px; }
+  .branch-btn{ padding:14px 10px; min-height:72px; border-radius:14px; }
+  .branch-icon{ font-size:24px; }
+  .branch-label{ font-size:12px; }
   .section-header{ margin-bottom:12px; }
   .section-title{ font-size:16px; }
   .situation-grid{ grid-template-columns:1fr 1fr; gap:8px; margin-bottom:0; }

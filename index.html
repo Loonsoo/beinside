@@ -269,13 +269,30 @@
       </div>
 
       <h1 data-i18n="home.title">지금, 어떤 상황이세요?<span class="hl"></span></h1>
-      <button class="guide-finder-btn" onclick="openGuideFinder()" aria-label="나에게 맞는 가이드 찾기">
-        잘 모르겠어요..
-      </button>
 
-      <div class="hero-sections">
+      <!-- 2단계 분기 진입 버튼 -->
+      <div class="branch-grid" id="branch-grid" role="radiogroup" aria-label="상황 선택">
+        <button class="branch-btn" data-branch="care" onclick="selectBranch('care')" role="radio" aria-checked="false">
+          <span class="branch-icon">👶</span>
+          <span class="branch-label">아이·가족을<br>돌보고 있어요</span>
+        </button>
+        <button class="branch-btn" data-branch="self" onclick="selectBranch('self')" role="radio" aria-checked="false">
+          <span class="branch-icon">💭</span>
+          <span class="branch-label">내 마음이<br>힘들어요</span>
+        </button>
+        <button class="branch-btn" data-branch="life" onclick="selectBranch('life')" role="radio" aria-checked="false">
+          <span class="branch-icon">🏠</span>
+          <span class="branch-label">생활이<br>막막해요</span>
+        </button>
+        <button class="branch-btn" data-branch="search" onclick="openGuideFinder()" role="radio" aria-checked="false">
+          <span class="branch-icon">🔍</span>
+          <span class="branch-label">잘 모르겠어요</span>
+        </button>
+      </div>
+
+      <div class="hero-sections branch-collapsed" id="hero-sections">
       <!-- 영역 1: 돌봄 & 양육 -->
-      <div class="section-care">
+      <div class="section-care" data-branch-section="care">
         <div class="section-header">
           <h2 class="section-title" data-i18n="home.care.title">아이와 가족을 돌보고 있다면</h2>
           <p class="section-sub" data-i18n="home.care.sub">연령별 발달 정보, 양육 팁, 지원 제도</p>
@@ -354,7 +371,7 @@
       </div>
 
       <!-- 영역 2: 나 자신을 돌보고 있다면 -->
-      <div class="section-self">
+      <div class="section-self" data-branch-section="self">
         <div class="section-header">
           <h2 class="section-title" data-i18n="home.self.title">지금 나 자신이 힘들다면</h2>
           <p class="section-sub" data-i18n="home.self.sub">상태 파악, 자가 체크, 대처법</p>
@@ -393,30 +410,6 @@
             <div class="sit-arrow">›</div>
           </button>
           <!-- 더 보기로 숨김 -->
-          <button class="sit-card self-area sit-card--more-self" data-card-id="transition" onclick="showPage('transition');setMTab('mind')" style="display:none">
-            <div class="sit-icon">🌀</div>
-            <div class="sit-card-body">
-              <div class="sit-title" data-i18n="home.card.transition.title">삶의 방향을 잃었어요</div>
-              <div class="sit-sub" data-i18n="home.card.transition.sub">변화 속 심리적 안정을 되찾는 방법</div>
-            </div>
-            <div class="sit-arrow">›</div>
-          </button>
-          <button class="sit-card sit-card--teen self-area sit-card--more-self" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" style="display:none">
-            <div class="sit-icon">🌙</div>
-            <div class="sit-card-body">
-              <div class="sit-title" data-i18n="home.card.teen.title">나 혼자 버텨왔어 (청소년·청년)</div>
-              <div class="sit-sub" data-i18n="home.card.teen.sub">10대·20대를 위한 마음 가이드</div>
-            </div>
-            <div class="sit-arrow">›</div>
-          </button>
-          <button class="sit-card self-area sit-card--more-self" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')" style="display:none">
-            <div class="sit-icon">🏢</div>
-            <div class="sit-card-body">
-              <div class="sit-title" data-i18n="home.card.workplace.title">회사에서 이상한 사람을 만났어요</div>
-              <div class="sit-sub" data-i18n="home.card.workplace.sub">나르시시스트·가스라이터 대처법 (정신분석학)</div>
-            </div>
-            <div class="sit-arrow">›</div>
-          </button>
           <button class="sit-card self-area sit-card--more-self" data-card-id="postpartum" onclick="showPage('postpartum');setMTab('mind')" style="display:none">
             <div class="sit-icon">🌸</div>
             <div class="sit-card-body">
@@ -449,7 +442,29 @@
             </div>
             <div class="sit-arrow">›</div>
           </button>
-          <button class="sit-card self-area sit-card--more-self" data-card-id="finance" onclick="showPage('finance');setMTab('mind')" style="display:none">
+        </div>
+        <button class="show-more-btn" id="show-more-self" onclick="toggleMoreCards('self')" aria-label="마음 가이드 더 보기">
+          <span class="show-more-text" data-i18n="common.more">더 보기</span>
+          <span class="show-more-arrow">↓</span>
+        </button>
+      </div>
+
+      <!-- 영역 3: 생활·전환 -->
+      <div class="section-life" data-branch-section="life">
+        <div class="section-header">
+          <h2 class="section-title">생활이 막막할 때</h2>
+          <p class="section-sub">자립, 재정, 직장, 인생 전환기 가이드</p>
+        </div>
+        <div class="situation-grid">
+          <button class="sit-card life-area" data-card-id="independence" onclick="showPage('independence');setMTab('mind')">
+            <div class="sit-icon">🚀</div>
+            <div class="sit-card-body">
+              <div class="sit-title">내 생활 시작하기</div>
+              <div class="sit-sub">집, 돈, 행정, 건강, 관계</div>
+            </div>
+            <div class="sit-arrow">›</div>
+          </button>
+          <button class="sit-card life-area" data-card-id="finance" onclick="showPage('finance');setMTab('mind')">
             <div class="sit-icon">💰</div>
             <div class="sit-card-body">
               <div class="sit-title" data-i18n="home.card.finance.title">돈 걱정에 잠이 안 와요</div>
@@ -457,21 +472,43 @@
             </div>
             <div class="sit-arrow">›</div>
           </button>
-          <button class="sit-card self-area sit-card--more-self" data-card-id="independence" onclick="showPage('independence');setMTab('mind')" style="display:none">
-            <div class="sit-icon">🚀</div>
+          <button class="sit-card life-area" data-card-id="workplace" onclick="showPage('workplace');setMTab('mind')">
+            <div class="sit-icon">🏢</div>
             <div class="sit-card-body">
-              <div class="sit-title">내 생활 시작하기</div>
-              <div class="sit-sub">처음 하는 건 누구나 헷갈려 — 집, 돈, 행정, 건강, 관계</div>
+              <div class="sit-title" data-i18n="home.card.workplace.title">회사에서 이상한 사람을 만났어요</div>
+              <div class="sit-sub" data-i18n="home.card.workplace.sub">나르시시스트·가스라이터 대처법</div>
+            </div>
+            <div class="sit-arrow">›</div>
+          </button>
+          <button class="sit-card life-area" data-card-id="transition" onclick="showPage('transition');setMTab('mind')">
+            <div class="sit-icon">🌀</div>
+            <div class="sit-card-body">
+              <div class="sit-title" data-i18n="home.card.transition.title">삶의 방향을 잃었어요</div>
+              <div class="sit-sub" data-i18n="home.card.transition.sub">변화 속 심리적 안정을 되찾는 방법</div>
+            </div>
+            <div class="sit-arrow">›</div>
+          </button>
+          <!-- 더 보기로 숨김 -->
+          <button class="sit-card sit-card--teen life-area sit-card--more-life" data-card-id="teen" onclick="showPage('teen');setMTab('mind')" style="display:none">
+            <div class="sit-icon">🌙</div>
+            <div class="sit-card-body">
+              <div class="sit-title" data-i18n="home.card.teen.title">나 혼자 버텨왔어 (청소년·청년)</div>
+              <div class="sit-sub" data-i18n="home.card.teen.sub">10대·20대를 위한 마음 가이드</div>
             </div>
             <div class="sit-arrow">›</div>
           </button>
         </div>
-        <button class="show-more-btn" id="show-more-self" onclick="toggleMoreCards('self')" aria-label="마음 가이드 더 보기">
+        <button class="show-more-btn" id="show-more-life" onclick="toggleMoreCards('life')" aria-label="생활 가이드 더 보기">
           <span class="show-more-text" data-i18n="common.more">더 보기</span>
           <span class="show-more-arrow">↓</span>
         </button>
       </div>
       </div><!-- /hero-sections -->
+
+      <!-- "다른 상황도 보기" 버튼 -->
+      <button class="branch-show-all" id="branch-show-all" onclick="showAllBranches()" style="display:none">
+        다른 상황도 보기
+      </button>
 
       <!-- 긴급 도움 -->
       <button class="emergency-quiet" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움 페이지로 이동">

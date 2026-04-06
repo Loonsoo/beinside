@@ -34,14 +34,23 @@
     }
   };
 
-  // Step 2 → 페이지 이동
+  // Step 2 → 페이지 이동 + 홈 분기 동기화
   window.onboardGo = function(page) {
     onboardDismiss();
+    // 홈 분기 상태도 동기화
+    var branchMap = {
+      growth:'care', sp:'care', birth:'care', dad:'care', elder:'care',
+      emotion:'self', burnout:'self', relation:'self', sleep:'self',
+      teen:'life', workplace:'life', finance:'life', independence:'life', transition:'life'
+    };
+    if (branchMap[page] && typeof selectBranch === 'function') {
+      selectBranch(branchMap[page]);
+    }
     showPage(page);
-    const tabMap = {
+    var tabMap = {
       growth: 'growth', sp: 'home', birth: 'home', dad: 'growth', elder: 'home',
-      emotion: 'mind', burnout: 'mind', relation: 'mind',
-      teen: 'mind', workplace: 'mind'
+      emotion: 'mind', burnout: 'mind', relation: 'mind', sleep: 'mind',
+      teen: 'mind', workplace: 'mind', finance: 'mind', independence: 'mind', transition: 'mind'
     };
     setMTab(tabMap[page] || 'home');
   };

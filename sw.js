@@ -36,6 +36,7 @@ const PRECACHE = [
   '/js/notify.js',
   '/js/search.js',
   '/js/vitals.js',
+  '/js/data-guides-independence.js',
   '/icons/icon-192.png',
   '/icons/icon-512.png'
 ];

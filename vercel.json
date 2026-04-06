@@ -24,6 +24,8 @@
     { "source": "/multicultural", "destination": "/index.html" },
     { "source": "/adhd", "destination": "/index.html" },
     { "source": "/addiction", "destination": "/index.html" },
-    { "source": "/finance", "destination": "/index.html" }
+    { "source": "/finance", "destination": "/index.html" },
+    { "source": "/independence", "destination": "/index.html" },
+    { "source": "/senior", "destination": "/index.html" }
   ]
 }

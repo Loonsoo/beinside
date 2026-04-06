@@ -496,6 +496,15 @@
   backdrop-filter:blur(20px) saturate(1.2);
   -webkit-backdrop-filter:blur(20px) saturate(1.2);
 }
+[data-theme="dark"] .section-life{
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.04);
+  backdrop-filter:blur(20px) saturate(1.2);
+  -webkit-backdrop-filter:blur(20px) saturate(1.2);
+}
+[data-theme="dark"] .section-life .section-title{
+  color:#7BC48A;
+}
 [data-theme="dark"] .toolkit-btn{
   border-color:rgba(232,144,106,.25);
 }

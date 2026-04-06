@@ -91,9 +91,19 @@ function showPage(id) {
     if (id === 'emergency') {
       try { sessionStorage.setItem('beinside_crisis_visit', '1'); } catch(e) {}
     }
-    // 홈 복귀 시 팔로업 배너 표시
+    // 홈 복귀 시 팔로업 배너 표시 + 분기 리셋
     if (id === 'home') {
       showFollowupBanner();
+      // 분기 상태 리셋: 초기 State A로
+      _activeBranch = null;
+      var heroSections = document.getElementById('hero-sections');
+      if (heroSections) heroSections.classList.add('branch-collapsed');
+      document.querySelectorAll('.branch-btn').forEach(function(b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-checked', 'false');
+      });
+      var showAllBtn = document.getElementById('branch-show-all');
+      if (showAllBtn) showAllBtn.style.display = 'none';
     }
 
     // 스크린리더 알림
@@ -1485,7 +1495,8 @@ function updatePageMeta(id) {
    P0: "더 보기" 카드 토글
 ══════════════════════════════════════════ */
 function toggleMoreCards(section) {
-  var cls = section === 'care' ? 'sit-card--more-care' : 'sit-card--more-self';
+  var clsMap = { care: 'sit-card--more-care', self: 'sit-card--more-self', life: 'sit-card--more-life' };
+  var cls = clsMap[section] || 'sit-card--more-' + section;
   var btn = document.getElementById('show-more-' + section);
   var cards = document.querySelectorAll('.' + cls);
   var isExpanded = btn.classList.toggle('expanded');
@@ -1495,6 +1506,99 @@ function toggleMoreCards(section) {
   var moreText = (typeof I18n !== 'undefined') ? I18n.t(isExpanded ? 'common.less' : 'common.more') : (isExpanded ? '접기' : '더 보기');
   btn.querySelector('.show-more-text').textContent = moreText;
 }
+
+/* ══════════════════════════════════════════
+   2단계 분기 진입
+══════════════════════════════════════════ */
+var _activeBranch = null;
+
+function selectBranch(type) {
+  _activeBranch = type;
+  var heroSections = document.getElementById('hero-sections');
+  var showAllBtn = document.getElementById('branch-show-all');
+
+  // 분기 버튼 활성 상태 + aria
+  document.querySelectorAll('.branch-btn').forEach(function(b) {
+    var match = b.dataset.branch === type;
+    b.classList.toggle('active', match);
+    b.setAttribute('aria-checked', match ? 'true' : 'false');
+  });
+
+  // hero-sections 펼침
+  if (heroSections) heroSections.classList.remove('branch-collapsed');
+
+  // 해당 섹션만 표시
+  document.querySelectorAll('[data-branch-section]').forEach(function(s) {
+    var match = s.dataset.branchSection === type;
+    if (match) {
+      s.style.display = '';
+      s.style.animation = 'branchIn .3s cubic-bezier(.32,.72,0,1) both';
+    } else {
+      s.style.display = 'none';
+      s.style.animation = '';
+    }
+  });
+
+  // "다른 상황도 보기" 버튼 표시
+  if (showAllBtn) showAllBtn.style.display = '';
+
+  // 선택된 섹션으로 부드럽게 스크롤
+  var target = document.querySelector('[data-branch-section="' + type + '"]');
+  if (target) {
+    setTimeout(function() {
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 50);
+  }
+
+  // Umami 추적
+  if (typeof umami !== 'undefined') {
+    try { umami.track('branch_select', { branch: type }); } catch(e) {}
+  }
+}
+
+function showAllBranches() {
+  _activeBranch = null;
+  var heroSections = document.getElementById('hero-sections');
+  var showAllBtn = document.getElementById('branch-show-all');
+
+  // 분기 버튼 비활성
+  document.querySelectorAll('.branch-btn').forEach(function(b) {
+    b.classList.remove('active');
+    b.setAttribute('aria-checked', 'false');
+  });
+
+  // 모든 섹션 표시
+  document.querySelectorAll('[data-branch-section]').forEach(function(s) {
+    s.style.display = '';
+    s.style.animation = 'branchIn .3s cubic-bezier(.32,.72,0,1) both';
+  });
+
+  // "다른 상황도 보기" 숨김
+  if (showAllBtn) showAllBtn.style.display = 'none';
+
+  // Umami 추적
+  if (typeof umami !== 'undefined') {
+    try { umami.track('branch_select', { branch: 'all' }); } catch(e) {}
+  }
+}
+
+// 분기 버튼 키보드 네비게이션 (방향키)
+(function initBranchKeyboard() {
+  var grid = document.getElementById('branch-grid');
+  if (!grid) return;
+  grid.addEventListener('keydown', function(e) {
+    var btns = Array.from(grid.querySelectorAll('.branch-btn'));
+    var idx = btns.indexOf(document.activeElement);
+    if (idx < 0) return;
+    var next = -1;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (idx + 1) % btns.length;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (idx - 1 + btns.length) % btns.length;
+    if (next >= 0) {
+      e.preventDefault();
+      btns[next].focus();
+    }
+  });
+})();
 
 /* ══════════════════════════════════════════
    P3: 위기 후 팔로업 배너
