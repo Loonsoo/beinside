@@ -82,6 +82,7 @@
   <meta name="naver-site-verification" content="naver4e49250f969f6005f45435e99a920006">
 </head>
 <body>
+<button id="quick-exit" class="quick-exit-btn" type="button" hidden onclick="quickExit()" aria-label="이 페이지 나가기">나가기</button>
 <!-- 스킵 네비게이션 (접근성) -->
 <a href="#hero" class="skip-nav">본문으로 건너뛰기</a>
 
@@ -811,7 +812,7 @@
 
       <!-- 감정 선택기 -->
       <div class="emotion-selector" id="teen-emotion-selector">
-        <div style="font-size:14px;font-weight:700;color:var(--teen-ink,#1A2A4A);margin-bottom:10px;">지금 어떤 감정이야?</div>
+        <div style="font-size:15px;font-weight:700;color:var(--teen-text-title);margin-bottom:10px;">지금 어떤 감정이야?</div>
         <div class="emotion-grid">
           <button class="emo-btn" onclick="showEmoResult('angry')">😡 화나</button>
           <button class="emo-btn" onclick="showEmoResult('sad')">😢 슬퍼</button>
@@ -840,11 +841,12 @@
           <span class="teen-sos-desc">정신건강 위기상담 — 무료, 24시간<br>비밀보장·기록 정책은 전화 시 확인</span>
         </a>
       </div>
-      <!-- 기록에 남지 않아요 안내 -->
+      <!-- 기록 안내 (사실대로) -->
       <div class="teen-privacy-notice">
-        🔒 <strong>이 페이지는 기록에 남지 않아요.</strong>
-        BeInside는 청소년 페이지를 localStorage에 저장하지 않아요.
-        브라우저를 닫으면 흔적이 남지 않아요. 안심하고 읽어도 돼.
+        🔒 <strong>여기서 고른 감정은 창을 닫으면 지워져.</strong>
+        하지만 브라우저 방문 기록이랑 전화 기록은 남을 수 있어.
+        걱정되면 시크릿 모드로 보거나, 다 본 뒤 방문 기록을 지워.
+        급하면 오른쪽 위 <strong>나가기</strong>를 눌러.
       </div>
     </div>
 

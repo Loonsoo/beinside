@@ -1954,9 +1954,36 @@
 /* ── 개인정보 없음 안내 (청소년) ── */
 .teen-privacy-notice {
   text-align: center;
-  font-size: 12px; color: var(--teen-text);
+  font-size: 13px; color: var(--teen-text-muted);
   padding: 12px 18px 20px;
-  line-height: 1.55;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* ── 빠른 나가기 (가정폭력·학대·청소년 페이지) ──
+   헤더 아래 우측 고정. 가해자가 봐도 모호하게 "나가기"만 표기. */
+.quick-exit-btn {
+  position: fixed;
+  top: calc(64px + env(safe-area-inset-top, 0px));
+  right: 12px;
+  z-index: 99999;
+  min-width: 52px; min-height: 44px;
+  padding: 8px 16px;
+  background: var(--text-body); color: var(--surface-card);
+  border: none; border-radius: 10px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 10px rgba(0,0,0,.18);
+}
+.quick-exit-btn[hidden] { display: none; }
+.quick-exit-btn:hover,
+.quick-exit-btn:focus-visible {
+  background: var(--text-primary);
+  outline: 2px solid var(--surface-card);
+  outline-offset: 2px;
 }
 
 @media(max-width:640px) {
