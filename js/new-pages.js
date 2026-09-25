@@ -643,7 +643,7 @@ function renderEmotionPage(container) {
     heroIcon: '😔',
     heroGradient: 'var(--lavender-d),var(--lavender)',
     stepLabel: '지금 어떤 느낌이에요?',
-    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))" aria-label="죽고 싶다는 생각이 들어요"><span class="emotion-btn-icon">💀</span><span>죽고 싶다는 생각이 들어요</span></button>'
+    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))" aria-label="죽고 싶다는 생각이 들어요"><span class="emotion-btn-icon">🆘</span><span>죽고 싶다는 생각이 들어요</span></button>'
   });
 }
 

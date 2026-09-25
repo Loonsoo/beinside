@@ -16,7 +16,7 @@ description: >
 이 순서는 절대적이다.
 
 ## 빠른 탈출 버튼 사양
-- 대상: 가정폭력 관련 모든 페이지
+- 대상: 가정폭력·학대·청소년 관련 페이지 (현재 teen, emergency, relation, sp)
 - 동작: 한 번 터치 → 네이버 메인 이동 + history.replaceState로 기록 대체
 - 위치: 우상단 고정, z-index 최상위
 - 크기: 최소 44px × 44px
@@ -38,7 +38,8 @@ description: >
 
 ## 청소년 페이지 기록 차단
 - localStorage 사용 금지
-- "기록에 남지 않아요" 명시
+- 남는 기록을 사실대로 안내 ("기록에 남지 않아요" 단정 금지 — 브라우저·통화 기록은 남는다)
+- 빠른 나가기 버튼 표시 (teen·emergency·relation·sp 페이지, `js/app.js`의 QUICK_EXIT_PAGES)
 - 위험한 어른 구별법 섹션 포함 (그루밍 예방)
 - references/child-safety-guide.md 참조
 

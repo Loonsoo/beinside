@@ -151,10 +151,10 @@
     </a>
 
     <!-- 보조 전화 -->
-    <a href="tel:1393" class="crisis-call-btn"
-       aria-label="1393 정신건강위기상담전화로 전화하기">
+    <a href="tel:109" class="crisis-call-btn"
+       aria-label="109 자살예방상담전화로 전화하기">
       <span class="cc-label">정신건강위기상담전화</span>
-      <span class="cc-number">1393</span>
+      <span class="cc-number">109</span>
       <span class="cc-desc">24시간, 무료</span>
     </a>
 
@@ -301,11 +301,11 @@
 ### 인라인 전화 버튼 (일반 페이지용)
 
 ```html
-<a href="tel:1393" class="emergency-btn"
-   aria-label="1393 정신건강위기상담전화로 전화하기">
+<a href="tel:109" class="emergency-btn"
+   aria-label="109 자살예방상담전화로 전화하기">
   <span class="eb-icon">&#x1F49C;</span>
   <div class="eb-info">
-    <span class="eb-number">1393</span>
+    <span class="eb-number">109</span>
     <span class="eb-name">정신건강위기상담전화</span>
     <span class="eb-desc">상담사가 이야기 들어줘요. 무료, 24시간.</span>
   </div>
@@ -398,7 +398,7 @@
 ```javascript
 var EMERGENCY_PHONES = [
   { number: '109',  name: '자살예방상담전화', desc: '24시간, 무료', icon: '&#x1F49C;' },
-  { number: '1393', name: '정신건강위기상담전화', desc: '24시간, 무료', icon: '&#x1F49C;' },
+  { number: '109', name: '자살예방상담전화', desc: '24시간, 무료', icon: '&#x1F49C;' },
   { number: '112',  name: '경찰', desc: '긴급 신고', icon: '&#x1F6A8;' },
   { number: '119',  name: '소방/응급', desc: '의료 응급', icon: '&#x1F691;' },
   { number: '1388', name: '청소년상담', desc: '24시간, 무료', icon: '&#x1F49A;' },
@@ -431,8 +431,8 @@ var EMERGENCY_PHONES = [
 ### 원칙 2: 동사로 시작하는 버튼
 
 ```
-나쁜 예: "자살예방상담전화 1393"
-좋은 예: "전화하기 - 1393 (24시간, 무료)"
+나쁜 예: "자살예방상담전화 109"
+좋은 예: "전화하기 - 109 (24시간, 무료)"
 ```
 
 - 모든 버튼 텍스트는 **동사로 시작**

@@ -297,10 +297,10 @@ body {
 
 ### 긴급 전화 버튼 (Safety 적용)
 ```html
-<a href="tel:1393" class="emergency-btn" aria-label="1393 자살예방상담전화로 전화하기">
+<a href="tel:109" class="emergency-btn" aria-label="109 자살예방상담전화로 전화하기">
   <span class="em-icon">💜</span>
   <div>
-    <span class="em-number">1393</span>
+    <span class="em-number">109</span>
     <span class="em-name">자살예방상담전화</span>
     <span class="em-desc">상담사가 이야기 들어줘요. 무료, 24시간.</span>
   </div>
