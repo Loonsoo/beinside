@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>BeInside 새 홈 시안 3개 (2026-09)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════════════════════
+   이 파일은 시안 비교용 정적 목업이다. 사이트 코드가 아니다.
+   - 색은 모두 아래 토큰(변수)에만 있다. 컴포넌트 규칙에는 hex를 쓰지 않는다.
+   - 대비비는 WCAG 2.x 상대휘도 공식으로 계산했다(2026-09-25).
+   - 전화·문자 링크는 실제로 동작한다(휴대폰에서 누르면 전화·문자 앱이 열린다).
+════════════════════════════════════════════════════════════ */
+
+/* ── 문서(설명 영역) 토큰 ── */
+:root{
+  --doc-bg:#EEEAE4;       /* 문서 바탕 */
+  --doc-card:#FAF8F5;     /* 설명 카드 */
+  --doc-ink:#26211D;      /* 13.30 / 카드 15.03 */
+  --doc-sub:#564E47;      /* 6.80 / 카드 7.69 */
+  --doc-accent:#7A4630;   /* 6.38 / 카드 7.21 */
+  --doc-line:#8C8279;     /* 3.14 / 카드 3.55 (구분선, 틀) */
+  --doc-hair:#DCD5CC;     /* 장식용 가는 선 */
+  --doc-shadow:0 10px 30px rgba(38,33,29,.14);
+}
+
+/* ── 시안 A "새벽 편지" ── */
+.tk-a{
+  --surface-base:#F6F1EA; --surface-raised:#FBF8F4; --surface-tint:#EFE3D8;
+  --text-primary:#2B211B; --text-body:#4A3D34; --text-secondary:#6B5C50;
+  --accent-strong:#9A4B32; --on-accent:#FBF8F4;
+  --stroke-control:#95806E; --line-subtle:#E4D9CD;
+  --danger-strong:#9E3F3F; --on-danger:#FBF8F4;
+}
+.tk-a.night{
+  --surface-base:#1A1512; --surface-raised:#241E1A; --surface-tint:#33261F;
+  --text-primary:#D9CEC3; --text-body:#C2B6AA; --text-secondary:#A89A8D;
+  --accent-strong:#E3A286; --on-accent:#1A1512;
+  --stroke-control:#7A6A5E; --line-subtle:#3A302A;
+  --danger-strong:#F0A8A8; --on-danger:#1A1512;
+}
+/* ── 시안 B "열두 달 시간 띠" ── */
+.tk-b{
+  --surface-base:#F2F1EC; --surface-raised:#FAFAF6; --surface-tint:#DDE8E1;
+  --surface-clay:#EADFCF; --text-on-clay:#5E4128;
+  --text-primary:#1E2925; --text-body:#36433E; --text-secondary:#56635E;
+  --accent-strong:#35604F; --on-accent:#FAFAF6;
+  --stroke-control:#7C8A84; --line-subtle:#DEDDD6;
+  --danger-strong:#9E3F3F; --on-danger:#FAFAF6;
+}
+.tk-b.night{
+  --surface-base:#121820; --surface-raised:#1A222C; --surface-tint:#1C3029;
+  --surface-clay:#2B2620; --text-on-clay:#E2CBB0;
+  --text-primary:#D3DADE; --text-body:#BAC4C9; --text-secondary:#909CA4;
+  --accent-strong:#93C4B0; --on-accent:#121820;
+  --stroke-control:#66737D; --line-subtle:#26303B;
+  --danger-strong:#F0A8A8; --on-danger:#121820;
+}
+/* ── 시안 C "세 갈래 연결" ── */
+.tk-c{
+  --surface-base:#FAF6F1; --surface-raised:#FFFDFA; --surface-tint:#EEE6DC;
+  --text-primary:#1F2430; --text-body:#3B4150; --text-secondary:#5B6170;
+  --accent-strong:#2E4A68; --on-accent:#FFFDFA;
+  --stroke-control:#80858F; --line-subtle:#E6E0D8;
+  --danger-strong:#9E3F3F; --on-danger:#FFFDFA;
+  --tier-talk-bg:#E6EDF3; --tier-talk-fg:#223C58;
+  --tier-now-bg:#F3E6D8;  --tier-now-fg:#62361C;
+  --tier-urgent-bg:#F7E4E1; --tier-urgent-fg:#8A2E29;
+}
+.tk-c.night{
+  --surface-base:#14161C; --surface-raised:#1C1F27; --surface-tint:#262A34;
+  --text-primary:#D8DBE1; --text-body:#C1C5CE; --text-secondary:#9A9FAA;
+  --accent-strong:#9DB8D6; --on-accent:#14161C;
+  --stroke-control:#6A7080; --line-subtle:#2A2E38;
+  --danger-strong:#F0A8A8; --on-danger:#14161C;
+  --tier-talk-bg:#1B2533; --tier-talk-fg:#B8CCE2;
+  --tier-now-bg:#2A2119;  --tier-now-fg:#E8C7A8;
+  --tier-urgent-bg:#301B1B; --tier-urgent-fg:#F2B0AA;
+}
+
+/* ════════ 문서 레이아웃 ════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--doc-bg); color:var(--doc-ink);
+  font-family:'Noto Sans KR',system-ui,sans-serif; font-size:15px; line-height:1.7;
+  word-break:keep-all; overflow-wrap:break-word;
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+a{color:inherit}
+.doc-head{max-width:1220px;margin:0 auto;padding:40px 20px 8px}
+.doc-head h1{font-family:'Gowun Batang',serif;font-size:30px;line-height:1.35}
+.doc-head p{color:var(--doc-sub);margin-top:8px;max-width:760px}
+.doc-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:14px;color:var(--doc-sub)}
+.doc-meta strong{color:var(--doc-ink)}
+.common{max-width:1220px;margin:18px auto 0;padding:0 20px}
+.common details{background:var(--doc-card);border:1px solid var(--doc-hair);border-radius:12px}
+.common summary{min-height:48px;display:flex;align-items:center;padding:0 16px;font-weight:700;cursor:pointer}
+.common ul{padding:0 20px 16px 36px;color:var(--doc-sub);font-size:14px}
+.common li{margin-top:4px}
+
+.board{
+  display:grid; grid-template-columns:repeat(3,390px); column-gap:20px; row-gap:0;
+  justify-content:center; max-width:1250px; margin:28px auto 0; padding:0 20px;
+}
+.opt{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:22px;margin-bottom:24px}
+.info{background:var(--doc-card);border:1px solid var(--doc-hair);border-radius:14px;padding:18px 18px 16px}
+.info .tag{font-size:13px;font-weight:700;color:var(--doc-accent);letter-spacing:.02em}
+.info h2{font-family:'Gowun Batang',serif;font-size:24px;line-height:1.3;margin-top:2px}
+.info .concept{margin-top:6px;font-weight:500}
+.info h3{font-size:13px;font-weight:700;color:var(--doc-ink);margin-top:14px}
+.info ul{padding-left:18px;font-size:14px;color:var(--doc-sub)}
+.info li{margin-top:2px}
+.pal{width:100%;border-collapse:collapse;margin-top:6px;font-size:12.5px;color:var(--doc-sub)}
+.pal th{font-weight:700;color:var(--doc-ink);text-align:left;padding:4px 2px;border-bottom:1px solid var(--doc-line)}
+.pal td{padding:4px 2px;border-bottom:1px solid var(--doc-hair);vertical-align:middle;font-variant-numeric:tabular-nums}
+.pal code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--doc-ink)}
+.sw{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:4px;box-shadow:inset 0 0 0 1px var(--doc-line)}
+.sw.s-base{background:var(--surface-base)} .sw.s-raised{background:var(--surface-raised)} .sw.s-tint{background:var(--surface-tint)}
+.sw.s-tp{background:var(--text-primary)} .sw.s-tb{background:var(--text-body)} .sw.s-ts{background:var(--text-secondary)}
+.sw.s-acc{background:var(--accent-strong)} .sw.s-stroke{background:var(--stroke-control)} .sw.s-danger{background:var(--danger-strong)}
+.sw.s-t1{background:var(--tier-talk-bg)} .sw.s-t2{background:var(--tier-now-bg)} .sw.s-t3{background:var(--tier-urgent-bg)}
+.sw.s-clay{background:var(--surface-clay)}
+.pal .note{font-size:12px;color:var(--doc-sub);margin-top:6px}
+
+.cap{font-size:13px;font-weight:700;color:var(--doc-sub);margin-bottom:8px;display:flex;justify-content:space-between;gap:8px}
+.cap span{font-weight:400}
+
+/* ════════ 폰 프레임 (390 × 844) ════════ */
+.phone{width:390px;height:844px;border-radius:28px;overflow:hidden;box-shadow:0 0 0 1px var(--doc-line),var(--doc-shadow);background:var(--surface-base)}
+.screen{
+  height:100%; overflow-y:auto; overscroll-behavior:contain; position:relative;
+  background:var(--surface-base); color:var(--text-body);
+  font-family:'Noto Sans KR',system-ui,sans-serif; font-size:16px; line-height:1.7;
+  display:flex; flex-direction:column;
+  scrollbar-width:thin;
+}
+.screen main{flex:1}
+.status{height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:13px;font-weight:700;color:var(--text-primary);background:var(--surface-base)}
+.status i{font-style:normal;font-weight:500;color:var(--text-secondary)}
+.hdr{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 20px;background:var(--surface-base)}
+.logo{font-family:'Gowun Batang',serif;font-weight:700;font-size:20px;color:var(--text-primary);letter-spacing:-.01em}
+.hdr-btn{min-width:44px;min-height:44px;padding:0 12px;border:0;background:none;font:inherit;font-size:15px;font-weight:500;color:var(--text-primary);cursor:pointer;border-radius:10px}
+.screen :is(a,button,summary):focus-visible{outline:2px solid var(--text-primary);outline-offset:2px;border-radius:10px}
+.ico{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.screen details summary{list-style:none;cursor:pointer}
+.screen details summary::-webkit-details-marker{display:none}
+.textbtn{min-height:44px;padding:0 2px;border:0;background:none;font:inherit;font-size:15px;color:var(--text-body);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.privacy{font-size:14px;line-height:1.65;color:var(--text-secondary)}
+.privacy a{color:var(--text-body);font-weight:500}
+.pressed-note{font-size:12px}
+
+/* ════════ 시안 A — 새벽 편지 ════════ */
+.a-top{position:sticky;top:0;z-index:5;background:var(--surface-base)}
+.a-strip{display:flex;align-items:center;gap:6px;padding:6px 10px 8px 16px;border-bottom:1px solid var(--line-subtle)}
+.a-strip-label{font-size:14px;color:var(--text-body);margin-right:auto;white-space:nowrap}
+.a-pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:0 11px;border-radius:22px;
+  border:1.5px solid var(--stroke-control);background:var(--surface-raised);color:var(--text-primary);
+  font-size:15px;font-weight:700;text-decoration:none;white-space:nowrap}
+.a-pill--urgent{border-color:var(--danger-strong);color:var(--danger-strong)}
+.a-main{padding:26px 22px 28px}
+.a-stage{font-size:14px;font-weight:500;color:var(--text-secondary);display:flex;align-items:center;gap:8px}
+.a-stage .ico{width:18px;height:18px;color:var(--accent-strong)}
+.a-week{font-family:'Gowun Batang',serif;font-weight:700;font-size:32px;line-height:1.3;color:var(--text-primary);margin-top:6px;letter-spacing:-.01em}
+.a-week em{font-style:normal;color:var(--accent-strong)}
+.a-lines{list-style:none;margin-top:18px;border-top:1px solid var(--line-subtle)}
+.a-lines li{padding:12px 0;border-bottom:1px solid var(--line-subtle);font-size:16px;line-height:1.75;color:var(--text-body)}
+.a-lines li b{font-weight:700;color:var(--text-primary)}
+.a-h2{font-family:'Gowun Batang',serif;font-weight:700;font-size:21px;color:var(--text-primary);margin-top:28px}
+.a-mood{display:flex;gap:8px;margin-top:10px}
+.a-mood button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:76px;padding:8px 4px;
+  border-radius:16px;border:1.5px solid var(--stroke-control);background:var(--surface-raised);color:var(--text-primary);font:inherit;font-size:15px;font-weight:500;cursor:pointer}
+.a-mood button .ico{width:26px;height:26px;color:var(--accent-strong)}
+.a-mood button[aria-pressed="true"]{background:var(--surface-tint);border:2px solid var(--text-primary);font-weight:700}
+.a-reply{margin-top:14px;font-size:16px;color:var(--text-body)}
+.a-reply strong{color:var(--text-primary)}
+.a-calls{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.a-call{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 16px;border-radius:14px;border:1.5px solid var(--stroke-control);
+  background:var(--surface-raised);color:var(--text-primary);font-size:16px;font-weight:700;text-decoration:none}
+.a-call small{margin-left:auto;font-size:13px;font-weight:500;color:var(--text-secondary);text-align:right;line-height:1.4}
+.a-call--primary{background:var(--accent-strong);border-color:var(--accent-strong);color:var(--on-accent)}
+.a-call--primary small{color:var(--on-accent)}
+.a-call--urgent{border-color:var(--danger-strong);color:var(--danger-strong)}
+.a-more summary{min-height:44px;display:flex;align-items:center;font-size:15px;font-weight:700;color:var(--text-body);text-decoration:underline;text-underline-offset:3px}
+.a-more[open]{display:flex;flex-direction:column;gap:8px}
+.a-script{margin-top:12px;font-size:15px;line-height:1.7;color:var(--text-body)}
+.a-script a{color:var(--danger-strong);font-weight:700}
+.a-row{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;margin-top:28px;padding:14px 0;border:0;border-top:1px solid var(--line-subtle);border-bottom:1px solid var(--line-subtle);
+  background:none;font:inherit;text-align:left;color:var(--text-primary);cursor:pointer}
+.a-row b{display:block;font-size:17px}
+.a-row span span{display:block;font-size:14px;color:var(--text-secondary);line-height:1.55}
+.a-row .ico{margin-left:auto;color:var(--text-body)}
+.a-det{border-bottom:1px solid var(--line-subtle)}
+.a-det summary{min-height:60px;display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:var(--text-primary)}
+.a-det summary::after{content:'';margin-left:auto;width:9px;height:9px;border-right:1.6px solid var(--text-body);border-bottom:1.6px solid var(--text-body);transform:rotate(45deg) translate(-3px,-3px)}
+.a-det[open] summary::after{transform:rotate(225deg)}
+.a-det-body{padding:0 0 16px}
+.flag-head{font-size:15px;font-weight:700;color:var(--text-primary);margin:12px 0 4px}
+.flag-head:first-child{margin-top:0}
+.plain-list{padding-left:18px;font-size:15px;line-height:1.7;color:var(--text-body)}
+.plain-list li{margin-top:4px}
+.note{font-size:14px;color:var(--text-secondary)}
+.a-foot{margin-top:24px}
+.a-other{display:flex;flex-direction:column;align-items:center;width:100%;min-height:60px;margin-top:18px;padding:10px;border:1px solid var(--stroke-control);border-radius:14px;background:none;font:inherit;font-size:15px;font-weight:700;color:var(--text-primary);cursor:pointer}
+.a-other span{font-size:13px;font-weight:400;color:var(--text-secondary)}
+.tabs{position:sticky;bottom:0;z-index:5;display:flex;background:var(--surface-base);border-top:1px solid var(--line-subtle);padding:4px 4px 18px}
+.tabs button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;border:0;background:none;font:inherit;font-size:12px;font-weight:500;color:var(--text-secondary);cursor:pointer;border-radius:10px}
+.tabs button[aria-current="page"]{color:var(--text-primary);font-weight:700}
+.tabs button[aria-current="page"] .ico{color:var(--accent-strong)}
+
+/* ════════ 시안 B — 열두 달 시간 띠 ════════ */
+.b-top{position:sticky;top:0;z-index:5;background:var(--surface-base);border-bottom:1px solid var(--line-subtle)}
+.b-main{padding:18px 16px 24px}
+.b-band{background:var(--surface-raised);border-radius:20px;padding:18px 18px 16px}
+.b-stage{font-size:14px;font-weight:500;color:var(--text-secondary)}
+.b-week{font-size:22px;font-weight:700;line-height:1.35;color:var(--text-primary);margin-top:2px}
+.b-week em{font-style:normal;font-size:34px;color:var(--accent-strong);letter-spacing:-.02em;margin-right:2px}
+.band{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:14px}
+.band li{font-size:12px;font-weight:500;color:var(--text-secondary);text-align:center;line-height:1.35}
+.band li::before{content:'';display:block;height:10px;border-radius:5px;background:var(--line-subtle);margin-bottom:6px}
+.band li[aria-current]{color:var(--text-primary);font-weight:700}
+.band li[aria-current]::before{background:var(--accent-strong)}
+.b-lines{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.b-lines li{position:relative;padding-left:16px;font-size:15.5px;line-height:1.7;color:var(--text-body)}
+.b-lines li::before{content:'';position:absolute;left:2px;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--accent-strong)}
+.b-h2{font-size:17px;font-weight:700;color:var(--text-primary);margin-top:22px}
+.b-mood{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.b-mood button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:84px;border-radius:16px;border:1.5px solid var(--stroke-control);background:var(--surface-raised);font:inherit;font-size:14.5px;font-weight:500;color:var(--text-primary);cursor:pointer}
+.b-mood svg{width:30px;height:30px;fill:var(--surface-tint);stroke:var(--accent-strong);stroke-width:1.8;stroke-linejoin:round}
+.b-mood button[aria-pressed="true"]{border:2px solid var(--text-primary);background:var(--surface-tint);font-weight:700}
+.b-mood button[aria-pressed="true"] svg{fill:var(--accent-strong)}
+.b-reply{margin-top:12px;background:var(--surface-raised);border-radius:16px;padding:14px 16px}
+.b-reply p{font-size:15.5px;color:var(--text-body)}
+.b-reply strong{color:var(--text-primary)}
+.b-reply .b-more{margin-top:8px}
+.b-reply .b-more summary{min-height:44px;display:flex;align-items:center;font-size:15px;font-weight:700;color:var(--text-body);text-decoration:underline;text-underline-offset:3px}
+.b-alt{display:flex;align-items:center;gap:8px;min-height:52px;padding:0 14px;margin-top:6px;border-radius:12px;border:1.5px solid var(--stroke-control);color:var(--text-primary);font-size:15px;font-weight:700;text-decoration:none}
+.b-alt small{margin-left:auto;font-size:12.5px;font-weight:500;color:var(--text-secondary);text-align:right;line-height:1.35}
+.b-script{margin-top:10px;font-size:14.5px;line-height:1.7}
+.b-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:22px}
+.b-tile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:112px;padding:14px;border-radius:16px;border:0;background:var(--surface-raised);font:inherit;text-align:left;color:var(--text-primary);cursor:pointer}
+.b-tile .ico{color:var(--accent-strong)}
+.b-tile b{font-size:15.5px;line-height:1.4}
+.b-tile span{font-size:13px;line-height:1.5;color:var(--text-secondary)}
+.b-tile--wide{grid-column:span 2;min-height:64px;flex-direction:row;align-items:center}
+.b-tile--wide b{flex:1}
+.b-tile--clay{background:var(--surface-clay);color:var(--text-on-clay)}
+.b-tile--clay span{color:var(--text-on-clay)}
+.b-foot{margin-top:18px}
+.dock{position:sticky;bottom:0;z-index:5;background:var(--surface-base);border-top:1px solid var(--line-subtle);padding:8px 12px 20px}
+.dock p{font-size:13px;font-weight:500;color:var(--text-body);margin:0 4px 6px}
+.dock-row{display:grid;grid-template-columns:1.1fr 1.1fr .8fr;gap:8px}
+.dock a{display:flex;align-items:center;justify-content:center;gap:6px;min-height:56px;border-radius:16px;font-size:16px;font-weight:700;text-decoration:none;
+  border:1.5px solid var(--stroke-control);background:var(--surface-raised);color:var(--text-primary)}
+.dock a.call{background:var(--accent-strong);border-color:var(--accent-strong);color:var(--on-accent)}
+.dock a.urgent{border:2px solid var(--danger-strong);color:var(--danger-strong)}
+.dock .ico{width:18px;height:18px}
+
+/* ════════ 시안 C — 세 갈래 연결 ════════ */
+.c-top{position:sticky;top:0;z-index:5;background:var(--surface-base);border-bottom:1px solid var(--line-subtle)}
+.c-main{padding:18px 16px 24px}
+.c-hello{font-family:'Gowun Batang',serif;font-size:24px;font-weight:700;line-height:1.35;color:var(--text-primary)}
+.c-hello em{font-style:normal;color:var(--accent-strong)}
+.c-stage{font-size:14px;color:var(--text-secondary);margin-top:2px}
+.c-h2{font-size:16px;font-weight:700;color:var(--text-primary);margin-top:18px}
+.c-mood{display:flex;gap:6px;margin-top:8px}
+.c-mood button{flex:1;min-height:48px;border-radius:24px;border:1.5px solid var(--stroke-control);background:var(--surface-raised);font:inherit;font-size:14.5px;font-weight:500;color:var(--text-primary);cursor:pointer;white-space:nowrap;padding:0 6px}
+.c-mood button[aria-pressed="true"]{background:var(--accent-strong);border-color:var(--accent-strong);color:var(--on-accent);font-weight:700}
+.c-note{font-size:14.5px;color:var(--text-body);margin-top:10px}
+.c-note strong{color:var(--text-primary)}
+.c-tiers{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.tier{border-radius:18px;padding:14px 14px 12px;border:1.5px solid transparent}
+.tier h3{font-size:16px;font-weight:700;line-height:1.4;display:flex;align-items:center;gap:8px}
+.tier .lvl{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:12px;font-size:13px;font-weight:700;border:1.5px solid currentColor}
+.tier p{font-size:14px;line-height:1.6;color:var(--text-body);margin-top:4px}
+.tier-row{display:flex;gap:8px;margin-top:10px}
+.tier-row a{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;min-height:56px;border-radius:14px;font-size:17px;font-weight:700;text-decoration:none;letter-spacing:.01em}
+.tier-row .ico{width:18px;height:18px}
+.tier--talk{background:var(--tier-talk-bg)} .tier--talk h3{color:var(--tier-talk-fg)}
+.tier--talk .tier-row a{background:var(--surface-raised);color:var(--tier-talk-fg);border:1.5px solid var(--tier-talk-fg)}
+.tier--now{background:var(--tier-now-bg)} .tier--now h3{color:var(--tier-now-fg)}
+.tier--now .tier-row a{background:var(--surface-raised);color:var(--tier-now-fg);border:1.5px solid var(--tier-now-fg)}
+.tier--now.is-suggested{border-color:var(--tier-now-fg);box-shadow:0 0 0 2px var(--tier-now-fg)}
+.tier--now.is-suggested .tier-row a:first-child{background:var(--tier-now-fg);color:var(--tier-now-bg)}
+.tier--urgent{background:var(--tier-urgent-bg);border-color:var(--danger-strong)} .tier--urgent h3{color:var(--tier-urgent-fg)}
+.tier--urgent .tier-row a{background:var(--danger-strong);color:var(--on-danger)}
+.tier .suggest{font-size:13px;font-weight:700;color:var(--tier-now-fg);margin:0 0 4px}
+.c-det{margin-top:16px;background:var(--surface-raised);border-radius:16px}
+.c-det summary{min-height:56px;display:flex;align-items:center;padding:0 16px;font-size:16px;font-weight:700;color:var(--text-primary)}
+.c-det summary::after{content:'';margin-left:auto;width:9px;height:9px;border-right:1.6px solid var(--text-body);border-bottom:1.6px solid var(--text-body);transform:rotate(45deg) translate(-3px,-3px)}
+.c-det[open] summary::after{transform:rotate(225deg)}
+.c-det ul{padding:0 16px 14px 34px;font-size:15px;line-height:1.7;color:var(--text-body)}
+.c-det li{margin-top:6px}
+.c-row{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;margin-top:8px;padding:12px 16px;border:0;border-radius:16px;background:var(--surface-raised);font:inherit;text-align:left;color:var(--text-primary);cursor:pointer}
+.c-row b{display:block;font-size:16px}
+.c-row span span{display:block;font-size:13.5px;color:var(--text-secondary);line-height:1.5}
+.c-row .ico{margin-left:auto}
+.c-foot{margin-top:18px}
+
+/* ════════ 추천 ════════ */
+.rec{max-width:1220px;margin:8px auto 60px;padding:0 20px}
+.rec-card{background:var(--doc-card);border:1px solid var(--doc-hair);border-left:4px solid var(--doc-accent);border-radius:14px;padding:22px 22px 18px}
+.rec-card h2{font-family:'Gowun Batang',serif;font-size:24px;line-height:1.35}
+.rec-card h3{font-size:15px;margin-top:16px}
+.rec-card ol,.rec-card ul{padding-left:20px;color:var(--doc-sub);margin-top:6px}
+.rec-card li{margin-top:4px}
+.rec-card li strong{color:var(--doc-ink)}
+.rec-card p{color:var(--doc-sub);margin-top:8px}
+
+/* 좁은 화면: 시안별로 세로로 쌓기 */
+@media (max-width:1259px){
+  .board{grid-template-columns:minmax(0,390px);padding:0}
+  .opt{grid-row:auto;grid-template-rows:none;margin-bottom:44px}
+  .info{margin:0 12px}
+  .cap{margin:0 14px 8px}
+}
+@media (max-width:420px){
+  .phone{border-radius:0;box-shadow:0 0 0 1px var(--doc-line)}
+  .doc-head{padding:28px 16px 4px}
+  .doc-head h1{font-size:25px}
+  .common,.rec{padding:0 12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- 공용 아이콘 (직접 그린 선 아이콘, 외부 라이선스 없음) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 3.2v2.1M12 18.7v2.1M3.2 12h2.1M18.7 12h2.1M5.8 5.8l1.5 1.5M16.7 16.7l1.5 1.5M5.8 18.2l1.5-1.5M16.7 7.3l1.5-1.5"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7.2 17.5h9.6a3.6 3.6 0 0 0 .4-7.2 5.2 5.2 0 0 0-10-1.1A4.2 4.2 0 0 0 7.2 17.5z"/></symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24"><path d="M7.2 14h9.6a3.4 3.4 0 0 0 .4-6.8 5 5 0 0 0-9.6-1A4 4 0 0 0 7.2 14z"/><path d="M8.5 17l-.8 2.2M12.3 17l-.8 2.2M16.1 17l-.8 2.2"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></symbol>
+    <symbol id="i-window" viewBox="0 0 24 24"><rect x="4.5" y="3.5" width="15" height="17" rx="7.5"/><path d="M12 3.5v17M4.8 12h14.4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.8h2.6l1.3 4-1.9 1.3a11 11 0 0 0 6.3 6.3l1.3-1.9 4 1.3v2.6a2 2 0 0 1-2.2 2A15.8 15.8 0 0 1 4.6 6a2 2 0 0 1 2-2.2z"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4.5 6.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-4.2 3.2v-3.2h.7a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
+    <symbol id="i-today" viewBox="0 0 24 24"><path d="M3.5 17.5h17M7 17.5a5 5 0 0 1 10 0M12 7.5V5.2M6.6 10.1 5 8.5M17.4 10.1 19 8.5"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M3.5 12h4l2-5 3.5 10 2-5h5.5"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><rect x="5.5" y="3.5" width="13" height="17" rx="2"/><path d="M8.8 8.5h6.4M8.8 12h6.4M8.8 15.5h3.8"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><circle cx="6.5" cy="12" r="2.5"/><circle cx="17.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/><path d="M8.8 10.9l6.4-3.3M8.8 13.1l6.4 3.3"/></symbol>
+  </defs>
+</svg>
+
+<header class="doc-head">
+  <h1>새 홈 시안 3개</h1>
+  <p>같은 화면(산후 동반자 홈)을 세 가지 방향으로 그렸습니다. 기준 상태는 <strong>"아기가 태어난 지 3주째예요"</strong>(출산 후 3~6주)입니다. 위는 낮의 첫 화면, 아래는 새벽 3시에 "많이 힘들어요"를 누른 뒤의 화면입니다. 폰 안은 스크롤할 수 있고, 접힌 항목은 눌러서 펼칠 수 있습니다.</p>
+  <div class="doc-meta">
+    <span><strong>작성</strong> 디자인 디렉터 · 2026-09-25</span>
+    <span><strong>근거</strong> reports/design/2026-09-study-global.md, 2026-09-study-korea.md</span>
+    <span><strong>상세·대비표</strong> reports/design/2026-09-direction.md</span>
+    <span><strong>주의</strong> 전화·문자 버튼은 실제 번호로 연결됩니다</span>
+  </div>
+</header>
+
+<section class="common" aria-label="세 시안이 공통으로 지킨 것">
+  <details>
+    <summary>세 시안이 공통으로 지킨 것 (눌러서 보기)</summary>
+    <ul>
+      <li>위기 연결(109 전화·109 문자·119)은 스크롤해도 늘 화면 안에 있습니다. 놓는 자리만 시안마다 다릅니다(A 위 고정 줄, B 아래 고정 도크, C 첫 화면 카드).</li>
+      <li>빨강 계열은 119에만 씁니다. 분홍·꽃·하트·아기 얼굴·이모지는 쓰지 않습니다. 아이콘은 모두 직접 그린 선 아이콘입니다.</li>
+      <li>글자와 버튼은 라이트·다크 모두 4.5:1 이상, 누를 수 있는 테두리는 3:1 이상입니다. 누르는 곳은 44px 이상, 전화·문자 버튼은 56px입니다.</li>
+      <li>글꼴은 지금 쓰는 두 가지(Noto Sans KR, 고운바탕)만 씁니다. 새 글꼴은 넣지 않았습니다.</li>
+      <li>문구는 현재 사이트(js/pp-home.js, index.html)의 실제 문구를 그대로 썼습니다. 새로 쓴 문장은 사생활 한 줄, 109 문자 설명, C의 단계 제목뿐이며 적용 전에 문구 검수를 받습니다.</li>
+      <li>연속 기록·배지·점수·"오랜만이에요" 같은 문구는 없습니다.</li>
+    </ul>
+  </details>
+</section>
+
+<div class="board">
+
+<!-- ═════════════════════ 시안 A ═════════════════════ -->
+<article class="opt" aria-labelledby="a-name">
+  <div class="info tk-a">
+    <p class="tag">시안 A</p>
+    <h2 id="a-name">새벽 편지</h2>
+    <p class="concept">한 장의 편지처럼 읽히는 홈. 큰 글씨의 "3주째"와 넉넉한 여백. 위기 연결은 위에 얇은 줄로 늘 붙어 있습니다.</p>
+    <h3>참고한 레퍼런스</h3>
+    <ul>
+      <li>29CM 여백과 톤 배경 (국내 D3)</li>
+      <li>Headspace 2024 크림 바탕 + 주색 하나 (해외 5)</li>
+      <li>Gentler Streak "숫자 대신 해석" (해외 1), 마보 "마음 날씨" (국내 A1)</li>
+      <li>고운바탕은 제목에만 (국내 D5)</li>
+    </ul>
+    <h3>장점</h3>
+    <ul>
+      <li>운영자가 말한 "은은하고 감성적인" 톤에 가장 가깝습니다.</li>
+      <li>지금 구조(위기 바, 펼침 항목, 순서)를 그대로 둡니다. 토큰과 홈 CSS만 바꾸면 되어 테스트 영향이 가장 적습니다.</li>
+    </ul>
+    <h3>위험</h3>
+    <ul>
+      <li>카드 테두리가 없어 훑어보기가 조금 느릴 수 있습니다(구분선과 제목 크기로 보완).</li>
+      <li>위기 줄을 위에 고정하면 헤더와 합쳐 약 110px를 늘 차지합니다.</li>
+      <li>고운바탕을 불러오기 전 잠깐 다른 글꼴로 보입니다.</li>
+    </ul>
+    <h3>팔레트 (대비: 바탕 위, 버튼 글자는 버튼 위)</h3>
+    <table class="pal">
+      <thead><tr><th>토큰</th><th>라이트</th><th>대비</th><th>새벽</th><th>대비</th></tr></thead>
+      <tbody>
+        <tr><td>surface-base</td><td><span class="sw s-base"></span><code>#F6F1EA</code></td><td>—</td><td><span class="sw s-base tk-a night"></span><code>#1A1512</code></td><td>—</td></tr>
+        <tr><td>text-primary</td><td><span class="sw s-tp"></span><code>#2B211B</code></td><td>13.99</td><td><span class="sw s-tp tk-a night"></span><code>#D9CEC3</code></td><td>11.70</td></tr>
+        <tr><td>text-body</td><td><span class="sw s-tb"></span><code>#4A3D34</code></td><td>9.31</td><td><span class="sw s-tb tk-a night"></span><code>#C2B6AA</code></td><td>9.11</td></tr>
+        <tr><td>text-secondary</td><td><span class="sw s-ts"></span><code>#6B5C50</code></td><td>5.71</td><td><span class="sw s-ts tk-a night"></span><code>#A89A8D</code></td><td>6.61</td></tr>
+        <tr><td>accent-strong</td><td><span class="sw s-acc"></span><code>#9A4B32</code></td><td>5.45</td><td><span class="sw s-acc tk-a night"></span><code>#E3A286</code></td><td>8.43</td></tr>
+        <tr><td>on-accent / accent</td><td><code>#FBF8F4</code></td><td>5.79</td><td><code>#1A1512</code></td><td>8.43</td></tr>
+        <tr><td>stroke-control</td><td><span class="sw s-stroke"></span><code>#95806E</code></td><td>3.34</td><td><span class="sw s-stroke tk-a night"></span><code>#7A6A5E</code></td><td>3.49</td></tr>
+        <tr><td>danger-strong (119)</td><td><span class="sw s-danger"></span><code>#9E3F3F</code></td><td>5.77</td><td><span class="sw s-danger tk-a night"></span><code>#F0A8A8</code></td><td>9.37</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- A 라이트 -->
+  <div>
+    <p class="cap">A · 라이트 <span>낮, 첫 화면</span></p>
+    <div class="phone tk-a" role="group" aria-label="시안 A 라이트 첫 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">14:20 <i>LTE</i></div>
+        <div class="a-top">
+          <div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div>
+          <div class="a-strip" role="region" aria-label="긴급 연락">
+            <span class="a-strip-label">지금 위험하다면</span>
+            <a class="a-pill" href="tel:109">109 전화<span class="sr-only"> 자살예방상담전화, 무료 24시간</span></a>
+            <a class="a-pill" href="sms:109">109 문자<span class="sr-only"> 상담</span></a>
+            <a class="a-pill a-pill--urgent" href="tel:119">119<span class="sr-only"> 응급 전화</span></a>
+          </div>
+        </div>
+        <main class="a-main">
+          <p class="a-stage"><svg class="ico" aria-hidden="true"><use href="#i-window"/></svg>출산 후 3~6주</p>
+          <h1 class="a-week">아기가 태어난 지<br><em>3주째</em>예요</h1>
+          <ul class="a-lines" role="list">
+            <li>우울한 기분이 2주 넘게 이어지면 베이비 블루스가 아니라 산후우울일 수 있어요. 아래 "마음 신호 확인"을 해 보세요.</li>
+            <li>산후 검진 때 기분 이야기도 해도 돼요. 아빠나 다른 주양육자도 산후우울을 겪을 수 있어요.</li>
+            <li>도와줄 사람이 없다면 보건소에 산모·신생아 방문 지원을 문의해 보세요.</li>
+          </ul>
+          <button type="button" class="textbtn">날짜 지우기</button>
+
+          <h2 class="a-h2">오늘 나는</h2>
+          <div class="a-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-sun"/></svg>괜찮아요</button>
+            <button type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-cloud"/></svg>버티는 중</button>
+            <button type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-rain"/></svg>많이 힘들어요</button>
+          </div>
+
+          <button type="button" class="a-row"><span><b>마음 신호 확인</b><span>2분 · 7가지 질문 · 진단이 아니라 도움받을 때인지 알아봐요</span></span><svg class="ico" aria-hidden="true"><use href="#i-chev"/></svg></button>
+
+          <details class="a-det">
+            <summary>바로 연락해야 하는 신호</summary>
+            <div class="a-det-body">
+              <p class="flag-head">119 또는 응급실, 지금 바로</p>
+              <ul class="plain-list">
+                <li>나나 아기를 해칠 것 같고, 멈출 수 없을 것 같을 때</li>
+                <li>다음 중 하나라도 있을 때: 없는 소리가 들리거나 없는 것이 보임 / 사실이 아닌 강한 확신(누군가 아기를 해치려 한다 등) / 며칠째 거의 못 자고 혼란스러움 <span class="note">(산후 정신병 신호일 수 있어요. 주변 사람이 먼저 알아채기도 해요)</span></li>
+                <li>38℃ 이상 열, 한 시간에 생리대를 하나 넘게 적시는 출혈, 가슴 통증이나 숨이 참, 심한 두통이나 앞이 흐려 보일 때, 경련이나 의식을 잃을 때, 한쪽 다리가 붓고 아프고 붉을 때</li>
+              </ul>
+              <div class="a-calls"><a class="a-call a-call--urgent" href="tel:119"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>119에 전화하기</a></div>
+              <p class="flag-head">109, 오늘 바로 (전화 또는 문자)</p>
+              <ul class="plain-list"><li>사라지고 싶거나 죽고 싶다는 생각이 들 때</li></ul>
+              <p class="flag-head">1577-0199 또는 보건소, 이번 주에</p>
+              <ul class="plain-list"><li>우울하거나 아무것도 즐겁지 않은 날이 2주 넘게 이어질 때</li><li>원하지 않는데 아기가 다치는 장면이 자꾸 떠올라 괴로울 때 <span class="note">(많은 부모가 겪고, 그 생각대로 행동하는 것과는 달라요. 도움을 받으면 줄어들어요)</span></li></ul>
+            </div>
+          </details>
+          <details class="a-det">
+            <summary>새벽에 할 수 있는 것 3가지</summary>
+            <div class="a-det-body">
+              <ol class="plain-list">
+                <li><b>아기가 계속 울고 나도 한계라면</b> 아기를 등을 대고 아기 침대에 눕힌 뒤, 방을 나와 5~10분 숨을 고른 뒤 다시 가서 살펴보세요. 안전한 곳에서 우는 건 괜찮아요. 아기를 흔들지 마세요. 평소와 다르게 울거나 열이 나면(3개월 미만은 38℃ 이상) 바로 진료를 받아요.</li>
+                <li><b>몸부터 챙기기</b> 물 한 잔 마시고, 4초 들이쉬고 6초 내쉬기를 다섯 번 해 보세요.</li>
+                <li><b>말할 사람이 없다면</b> 109에 문자를 보내도 돼요. "잠을 못 자서 너무 힘들어요"처럼 짧게 써도 괜찮아요.</li>
+              </ol>
+              <div class="a-calls"><a class="a-call" href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109에 문자 보내기</a></div>
+            </div>
+          </details>
+
+          <p class="privacy a-foot">아기가 태어난 날은 이 휴대폰에만 저장돼요. 휴대폰의 방문 기록과 통화 기록은 남아요. <a href="#">지우는 방법</a></p>
+          <button type="button" class="a-other">다른 상황 보기 <span>아이 성장 · 내 마음 · 생활</span></button>
+        </main>
+        <nav class="tabs" aria-label="주요 메뉴">
+          <button type="button" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-today"/></svg>오늘</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg>마음 신호</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>기록</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg>다른 상황</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- A 새벽 -->
+  <div>
+    <p class="cap">A · 새벽(다크) <span>03:12, "많이 힘들어요"를 누른 뒤</span></p>
+    <div class="phone tk-a night" role="group" aria-label="시안 A 새벽 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">03:12 <i>LTE</i></div>
+        <div class="a-top">
+          <div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div>
+          <div class="a-strip" role="region" aria-label="긴급 연락">
+            <span class="a-strip-label">지금 위험하다면</span>
+            <a class="a-pill" href="tel:109">109 전화<span class="sr-only"> 자살예방상담전화, 무료 24시간</span></a>
+            <a class="a-pill" href="sms:109">109 문자<span class="sr-only"> 상담</span></a>
+            <a class="a-pill a-pill--urgent" href="tel:119">119<span class="sr-only"> 응급 전화</span></a>
+          </div>
+        </div>
+        <main class="a-main" style="padding-top:18px">
+          <p class="a-stage"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg>3주째 · 출산 후 3~6주</p>
+          <h2 class="a-h2" style="margin-top:10px">오늘 나는</h2>
+          <div class="a-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-sun"/></svg>괜찮아요</button>
+            <button type="button" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="#i-cloud"/></svg>버티는 중</button>
+            <button type="button" aria-pressed="true"><svg class="ico" aria-hidden="true"><use href="#i-rain"/></svg>많이 힘들어요</button>
+          </div>
+          <div class="a-reply" aria-live="polite">
+            <p><strong>혼자 버티지 않아도 돼요.</strong> 지금 이야기를 들어줄 사람이 있어요.</p>
+            <div class="a-calls">
+              <a class="a-call a-call--primary" href="tel:109"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>109에 전화하기<small>무료 · 24시간</small></a>
+              <a class="a-call" href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109에 문자 보내기<small>말하지 않고<br>쓸 수 있어요</small></a>
+              <details class="a-more" open>
+                <summary>다른 방법</summary>
+                <a class="a-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>카카오톡 마들랜 상담<span class="sr-only"> (새 창)</span></a>
+                <a class="a-call" href="tel:15770199"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>1577-0199<small>정신건강위기상담전화<br>상담 무료(통화료는 들 수 있어요)</small></a>
+              </details>
+            </div>
+            <p class="a-script">처음엔 <strong>"아기가 태어나고 요즘 많이 힘들어요"</strong>라고만 해도 돼요. 나나 아기가 지금 위험하다면 <a href="tel:119">119</a>에 전화해 주세요.</p>
+          </div>
+          <button type="button" class="a-row"><span><b>마음 신호 확인</b><span>2분 · 7가지 질문 · 진단이 아니라 도움받을 때인지 알아봐요</span></span><svg class="ico" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <details class="a-det"><summary>바로 연락해야 하는 신호</summary><div class="a-det-body"><p class="note">라이트 화면과 같은 내용</p></div></details>
+          <details class="a-det"><summary>새벽에 할 수 있는 것 3가지</summary><div class="a-det-body"><p class="note">라이트 화면과 같은 내용</p></div></details>
+        </main>
+        <nav class="tabs" aria-label="주요 메뉴">
+          <button type="button" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-today"/></svg>오늘</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg>마음 신호</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>기록</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg>다른 상황</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ═════════════════════ 시안 B ═════════════════════ -->
+<article class="opt" aria-labelledby="b-name">
+  <div class="info tk-b">
+    <p class="tag">시안 B</p>
+    <h2 id="b-name">열두 달 시간 띠</h2>
+    <p class="concept">지금이 첫 12개월 중 어디쯤인지 한눈에. 오늘 할 수 있는 것은 타일로, 위기 연결은 엄지가 닿는 아래에 둡니다.</p>
+    <h3>참고한 레퍼런스</h3>
+    <ul>
+      <li>Tiimo 시간을 색 블록으로 (해외 4)</li>
+      <li>오브맘 GD 2020, 아이마중 월령 구조 (국내 B2·B3)</li>
+      <li>How We Feel 도형으로 감정 표현 (해외 2), 베이비타임 최소 터치 (국내 B1)</li>
+      <li>한 손 사용 49% (Hoober, 국내 3-4), 988 차가운색·따뜻한색 섞기 (해외 14)</li>
+    </ul>
+    <h3>장점</h3>
+    <ul>
+      <li>새벽 한 손 사용에 가장 잘 맞습니다. 전화·문자 버튼이 엄지 영역에 56px로 늘 있습니다.</li>
+      <li>시기 인식이 빠르고, 3단계(월령별 콘텐츠)와 자연스럽게 이어집니다.</li>
+    </ul>
+    <h3>위험</h3>
+    <ul>
+      <li>시간 띠가 "진도"처럼 읽혀 뒤처진 느낌을 줄 수 있습니다.</li>
+      <li>탭바를 없애고 위기 바를 아래로 옮기는 구조 변경입니다. 안전 테스트(상단 위기 바 검사)도 고쳐야 합니다.</li>
+      <li>세이지·청회색이 넓게 깔리면 차갑거나 병원처럼 느껴질 수 있습니다. 새 컴포넌트가 2개(시간 띠, 도형 버튼) 생깁니다.</li>
+    </ul>
+    <h3>팔레트 (대비: 바탕 위, 버튼 글자는 버튼 위)</h3>
+    <table class="pal">
+      <thead><tr><th>토큰</th><th>라이트</th><th>대비</th><th>새벽</th><th>대비</th></tr></thead>
+      <tbody>
+        <tr><td>surface-base</td><td><span class="sw s-base"></span><code>#F2F1EC</code></td><td>—</td><td><span class="sw s-base tk-b night"></span><code>#121820</code></td><td>—</td></tr>
+        <tr><td>text-primary</td><td><span class="sw s-tp"></span><code>#1E2925</code></td><td>13.27</td><td><span class="sw s-tp tk-b night"></span><code>#D3DADE</code></td><td>12.62</td></tr>
+        <tr><td>text-body</td><td><span class="sw s-tb"></span><code>#36433E</code></td><td>9.15</td><td><span class="sw s-tb tk-b night"></span><code>#BAC4C9</code></td><td>10.05</td></tr>
+        <tr><td>text-secondary</td><td><span class="sw s-ts"></span><code>#56635E</code></td><td>5.56</td><td><span class="sw s-ts tk-b night"></span><code>#909CA4</code></td><td>6.35</td></tr>
+        <tr><td>accent-strong</td><td><span class="sw s-acc"></span><code>#35604F</code></td><td>6.32</td><td><span class="sw s-acc tk-b night"></span><code>#93C4B0</code></td><td>9.14</td></tr>
+        <tr><td>on-accent / accent</td><td><code>#FAFAF6</code></td><td>6.83</td><td><code>#121820</code></td><td>9.14</td></tr>
+        <tr><td>text-on-clay / clay</td><td><span class="sw s-clay"></span><code>#5E4128</code></td><td>7.05</td><td><span class="sw s-clay tk-b night"></span><code>#E2CBB0</code></td><td>9.57</td></tr>
+        <tr><td>stroke-control</td><td><span class="sw s-stroke"></span><code>#7C8A84</code></td><td>3.19</td><td><span class="sw s-stroke tk-b night"></span><code>#66737D</code></td><td>3.66</td></tr>
+        <tr><td>danger-strong (119)</td><td><span class="sw s-danger"></span><code>#9E3F3F</code></td><td>5.74</td><td><span class="sw s-danger tk-b night"></span><code>#F0A8A8</code></td><td>9.23</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- B 라이트 -->
+  <div>
+    <p class="cap">B · 라이트 <span>낮, 첫 화면</span></p>
+    <div class="phone tk-b" role="group" aria-label="시안 B 라이트 첫 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">14:20 <i>LTE</i></div>
+        <div class="b-top"><div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div></div>
+        <main class="b-main">
+          <section class="b-band" aria-label="지금 시기">
+            <p class="b-stage">출산 후 3~6주</p>
+            <h1 class="b-week">아기가 태어난 지 <em>3주째</em>예요</h1>
+            <ol class="band" aria-label="첫 12개월 구간">
+              <li>첫 2주</li>
+              <li aria-current="step">3~6주<span class="sr-only"> (지금)</span></li>
+              <li>6주~3개월</li>
+              <li>3~12개월</li>
+            </ol>
+          </section>
+          <ul class="b-lines" role="list">
+            <li>우울한 기분이 2주 넘게 이어지면 베이비 블루스가 아니라 산후우울일 수 있어요. 아래 "마음 신호 확인"을 해 보세요.</li>
+            <li>산후 검진 때 기분 이야기도 해도 돼요. 아빠나 다른 주양육자도 산후우울을 겪을 수 있어요.</li>
+            <li>도와줄 사람이 없다면 보건소에 산모·신생아 방문 지원을 문의해 보세요.</li>
+          </ul>
+          <h2 class="b-h2">오늘 나는</h2>
+          <div class="b-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"/></svg>괜찮아요</button>
+            <button type="button" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 17c0-6 4-11 11-11s11 3 11 9-3 4-6 7-6 5-10 4-6-3-6-9z"/></svg>버티는 중</button>
+            <button type="button" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 11l6-5 5 3 7-2 2 7-3 5 2 6-7 2-5-3-6 2-2-6 3-4z"/></svg>많이 힘들어요</button>
+          </div>
+          <div class="b-grid">
+            <button type="button" class="b-tile"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg><b>마음 신호 확인</b><span>2분 · 7가지 질문 · 진단이 아니라 도움받을 때인지 알아봐요</span></button>
+            <button type="button" class="b-tile"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg><b>새벽에 할 수 있는 것 3가지</b><span>울음이 안 멈출 때, 몸부터 챙기기, 말할 사람이 없을 때</span></button>
+            <button type="button" class="b-tile b-tile--wide"><b>바로 연락해야 하는 신호</b><svg class="ico" aria-hidden="true"><use href="#i-chev"/></svg></button>
+            <button type="button" class="b-tile b-tile--wide b-tile--clay"><b>다른 상황 보기</b><span>아이 성장 · 내 마음 · 생활</span></button>
+          </div>
+          <p class="privacy b-foot">아기가 태어난 날은 이 휴대폰에만 저장돼요. 휴대폰의 방문 기록과 통화 기록은 남아요. <a href="#">지우는 방법</a></p>
+        </main>
+        <div class="dock" role="region" aria-label="긴급 연락">
+          <p>지금 위험하다면</p>
+          <div class="dock-row">
+            <a class="call" href="tel:109"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>109 전화<span class="sr-only"> 자살예방상담전화, 무료 24시간</span></a>
+            <a href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109 문자</a>
+            <a class="urgent" href="tel:119">119<span class="sr-only"> 응급 전화</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B 새벽 -->
+  <div>
+    <p class="cap">B · 새벽(다크) <span>03:12, "많이 힘들어요"를 누른 뒤</span></p>
+    <div class="phone tk-b night" role="group" aria-label="시안 B 새벽 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">03:12 <i>LTE</i></div>
+        <div class="b-top"><div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div></div>
+        <main class="b-main">
+          <section class="b-band" aria-label="지금 시기" style="padding:12px 16px">
+            <p class="b-week" style="font-size:17px"><em style="font-size:24px">3주째</em> · 출산 후 3~6주</p>
+            <ol class="band" aria-label="첫 12개월 구간" style="margin-top:8px">
+              <li>첫 2주</li><li aria-current="step">3~6주<span class="sr-only"> (지금)</span></li><li>6주~3개월</li><li>3~12개월</li>
+            </ol>
+          </section>
+          <h2 class="b-h2" style="margin-top:16px">오늘 나는</h2>
+          <div class="b-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"/></svg>괜찮아요</button>
+            <button type="button" aria-pressed="false"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 17c0-6 4-11 11-11s11 3 11 9-3 4-6 7-6 5-10 4-6-3-6-9z"/></svg>버티는 중</button>
+            <button type="button" aria-pressed="true"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 11l6-5 5 3 7-2 2 7-3 5 2 6-7 2-5-3-6 2-2-6 3-4z"/></svg>많이 힘들어요</button>
+          </div>
+          <div class="b-reply" aria-live="polite">
+            <p><strong>혼자 버티지 않아도 돼요.</strong> 지금 이야기를 들어줄 사람이 있어요. 아래 <strong>109 전화</strong>나 <strong>109 문자</strong>를 눌러 주세요.</p>
+            <details class="b-more" open>
+              <summary>다른 방법</summary>
+              <a class="b-alt" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>카카오톡 마들랜 상담<span class="sr-only"> (새 창)</span></a>
+              <a class="b-alt" href="tel:15770199"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>1577-0199<small>정신건강위기상담전화<br>상담 무료(통화료는 들 수 있어요)</small></a>
+            </details>
+            <p class="b-script">처음엔 <strong>"아기가 태어나고 요즘 많이 힘들어요"</strong>라고만 해도 돼요.</p>
+          </div>
+          <div class="b-grid">
+            <button type="button" class="b-tile"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg><b>마음 신호 확인</b><span>2분 · 7가지 질문</span></button>
+            <button type="button" class="b-tile"><svg class="ico" aria-hidden="true"><use href="#i-moon"/></svg><b>새벽에 할 수 있는 것 3가지</b></button>
+          </div>
+        </main>
+        <div class="dock" role="region" aria-label="긴급 연락">
+          <p>지금 위험하다면</p>
+          <div class="dock-row">
+            <a class="call" href="tel:109"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>109 전화<span class="sr-only"> 자살예방상담전화, 무료 24시간</span></a>
+            <a href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109 문자</a>
+            <a class="urgent" href="tel:119">119<span class="sr-only"> 응급 전화</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- ═════════════════════ 시안 C ═════════════════════ -->
+<article class="opt" aria-labelledby="c-name">
+  <div class="info tk-c">
+    <p class="tag">시안 C</p>
+    <h2 id="c-name">세 갈래 연결</h2>
+    <p class="concept">첫 화면에 "이야기하고 싶을 때 · 많이 힘들 때 · 위험할 때" 세 단계 연결을 둡니다. 기분을 고르면 맞는 연결이 강조됩니다.</p>
+    <h3>참고한 레퍼런스</h3>
+    <ul>
+      <li>NHS care cards 단계 구분 (해외 16)</li>
+      <li>PSI 웜라인·핫라인 구분 (해외 18), Wysa 홈 화면 위기 버튼 (해외 9)</li>
+      <li>Crisis Text Line 여러 경로 한 화면 (해외 15), 마들랜 (국내 A5)</li>
+      <li>트로스트 "오늘 내 감정"을 입구로 (국내 A3)</li>
+    </ul>
+    <h3>장점</h3>
+    <ul>
+      <li>연결까지 가장 짧습니다(첫 화면에서 한 번). 119가 엄지 영역에 있습니다.</li>
+      <li>1577-0199를 "위기는 아니지만 이야기하고 싶을 때"의 입구로 보여 연락 문턱을 낮춥니다.</li>
+    </ul>
+    <h3>위험</h3>
+    <ul>
+      <li>괜찮은 날에도 첫 화면에 위기 번호 세 개가 보여 무겁고 병원 같다는 인상을 줄 수 있습니다(국내 §5).</li>
+      <li>홈에서만 상단 위기 바를 카드로 바꾸는 예외가 생겨 규칙·테스트를 고쳐야 합니다.</li>
+      <li>단계 색(청·살구·적) 3개가 늘어 "강조색 하나" 원칙과 부딪힙니다. "3주째" 이야기는 접혀서 덜 보입니다.</li>
+    </ul>
+    <h3>팔레트 (대비: 바탕 위, 버튼 글자는 버튼 위)</h3>
+    <table class="pal">
+      <thead><tr><th>토큰</th><th>라이트</th><th>대비</th><th>새벽</th><th>대비</th></tr></thead>
+      <tbody>
+        <tr><td>surface-base</td><td><span class="sw s-base"></span><code>#FAF6F1</code></td><td>—</td><td><span class="sw s-base tk-c night"></span><code>#14161C</code></td><td>—</td></tr>
+        <tr><td>text-primary</td><td><span class="sw s-tp"></span><code>#1F2430</code></td><td>14.42</td><td><span class="sw s-tp tk-c night"></span><code>#D8DBE1</code></td><td>13.04</td></tr>
+        <tr><td>text-body</td><td><span class="sw s-tb"></span><code>#3B4150</code></td><td>9.48</td><td><span class="sw s-tb tk-c night"></span><code>#C1C5CE</code></td><td>10.46</td></tr>
+        <tr><td>text-secondary</td><td><span class="sw s-ts"></span><code>#5B6170</code></td><td>5.76</td><td><span class="sw s-ts tk-c night"></span><code>#9A9FAA</code></td><td>6.81</td></tr>
+        <tr><td>accent-strong</td><td><span class="sw s-acc"></span><code>#2E4A68</code></td><td>8.50</td><td><span class="sw s-acc tk-c night"></span><code>#9DB8D6</code></td><td>8.84</td></tr>
+        <tr><td>tier-talk fg/bg</td><td><span class="sw s-t1"></span><code>#223C58</code></td><td>9.58</td><td><span class="sw s-t1 tk-c night"></span><code>#B8CCE2</code></td><td>9.40</td></tr>
+        <tr><td>tier-now fg/bg</td><td><span class="sw s-t2"></span><code>#62361C</code></td><td>8.30</td><td><span class="sw s-t2 tk-c night"></span><code>#E8C7A8</code></td><td>9.90</td></tr>
+        <tr><td>tier-urgent fg/bg</td><td><span class="sw s-t3"></span><code>#8A2E29</code></td><td>6.85</td><td><span class="sw s-t3 tk-c night"></span><code>#F2B0AA</code></td><td>8.91</td></tr>
+        <tr><td>stroke-control</td><td><span class="sw s-stroke"></span><code>#80858F</code></td><td>3.44</td><td><span class="sw s-stroke tk-c night"></span><code>#6A7080</code></td><td>3.65</td></tr>
+        <tr><td>danger-strong (119)</td><td><span class="sw s-danger"></span><code>#9E3F3F</code></td><td>6.03</td><td><span class="sw s-danger tk-c night"></span><code>#F0A8A8</code></td><td>9.36</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- C 라이트 -->
+  <div>
+    <p class="cap">C · 라이트 <span>낮, 첫 화면</span></p>
+    <div class="phone tk-c" role="group" aria-label="시안 C 라이트 첫 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">14:20 <i>LTE</i></div>
+        <div class="c-top"><div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div></div>
+        <main class="c-main">
+          <h1 class="c-hello">아기가 태어난 지 <em>3주째</em>예요</h1>
+          <p class="c-stage">출산 후 3~6주</p>
+          <h2 class="c-h2">오늘 나는</h2>
+          <div class="c-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false">괜찮아요</button>
+            <button type="button" aria-pressed="false">버티는 중</button>
+            <button type="button" aria-pressed="false">많이 힘들어요</button>
+          </div>
+          <section class="c-tiers" role="region" aria-label="긴급 연락">
+            <div class="tier tier--talk">
+              <h3><span class="lvl" aria-hidden="true">1</span>이야기해 보고 싶을 때<span class="sr-only"> (1단계, 위기는 아님)</span></h3>
+              <p>정신건강위기상담전화 · 상담 무료(통화료는 들 수 있어요) · 24시간 · 가까운 정신건강복지센터로 연결</p>
+              <div class="tier-row"><a href="tel:15770199"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>1577-0199</a></div>
+            </div>
+            <div class="tier tier--now">
+              <h3><span class="lvl" aria-hidden="true">2</span>많이 힘들거나 사라지고 싶을 때<span class="sr-only"> (2단계)</span></h3>
+              <p>자살예방상담전화 · 무료 · 24시간 · 문자도 돼요</p>
+              <div class="tier-row">
+                <a href="tel:109"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>109 전화</a>
+                <a href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109 문자</a>
+              </div>
+            </div>
+            <div class="tier tier--urgent">
+              <h3><span class="lvl" aria-hidden="true">3</span>나나 아기가 지금 위험할 때<span class="sr-only"> (3단계, 응급)</span></h3>
+              <p>응급 상황, 지금 위험할 때</p>
+              <div class="tier-row"><a href="tel:119"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>119 전화</a></div>
+            </div>
+          </section>
+          <details class="c-det">
+            <summary>3주째, 이 시기 이야기</summary>
+            <ul>
+              <li>우울한 기분이 2주 넘게 이어지면 베이비 블루스가 아니라 산후우울일 수 있어요. 아래 "마음 신호 확인"을 해 보세요.</li>
+              <li>산후 검진 때 기분 이야기도 해도 돼요. 아빠나 다른 주양육자도 산후우울을 겪을 수 있어요.</li>
+              <li>도와줄 사람이 없다면 보건소에 산모·신생아 방문 지원을 문의해 보세요.</li>
+            </ul>
+          </details>
+          <button type="button" class="c-row"><span><b>마음 신호 확인</b><span>2분 · 7가지 질문 · 진단이 아니라 도움받을 때인지 알아봐요</span></span><svg class="ico" aria-hidden="true"><use href="#i-chev"/></svg></button>
+          <details class="c-det"><summary>바로 연락해야 하는 신호</summary><ul><li>A 시안과 같은 내용</li></ul></details>
+          <details class="c-det"><summary>새벽에 할 수 있는 것 3가지</summary><ul><li>A 시안과 같은 내용</li></ul></details>
+          <p class="privacy c-foot">아기가 태어난 날은 이 휴대폰에만 저장돼요. 휴대폰의 방문 기록과 통화 기록은 남아요. <a href="#">지우는 방법</a></p>
+        </main>
+        <nav class="tabs" aria-label="주요 메뉴">
+          <button type="button" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-today"/></svg>오늘</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg>마음 신호</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>연결</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg>다른 상황</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- C 새벽 -->
+  <div>
+    <p class="cap">C · 새벽(다크) <span>03:12, "많이 힘들어요"를 누른 뒤</span></p>
+    <div class="phone tk-c night" role="group" aria-label="시안 C 새벽 화면">
+      <div class="screen">
+        <div class="status" aria-hidden="true">03:12 <i>LTE</i></div>
+        <div class="c-top"><div class="hdr"><span class="logo">BeInside</span><button type="button" class="hdr-btn">메뉴</button></div></div>
+        <main class="c-main">
+          <h1 class="c-hello">아기가 태어난 지 <em>3주째</em>예요</h1>
+          <p class="c-stage">출산 후 3~6주</p>
+          <h2 class="c-h2">오늘 나는</h2>
+          <div class="c-mood" role="group" aria-label="오늘 기분 고르기">
+            <button type="button" aria-pressed="false">괜찮아요</button>
+            <button type="button" aria-pressed="false">버티는 중</button>
+            <button type="button" aria-pressed="true">많이 힘들어요</button>
+          </div>
+          <p class="c-note" aria-live="polite"><strong>혼자 버티지 않아도 돼요.</strong> 처음엔 "아기가 태어나고 요즘 많이 힘들어요"라고만 해도 돼요.</p>
+          <section class="c-tiers" role="region" aria-label="긴급 연락">
+            <div class="tier tier--talk">
+              <h3><span class="lvl" aria-hidden="true">1</span>이야기해 보고 싶을 때<span class="sr-only"> (1단계, 위기는 아님)</span></h3>
+              <p>정신건강위기상담전화 · 상담 무료(통화료는 들 수 있어요) · 24시간</p>
+              <div class="tier-row"><a href="tel:15770199"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>1577-0199</a></div>
+            </div>
+            <div class="tier tier--now is-suggested">
+              <p class="suggest">지금 고른 기분에 맞는 연결</p>
+              <h3><span class="lvl" aria-hidden="true">2</span>많이 힘들거나 사라지고 싶을 때<span class="sr-only"> (2단계)</span></h3>
+              <p>자살예방상담전화 · 무료 · 24시간 · 문자도 돼요</p>
+              <div class="tier-row">
+                <a href="tel:109"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>109 전화</a>
+                <a href="sms:109"><svg class="ico" aria-hidden="true"><use href="#i-msg"/></svg>109 문자</a>
+              </div>
+            </div>
+            <div class="tier tier--urgent">
+              <h3><span class="lvl" aria-hidden="true">3</span>나나 아기가 지금 위험할 때<span class="sr-only"> (3단계, 응급)</span></h3>
+              <div class="tier-row"><a href="tel:119"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>119 전화</a></div>
+            </div>
+          </section>
+        </main>
+        <nav class="tabs" aria-label="주요 메뉴">
+          <button type="button" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-today"/></svg>오늘</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-signal"/></svg>마음 신호</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>연결</button>
+          <button type="button"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg>다른 상황</button>
+        </nav>
+      </div>
+    </div>
+  </div>
+</article>
+
+</div><!-- /board -->
+
+<section class="rec" aria-labelledby="rec-h">
+  <div class="rec-card">
+    <h2 id="rec-h">디렉터 추천: 시안 A "새벽 편지"</h2>
+    <p>결정은 운영자가 합니다. 아래는 추천 이유와 조건입니다.</p>
+    <h3>이유</h3>
+    <ol>
+      <li><strong>운영자 톤에 가장 가깝습니다.</strong> 장식을 더하지 않고 여백·톤 배경·고운바탕 큰 제목만으로 감성을 냅니다(29CM, Headspace, 고운바탕 근거). 1인 운영에서 오래 유지할 수 있는 방식입니다.</li>
+      <li><strong>가장 안전하게 바꿀 수 있습니다.</strong> 지금 홈의 구조와 순서, 상단 위기 바를 그대로 두고 토큰과 홈 CSS만 바꿉니다. 안전 테스트 수정이 필요 없고 "토큰 → 새 홈 → 내비게이션" 순서에 그대로 맞습니다.</li>
+      <li><strong>새벽 화면이 가장 편합니다.</strong> 붉은 기가 조금 도는 따뜻한 먹색(#1A1512)에 본문 글자를 한 단계 낮춰(11.70:1) 눈부심을 줄였습니다. 지금 초록빛 다크(#161B19)보다 브랜드 온도와 맞습니다.</li>
+      <li><strong>C의 좋은 점은 필요한 자리에서 가져옵니다.</strong> 세 단계 연결(1577-0199 / 109 / 119)은 첫 화면이 아니라 "많이 힘들어요" 응답과 "바로 연락해야 하는 신호" 안에 둡니다. B의 시간 띠는 3단계 월령 콘텐츠를 만들 때 작은 요소로 다시 검토합니다.</li>
+    </ol>
+    <h3>A를 고를 때 함께 정해야 할 것</h3>
+    <ul>
+      <li>위기 줄을 <strong>위에 고정</strong>할지(추천: 고정. 지금은 스크롤하면 사라집니다).</li>
+      <li>헤더 SOS·탭바 "긴급"을 없애 긴급 진입점을 위기 줄 하나로 모을지(추천: 모음).</li>
+      <li>탭바를 "오늘 · 마음 신호 · 기록 · 다른 상황"으로 바꿀지.</li>
+    </ul>
+    <p>자세한 근거, 현재 문제 목록, 전체 대비표, 결정 목록은 reports/design/2026-09-direction.md에 있습니다.</p>
+  </div>
+</section>
+
+</body>
+</html>
