@@ -42,6 +42,7 @@ function loadCheckTool() {
   };
   vm.createContext(ctx);
   vm.runInContext(read('js/utils.js'), ctx);
+  vm.runInContext(read('js/helplines.js'), ctx);
   vm.runInContext(read('js/features.js'), ctx);
   return ctx;
 }
@@ -56,7 +57,7 @@ function mount(config) {
   return { click: i => items[i].handlers.click(), result };
 }
 
-const isEmergency = r => r.className.includes('high') && r.innerHTML.includes('tel:109');
+const isEmergency = r => r.className.includes('high') && r.innerHTML.includes('tel:109') && r.innerHTML.includes('sms:109');
 
 /* ═══════ 1. 자가체크: 자해 문항이 체크되면 긴급 안내가 항상 이긴다 ═══════ */
 describe('자가체크 긴급 안내 우선순위', () => {
@@ -174,5 +175,83 @@ describe('청소년·학대 페이지 보호', () => {
 
   it('청소년 감정 제목이 정의된 색 변수를 씀 (배경에 묻히지 않음)', () => {
     assert.doesNotMatch(html, /--teen-ink/);
+  });
+});
+
+/* ═══════ 5. 위기 연결층 (1단계) ═══════ */
+describe('위기 연결층', () => {
+  const html = read('index.html');
+
+  it('모든 화면 상단 위기 바에 109 전화·문자와 119가 있음', () => {
+    const bar = html.match(/<div class="crisis-bar"[\s\S]*?<\/div>/);
+    assert.ok(bar, '위기 바가 없음');
+    for (const href of ['tel:109', 'sms:109', 'tel:119']) assert.ok(bar[0].includes(`href="${href}"`), href);
+  });
+
+  it('helplines.js 번호가 공식 번호와 일치', () => {
+    const ctx = {}; vm.createContext(ctx);
+    vm.runInContext(read('js/helplines.js') + '\n;this.H = HELPLINES; this.tel = helplineTel; this.sms = helplineSms;', ctx);
+    assert.equal(ctx.H.suicide.number, '109');
+    assert.equal(ctx.H.mental.number, '1577-0199');
+    assert.equal(ctx.H.emergency.number, '119');
+    assert.equal(ctx.tel('mental'), 'tel:15770199');
+    assert.equal(ctx.sms('suicide'), 'sms:109');
+    assert.equal(ctx.sms('mental'), null);
+  });
+
+  it('체크 결과 "중간"에도 연결 번호가 있고, "낮음"에는 긴급 버튼이 없음', () => {
+    const ctx = loadCheckTool();
+    assert.match(ctx.checkConnectHTML('mid', false), /tel:15770199/);
+    assert.equal(ctx.checkConnectHTML('low', false), '');
+  });
+});
+
+/* ═══════ 6. 산후 동반자 홈 (2단계) ═══════ */
+describe('산후 동반자 홈', () => {
+  const html = read('index.html');
+  function loadPp() {
+    const store = {};
+    const ctx = {
+      document: { getElementById: () => null, querySelectorAll: () => [] },
+      localStorage: { getItem: k => store[k] ?? null, setItem: (k, v) => { store[k] = v; }, removeItem: k => { delete store[k]; } },
+      esc: s => s, setTimeout: () => 0,
+    };
+    vm.createContext(ctx);
+    vm.runInContext(read('js/helplines.js'), ctx);
+    vm.runInContext(read('js/pp-home.js') + '\n;this.STAGES = PP_STAGES; this.REPLY = PP_MOOD_REPLY;', ctx);
+    return ctx;
+  }
+
+  it('첫 화면이 산후 홈이고, 기존 홈은 접혀서 보존됨', () => {
+    assert.match(html, /id="pp-home"/);
+    assert.match(html, /id="home-other" hidden/);
+    assert.match(html, /aria-controls="home-other"/);
+    assert.ok(html.indexOf('id="pp-home"') < html.indexOf('id="home-other"'));
+  });
+
+  it('출산 후 구간이 0~365일을 빈틈없이 덮음', () => {
+    const { STAGES } = loadPp();
+    let prev = -1;
+    for (const s of STAGES) { assert.ok(s.maxDay > prev); assert.equal(s.lines.length, 3); prev = s.maxDay; }
+    assert.equal(prev, 365);
+  });
+
+  it('"많이 힘들어요"는 109 전화·문자, 1577-0199, 119를 모두 보여줌', () => {
+    const out = loadPp().REPLY.hard();
+    for (const h of ['tel:109', 'sms:109', 'tel:15770199', 'tel:119']) assert.ok(out.includes(h), h);
+  });
+
+  it('산후 체크에 진단 라벨이 없음 (임상 검수자 없이 운영하는 동안)', () => {
+    const src = read('js/data-guides-new.js');
+    const block = src.slice(src.indexOf("id: 'ct_postpartum'"), src.indexOf("id: 'ct_postpartum'") + 2500);
+    assert.doesNotMatch(block, /산후우울증 가능성이 높아요|진단됩니다/);
+  });
+
+  it('새 홈 스크립트가 로드되고 서비스워커 캐시에 포함됨', () => {
+    assert.match(html, /src="js\/pp-home\.js"/);
+    assert.match(html, /src="js\/helplines\.js"/);
+    const sw = read('sw.js');
+    assert.match(sw, /\/js\/pp-home\.js/);
+    assert.match(sw, /\/js\/helplines\.js/);
   });
 });

@@ -24,6 +24,7 @@
   --semantic-caution-bg:#F5EDD8;
   --semantic-danger:#B85454;
   --semantic-danger-bg:#F5E0E0;
+  --semantic-danger-strong:#9E3F3F;
   --border-default:rgba(180,160,140,.12);
   --border-hover:rgba(180,160,140,.25);
   --shadow-sm:0 1px 3px rgba(44,30,20,.04);
@@ -67,6 +68,7 @@
   --semantic-caution-bg:rgba(208,168,80,.10);
   --semantic-danger:#D07070;
   --semantic-danger-bg:rgba(208,112,112,.10);
+  --semantic-danger-strong:#F0A8A8;
 
   /* 보더: 녹색 기조의 미세한 밝은 보더 */
   --border-default:rgba(180,200,190,.10);

@@ -4,7 +4,7 @@
     - 폰트: cache-first (장기 캐시)
     - 배포 시 SW 파일 자체가 변경되면 브라우저가 자동 업데이트 */
 
-const CACHE_STATIC = 'beinside-static-v1';
+const CACHE_STATIC = 'beinside-static-v2';
 const CACHE_FONT   = 'beinside-font-v1';
 const OFFLINE_PAGE = '/offline.html';
 
@@ -22,6 +22,8 @@ const PRECACHE = [
   '/js/profiles.js',
   '/js/storage.js',
   '/js/utils.js',
+  '/js/helplines.js',
+  '/js/pp-home.js',
   '/js/memo.js',
   '/js/share.js',
   '/js/onboard.js',

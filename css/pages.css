@@ -1964,10 +1964,10 @@
    헤더 아래 우측 고정. 가해자가 봐도 모호하게 "나가기"만 표기. */
 .quick-exit-btn {
   position: fixed;
-  top: calc(64px + env(safe-area-inset-top, 0px));
+  top: calc(108px + env(safe-area-inset-top, 0px)); /* 헤더 56 + 위기 바 44 아래 */
   right: 12px;
   z-index: 99999;
-  min-width: 52px; min-height: 44px;
+  min-width: 56px; min-height: 56px;
   padding: 8px 16px;
   background: var(--text-body); color: var(--surface-card);
   border: none; border-radius: 10px;
@@ -1976,14 +1976,15 @@
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 2px 10px rgba(0,0,0,.18);
+  box-shadow: var(--shadow-md);
 }
 .quick-exit-btn[hidden] { display: none; }
 .quick-exit-btn:hover,
 .quick-exit-btn:focus-visible {
   background: var(--text-primary);
-  outline: 2px solid var(--surface-card);
+  outline: 3px solid var(--text-primary);
   outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--surface-card);
 }
 
 @media(max-width:640px) {
@@ -4936,4 +4937,234 @@ a:focus:not(:focus-visible){
 .center-badge{
   font-size:11px;padding:2px 6px;border-radius:6px;
   background:var(--lavender-p);color:var(--lavender-d);font-weight:600;
+}
+
+
+/* ── 위기 연결 바 (모든 화면 상단) ──
+   조용하지만 항상 보이게. 헤더 바로 아래, 스크롤과 함께 올라감. */
+.crisis-bar {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 4px; row-gap: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border-default);
+  font-size: 14px;
+  word-break: keep-all;
+}
+.crisis-bar-label {
+  color: var(--text-body);
+  margin-right: 6px;
+}
+.crisis-bar-link {
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 0 10px;
+  color: var(--text-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.crisis-bar-link--urgent { color: var(--semantic-danger-strong); }
+.crisis-bar-link:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: -4px;
+  border-radius: 6px;
+}
+
+/* ── 체크 결과 안의 연결 버튼 ── */
+.check-connect { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+.check-connect-btn {
+  display: block;
+  min-height: 56px; padding: 9px 16px;
+  border-radius: 12px;
+  background: var(--text-primary); color: var(--surface-card);
+  font-size: 15px; font-weight: 700; text-decoration: none;
+}
+.check-connect-btn span:not([aria-hidden]) { display: block; font-size: 13px; font-weight: 500; }
+.check-connect-btn--sub {
+  background: var(--surface-card); color: var(--text-primary);
+  border: 1px solid var(--border-hover);
+}
+.check-connect-btn:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.check-connect-script {
+  margin-top: 10px;
+  font-size: 14px; font-weight: 400; line-height: 1.7;
+  color: var(--text-body);
+  word-break: keep-all;
+}
+.check-connect-script a { color: var(--text-primary); font-weight: 700; }
+
+/* ══════════════════════════════════════════
+   산후 동반자 홈 — 혼자 돌보는 첫 12개월
+══════════════════════════════════════════ */
+/* 홈(.hero)의 일반 규칙(p 13.5px·지연 페이드·가운데 정렬·선택 금지)이 새 홈에 새지 않게 차단 */
+.hero .pp-home { text-align: left; align-self: center; }
+.pp-home p, .pp-home h1, .pp-home h2 { max-width: none; margin: 0; animation: none; }
+.hero .pp-home, .hero .pp-home * { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
+.pp-home {
+  width: 100%; max-width: 640px;
+  display: flex; flex-direction: column; gap: 12px;
+  position: relative; z-index: 1;
+}
+.pp-home .pp-title {
+  font-family: 'Gowun Batang', serif;
+  font-size: clamp(24px, 5vw, 30px); font-weight: 700;
+  color: var(--text-primary); line-height: 1.35;
+  word-break: keep-all;
+}
+.pp-home .pp-sub {
+  font-size: 15px; color: var(--text-body); line-height: 1.7;
+  margin-bottom: 4px; word-break: keep-all;
+}
+.pp-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.pp-home .pp-card-title {
+  font-size: 16px; font-weight: 700; color: var(--text-primary);
+  margin-bottom: 8px; line-height: 1.5; word-break: keep-all;
+}
+.pp-home .pp-card-title strong { color: var(--text-primary); font-weight: 800; }
+.pp-home .pp-card-sub { font-size: calc(14px + var(--text-scale, 0) * 2px); color: var(--text-body); line-height: 1.7; word-break: keep-all; }
+.pp-home .pp-stage-label { font-size: 13px; font-weight: 700; color: var(--text-body); margin-bottom: 6px; }
+
+.pp-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pp-list li {
+  position: relative; padding-left: 16px;
+  font-size: calc(15px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); word-break: keep-all;
+}
+.pp-list li::before { content: '·'; position: absolute; left: 3px; font-weight: 700; color: var(--text-primary); }
+.pp-list--num { counter-reset: pp; }
+.pp-list--num li { counter-increment: pp; padding-left: 26px; }
+.pp-list--num li::before { content: counter(pp) '.'; left: 0; }
+.pp-list strong { display: block; color: var(--text-primary); }
+.pp-note { color: var(--text-body); font-size: 14px; }
+
+.pp-age-form { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.pp-date {
+  flex: 1; min-width: 160px; min-height: 48px;
+  padding: 0 12px; border-radius: 10px;
+  border: 1px solid var(--text-secondary);
+  background: var(--surface-elevated); color: var(--text-primary);
+  font-family: inherit; font-size: 16px; /* 16px 미만이면 iOS가 확대함 */
+}
+.pp-btn {
+  min-height: 48px; padding: 0 20px; border-radius: 10px; border: none;
+  background: var(--text-primary); color: var(--surface-card);
+  font-family: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+}
+.pp-btn--ghost { background: var(--surface-card); color: var(--text-primary); border: 1px solid var(--border-hover); margin-top: 10px; }
+.pp-text-btn {
+  margin-top: 8px; min-height: 44px; padding: 0 4px;
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; font-size: 14px; color: var(--text-body);
+  text-decoration: underline; text-underline-offset: 3px;
+}
+
+.pp-mood { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.pp-mood-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  min-height: 72px; padding: 10px 6px;
+  border-radius: 12px; border: 1.5px solid var(--border-hover);
+  background: var(--surface-elevated); color: var(--text-primary);
+  font-family: inherit; font-size: 24px; cursor: pointer;
+  transition: transform .12s var(--ease), background var(--dur) var(--ease);
+}
+.pp-mood-btn span:not(.pp-emoji) { font-size: 14px; font-weight: 600; word-break: keep-all; }
+.pp-mood-btn:active { transform: scale(.97); }
+.pp-mood-btn.on { background: var(--accent-subtle); border: 2px solid var(--text-primary); }
+.pp-mood-btn.on span:not(.pp-emoji) { font-weight: 800; }
+.pp-mood-result:not(:empty) { margin-top: 12px; }
+.pp-home .pp-reply { font-size: calc(15px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); word-break: keep-all; }
+.pp-home .pp-reply strong { color: var(--text-primary); }
+
+.pp-connect { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.pp-call {
+  display: flex; align-items: center; justify-content: flex-start; gap: 4px;
+  min-height: 56px; padding: 0 16px; margin-top: 8px;
+  border-radius: 12px; border: 1px solid var(--border-hover);
+  background: var(--surface-elevated); color: var(--text-primary);
+  font-size: 15px; font-weight: 700; text-decoration: none;
+}
+.pp-connect .pp-call { margin-top: 0; }
+.pp-call span:not([aria-hidden]) { margin-left: auto; font-size: 13px; font-weight: 500; }
+.pp-call--primary { background: var(--text-primary); color: var(--surface-card); border-color: var(--text-primary); }
+.pp-call--urgent { color: var(--semantic-danger-strong); border-color: var(--semantic-danger-strong); }
+.pp-home .pp-script { font-size: calc(14px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); margin-top: 4px; word-break: keep-all; }
+.pp-home .pp-script a { color: var(--semantic-danger-strong); font-weight: 700; }
+
+.pp-row {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  min-height: 64px; padding: 12px 16px; text-align: left;
+  background: var(--surface-card); color: var(--text-primary);
+  border: 1px solid var(--border-default); border-radius: 14px;
+  font-family: inherit; cursor: pointer; box-shadow: var(--shadow-sm);
+}
+.pp-row-icon { font-size: 24px; }
+.pp-row-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.pp-row-text strong { font-size: 16px; }
+.pp-row-text span { font-size: 13px; color: var(--text-body); line-height: 1.5; word-break: keep-all; }
+.pp-row-arrow { font-size: 22px; color: var(--text-body); }
+
+.pp-details {
+  background: var(--surface-card);
+  border: 1px solid var(--border-default); border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.pp-details summary {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 56px; padding: 0 16px;
+  font-size: 16px; font-weight: 700; color: var(--text-primary);
+  cursor: pointer; list-style: none;
+}
+.pp-details summary::-webkit-details-marker { display: none; }
+.pp-details summary::after { content: '›' / ''; margin-left: auto; font-size: 22px; color: var(--text-body); transition: transform var(--dur) var(--ease); }
+.pp-details[open] summary::after { transform: rotate(90deg); }
+.pp-details-body { padding: 0 16px 16px; }
+.pp-home .pp-flag-head { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 12px 0 6px; }
+.pp-home .pp-flag-head:first-child { margin-top: 0; }
+
+.pp-other-toggle {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  min-height: 56px; margin-top: 8px; padding: 10px;
+  background: none; border: 1px dashed var(--border-hover); border-radius: 14px;
+  font-family: inherit; font-size: 15px; font-weight: 700; color: var(--text-primary); cursor: pointer;
+}
+.pp-other-toggle span { font-size: 13px; font-weight: 400; color: var(--text-body); }
+.home-other { width: 100%; margin-top: 24px; }
+.home-other-title {
+  font-family: 'Gowun Batang', serif; font-size: 20px; font-weight: 700;
+  color: var(--text-primary); margin-bottom: 12px;
+}
+
+.pp-home :is(button, a, summary):focus-visible,
+.pp-date:focus-visible {
+  outline: 2px solid var(--text-primary); outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pp-mood-btn, .pp-details summary::after { transition: none; }
+}
+.pp-home .pp-list strong.pp-inline { display: inline; }
+
+/* 검수 반영: 다크모드 달력 아이콘, 누름 반응, 접기 상태 표시, "다른 방법" */
+[data-theme="dark"] .pp-date { color-scheme: dark; }
+.pp-call:active, .pp-row:active, .pp-btn:active, .pp-details summary:active,
+.pp-other-toggle:active, .check-connect-btn:active, .quick-exit-btn:active,
+.crisis-bar-link:active { transform: scale(.98); }
+.pp-other-toggle[aria-expanded="true"] { border-style: solid; }
+.pp-more { margin-top: 2px; }
+.pp-more summary {
+  display: flex; align-items: center; min-height: 44px; padding: 0 4px;
+  font-size: 14px; font-weight: 700; color: var(--text-body); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; list-style: none;
+}
+.pp-more summary::-webkit-details-marker { display: none; }
+.pp-more[open] { display: flex; flex-direction: column; gap: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .pp-call:active, .pp-row:active, .pp-btn:active, .pp-details summary:active,
+  .pp-other-toggle:active, .check-connect-btn:active, .quick-exit-btn:active,
+  .crisis-bar-link:active { transform: none; }
 }
