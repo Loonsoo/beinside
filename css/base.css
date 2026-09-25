@@ -57,6 +57,7 @@ button.logo{
   --semantic-caution-bg:#F5EDD8;
   --semantic-danger:#B85454;
   --semantic-danger-bg:#F5E0E0;
+  --semantic-danger-strong:#9E3F3F; /* 작은 글씨용 빨강 (카드 배경 대비 6:1) */
 
   /* ── 보더 ── */
   --border-default:rgba(180,160,140,.12);

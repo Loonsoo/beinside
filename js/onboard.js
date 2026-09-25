@@ -7,8 +7,9 @@
   const overlay = document.getElementById('onboard-overlay');
   if (!overlay) return;
 
-  // 이미 본 사용자는 숨김
-  if (localStorage.getItem(KEY)) {
+  // 이미 본 사용자, 또는 산후 동반자 홈이 첫 화면인 경우 숨김
+  // (새 홈이 곧 첫 안내이므로 상황 선택 팝업을 겹쳐 띄우지 않는다)
+  if (localStorage.getItem(KEY) || document.getElementById('pp-home')) {
     overlay.style.display = 'none';
     return;
   }

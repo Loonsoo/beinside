@@ -87,10 +87,28 @@ function updateCheckResult(count, config, resultEl) {
   showCheckResult(resultEl, cls, `<strong>${esc(label)}</strong>${action ? '<br><span style="font-weight:400;margin-top:4px;display:block;">' + action + '</span>' : ''}`, false);
 }
 
+/* 결과 박스 안의 연결 버튼 — 결과를 읽은 그 자리에서 바로 누를 수 있게 */
+function checkConnectHTML(cls, isEmergency) {
+  if (typeof HELPLINES === 'undefined') return '';
+  if (isEmergency || cls === 'high') {
+    return '<div class="check-connect">'
+      + '<a class="check-connect-btn" href="' + helplineTel('suicide') + '" data-umami-event="check-connect" data-umami-event-type="call-109">📞 109에 전화하기 <span>무료 · 24시간</span></a>'
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineSms('suicide') + '" data-umami-event="check-connect" data-umami-event-type="sms-109">💬 109에 문자 보내기</a>'
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199">📞 1577-0199 정신건강상담전화</a>'
+      + '<p class="check-connect-script">처음엔 <strong>"요즘 많이 힘들어서 연락했어요"</strong>라고만 해도 돼요. 지금 당장 위험하다면 <a href="tel:119">119</a>.</p>'
+      + '</div>';
+  }
+  if (cls === 'mid') {
+    return '<p class="check-connect-script">이 상태가 2주 넘게 이어지면 <a href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199">1577-0199</a>에 전화해 보세요. 가까운 정신건강복지센터로 연결해 줘요.</p>';
+  }
+  return '';
+}
+
 function showCheckResult(resultEl, cls, html, isEmergency) {
   resultEl.style.display = 'block';
   resultEl.className = 'check-result ' + cls;
-  resultEl.innerHTML = html + '<div class="check-disclaimer">이 결과는 의학적·심리학적 진단이 아닌 참고용이에요. 정확한 진단은 전문가와 상담하세요. 자세한 내용(비밀보장 범위 등)은 전화 시 확인해 주세요.</div>';
+  resultEl.innerHTML = html + checkConnectHTML(cls, isEmergency)
+    + '<div class="check-disclaimer">이 결과는 참고용이며, 의학적·심리학적 진단을 대체하지 않습니다.</div>';
   setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
 }
 
