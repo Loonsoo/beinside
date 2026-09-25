@@ -360,6 +360,7 @@ button.logo{
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto;}}
 body{
   font-family:var(--font-sans);
   font-size:clamp(15px, calc(15px + var(--text-scale) * 2px), 21px);
@@ -437,8 +438,9 @@ button.logo,
 body.subpage .hdr-back{display:flex;}
 /* 프로필 칩은 헤더에 두지 않는다(첫 방문 위기 사용자에게 개인정보 수집으로 읽힘). 메뉴 "아이 프로필"에서 연다 */
 .prof-chip{display:none !important;}
-nav{display:flex;gap:4px;justify-content:flex-end;}
-nav button{
+/* 옛 전역 nav 규칙. 헤더 메뉴(nav.hdr-menu)는 제 규칙(pages.css)을 쓰므로 빼 둔다 */
+nav:not(.hdr-menu){display:flex;gap:4px;justify-content:flex-end;}
+nav:not(.hdr-menu) button{
   background:none;border:none;
   font-family:var(--font-sans);font-size:13px;
   color:var(--ink-m);cursor:pointer;
@@ -446,8 +448,8 @@ nav button{
   transition:all var(--calm-dur) var(--calm-ease);font-weight:600;
   letter-spacing:-.2px;
 }
-nav button:hover:not(.on){background:rgba(var(--accent-rgb),.08);color:var(--peach-d);}
-nav button.on{
+nav:not(.hdr-menu) button:hover:not(.on){background:rgba(var(--accent-rgb),.08);color:var(--peach-d);}
+nav:not(.hdr-menu) button.on{
   background:var(--peach-d);color:var(--on-accent);
   box-shadow:0 2px 8px rgba(var(--accent-rgb),.20);
 }

@@ -196,12 +196,18 @@ function ppSubmitDate(e) {
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
-/* ── 랜딩: "지금 많이 힘들어요" → 109가 먼저 보이는 응답 (대시보드 "많이 힘들어요"와 같은 문구) ── */
+/* ── 랜딩: "지금 많이 힘들어요" → 109가 먼저 보이는 응답 (대시보드 "많이 힘들어요"와 같은 문구)
+   한 번 더 누르면 접는다(aria-expanded 토글). 접어도 도크의 109는 그대로 보인다 ── */
 function ppLandingHard() {
   const btn = document.getElementById('pp-l-hard');
   const box = document.getElementById('pp-l-reply');
   if (!box) return;
-  if (box.hidden || !box.innerHTML) box.innerHTML = PP_MOOD_REPLY.hard();
+  if (!box.hidden && box.innerHTML) {
+    box.hidden = true;
+    if (btn) { btn.setAttribute('aria-expanded', 'false'); btn.focus({ preventScroll: true }); }
+    return;
+  }
+  box.innerHTML = PP_MOOD_REPLY.hard();
   box.hidden = false;
   if (btn) btn.setAttribute('aria-expanded', 'true');
   box.focus({ preventScroll: true });

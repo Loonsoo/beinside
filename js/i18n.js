@@ -6,7 +6,6 @@
 var I18n = (function () {
   'use strict';
 
-  var SUPPORTED = ['ko', 'en', 'vi', 'zh'];
   var DEFAULT   = 'ko';
   var STORAGE_KEY = 'beinside_lang';
 
@@ -35,15 +34,12 @@ var I18n = (function () {
     });
   }
 
-  /* ── 언어 감지 ── */
+  /* ── 언어: 한국어 고정 ──
+     본문·산후 홈·위기 도크는 한국어뿐이라, 일부 라벨만 다른 언어가 되면 화면에 언어가 섞인다
+     (reports/design/2026-09-direction.md D4·결정 6). 예전에 저장된 beinside_lang은 지운다.
+     다문화 가이드는 자체 언어 선택(beinside_mc_lang, multicultural-page.js)을 쓰며 여기서 건드리지 않는다. */
   function detect() {
-    // 1) localStorage
-    var saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
-
-    // 2) 브라우저 언어는 따라가지 않는다(한국어 기본).
-    //    본문·산후 홈·위기 도크는 한국어뿐이라, 브라우저 언어로 일부 라벨만 영어가 되면 화면에 언어가 섞인다
-    //    (reports/design/2026-09-direction.md D4·결정 6). 다문화 가이드는 자체 언어 선택(multicultural-page.js)을 쓴다.
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
     return DEFAULT;
   }
 
@@ -91,41 +87,20 @@ var I18n = (function () {
         el.textContent = t(key);
       }
     }
-    // html lang 속성 업데이트
-    document.documentElement.lang = _locale;
-  }
-
-  /* ── 언어 전환 ── */
-  function setLocale(lang, cb) {
-    if (SUPPORTED.indexOf(lang) === -1) lang = DEFAULT;
-    _locale = lang;
-    localStorage.setItem(STORAGE_KEY, lang);
-
-    // localStorage에 저장 후 새로고침 — JS 하드코딩 텍스트까지 완전 반영
-    location.reload();
+    // <html lang="ko">는 바꾸지 않는다 (한국어 고정)
   }
 
   /* ── 초기화 ── */
   function init(cb) {
     _locale = detect();
 
-    // 기본 언어(ko)와 선택 언어 동시 로드
-    var loaded = 0;
-    var needed = (_locale === DEFAULT) ? 1 : 2;
-
-    function done() {
-      loaded++;
-      if (loaded >= needed) {
-        _ready = true;
-        applyDOM();
-        for (var i = 0; i < _onReady.length; i++) _onReady[i]();
-        _onReady = [];
-        cb && cb();
-      }
-    }
-
-    loadLocale(DEFAULT, done);
-    if (_locale !== DEFAULT) loadLocale(_locale, done);
+    loadLocale(DEFAULT, function () {
+      _ready = true;
+      applyDOM();
+      for (var i = 0; i < _onReady.length; i++) _onReady[i]();
+      _onReady = [];
+      cb && cb();
+    });
   }
 
   /* ── 준비 완료 콜백 ── */
@@ -138,10 +113,8 @@ var I18n = (function () {
   return {
     init:       init,
     t:          t,
-    setLocale:  setLocale,
     getLocale:  function () { return _locale; },
     applyDOM:   applyDOM,
-    onReady:    onReady,
-    SUPPORTED:  SUPPORTED
+    onReady:    onReady
   };
 })();

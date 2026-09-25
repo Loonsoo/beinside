@@ -46,7 +46,7 @@ function scrollToCard(id) {
   if (!el) return;
   const card = el.closest('.card') || el;
   const top = card.getBoundingClientRect().top + window.scrollY - 90;
-  window.scrollTo({ top, behavior: 'smooth' });
+  window.scrollTo({ top, behavior: scrollMotion() });
 }
 
 
@@ -700,14 +700,14 @@ function renderMentalPageContent(key) {
 
   const hotlineMap = {
     infant:    '109 (자살예방·산후우울 상담, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
-    toddler:   '109 (정신건강 위기상담, 무료·24시간) / 1577-0199 (정신건강복지센터)',
+    toddler:   '109 (자살예방상담전화, 무료·24시간) / 1577-0199 (정신건강위기상담전화, 정신건강복지센터 연결)',
     preschool: '109 / Wee센터 (학교 아동상담, 무료) / 아동상담치료센터',
     school:    '1388 (청소년전화) / Wee클래스 (학교 내 무료 상담) / 109',
     teen:      '109 (자살예방, 무료·24시간) / 1388 (청소년전화) / 청소년 마음이음 상담센터',
     young:     '1577-0199 (정신건강 위기상담) / 청년 마음건강 바우처 (복지로 검색) / 109',
-    adult:     '1577-0199 / 직장인 EAP(근로자지원프로그램, 회사별 무료 제공) / 정신건강복지센터',
-    middle:    '1577-0199 / 정신건강복지센터 (전국, 무료) / 갱년기 클리닉',
-    senior:    '1577-0199 / 정신건강복지센터 (무료) / 노인맞춤돌봄서비스 (주민센터)',
+    adult:     '1577-0199 / 직장인 EAP(근로자지원프로그램, 회사가 지원하는 곳이 있어요) / 정신건강복지센터',
+    middle:    '1577-0199 / 정신건강복지센터 (전국) / 갱년기 클리닉',
+    senior:    '1577-0199 / 정신건강복지센터 / 노인맞춤돌봄서비스 (주민센터)',
   };
 
   el.innerHTML = `

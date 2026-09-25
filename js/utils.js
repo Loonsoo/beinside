@@ -16,6 +16,14 @@ function esc(s) {
 }
 
 /**
+ * 스크롤 움직임 — "동작 줄이기"를 켠 사용자에게는 즉시 이동
+ */
+function scrollMotion() {
+  return typeof window !== 'undefined' && window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+}
+
+/**
  * 월령 → 발달 단계 레이블
  * 단일 정의 — 이 함수만 수정하면 전체에 반영됩니다.
  */

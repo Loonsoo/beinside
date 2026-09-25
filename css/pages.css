@@ -1535,7 +1535,10 @@
   display: flex; flex-direction: column;
   gap: 6px;
   padding: 0 var(--sp-4) var(--sp-3);
+  margin: 0; list-style: none;
 }
+.emergency-list > li, .emer-alt-list > li { display: block; }
+.emer-alt-list { margin: 0; padding: 0; list-style: none; }
 .emer-row {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 16px;
@@ -1925,22 +1928,21 @@
 }
 
 /* ── 빠른 나가기 (가정폭력·학대·청소년 페이지) ──
-   헤더 아래 우측 고정. 가해자가 봐도 모호하게 "나가기"만 표기. */
+   헤더 안, 메뉴 버튼 왼쪽. 떠 있지 않으므로 메뉴 시트·검색 모달·위기 도크와 겹치지 않는다.
+   가해자가 봐도 모호하게 "나가기"만 표기. */
 .quick-exit-btn {
-  position: fixed;
-  top: calc(var(--header-h) + 8px + env(safe-area-inset-top, 0px)); /* 헤더 바로 아래. 위기 도크(하단)와 겹치지 않는다 */
-  right: 12px;
-  z-index: 99999;
-  min-width: 56px; min-height: 56px;
-  padding: 8px 16px;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 56px; min-height: 44px;
+  margin-right: 4px;
+  padding: 0 14px;
   background: var(--text-body); color: var(--surface-card);
   border: none; border-radius: 10px;
   font-family: var(--font-sans);
-  font-size: 15px; font-weight: 600;
+  font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 600;
+  white-space: nowrap;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: var(--shadow-md);
 }
 .quick-exit-btn[hidden] { display: none; }
 .quick-exit-btn:hover,
@@ -1959,9 +1961,20 @@
   .emergency-hero-area { padding: 16px 18px 12px; }
   .emergency-hero-text { font-size: 14px; }
   .emergency-list { padding: 0 var(--sp-2) var(--sp-2); }
-  .emer-row { padding: 12px 14px; gap: 10px; }
-  .emer-row-desc { display: none; }
-  .emer-row-num { min-width: 60px; }
+  /* 모바일: 설명을 숨기지 않고 번호·이름 아래 한 줄로 내린다 (1577-0199 비용 표기가 보여야 한다) */
+  .emer-row {
+    display: grid; grid-template-columns: auto auto 1fr auto;
+    column-gap: 10px; row-gap: 2px; padding: 12px 14px;
+  }
+  .emer-row-icon { grid-column: 1; grid-row: 1 / span 2; }
+  .emer-row-num { grid-column: 2; grid-row: 1; min-width: 60px; }
+  .emer-row-name { grid-column: 3; grid-row: 1; }
+  .emer-row-desc {
+    grid-column: 2 / 4; grid-row: 2;
+    text-align: left; white-space: normal;
+    font-size: calc(13px + var(--text-scale, 0) * 1px); line-height: 1.45;
+  }
+  .emer-row-arrow { grid-column: 4; grid-row: 1 / span 2; }
 }
 
 /* ══════════════════════════════════════════
@@ -4275,141 +4288,7 @@
   border-bottom-color:var(--ink);
 }
 
-/* ═══════════════════════════════════════════════
-   온보딩 오버레이
-═══════════════════════════════════════════════ */
-.onboard-overlay{
-  position:fixed; inset:0; z-index:10000;
-  display:none;
-  background:rgba(0,0,0,.45);
-  backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  justify-content:center; align-items:center;
-  opacity:0;
-  transition:opacity .3s ease;
-}
-.onboard-overlay.on{
-  display:flex;
-  opacity:1;
-}
-.onboard-overlay.out{
-  opacity:0;
-}
-.onboard-card{
-  background:var(--white);
-  border-radius:24px;
-  padding:36px 28px 28px;
-  max-width:380px;
-  width:calc(100vw - 40px);
-  max-height:calc(100vh - 60px);
-  overflow-y:auto;
-  box-shadow:0 20px 60px rgba(0,0,0,.18);
-  text-align:center;
-  animation:onboard-pop .35s cubic-bezier(.34,1.56,.64,1);
-}
-@keyframes onboard-pop{
-  from{ opacity:0; transform:scale(.92) translateY(16px); }
-  to{ opacity:1; transform:scale(1) translateY(0); }
-}
-.onboard-overlay.out .onboard-card{
-  animation:onboard-out .25s ease forwards;
-}
-@keyframes onboard-out{
-  to{ opacity:0; transform:scale(.95) translateY(10px); }
-}
-.onboard-logo{
-  font-size:40px;
-  margin-bottom:8px;
-}
-.onboard-title{
-  font-family:var(--font-accent);
-  font-size:20px;
-  font-weight:700;
-  color:var(--ink);
-  margin:0 0 6px;
-}
-.onboard-sub{
-  font-size:13px;
-  color:var(--ink-m);
-  margin:0 0 24px;
-  line-height:1.6;
-}
-.onboard-step-label{
-  font-size:14px;
-  font-weight:600;
-  color:var(--ink);
-  margin-bottom:14px;
-}
-.onboard-options{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.onboard-opt{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:14px 18px;
-  border:1.5px solid var(--line);
-  border-radius:14px;
-  background:var(--white);
-  cursor:pointer;
-  transition:transform .2s, border-color .2s, box-shadow .2s;
-  text-align:left;
-}
-.onboard-opt:hover,
-.onboard-opt:active{
-  border-color:var(--peach);
-  transform:translateY(-2px);
-  box-shadow:0 4px 16px rgba(var(--accent-rgb),.15);
-}
-.onboard-opt-icon{
-  font-size:24px;
-  flex-shrink:0;
-}
-.onboard-opt--sm .onboard-opt-icon{
-  font-size:20px;
-}
-.onboard-opt-text{
-  font-size:14px;
-  font-weight:500;
-  color:var(--ink);
-  line-height:1.5;
-}
-.onboard-opt--sm .onboard-opt-text{
-  font-size:13px;
-}
-.onboard-skip{
-  display:block;
-  margin:20px auto 0;
-  padding:10px 20px;
-  border:none;
-  background:none;
-  color:var(--ink-l);
-  font-size:13px;
-  cursor:pointer;
-  text-decoration:underline;
-  text-underline-offset:3px;
-}
-.onboard-skip:hover{ color:var(--ink-m); }
-.onboard-back{
-  display:block;
-  margin:16px auto 0;
-  padding:8px 16px;
-  border:none;
-  background:none;
-  color:var(--ink-l);
-  font-size:13px;
-  cursor:pointer;
-}
-.onboard-back:hover{ color:var(--ink-m); }
-.onboard-fade-in{
-  animation:onboard-fadein .25s ease;
-}
-@keyframes onboard-fadein{
-  from{ opacity:0; transform:translateX(12px); }
-  to{ opacity:1; transform:translateX(0); }
-}
+/* 온보딩 오버레이는 없앴다 (산후 홈이 첫 안내. 도크를 덮을 수 있어 제거) */
 
 /* 떠 있는 공유 버튼(share-fab)은 없앴다. 공유는 헤더 메뉴에서 연다 */
 
@@ -4831,15 +4710,36 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
   z-index: 9000;
   background: var(--surface-base);
   border-top: 1px solid var(--line-subtle);
-  padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
   font-family: var(--font-sans);
 }
+/* 키보드가 올라와 있는 동안(글 입력 중)만 도크를 감춘다. 자리는 그대로 두어 화면이 튀지 않는다.
+   도크를 키보드 위로 올리면 입력칸을 가리므로 입력칸을 우선한다. 입력을 마치면 바로 다시 보인다 (js/app.js initKeyboardDock) */
+html.kb-open .crisis-dock { visibility: hidden; }
 .crisis-dock-inner { max-width: 640px; margin: 0 auto; }
+/* 라벨 줄: 왼쪽 "지금 위험하다면", 오른쪽 마들랜 작은 글자 링크.
+   줄 높이는 24px로 두고, 링크의 누르는 영역만 위아래로 넓혀 44px를 맞춘다(도크가 높아지지 않게) */
+.crisis-dock-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  min-height: 24px; margin: 0 4px 10px;
+}
 .crisis-dock-label {
-  margin: 0 4px 6px;
-  font-size: 14px; font-weight: 500; line-height: 1.4;
+  margin: 0;
+  font-size: calc(14px + var(--text-scale, 0) * 1px); font-weight: 500; line-height: 1.4;
   color: var(--text-body);
 }
+.crisis-dock-madlan {
+  display: inline-flex; align-items: center;
+  min-height: 44px; min-width: 44px; margin: -10px -4px; padding: 0 4px;
+  font-size: calc(14px + var(--text-scale, 0) * 1px); font-weight: 600; line-height: 1.4;
+  color: var(--text-body);
+  text-decoration: underline; text-underline-offset: 3px;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.crisis-dock-madlan:hover { color: var(--text-primary); }
+.crisis-dock-madlan:focus-visible { outline: 3px solid var(--text-primary); outline-offset: -3px; border-radius: 8px; }
 .crisis-dock-row { display: grid; grid-template-columns: 1.1fr 1.1fr .8fr; gap: 8px; }
 .crisis-dock-btn {
   display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -4868,7 +4768,9 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
 @media (min-width: 641px) {
   .crisis-dock { padding-top: 10px; }
   .crisis-dock-inner { display: flex; align-items: center; gap: 14px; }
-  .crisis-dock-label { margin: 0; flex: none; font-size: 15px; }
+  .crisis-dock-head { flex: none; flex-direction: column; align-items: flex-start; gap: 0; margin: 0; }
+  .crisis-dock-label { font-size: calc(15px + var(--text-scale, 0) * 1px); }
+  .crisis-dock-madlan { margin: -12px -4px; }
   .crisis-dock-row { flex: 1; }
 }
 @media (max-width: 359px) { .crisis-dock-ico { display: none; } }
@@ -5029,8 +4931,8 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
 .pp-l-calls { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
 .pp-l-calls .pp-call { margin-top: 0; }
 .pp-109 { margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: var(--surface-raised); }
-.pp-109-name { font-size: 16px; color: var(--text-primary); }
-.pp-109-name span { font-size: 14px; color: var(--text-secondary); margin-left: 4px; }
+.pp-109-name { font-size: calc(16px + var(--text-scale, 0) * 1px); color: var(--text-primary); }
+.pp-109-name span { font-size: calc(14px + var(--text-scale, 0) * 1px); color: var(--text-secondary); margin-left: 4px; }
 .pp-109-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
 .pp-109-row .pp-call { margin-top: 0; justify-content: center; padding: 0 10px; }
 
@@ -5133,7 +5035,7 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
 .pp-grid > .pp-details[open] > summary::after { transform: rotate(45deg); }
 .pp-tile:hover, .pp-grid > .pp-details > summary:hover { box-shadow: inset 0 0 0 1.5px var(--stroke-control); }
 .pp-details-body { padding: 0 16px 16px; }
-.pp-flag-head { margin: 14px 0 6px; font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.pp-flag-head { margin: 14px 0 6px; font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700; color: var(--text-primary); }
 .pp-flag-head:first-child { margin-top: 0; }
 
 .pp-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
@@ -5196,7 +5098,7 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
 }
 .pp-call .pp-ico { width: 20px; height: 20px; }
 .pp-connect .pp-call { margin-top: 0; }
-.pp-call > span:not(.pp-call-name):not(.sr-only) { margin-left: auto; padding-left: 8px; font-size: 14px; font-weight: 500; text-align: right; }
+.pp-call > span:not(.pp-call-name):not(.sr-only) { margin-left: auto; padding-left: 8px; font-size: calc(14px + var(--text-scale, 0) * 1px); font-weight: 500; text-align: right; }
 .pp-call--primary { background: var(--accent-strong); color: var(--on-accent); border-color: var(--accent-strong); }
 .pp-call--urgent { color: var(--danger-strong); border: 2px solid var(--danger-strong); }
 .pp-call--stack { flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; padding-block: 8px; }
@@ -5210,10 +5112,11 @@ body { padding-bottom: calc(var(--dock-h) + 8px); }
 /* 문장 안의 번호 링크: 줄 간격은 그대로, 누르는 영역만 높이 44px로 넓힌다 */
 .tel-inline {
   position: relative;
+  display: inline-block; min-width: 44px; text-align: center;
   color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px;
 }
 .tel-inline::after {
-  content: ''; position: absolute; left: -6px; right: -6px; top: 50%;
+  content: ''; position: absolute; left: 0; right: 0; top: 50%;
   height: 44px; transform: translateY(-50%);
 }
 .pp-more { margin-top: 2px; }

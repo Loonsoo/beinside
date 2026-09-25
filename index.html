@@ -1,32 +1,55 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <!-- 글로벌 에러 핸들링: JS 실패 시 빈 화면 방지 -->
+  <!-- 글로벌 에러 핸들링: JS 실패 시 빈 화면 방지.
+       오류 화면에도 위기 번호(109 전화·109 문자·119)를 넣는다. 도크가 살아 있으면 도크 위까지만 덮는다.
+       CSS가 못 불러와져도 떠야 하므로 색은 인라인 hex(css/base.css·dark.css 팔레트와 같은 값)로 둔다. -->
   <script>
   (function(){
     var shown = false;
-    function showFallback(msg) {
+    var PAL = {
+      light: { bg:'#F2F1EC', raised:'#FAFAF6', ink:'#1E2925', sub:'#56635E', stroke:'#7C8A84', accent:'#35604F', onAccent:'#FAFAF6', danger:'#9E3F3F' },
+      dark:  { bg:'#171A13', raised:'#20241B', ink:'#D1D5C3', sub:'#9BA08C', stroke:'#71775F', accent:'#9AAD80', onAccent:'#171A13', danger:'#EC9B87' }
+    };
+    function fallbackHTML(c) {
+      var btn = 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;padding:8px 12px;border-radius:14px;text-decoration:none;font-weight:700;font-size:18px;line-height:1.3;';
+      var sm = 'font-size:13px;font-weight:500;';
+      return '<div style="max-width:420px;width:100%;margin:auto">'
+        + '<h2 id="error-fallback-t" style="font-size:20px;margin:0 0 8px;color:' + c.ink + '">일시적인 문제가 생겼어요</h2>'
+        + '<p style="font-size:15px;line-height:1.6;color:' + c.sub + ';margin:0 0 20px">새로고침하거나 잠시 뒤에 다시 열어 주세요. 지금 위험하다면 아래로 바로 연락할 수 있어요.</p>'
+        + '<div style="display:grid;gap:8px;margin:0 0 20px;text-align:center">'
+        + '<a href="tel:109" style="' + btn + 'background:' + c.accent + ';color:' + c.onAccent + ';border:1.5px solid ' + c.accent + '">109 전화<span style="' + sm + '">자살예방상담전화 · 무료 · 24시간</span></a>'
+        + '<a href="sms:109" style="' + btn + 'background:' + c.raised + ';color:' + c.ink + ';border:1.5px solid ' + c.stroke + '">109 문자<span style="' + sm + 'color:' + c.sub + '">자살예방상담전화 문자 상담</span></a>'
+        + '<a href="tel:119" style="' + btn + 'background:' + c.raised + ';color:' + c.danger + ';border:2px solid ' + c.danger + '">119<span style="' + sm + '">구급차와 응급 출동</span></a>'
+        + '</div>'
+        + '<button type="button" onclick="location.reload()" style="min-height:48px;padding:12px 32px;border:1.5px solid ' + c.stroke + ';border-radius:24px;background:transparent;color:' + c.ink + ';font-size:16px;font-family:inherit;cursor:pointer">새로고침</button>'
+        + '</div>';
+    }
+    function showFallback() {
       if (shown) return;
       shown = true;
-      var el = document.getElementById('error-fallback');
-      if (!el) {
-        el = document.createElement('div');
-        el.id = 'error-fallback';
-        el.style.cssText = 'position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;background:#F2F1EC;padding:32px;text-align:center;font-family:sans-serif;color:#1E2925';
-        el.innerHTML = '<div>'
-          + '<p style="font-size:48px;margin:0 0 16px">🌻</p>'
-          + '<h2 style="font-size:20px;margin:0 0 8px">일시적인 문제가 발생했어요</h2>'
-          + '<p style="font-size:14px;color:#56635E;margin:0 0 24px">잠시 후 다시 시도해 주세요</p>'
-          + '<button onclick="location.reload()" style="padding:12px 32px;border:none;border-radius:24px;background:#35604F;color:#FAFAF6;font-size:16px;cursor:pointer">새로고침</button>'
-          + '</div>';
-        (document.body || document.documentElement).appendChild(el);
-      }
+      if (document.getElementById('error-fallback')) return;
+      var c = document.documentElement.getAttribute('data-theme') === 'dark' ? PAL.dark : PAL.light;
+      var el = document.createElement('div');
+      el.id = 'error-fallback';
+      el.setAttribute('role', 'alertdialog');
+      el.setAttribute('aria-labelledby', 'error-fallback-t');
+      /* bottom: 도크가 그려졌으면 --dock-h만큼 비워 도크를 보이게 둔다. CSS가 없으면 0 */
+      el.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:var(--dock-h,0px);z-index:99999;display:flex;overflow:auto;background:' + c.bg + ';padding:32px 16px;text-align:center;font-family:sans-serif;color:' + c.ink;
+      el.innerHTML = fallbackHTML(c);
+      (document.body || document.documentElement).appendChild(el);
     }
-    window.onerror = function(msg, src, line, col, err) {
-      if (src && src.indexOf('/js/') !== -1) showFallback();
+    /* 우리 스크립트(같은 출처의 /js/)에서 난 오류만 오류 화면을 띄운다.
+       외부 스크립트(통계·카카오)나 사소한 Promise 거부로는 띄우지 않는다. */
+    var OWN = location.origin + '/js/';
+    window.onerror = function(msg, src) {
+      if (src && src.indexOf(OWN) === 0) showFallback();
     };
     window.addEventListener('unhandledrejection', function(e) {
-      showFallback();
+      var r = e && e.reason;
+      if (!r || typeof r !== 'object' || !r.stack) return;
+      if (!/^(TypeError|ReferenceError|SyntaxError|RangeError)$/.test(r.name)) return;
+      if (String(r.stack).indexOf(OWN) !== -1) showFallback();
     });
   })();
   </script>
@@ -70,16 +93,27 @@
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet">
   <!-- 고운바탕 — 로고·감성 한 줄 제목만 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Flash-of-wrong-theme 방지: CSS 로드 전 테마 적용 -->
+  <!-- Flash-of-wrong-theme 방지: CSS 로드 전 테마 적용.
+       직접 고른 값(beinside_theme)이 있으면 그 값, 없으면 시스템 설정(prefers-color-scheme)을 따른다.
+       시스템이 바뀌면 js/app.js initTheme이 다시 맞춘다. -->
   <script>
   (function(){
-    var s = localStorage.getItem('beinside_theme');
-    var t = s === 'dark' ? 'dark' : 'light';
+    var s = null;
+    try { s = localStorage.getItem('beinside_theme'); } catch (e) {}
+    var sysDark = !!(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    var t = s === 'dark' || s === 'light' ? s : (sysDark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', t);
-    // theme-color(media 두 개)를 실제 적용된 테마 바탕색에 맞춘다
-    var m = document.querySelectorAll('meta[name="theme-color"]');
-    for (var i = 0; i < m.length; i++) m[i].setAttribute('content', t === 'dark' ? '#171A13' : '#F2F1EC');
+    // 직접 고른 테마가 시스템과 다를 수 있어, 그때만 theme-color(media 두 개)를 고른 테마 바탕색으로 맞춘다.
+    // 시스템을 따를 때는 media 조건이 알아서 고른다.
+    if (s === 'dark' || s === 'light') {
+      var m = document.querySelectorAll('meta[name="theme-color"]');
+      for (var i = 0; i < m.length; i++) {
+        m[i].setAttribute('data-base', m[i].getAttribute('content'));
+        m[i].setAttribute('content', t === 'dark' ? '#171A13' : '#F2F1EC');
+      }
+    }
     // 첫 화면 하늘: 접속 시각으로 한 번만 고른다 (새벽 0~5 · 아침 6~10 · 낮 11~16 · 저녁 17~23). 움직이지 않는다.
+    // 색은 테마별로 css/base.css(라이트)·css/dark.css([data-theme="dark"][data-sky])가 정한다.
     var h = new Date().getHours();
     document.documentElement.setAttribute('data-sky', h < 6 ? 'dawn' : h < 11 ? 'morning' : h < 17 ? 'day' : 'evening');
   })();
@@ -113,7 +147,6 @@
     <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4l4 4M5 12v6.5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V12"/></symbol>
   </defs>
 </svg>
-<button id="quick-exit" class="quick-exit-btn" type="button" hidden onclick="quickExit()" aria-label="빨리 나가기, 네이버 첫 화면으로 바뀌어요">나가기</button>
 <!-- 스킵 네비게이션 (접근성) -->
 <a href="#hero" class="skip-nav">본문으로 건너뛰기</a>
 
@@ -136,6 +169,8 @@
     <button class="logo" type="button" onclick="goHome()" aria-label="BeInside 홈으로">BeInside</button>
   </div>
   <div class="hdr-right">
+    <!-- 빠른 나가기: 헤더 안(메뉴 버튼 왼쪽). 메뉴 시트·검색 모달과 겹치지 않는다 -->
+    <button id="quick-exit" class="quick-exit-btn" type="button" hidden onclick="quickExit()" aria-label="빨리 나가기, 네이버 첫 화면으로 바뀌어요">나가기</button>
     <button class="menu-btn" id="menu-btn" type="button" onclick="toggleHeaderMenu()" aria-expanded="false" aria-controls="hdr-menu">
       <span class="menu-btn-lines" aria-hidden="true"><span></span><span></span><span></span></span>
       <span class="menu-btn-label">메뉴</span>
@@ -381,7 +416,7 @@
             <div class="pp-109">
               <p class="pp-109-name"><strong>109 자살예방상담전화</strong> <span>무료 · 24시간</span></p>
               <div class="pp-109-row">
-                <a class="pp-call pp-call--primary" href="tel:109" data-umami-event="pp-connect" data-umami-event-type="call-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109에 전화하기</a>
+                <a class="pp-call" href="tel:109" data-umami-event="pp-connect" data-umami-event-type="call-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109에 전화하기</a>
                 <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109에 문자 보내기</a>
               </div>
             </div>
@@ -1064,76 +1099,76 @@
         <p class="emergency-hero-text">누르면 바로 전화가 연결돼요.</p>
       </div>
 
-      <div class="emergency-list" role="list" aria-label="긴급 전화번호 목록">
-        <a href="tel:119" class="emer-row emer-row--primary" role="listitem" aria-label="119 응급구조로 전화하기" data-umami-event="emergency-call" data-umami-event-number="119">
+      <ul class="emergency-list" aria-label="긴급 전화번호 목록">
+        <li><a href="tel:119" class="emer-row emer-row--primary" data-umami-event="emergency-call" data-umami-event-number="119">
           <span class="emer-row-icon" role="img" aria-hidden="true">🚑</span>
           <span class="emer-row-num" style="color:var(--emer-119)">119</span>
           <span class="emer-row-name">응급 · 구조</span>
           <span class="emer-row-desc">신체 응급 · 구급차. 24시간</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-        <a href="tel:109" class="emer-row emer-row--primary" role="listitem" aria-label="109 자살예방 상담전화로 전화하기" data-umami-event="emergency-call" data-umami-event-number="109">
+        </a></li>
+        <li><a href="tel:109" class="emer-row emer-row--primary" data-umami-event="emergency-call" data-umami-event-number="109">
           <span class="emer-row-icon" role="img" aria-hidden="true">💜</span>
           <span class="emer-row-num" style="color:var(--emer-109)">109</span>
           <span class="emer-row-name">자살예방 상담</span>
           <span class="emer-row-desc">무료 · 24시간 · 상담사 연결</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-        <a href="tel:112" class="emer-row" role="listitem" aria-label="112 학대범죄 신고 전화하기" data-umami-event="emergency-call" data-umami-event-number="112">
+        </a></li>
+        <li><a href="tel:112" class="emer-row" data-umami-event="emergency-call" data-umami-event-number="112">
           <span class="emer-row-icon" role="img" aria-hidden="true">🚨</span>
           <span class="emer-row-num" style="color:var(--emer-112)">112</span>
           <span class="emer-row-name">학대 · 범죄 신고</span>
           <span class="emer-row-desc">아동학대 · 가정폭력. 24시간</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-        <a href="tel:1388" class="emer-row" role="listitem" aria-label="1388 청소년 전화하기" data-umami-event="emergency-call" data-umami-event-number="1388">
+        </a></li>
+        <li><a href="tel:1388" class="emer-row" data-umami-event="emergency-call" data-umami-event-number="1388">
           <span class="emer-row-icon" role="img" aria-hidden="true">💚</span>
           <span class="emer-row-num" style="color:var(--emer-1388)">1388</span>
           <span class="emer-row-name">청소년 전화</span>
           <span class="emer-row-desc">무료 · 24시간</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-        <a href="tel:1366" class="emer-row" role="listitem" aria-label="1366 여성긴급전화로 전화하기" data-umami-event="emergency-call" data-umami-event-number="1366">
+        </a></li>
+        <li><a href="tel:1366" class="emer-row" data-umami-event="emergency-call" data-umami-event-number="1366">
           <span class="emer-row-icon" role="img" aria-hidden="true">🌸</span>
           <span class="emer-row-num" style="color:var(--emer-1366)">1366</span>
           <span class="emer-row-name">여성긴급전화</span>
           <span class="emer-row-desc">가정폭력 · 성폭력. 24시간</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-        <a href="tel:1577-0199" class="emer-row" role="listitem" aria-label="1577-0199 정신건강 위기상담 전화하기" data-umami-event="emergency-call" data-umami-event-number="1577-0199">
+        </a></li>
+        <li><a href="tel:1577-0199" class="emer-row" data-umami-event="emergency-call" data-umami-event-number="1577-0199">
           <span class="emer-row-icon" role="img" aria-hidden="true">💙</span>
           <span class="emer-row-num" style="color:var(--emer-1577)">1577-0199</span>
           <span class="emer-row-name">정신건강 위기상담</span>
-          <span class="emer-row-desc">무료 · 24시간</span>
+          <span class="emer-row-desc">24시간 · 상담 무료(통화료는 들 수 있어요)</span>
           <span class="emer-row-arrow" aria-hidden="true"></span>
-        </a>
-      </div>
+        </a></li>
+      </ul>
 
       <!-- 전화가 어려울 때 대안 채널 -->
       <div class="emer-alt-channels">
         <div class="emer-alt-title">전화가 어려우시면</div>
-        <div class="emer-alt-list" role="list" aria-label="대안 상담 채널">
-          <a href="sms:109" class="emer-alt-row" role="listitem" aria-label="109 문자 상담">
-            <span class="emer-alt-row-icon">💬</span>
+        <ul class="emer-alt-list" aria-label="대안 상담 채널">
+          <li><a href="sms:109" class="emer-alt-row">
+            <span class="emer-alt-row-icon" aria-hidden="true">💬</span>
             <span class="emer-alt-row-name">109 문자 상담</span>
             <span class="emer-alt-row-desc">문자로 상담사에게 연결</span>
-          </a>
-          <a href="https://www.suicide.or.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="온라인 채팅 상담">
-            <span class="emer-alt-row-icon">💻</span>
+          </a></li>
+          <li><a href="https://www.suicide.or.kr" class="emer-alt-row" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-row-icon" aria-hidden="true">💻</span>
             <span class="emer-alt-row-name">온라인 채팅 상담</span>
-            <span class="emer-alt-row-desc">자살예방상담전화 홈페이지</span>
-          </a>
-          <a href="https://www.cyber1388.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="청소년 사이버상담">
-            <span class="emer-alt-row-icon">🧒</span>
+            <span class="emer-alt-row-desc">자살예방상담전화 홈페이지</span><span class="sr-only"> (새 창)</span>
+          </a></li>
+          <li><a href="https://www.cyber1388.kr" class="emer-alt-row" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-row-icon" aria-hidden="true">🧒</span>
             <span class="emer-alt-row-name">청소년 사이버상담</span>
-            <span class="emer-alt-row-desc">1388 채팅 · 카카오톡</span>
-          </a>
-          <a href="https://www.women1366.kr" class="emer-alt-row" role="listitem" target="_blank" rel="noopener noreferrer" aria-label="여성긴급 온라인 상담">
-            <span class="emer-alt-row-icon">🌸</span>
+            <span class="emer-alt-row-desc">1388 채팅 · 카카오톡</span><span class="sr-only"> (새 창)</span>
+          </a></li>
+          <li><a href="https://www.women1366.kr" class="emer-alt-row" target="_blank" rel="noopener noreferrer">
+            <span class="emer-alt-row-icon" aria-hidden="true">🌸</span>
             <span class="emer-alt-row-name">여성긴급 온라인 상담</span>
-            <span class="emer-alt-row-desc">가정폭력 · 성폭력 상담 접수</span>
-          </a>
-        </div>
+            <span class="emer-alt-row-desc">가정폭력 · 성폭력 상담 접수</span><span class="sr-only"> (새 창)</span>
+          </a></li>
+        </ul>
       </div>
 
       <div class="emer-firstaid-wrap">
@@ -1220,7 +1255,7 @@
             <div class="accordion-body"><div class="accordion-body-inner">
               <p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">
                 "나는 아빠 자격이 없나" 하는 생각이 들 수 있어요. 아빠도 산후우울증을 겪을 수 있어요 (약 10%).
-                힘들면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700;">1577-0199</a>(정신건강위기상담, 무료·24시간)에 연락해 보세요.
+                힘들면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700;">1577-0199</a>(정신건강위기상담, 24시간 · 상담 무료(통화료는 들 수 있어요))에 연락해 보세요.
               </p>
             </div></div>
           </div>
@@ -1434,100 +1469,20 @@
 </main><!-- /page-wrap -->
 
 <!-- ── 위기 도크: 모든 화면 하단 고정 ──
-     번호는 js/helplines.js와 같아야 한다 (tests/safety.test.js 검사).
+     번호는 js/helplines.js와 같아야 한다 (tests/safety.test.js 검사). 마들랜 주소는 MADLAN_URL과 같아야 한다.
+     sms:109 1차 출처 확인 전까지 문자 버튼과 함께 마들랜(카카오톡 글 상담)을 라벨 줄 오른쪽에 둔다.
      감성 장치(명조·그라데이션·모션·반투명) 금지. 고딕 700, 번호 18px 이상, 버튼 높이 56px 이상.
      한국어 고정(i18n 없음). 헤더 SOS·탭바 "긴급"을 대신하는 유일한 긴급 진입점. -->
 <div class="crisis-dock" id="crisis-dock" role="region" aria-label="긴급 연락">
   <div class="crisis-dock-inner">
-    <p class="crisis-dock-label">지금 위험하다면</p>
+    <div class="crisis-dock-head">
+      <p class="crisis-dock-label">지금 위험하다면</p>
+      <a href="https://pf.kakao.com/_DAxbYG" class="crisis-dock-madlan" target="_blank" rel="noopener noreferrer" data-umami-event="crisis-bar" data-umami-event-type="madlan">카카오톡 마들랜<span class="sr-only">, 109 SNS 글 상담 채널 (새 창)</span></a>
+    </div>
     <div class="crisis-dock-row">
       <a href="tel:109" class="crisis-dock-btn crisis-dock-btn--call" data-umami-event="crisis-bar" data-umami-event-type="call-109"><svg class="crisis-dock-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109 전화<span class="sr-only">, 자살예방상담전화, 무료 24시간</span></a>
       <a href="sms:109" class="crisis-dock-btn" data-umami-event="crisis-bar" data-umami-event-type="sms-109"><svg class="crisis-dock-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109 문자<span class="sr-only">, 자살예방상담전화 문자 상담</span></a>
       <a href="tel:119" class="crisis-dock-btn crisis-dock-btn--urgent" data-umami-event="crisis-bar" data-umami-event-type="call-119">119<span class="sr-only">, 구급차와 응급 출동</span></a>
-    </div>
-  </div>
-</div>
-
-<!-- ── 온보딩 오버레이 (첫 방문) ── -->
-<div class="onboard-overlay" id="onboard-overlay">
-  <div class="onboard-card" role="dialog" aria-label="BeInside 시작하기">
-    <div class="onboard-logo">🌻</div>
-    <h2 class="onboard-title">어떤 상황이세요?</h2>
-    <p class="onboard-sub">가장 가까운 도움을 바로 안내해 드릴게요</p>
-
-    <!-- Step 1: 큰 분류 -->
-    <div class="onboard-step" id="onboard-step-1">
-      <div class="onboard-options">
-        <button class="onboard-opt" onclick="onboardSelect('care')">
-          <span class="onboard-opt-icon">👶</span>
-          <span class="onboard-opt-text">아이·가족을 돌보고 있어요</span>
-        </button>
-        <button class="onboard-opt" onclick="onboardSelect('self')">
-          <span class="onboard-opt-icon">💜</span>
-          <span class="onboard-opt-text">지금 내가 힘들어요</span>
-        </button>
-        <button class="onboard-opt" onclick="onboardSelect('emergency')">
-          <span class="onboard-opt-icon">🚨</span>
-          <span class="onboard-opt-text">지금 당장 도움이 필요해요</span>
-        </button>
-      </div>
-      <button class="onboard-skip" onclick="onboardDismiss()">괜찮아요, 둘러볼게요</button>
-    </div>
-
-    <!-- Step 2a: 돌봄 세부 -->
-    <div class="onboard-step" id="onboard-step-care" style="display:none">
-      <div class="onboard-step-label">어떤 부분이 가장 궁금하세요?</div>
-      <div class="onboard-options">
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('growth')">
-          <span class="onboard-opt-icon">📊</span>
-          <span class="onboard-opt-text">아이 성장·발달이 궁금해요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('sp')">
-          <span class="onboard-opt-icon">👩‍👦</span>
-          <span class="onboard-opt-text">혼자 아이를 키우고 있어요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('birth')">
-          <span class="onboard-opt-icon">🤱</span>
-          <span class="onboard-opt-text">출산 후 회복 중이에요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('dad')">
-          <span class="onboard-opt-icon">👨</span>
-          <span class="onboard-opt-text">아빠로서 어떻게 해야 할지 모르겠어요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('elder')">
-          <span class="onboard-opt-icon">🧓</span>
-          <span class="onboard-opt-text">부모님 돌봄이 힘들어요</span>
-        </button>
-      </div>
-      <button class="onboard-back" onclick="onboardBack()">← 이전으로</button>
-    </div>
-
-    <!-- Step 2b: 나 자신 세부 -->
-    <div class="onboard-step" id="onboard-step-self" style="display:none">
-      <div class="onboard-step-label">어떤 상황에 가까우세요?</div>
-      <div class="onboard-options">
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('emotion')">
-          <span class="onboard-opt-icon">😔</span>
-          <span class="onboard-opt-text">감정을 다루기 어려워요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('burnout')">
-          <span class="onboard-opt-icon">🫠</span>
-          <span class="onboard-opt-text">번아웃인 것 같아요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('relation')">
-          <span class="onboard-opt-icon">💔</span>
-          <span class="onboard-opt-text">관계가 힘들어졌어요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('teen')">
-          <span class="onboard-opt-icon">🧒</span>
-          <span class="onboard-opt-text">청소년·청년이에요</span>
-        </button>
-        <button class="onboard-opt onboard-opt--sm" onclick="onboardGo('workplace')">
-          <span class="onboard-opt-icon">🏢</span>
-          <span class="onboard-opt-text">직장에서 힘든 사람이 있어요</span>
-        </button>
-      </div>
-      <button class="onboard-back" onclick="onboardBack()">← 이전으로</button>
     </div>
   </div>
 </div>
@@ -1607,7 +1562,6 @@
 <script defer src="js/centers-ui.js"></script>
 <script defer src="js/new-pages.js"></script>
 <script defer src="js/app.js"></script>
-<script defer src="js/onboard.js"></script>
 <script defer src="js/pp-home.js"></script>
 <script defer src="js/share.js"></script>
 <script defer src="js/search.js"></script>
@@ -1686,7 +1640,7 @@
         "name": "정신건강위기상담전화 번호는?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "1577-0199 (정신건강위기상담전화, 무료, 24시간). 정신건강 어려움 전반에 대해 상담받을 수 있습니다."
+          "text": "1577-0199 (정신건강위기상담전화, 24시간, 상담 무료(통화료는 들 수 있어요)). 정신건강 어려움 전반에 대해 상담받을 수 있습니다."
         }
       },
       {

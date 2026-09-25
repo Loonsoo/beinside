@@ -115,7 +115,7 @@ function showCheckResult(resultEl, cls, html, isEmergency) {
   const body = typeof resultEl.closest === 'function' ? resultEl.closest('.accordion-body') : null;
   const inner = body && body.querySelector('.accordion-body-inner');
   if (inner && body.style.maxHeight && body.style.maxHeight !== '0px') body.style.maxHeight = (inner.scrollHeight + 32) + 'px';
-  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
+  setTimeout(() => resultEl.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' }), 150);
 }
 
 /* ══════════════════════════════════════════════════════
@@ -205,7 +205,7 @@ function buildMoodWidget(container) {
 
   let timelineMsg = '최근 7일의 감정 흐름이에요.';
   if (hardDays >= 5) {
-    timelineMsg = `힘든 날이 7일 중 ${hardDays}일이에요. 혼자 감당하기 어렵다면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700">1577-0199</a>(정신건강위기상담, 무료·24시간)에 전화해 보세요.`;
+    timelineMsg = `힘든 날이 7일 중 ${hardDays}일이에요. 혼자 감당하기 어렵다면 <a href="tel:1577-0199" style="color:var(--peach-d);font-weight:700">1577-0199</a>(정신건강위기상담, 24시간 · 상담 무료(통화료는 들 수 있어요))에 전화해 보세요.`;
   } else if (hardDays >= 3) {
     timelineMsg = `최근 7일 중 ${hardDays}일은 힘든 날이었어요. 추이를 계속 관찰해 보세요.`;
   }
@@ -402,7 +402,7 @@ function saveJournalEntry() {
     const firstItem = listWrap.querySelector('.jn-journal-item');
     if (firstItem) {
       firstItem.classList.add('jn-item-enter');
-      firstItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      firstItem.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' });
     }
   }
 }

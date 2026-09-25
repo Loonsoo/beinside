@@ -427,3 +427,155 @@ describe('위기 문구 회귀 (정신과 감수 2026-09-25)', () => {
     assert.doesNotMatch(app, /beinside_crisis_visit|showFollowupBanner|closeFollowup/);
   });
 });
+
+/* ═══════ 8. 리디자인 검수 회귀 (2026-09-25 fix1) ═══════ */
+describe('리디자인 검수 회귀', () => {
+  const html = read('index.html');
+  const css = read('css/base.css') + read('css/pages.css') + read('css/dark.css');
+  const rule = sel => {
+    const esc = sel.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
+    return [...css.matchAll(new RegExp('(?:^|[}\\s,])' + esc + '\\s*\\{([^}]*)\\}', 'g'))].map(m => m[1]).join(';');
+  };
+  const COST = '상담 무료(통화료는 들 수 있어요)';
+  const MADLAN = (() => { const c = {}; vm.createContext(c); vm.runInContext(read('js/helplines.js') + ';this.M = MADLAN_URL;', c); return c.M; })();
+
+  /* 오류 화면 인라인 스크립트를 흉내 낸 브라우저에서 돌린다 */
+  function loadErrorScript() {
+    const script = html.match(/<head>\s*(?:<!--[\s\S]*?-->\s*)?<script>([\s\S]*?)<\/script>/)[1];
+    const appended = [];
+    const listeners = {};
+    const mkEl = () => ({ style: {}, attrs: {}, setAttribute(k, v) { this.attrs[k] = v; }, innerHTML: '', id: '' });
+    const win = {
+      addEventListener: (t, fn) => { listeners[t] = fn; },
+    };
+    const ctx = {
+      window: win,
+      location: { origin: 'https://beinside.kr' },
+      document: {
+        getElementById: () => null,
+        createElement: mkEl,
+        documentElement: { getAttribute: () => 'light', appendChild: e => appended.push(e) },
+        body: { appendChild: e => appended.push(e) },
+      },
+    };
+    vm.createContext(ctx);
+    vm.runInContext(script, ctx);
+    return { win, listeners, appended };
+  }
+
+  it('오류 화면에 109 전화·109 문자·119가 설명과 함께 있고, 도크 위까지만 덮음', () => {
+    const t = loadErrorScript();
+    t.win.onerror('x', 'https://beinside.kr/js/app.js');
+    assert.equal(t.appended.length, 1, '우리 스크립트 오류에 오류 화면이 안 뜸');
+    const el = t.appended[0];
+    for (const [href, desc] of [['tel:109', '자살예방상담전화'], ['sms:109', '문자 상담'], ['tel:119', '구급차']]) {
+      const a = el.innerHTML.match(new RegExp(`<a href="${href}"[^>]*>[\\s\\S]*?<\\/a>`));
+      assert.ok(a, `오류 화면에 ${href} 없음`);
+      assert.ok(a[0].includes(desc), `${href}에 한 줄 설명 없음`);
+    }
+    assert.match(el.style.cssText, /bottom:var\(--dock-h,0px\)/, '오류 화면이 위기 도크를 덮음');
+  });
+
+  it('외부 스크립트 오류·사소한 Promise 거부로는 오류 화면이 뜨지 않음', () => {
+    const t = loadErrorScript();
+    t.win.onerror('Script error.', '');
+    t.win.onerror('x', 'https://cloud.umami.is/script.js');
+    t.listeners.unhandledrejection({ reason: 'aborted' });
+    t.listeners.unhandledrejection({ reason: { name: 'AbortError', stack: 'https://beinside.kr/js/app.js:1' } });
+    t.listeners.unhandledrejection({ reason: { name: 'TypeError', stack: 'at https://t1.kakaocdn.net/x.js:1' } });
+    assert.equal(t.appended.length, 0);
+    t.listeners.unhandledrejection({ reason: { name: 'TypeError', stack: 'at https://beinside.kr/js/render.js:10' } });
+    assert.equal(t.appended.length, 1, '우리 코드의 TypeError 거부에 오류 화면이 안 뜸');
+  });
+
+  it('위기 도크 라벨 줄에 카카오톡 마들랜이 보이고, 누르는 영역 44px', () => {
+    const dock = (html.match(/<div class="crisis-dock"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/) || [''])[0];
+    const a = dock.match(new RegExp(`<a href="${MADLAN.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')}"[^>]*>[\\s\\S]*?<\\/a>`));
+    assert.ok(a, '도크에 마들랜(MADLAN_URL) 링크 없음');
+    assert.match(a[0], /target="_blank"/);
+    assert.match(a[0], /rel="noopener noreferrer"/);
+    assert.match(a[0], /<span class="sr-only">[^<]{4,}<\/span>/, '마들랜 링크에 스크린리더 설명 없음');
+    assert.match(a[0], /data-umami-event="crisis-bar"/);
+    assert.ok(dock.indexOf(MADLAN) < dock.indexOf('crisis-dock-row'), '마들랜이 라벨 줄에 있지 않음');
+    assert.doesNotMatch(dock.slice(0, dock.indexOf(MADLAN)), /<details/, '마들랜이 접혀 있음');
+    const r = rule('.crisis-dock-madlan');
+    assert.ok(Number((r.match(/min-height:\s*(\d+)px/) || [])[1]) >= 44, '마들랜 링크 높이 44px 미만');
+    assert.doesNotMatch(r, /display:\s*none|visibility:\s*hidden/);
+  });
+
+  it('도크를 감추는 CSS는 키보드 입력 중(html.kb-open) 하나뿐이고, 자리를 유지함(visibility)', () => {
+    /* 도크 안 아이콘(좁은 화면에서 숨김)만 빼고, 도크·줄·버튼·마들랜을 감추는 규칙을 모두 찾는다 */
+    const plain = css.replace(/\/\*[\s\S]*?\*\//g, '');
+    const hides = [...plain.matchAll(/([^{}]*\.crisis-dock(?!-ico)[^{}]*)\{([^}]*)\}/g)]
+      .filter(m => /display:\s*none|visibility:\s*hidden|opacity:\s*0(?![.\d])/.test(m[2]));
+    assert.equal(hides.length, 1, '도크를 감추는 규칙이 여러 개');
+    assert.match(hides[0][1].trim(), /^html\.kb-open \.crisis-dock$/);
+    assert.match(hides[0][2], /visibility:\s*hidden/);
+    const app = read('js/app.js');
+    const blk = app.slice(app.indexOf('function initKeyboardDock'), app.indexOf('})();', app.indexOf('function initKeyboardDock')));
+    assert.match(blk, /isTextField\(document\.activeElement\)/, 'kb-open이 글 입력 중이 아닐 때도 켜질 수 있음');
+  });
+
+  it('빠른 나가기는 헤더 안(메뉴 버튼 왼쪽)에 있고 44px 이상, 떠 있지 않음', () => {
+    const hdr = html.slice(html.indexOf('<header>'), html.indexOf('</header>'));
+    const qe = hdr.indexOf('id="quick-exit"');
+    assert.ok(qe >= 0 && qe < hdr.indexOf('id="menu-btn"'), '빠른 나가기가 헤더 메뉴 버튼 왼쪽에 없음');
+    assert.match(hdr, /id="quick-exit"[^>]*aria-label="[^"]{4,}"[^>]*>나가기<\/button>/);
+    const r = rule('.quick-exit-btn');
+    assert.ok(Number((r.match(/min-height:\s*(\d+)px/) || [])[1]) >= 44);
+    assert.ok(Number((r.match(/min-width:\s*(\d+)px/) || [])[1]) >= 44);
+    assert.doesNotMatch(r, /position:\s*fixed/);
+  });
+
+  it('언어는 한국어 고정: 저장된 beinside_lang을 지우고 <html lang>을 바꾸지 않음, 다문화 언어는 그대로', () => {
+    const store = { beinside_lang: 'en', beinside_mc_lang: 'vi' };
+    const docEl = { lang: 'ko' };
+    function XHR() {}
+    XHR.prototype.open = function () {};
+    XHR.prototype.send = function () { this.readyState = 4; this.status = 200; this.responseText = '{}'; this.onreadystatechange(); };
+    const ctx = {
+      localStorage: { getItem: k => store[k] ?? null, setItem: (k, v) => { store[k] = v; }, removeItem: k => { delete store[k]; } },
+      XMLHttpRequest: XHR,
+      document: { documentElement: docEl, querySelectorAll: () => [] },
+    };
+    vm.createContext(ctx);
+    vm.runInContext(read('js/i18n.js') + ';this.I = I18n;', ctx);
+    ctx.I.init();
+    assert.equal(ctx.I.getLocale(), 'ko');
+    assert.equal(store.beinside_lang, undefined, '저장된 beinside_lang이 남아 있음');
+    assert.equal(store.beinside_mc_lang, 'vi', '다문화 언어 설정을 건드림');
+    assert.equal(docEl.lang, 'ko');
+    assert.doesNotMatch(read('js/i18n.js'), /documentElement\.lang\s*=/);
+  });
+
+  it('1577-0199를 "무료"로만 쓴 곳이 없음 (사이트 전체, 통화료 표기 필수)', () => {
+    const files = ['index.html', 'offline.html', ...fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.endsWith('.js')).map(f => 'js/' + f)];
+    /* 한 줄에서 번호마다 구간을 나눈다: 1577-0199 뒤~다음 번호 전(첫 번호면 줄 처음부터). 그 안의 "무료"는 모두 "무료(통화료…" */
+    const NUM = /(?<![\d-])(?:\d{2,4}-\d{3,4}(?:-\d{4})?|15770199|1\d{2,3})(?![\d-])/g;
+    const bad = [];
+    let seen = 0;
+    for (const f of files) {
+      read(f).split('\n').forEach((line, i) => {
+        if (!/1577-?0199/.test(line)) return;
+        const ms = [...line.matchAll(NUM)];
+        ms.forEach((m, k) => {
+          if (m[0].replace(/-/g, '') !== '15770199') return;
+          seen++;
+          const seg = line.slice(k === 0 ? 0 : m.index, k + 1 < ms.length ? ms[k + 1].index : line.length);
+          if (/무료(?!\(통화료)/.test(seg)) bad.push(`${f}:${i + 1}`);
+        });
+      });
+    }
+    assert.ok(seen >= 60, `1577-0199를 ${seen}곳만 찾음 — 패턴 확인`);
+    assert.deepEqual(bad, [], '"무료"만 적힌 1577-0199: ' + bad.join(', '));
+  });
+
+  it('긴급 페이지: ul/li/a 구조, 1577-0199에 비용 표기, 모바일에서도 설명이 보임', () => {
+    const page = html.slice(html.indexOf('id="page-emergency"'), html.indexOf('<!-- ══════════════ PAGE: 감정 가이드'));
+    assert.doesNotMatch(page, /role="listitem"/);
+    assert.match(page, /<ul class="emergency-list"/);
+    const row = page.match(/<li><a href="tel:1577-0199"[\s\S]*?<\/a><\/li>/);
+    assert.ok(row && row[0].includes(COST), '긴급 페이지 1577-0199에 비용 표기 없음');
+    assert.doesNotMatch(rule('.emer-row-desc'), /display:\s*none/, '모바일에서 긴급 번호 설명이 숨겨짐');
+  });
+});

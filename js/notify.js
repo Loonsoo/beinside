@@ -24,22 +24,46 @@
     try { localStorage.setItem(NOTIFY_KEY, JSON.stringify(s)); } catch (e) {}
   }
 
-  /* ── 알림 전송 ── */
-  function sendNotification() {
-    if (Notification.permission !== 'granted') return;
+  var HAS_NOTIFY = typeof window !== 'undefined' && 'Notification' in window;
+
+  function pickOptions() {
     var msg = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
-    var n = new Notification(msg.title, {
-      body: msg.body,
-      icon: '/icons/icon.svg',
-      badge: '/icons/icon.svg',
-      tag: 'beinside-checkin',
-      renotify: true
-    });
-    n.onclick = function () {
-      window.focus();
-      if (typeof showPage === 'function') showPage('journal');
-      n.close();
+    return {
+      title: msg.title,
+      opts: { body: msg.body, icon: '/icons/icon-192.png', badge: '/icons/icon-192.png', tag: 'beinside-checkin', renotify: true, data: { url: '/journal' } }
     };
+  }
+
+  /* 페이지에서 직접 띄우기 (서비스워커가 없을 때만). 안드로이드 크롬 등은 생성자를 막으므로 try로 감싼다 */
+  function notifyDirect(m) {
+    try {
+      var n = new Notification(m.title, m.opts);
+      n.onclick = function () {
+        window.focus();
+        if (typeof showPage === 'function') showPage('journal');
+        n.close();
+      };
+    } catch (e) { /* 이 브라우저는 페이지에서 알림을 만들 수 없음 */ }
+  }
+
+  /* ── 알림 전송: 서비스워커가 있으면 showNotification, 없으면 생성자 ── */
+  function sendNotification() {
+    if (!HAS_NOTIFY || Notification.permission !== 'granted') return;
+    var m = pickOptions();
+    try {
+      if ('serviceWorker' in navigator && navigator.serviceWorker.getRegistration) {
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+          if (reg && reg.showNotification) return reg.showNotification(m.title, m.opts);
+          notifyDirect(m);
+        }).catch(function () { notifyDirect(m); });
+        return;
+      }
+    } catch (e) { /* 아래 생성자로 */ }
+    notifyDirect(m);
+  }
+
+  function localDate(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
 
   /* ── 스케줄 체크 ── */
@@ -48,31 +72,40 @@
     if (!s.enabled) return;
 
     var now = new Date();
-    var today = now.toISOString().split('T')[0];
+    var today = localDate(now);
     if (s.lastDate === today) return; // 오늘 이미 보냄
 
-    if (now.getHours() >= s.hour && now.getMinutes() >= s.minute) {
-      sendNotification();
+    if (now.getHours() * 60 + now.getMinutes() >= s.hour * 60 + s.minute) {
+      // 보내기 전에 먼저 저장한다. 알림 오류가 나도 1분마다 다시 시도하지 않게
       s.lastDate = today;
       saveSettings(s);
+      sendNotification();
     }
   }
 
   /* ── 알림 켜기/끄기 (설정 패널에서 호출) ── */
   window.toggleDailyCheckin = function (enabled) {
     var s = getSettings();
+    var box = document.getElementById('checkin-toggle');
 
-    if (enabled && Notification.permission === 'default') {
-      Notification.requestPermission().then(function (perm) {
-        if (perm === 'granted') {
-          s.enabled = true;
-          saveSettings(s);
-        }
-      });
-    } else {
-      s.enabled = enabled;
-      saveSettings(s);
+    if (enabled && !HAS_NOTIFY) {
+      if (box) box.checked = false;
+      return;
     }
+    if (enabled && Notification.permission !== 'granted') {
+      var done = function (perm) {
+        s.enabled = perm === 'granted';
+        saveSettings(s);
+        if (box) box.checked = s.enabled;
+      };
+      try {
+        var p = Notification.requestPermission(done);
+        if (p && p.then) p.then(done, function () { done('denied'); });
+      } catch (e) { done('denied'); }
+      return;
+    }
+    s.enabled = enabled;
+    saveSettings(s);
   };
 
   window.setCheckinTime = function (hour, minute) {
@@ -87,7 +120,7 @@
   };
 
   /* ── 시작 ── */
-  if ('Notification' in window) {
+  if (HAS_NOTIFY) {
     setInterval(checkSchedule, CHECK_INTERVAL);
     // 페이지 로드 시 한번 체크
     setTimeout(checkSchedule, 5000);
