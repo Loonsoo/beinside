@@ -94,12 +94,14 @@ function checkConnectHTML(cls, isEmergency) {
     return '<div class="check-connect">'
       + '<a class="check-connect-btn" href="' + helplineTel('suicide') + '" data-umami-event="check-connect" data-umami-event-type="call-109"><span aria-hidden="true">📞 </span>109에 전화하기 <span>무료 · 24시간</span></a>'
       + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineSms('suicide') + '" data-umami-event="check-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>'
-      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199"><span aria-hidden="true">📞 </span>1577-0199 정신건강위기상담전화</a>'
-      + '<p class="check-connect-script">처음엔 <strong>"요즘 많이 힘들어서 연락했어요"</strong>라고만 해도 돼요. 지금 당장 위험하다면 <a href="tel:119">119</a>.</p>'
+      /* sms:109가 상담으로 이어지는지 1차 출처 확인 전까지 마들랜을 문자 버튼 바로 아래에 보이게 둔다 */
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + MADLAN_URL + '" target="_blank" rel="noopener noreferrer" data-umami-event="check-connect" data-umami-event-type="madlan"><span aria-hidden="true">💬 </span>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>'
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199"><span aria-hidden="true">📞 </span>1577-0199 정신건강위기상담전화 <span>' + HELPLINES.mental.desc + '</span></a>'
+      + '<p class="check-connect-script">처음엔 <strong>"요즘 많이 힘들어서 연락했어요"</strong>라고만 해도 돼요. 지금 당장 위험하다면 <a class="tel-inline" href="' + helplineTel('emergency') + '">119</a>에 전화해 주세요.</p>'
       + '</div>';
   }
   if (cls === 'mid') {
-    return '<p class="check-connect-script">이 상태가 2주 넘게 이어지면 <a href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199">1577-0199</a>에 전화해 보세요. 가까운 정신건강복지센터로 연결해 줘요.</p>';
+    return '<p class="check-connect-script">이런 날이 2주 넘게 이어지면 <a class="tel-inline" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199">1577-0199</a>에 전화해 보세요. 지역 정신건강복지센터로 연결돼요. 24시간 · 상담 무료(통화료는 들 수 있어요).</p>';
   }
   return '';
 }
@@ -109,6 +111,10 @@ function showCheckResult(resultEl, cls, html, isEmergency) {
   resultEl.className = 'check-result ' + cls;
   resultEl.innerHTML = html + checkConnectHTML(cls, isEmergency)
     + '<div class="check-disclaimer">이 결과는 참고용이며, 의학적·심리학적 진단을 대체하지 않습니다.</div>';
+  // 열린 아코디언 높이는 열 때 계산되므로, 결과가 늘어나면 다시 맞춘다 (연결 버튼이 잘리지 않게)
+  const body = typeof resultEl.closest === 'function' ? resultEl.closest('.accordion-body') : null;
+  const inner = body && body.querySelector('.accordion-body-inner');
+  if (inner && body.style.maxHeight && body.style.maxHeight !== '0px') body.style.maxHeight = (inner.scrollHeight + 32) + 'px';
   setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
 }
 

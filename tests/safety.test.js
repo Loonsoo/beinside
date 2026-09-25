@@ -218,7 +218,7 @@ describe('산후 동반자 홈', () => {
     };
     vm.createContext(ctx);
     vm.runInContext(read('js/helplines.js'), ctx);
-    vm.runInContext(read('js/pp-home.js') + '\n;this.STAGES = PP_STAGES; this.REPLY = PP_MOOD_REPLY;', ctx);
+    vm.runInContext(read('js/pp-home.js') + '\n;this.STAGES = PP_STAGES; this.REPLY = PP_MOOD_REPLY; this.LINE = ppLineHTML;', ctx);
     return ctx;
   }
 
@@ -253,5 +253,133 @@ describe('산후 동반자 홈', () => {
     const sw = read('sw.js');
     assert.match(sw, /\/js\/pp-home\.js/);
     assert.match(sw, /\/js\/helplines\.js/);
+  });
+});
+
+/* ═══════ 7. 문구 감수 반영 (reports/2026-09-copy-review.md §8) ═══════ */
+describe('위기 문구 회귀 (정신과 감수 2026-09-25)', () => {
+  const html = read('index.html');
+  const flags = (html.match(/<details class="pp-details" id="pp-redflags">[\s\S]*?<\/details>/) || [''])[0];
+  const COST = '상담 무료(통화료는 들 수 있어요)';
+
+  function loadPp() {
+    const ctx = {
+      document: { getElementById: () => null, querySelectorAll: () => [] },
+      localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+      esc: s => s, setTimeout: () => 0,
+    };
+    vm.createContext(ctx);
+    vm.runInContext(read('js/helplines.js'), ctx);
+    vm.runInContext(read('js/pp-home.js') + '\n;this.STAGES = PP_STAGES; this.REPLY = PP_MOOD_REPLY; this.LINE = ppLineHTML; this.MADLAN = MADLAN_URL;', ctx);
+    return ctx;
+  }
+  /* 산후 체크 설정을 파일에서 그대로 꺼낸다 */
+  function loadPostpartumCheck() {
+    const ctx = {}; vm.createContext(ctx);
+    const src = read('js/data-guides-new.js');
+    vm.runInContext(src + '\n;this.PP = POSTPARTUM_DATA;', ctx);
+    return ctx.PP.check;
+  }
+
+  it('"바로 연락해야 하는 신호": 119·109·1577-0199가 모두 누를 수 있는 링크', () => {
+    assert.ok(flags, '신호 목록이 없음');
+    for (const href of ['tel:119', 'tel:109', 'sms:109', 'tel:15770199']) assert.ok(flags.includes(`href="${href}"`), href);
+  });
+
+  it('119 칸에 계획·이미 한 행동·확대 자살 위험·옳게 느껴지는 생각·조증 신호가 있음', () => {
+    const head119 = flags.indexOf('119 또는 응급실');
+    const head109 = flags.indexOf('109, 지금');
+    assert.ok(head119 >= 0 && head109 > head119);
+    const box119 = flags.slice(head119, head109);
+    for (const t of ['죽을 방법을 정했거나', '이미 자해했거나 약을 많이 먹었을 때', '아기와 함께 사라지는 게 낫다', '옳게 느껴지거나', '잠을 거의 안 자도 피곤하지 않고']) {
+      assert.ok(box119.includes(t), `119 칸에 "${t}" 없음`);
+    }
+  });
+
+  it('109 칸 안에도 119 경계 문장과 119 링크가 있음', () => {
+    const box109 = flags.slice(flags.indexOf('109, 지금'), flags.indexOf('1577-0199 또는 보건소'));
+    assert.match(box109, /방법까지 생각했거나[^<]*<a[^>]*href="tel:119"/);
+  });
+
+  it('산후 체크 긴급 안내: 첫 줄은 109 행동, 둘째 줄은 119, 침투 사고 안심은 맨 뒤', () => {
+    const msg = loadPostpartumCheck().emergencyMsg;
+    const lines = msg.split('<br>');
+    assert.match(lines[0], /href="tel:109"/);
+    assert.match(lines[1], /방법까지 생각했거나[\s\S]*href="tel:119"/, '119 줄이 빠짐 (정신과가 삭제를 반려함)');
+    const reassure = msg.indexOf('행동하는 것과는 달라요');
+    assert.ok(reassure > msg.indexOf('tel:119'), '침투 사고 안심 문장이 119 안내보다 앞에 있음');
+    assert.equal(lines.findIndex(l => l.includes('행동하는 것과는 달라요')), lines.length - 1);
+  });
+
+  it('실제 산후 체크에서 긴급 문항을 누르면 109·119·1577-0199(비용 표기)가 모두 나옴', () => {
+    const config = loadPostpartumCheck();
+    const t = mount(config);
+    t.click(0); t.click(config.emergencyIndex); t.click(1);
+    const out = t.result.innerHTML;
+    assert.ok(isEmergency(t.result));
+    for (const h of ['tel:119', 'tel:15770199']) assert.ok(out.includes(h), h);
+    assert.ok(out.includes(COST));
+  });
+
+  it('1577-0199 버튼·링크 옆에는 항상 "상담 무료(통화료는 들 수 있어요)"', () => {
+    const ctx = loadCheckTool();
+    assert.ok(vm.runInContext('HELPLINES.mental.desc', ctx).includes(COST));
+    const blocks = [
+      ...(flags.match(/<a[^>]*href="tel:15770199"[\s\S]*?<\/a>/g) || []),
+      ...(loadPp().REPLY.hard().match(/<a[^>]*href="tel:15770199"[\s\S]*?<\/a>/g) || []),
+      ...(ctx.checkConnectHTML('high', false).match(/<a[^>]*href="tel:15770199"[\s\S]*?<\/a>/g) || []),
+    ];
+    assert.ok(blocks.length >= 3);
+    for (const b of blocks) assert.ok(b.includes(COST), b);
+    assert.ok(ctx.checkConnectHTML('mid', false).includes(COST), '체크 "중간" 결과의 1577-0199에 비용 표기 없음');
+    const pp = loadPostpartumCheck();
+    for (const k of ['high', 'low']) {
+      const a = pp.results[k].action;
+      if (a.includes('1577-0199')) {
+        assert.match(a, /href="tel:15770199"/, `산후 체크 ${k}: 1577-0199가 글자뿐`);
+        assert.match(a, /상담 무료[^<]*통화료는 들 수 있어요/, `산후 체크 ${k}: 비용 표기 없음`);
+      }
+    }
+  });
+
+  it('시기별 3줄에 나오는 119·109·1577-0199는 누를 수 있는 버튼이 붙음', () => {
+    const { STAGES, LINE } = loadPp();
+    let seen = 0;
+    for (const s of STAGES) for (const l of s.lines) {
+      const text = typeof l === 'string' ? l : l.text;
+      const m = text.match(/1577-0199|(?<![\d-])119(?![\d-])|(?<![\d-])109(?![\d-])/);
+      if (!m) continue;
+      seen++;
+      const tel = 'tel:' + m[0].replace(/-/g, '');
+      assert.ok(LINE(l).includes(`href="${tel}"`), `"${text}"의 ${m[0]}가 글자뿐`);
+      if (m[0] === '1577-0199') assert.ok(LINE(l).includes(COST));
+    }
+    assert.ok(seen >= 2);
+  });
+
+  it('"아기가 잘 때 같이 자는" 문구가 없음 (영아 수면 안전)', () => {
+    assert.doesNotMatch(read('js/pp-home.js'), /같이 자는/);
+  });
+
+  it('109 문자 버튼 바로 아래에 마들랜이 접히지 않고 보임 (sms:109 1차 출처 확인 전)', () => {
+    const { REPLY, MADLAN } = loadPp();
+    const hard = REPLY.hard();
+    const sms = hard.indexOf('sms:109'), mad = hard.indexOf(MADLAN), det = hard.indexOf('<details');
+    assert.ok(sms >= 0 && mad > sms && (det === -1 || mad < det), '"많이 힘들어요" 응답에서 마들랜이 숨어 있음');
+    const high = loadCheckTool().checkConnectHTML('high', false);
+    assert.ok(high.indexOf(MADLAN) > high.indexOf('sms:109'), '체크 결과에 마들랜 없음');
+    const smsInHome = [...html.matchAll(/href="sms:109"/g)].map(m => m.index)
+      .filter(i => i > html.indexOf('id="pp-home"') && i < html.indexOf('id="home-other"'));
+    assert.ok(smsInHome.length >= 2);
+    for (const i of smsInHome) {
+      const after = html.slice(i, i + 600);
+      assert.ok(after.includes(MADLAN) && !after.slice(0, after.indexOf(MADLAN)).includes('<details'), '홈의 109 문자 버튼 옆에 마들랜 없음');
+    }
+  });
+
+  it('팔로업 배너("다시 오셨네요")와 긴급 페이지 방문 기록이 없음', () => {
+    assert.doesNotMatch(html, /다시 오셨네요|followup-banner/);
+    const app = read('js/app.js');
+    assert.doesNotMatch(app, /beinside_crisis_visit|showFollowupBanner|closeFollowup/);
   });
 });

@@ -1087,54 +1087,6 @@
 }
 
 /* ══════════════════════════════════════════
-   P3: 위기 후 팔로업 배너
-══════════════════════════════════════════ */
-.followup-banner{
-  width:100%;max-width:480px;
-  margin-bottom:var(--sp-2);
-}
-.followup-inner{
-  display:flex;align-items:flex-start;gap:12px;
-  background:linear-gradient(135deg,rgba(var(--accent-rgb),.08),rgba(107,168,133,.06));
-  border:1px solid rgba(var(--accent-rgb),.18);
-  border-radius:16px;
-  padding:var(--sp-2);
-  position:relative;
-}
-.followup-icon{
-  font-size:24px;flex-shrink:0;
-  margin-top:2px;
-}
-.followup-text{
-  flex:1;min-width:0;
-}
-.followup-text strong{
-  display:block;
-  font-size:14px;font-weight:700;color:var(--ink);
-  margin-bottom:4px;
-  letter-spacing:-.2px;
-}
-.followup-text span{
-  font-size:12.5px;color:var(--ink-m);
-  line-height:1.6;
-  word-break:keep-all;
-}
-.followup-close{
-  position:absolute;top:10px;right:12px;
-  background:none;border:none;
-  font-size:14px;color:var(--ink-l);
-  cursor:pointer;padding:4px;
-  line-height:1;
-  transition:color .2s;
-}
-.followup-close:hover{color:var(--ink);}
-
-[data-theme="dark"] .followup-inner{
-  background:linear-gradient(135deg,rgba(var(--accent-rgb),.10),rgba(107,168,133,.08));
-  border-color:rgba(255,255,255,.08);
-}
-
-/* ══════════════════════════════════════════
    P3: 고대비 모드 (prefers-contrast: more)
 ══════════════════════════════════════════ */
 @media(prefers-contrast:more){

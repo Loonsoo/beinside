@@ -7,15 +7,18 @@
 
 const PP_BIRTH_KEY = 'beinside_pp_birth_v1';
 
-/* 출산 후 일수 구간별 3줄. 문구 수정 시 psychiatrist 검수를 받는다. */
+/* 출산 후 일수 구간별 3줄. 문구 수정 시 psychiatrist 검수를 받는다.
+   줄은 문자열이거나 { text, call, check } 객체다.
+   call: HELPLINES 키 — 줄 아래에 누를 수 있는 번호 버튼을 붙인다(번호를 글자로만 두지 않는다).
+   check: true면 "마음 신호 확인" 버튼을 붙인다. */
 const PP_STAGES = [
   { maxDay: 14, label: '출산 후 첫 2주', lines: [
-    '눈물이 나고 기분이 자주 오르내리는 건 많은 산모가 겪어요(베이비 블루스). 보통 2주 안에 옅어져요. 다만 아기가 자도 전혀 잠들 수 없거나, 혼란스럽거나, 나나 아기를 해칠 것 같은 생각이 들면 블루스가 아니에요. 아래 "바로 연락해야 하는 신호"를 봐 주세요.',
-    '아기가 잘 때 같이 자는 게 먼저예요. 집안일은 미뤄도 돼요.',
-    '38℃ 이상 열이나 한 시간에 생리대를 하나 넘게 적시는 출혈이 있으면 바로 119에 전화하거나 응급실로 가세요.',
+    '눈물이 나고 기분이 자주 오르내리는 건 많은 산모가 겪고, 보통 2주 안에 옅어져요(베이비 블루스). 아기가 자도 전혀 잠들 수 없거나, 혼란스럽거나, 나나 아기를 해칠 것 같은 생각이 들면 블루스가 아니에요. 아래 "바로 연락해야 하는 신호"를 봐 주세요.',
+    '아기가 잘 때 나도 눈을 붙이는 게 먼저예요. 집안일은 미뤄도 돼요.',
+    { text: '38℃ 이상 열이나 한 시간에 생리대를 하나 넘게 적시는 출혈이 있으면 바로 119에 전화하거나 응급실로 가세요.', call: 'emergency' },
   ]},
   { maxDay: 42, label: '출산 후 3~6주', lines: [
-    '우울한 기분이 2주 넘게 이어지면 베이비 블루스가 아니라 산후우울일 수 있어요. 아래 "마음 신호 확인"을 해 보세요.',
+    { text: '우울한 기분이 2주 넘게 이어지면 베이비 블루스가 아니라 산후우울일 수 있어요. 아래 "마음 신호 확인"을 해 보세요.', check: true },
     '산후 검진 때 기분 이야기도 해도 돼요. 아빠나 다른 주양육자도 산후우울을 겪을 수 있어요.',
     '도와줄 사람이 없다면 보건소에 산모·신생아 방문 지원을 문의해 보세요.',
   ]},
@@ -26,7 +29,7 @@ const PP_STAGES = [
   ]},
   { maxDay: 365, label: '출산 후 3~12개월', lines: [
     '출산 후 1년까지는 산후우울이 생길 수 있는 기간으로 봐요. 늦게 시작돼도 도움을 받을 수 있어요.',
-    '복직, 수면 변화처럼 생활이 크게 바뀌는 때예요. 힘든 날이 2주 넘게 이어지면 1577-0199나 보건소에 문의해 보세요.',
+    { text: '복직, 수면 변화처럼 생활이 크게 바뀌는 때예요. 힘든 날이 2주 넘게 이어지면 1577-0199나 보건소에 문의해 보세요.', call: 'mental' },
     '월령별 아기 발달은 아래 "다른 상황 보기 → 아이 성장"에서 볼 수 있어요.',
   ]},
 ];
@@ -64,6 +67,25 @@ function ppFocusTitle(el) {
   if (!t) return;
   t.tabIndex = -1;
   t.focus({ preventScroll: true });
+}
+
+/* 번호 버튼: 번호 + 행동 + 한 줄 설명. 119는 긴급 스타일 */
+function ppCallHTML(key) {
+  const h = HELPLINES[key];
+  const stack = h.desc.length > 10;
+  const name = '<span aria-hidden="true">📞 </span>' + h.number + '에 전화하기';
+  const cls = 'pp-call' + (key === 'emergency' ? ' pp-call--urgent' : '') + (stack ? ' pp-call--stack' : '');
+  return '<a class="' + cls + '" href="' + helplineTel(key) + '"'
+    + ' data-umami-event="pp-connect" data-umami-event-type="call-' + h.number.replace(/-/g, '') + '">'
+    + (stack ? '<span class="pp-call-name">' + name + '</span>' : name) + ' <span>' + h.desc + '</span></a>';
+}
+
+function ppLineHTML(line) {
+  if (typeof line === 'string') return '<li>' + esc(line) + '</li>';
+  return '<li>' + esc(line.text)
+    + (line.call ? ppCallHTML(line.call) : '')
+    + (line.check ? '<button type="button" class="pp-btn pp-btn--ghost" data-pp-check data-umami-event="pp-check-open">마음 신호 확인</button>' : '')
+    + '</li>';
 }
 
 function ppRenderAge(focus) {
@@ -107,10 +129,11 @@ function ppRenderAge(focus) {
   } else {
     html = '<h2 class="pp-card-title">아기가 태어난 지 <strong>' + week + '주째</strong>예요</h2>'
       + '<p class="pp-stage-label">' + esc(stage.label) + '</p>'
-      + '<ul class="pp-list" role="list">' + stage.lines.map(l => '<li>' + esc(l) + '</li>').join('') + '</ul>';
+      + '<ul class="pp-list" role="list">' + stage.lines.map(ppLineHTML).join('') + '</ul>';
   }
   el.innerHTML = html
     + '<button type="button" class="pp-text-btn" id="pp-birth-reset">날짜 지우기</button>';
+  el.querySelectorAll('[data-pp-check]').forEach(b => b.addEventListener('click', ppOpenCheck));
   document.getElementById('pp-birth-reset').addEventListener('click', function () {
     ppWriteBirth('');
     ppRenderAge(true);
@@ -123,18 +146,19 @@ function ppConnectHTML() {
   return '<div class="pp-connect">'
     + '<a class="pp-call pp-call--primary" href="' + helplineTel('suicide') + '" data-umami-event="pp-connect" data-umami-event-type="call-109"><span aria-hidden="true">📞 </span>109에 전화하기 <span>무료 · 24시간</span></a>'
     + '<a class="pp-call" href="' + helplineSms('suicide') + '" data-umami-event="pp-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>'
+    /* sms:109가 상담으로 이어지는지 1차 출처 확인 전까지 마들랜을 문자 버튼 바로 아래에 보이게 둔다 (copy-review §8-7) */
+    + '<a class="pp-call" href="' + MADLAN_URL + '" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><span aria-hidden="true">💬 </span>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>'
     + '<details class="pp-more"><summary>다른 방법</summary>'
-    + '<a class="pp-call" href="' + MADLAN_URL + '" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><span aria-hidden="true">💬 </span>카카오톡 마들랜 상담<span class="sr-only"> (새 창)</span></a>'
-    + '<a class="pp-call" href="' + helplineTel('mental') + '" data-umami-event="pp-connect" data-umami-event-type="call-15770199"><span aria-hidden="true">📞 </span>1577-0199 정신건강위기상담전화</a>'
+    + '<a class="pp-call pp-call--stack" href="' + helplineTel('mental') + '" data-umami-event="pp-connect" data-umami-event-type="call-15770199"><span class="pp-call-name"><span aria-hidden="true">📞 </span>1577-0199 정신건강위기상담전화</span> <span>' + HELPLINES.mental.desc + '</span></a>'
     + '</details>'
-    + '<p class="pp-script">처음엔 <strong>"아기가 태어나고 요즘 많이 힘들어요"</strong>라고만 해도 돼요.<br>나나 아기가 지금 위험하다면 <a href="tel:119">119</a>에 전화해 주세요.</p>'
+    + '<p class="pp-script">처음엔 <strong>"아기가 태어나고 요즘 많이 힘들어요"</strong>라고만 해도 돼요.<br>나나 아기가 지금 위험하다면 <a class="tel-inline" href="' + helplineTel('emergency') + '">119</a>에 전화해 주세요.</p>'
     + '</div>';
 }
 
 const PP_MOOD_REPLY = {
   ok: () => '<p class="pp-reply">힘든 날이 오면 여기서 다시 골라 주세요. 필요한 곳으로 이어 드릴게요.</p>',
   holding: () => '<p class="pp-reply">버티는 날도 있어요. 아래 <strong>새벽에 할 수 있는 것</strong> 중 하나만 해 보세요. 이런 날이 2주 넘게 이어지면 <strong>마음 신호 확인</strong>을 해 보세요.</p>',
-  hard: () => '<p class="pp-reply"><strong>혼자 버티지 않아도 돼요.</strong> 지금 이야기를 들어줄 사람이 있어요.</p>' + ppConnectHTML(),
+  hard: () => '<p class="pp-reply"><strong>지금 전화나 문자로 이야기할 수 있어요.</strong> 109는 24시간, 무료예요.</p>' + ppConnectHTML(),
 };
 
 function ppSelectMood(mood) {

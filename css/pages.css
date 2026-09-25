@@ -5096,6 +5096,19 @@ a:focus:not(:focus-visible){
 .pp-call--urgent { color: var(--semantic-danger-strong); border-color: var(--semantic-danger-strong); }
 .pp-home .pp-script { font-size: calc(14px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); margin-top: 4px; word-break: keep-all; }
 .pp-home .pp-script a { color: var(--semantic-danger-strong); font-weight: 700; }
+/* 문장 안의 번호 링크: 줄 간격은 그대로, 누르는 영역만 높이 44px로 넓힌다 */
+.tel-inline {
+  position: relative;
+  color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px;
+}
+.tel-inline::after {
+  content: ''; position: absolute; left: -6px; right: -6px; top: 50%;
+  height: 44px; transform: translateY(-50%);
+}
+/* 설명이 긴 번호 버튼: 번호 줄 아래에 설명 줄 */
+.pp-call--stack { flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; padding-block: 8px; }
+.pp-call--stack span:not([aria-hidden]) { margin-left: 0; }
+.pp-call.pp-call--stack .pp-call-name { margin-left: 0; font-size: 15px; font-weight: 700; }
 
 .pp-row {
   display: flex; align-items: center; gap: 12px; width: 100%;
