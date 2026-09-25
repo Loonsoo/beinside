@@ -41,12 +41,9 @@ var I18n = (function () {
     var saved = localStorage.getItem(STORAGE_KEY);
     if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
 
-    // 2) navigator.language (ko-KR → ko)
-    var nav = (navigator.language || navigator.userLanguage || '').toLowerCase();
-    for (var i = 0; i < SUPPORTED.length; i++) {
-      if (nav.indexOf(SUPPORTED[i]) === 0) return SUPPORTED[i];
-    }
-
+    // 2) 브라우저 언어는 따라가지 않는다(한국어 기본).
+    //    본문·산후 홈·위기 도크는 한국어뿐이라, 브라우저 언어로 일부 라벨만 영어가 되면 화면에 언어가 섞인다
+    //    (reports/design/2026-09-direction.md D4·결정 6). 다문화 가이드는 자체 언어 선택(multicultural-page.js)을 쓴다.
     return DEFAULT;
   }
 

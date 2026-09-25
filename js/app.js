@@ -1330,23 +1330,84 @@ function getRecommendedGuides(topic, duration, daily) {
    헤더 메뉴 + 설정 패널
 ══════════════════════════════════════════════════════ */
 
-/* ── 헤더 드롭다운 메뉴 ── */
+/* ── 헤더 메뉴 ──
+   탭바를 없앤 뒤 옛 페이지(URL 그대로)·도구·공유를 여기서 연다. 한국어 고정. */
 function toggleHeaderMenu() {
   const menu = document.getElementById('hdr-menu');
-  const overlay = document.getElementById('hdr-menu-overlay');
-  const isOpen = menu.classList.contains('on');
-  if (isOpen) {
-    closeHeaderMenu();
-  } else {
-    menu.classList.add('on');
-    overlay.classList.add('on');
-  }
+  if (!menu) return;
+  if (menu.classList.contains('on')) closeHeaderMenu();
+  else openHeaderMenu();
 }
 
-function closeHeaderMenu() {
-  document.getElementById('hdr-menu').classList.remove('on');
-  document.getElementById('hdr-menu-overlay').classList.remove('on');
+function openHeaderMenu() {
+  const menu = document.getElementById('hdr-menu');
+  const overlay = document.getElementById('hdr-menu-overlay');
+  const btn = document.getElementById('menu-btn');
+  if (!menu) return;
+  menu.hidden = false;
+  menu.classList.add('on');
+  if (overlay) overlay.classList.add('on');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+  menu.scrollTop = 0;
+  const first = menu.querySelector('button');
+  if (first) first.focus({ preventScroll: true });
 }
+
+function closeHeaderMenu(returnFocus) {
+  const menu = document.getElementById('hdr-menu');
+  const overlay = document.getElementById('hdr-menu-overlay');
+  const btn = document.getElementById('menu-btn');
+  if (!menu) return;
+  const wasOpen = menu.classList.contains('on');
+  menu.classList.remove('on');
+  menu.hidden = true;
+  if (overlay) overlay.classList.remove('on');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+  if (wasOpen && returnFocus !== false && btn && menu.contains(document.activeElement)) btn.focus({ preventScroll: true });
+}
+
+(function initHeaderMenu() {
+  const menu = document.getElementById('hdr-menu');
+  if (!menu) return;
+  const ACTS = {
+    search: () => typeof openSearch === 'function' && openSearch(),
+    profile: () => typeof openProfPanel === 'function' && openProfPanel(),
+    settings: () => typeof openSettings === 'function' && openSettings(),
+    source: () => typeof openSourceDrawer === 'function' && openSourceDrawer(),
+    'share-kakao': () => typeof shareKakao === 'function' && shareKakao(),
+    'share-url': () => typeof shareURL === 'function' && shareURL(),
+    'share-native': () => typeof shareNative === 'function' && shareNative(),
+  };
+  menu.addEventListener('click', function (e) {
+    const b = e.target.closest('button');
+    if (!b) return;
+    closeHeaderMenu(false);
+    if (b.dataset.menuGo) {
+      if (b.dataset.menuGo === 'home') goHome(); else showPage(b.dataset.menuGo);
+      return;
+    }
+    if (b.hasAttribute('data-menu-other')) {
+      if (curPage !== 'home') goHome();
+      setTimeout(function () { if (typeof ppSetOther === 'function') ppSetOther(true, true); }, curPage === 'home' ? 0 : 200);
+      return;
+    }
+    const act = ACTS[b.dataset.menuAct];
+    if (act) setTimeout(act, 120);
+  });
+})();
+
+/* ── 위기 도크 높이 → --dock-h (본문 padding-bottom, 아래쪽 시트·토스트 위치에 씀)
+   글씨 크기·safe-area에 따라 높이가 바뀌므로 실제 높이를 잰다 ── */
+(function initDockHeight() {
+  const dock = document.getElementById('crisis-dock');
+  if (!dock) return;
+  function apply() {
+    document.documentElement.style.setProperty('--dock-h', Math.ceil(dock.getBoundingClientRect().height) + 'px');
+  }
+  apply();
+  if (typeof ResizeObserver === 'function') new ResizeObserver(apply).observe(dock);
+  else window.addEventListener('resize', apply);
+})();
 
 /* ── 설정 패널 ── */
 function openSettings() {

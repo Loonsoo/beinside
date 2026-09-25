@@ -11,14 +11,14 @@
     Kakao.init(KAKAO_KEY);
   }
 
-  /* ── 메뉴 토글 ── */
+  /* ── 메뉴 토글 (떠 있는 공유 버튼은 없앴다. 공유는 헤더 메뉴에서 shareKakao/shareURL/shareNative를 직접 부른다) ── */
   window.toggleShareMenu = function() {
     const menu = document.getElementById('share-menu');
     const fab = document.getElementById('share-fab');
     if (!menu) return;
     menuOpen = !menuOpen;
     menu.classList.toggle('on', menuOpen);
-    fab.classList.toggle('on', menuOpen);
+    if (fab) fab.classList.toggle('on', menuOpen);
   };
 
   function closeMenu() {

@@ -174,16 +174,22 @@
 
 /* prefers-color-scheme 제거: data-theme="light|dark"로 직접 관리 */
 
+/* 시간대 하늘 (새벽 "이끼 그늘"). 가장 밝은 점(지평선 빛)에서도 --text-primary 7.92 이상 */
+[data-theme="dark"][data-sky="dawn"]   {--sky-top:#10130D; --sky-mid:#161A12; --sky-low:#1F241A; --sky-glow:#2C3122;}
+[data-theme="dark"][data-sky="morning"]{--sky-top:#141811; --sky-mid:#1B2016; --sky-low:#262B1D; --sky-glow:#353625;}
+[data-theme="dark"][data-sky="day"]    {--sky-top:#181C14; --sky-mid:#1F241A; --sky-low:#283020; --sky-glow:#323A27;}
+[data-theme="dark"][data-sky="evening"]{--sky-top:#13140F; --sky-mid:#1B1C15; --sky-low:#28261C; --sky-glow:#36301F;}
+
 /* 다크 모드 컴포넌트 오버라이드 */
 [data-theme="dark"] body{
   background:var(--surface-base);
   color:var(--text-primary);
 }
 [data-theme="dark"] header{
-  background:var(--glass-bg);
-  backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-  border-bottom-color:var(--glass-border);
+  background:var(--surface-base);
+  border-bottom-color:var(--line-subtle);
 }
+[data-theme="dark"] body.pp-view-landing:not(.subpage) header{background:var(--sky-top);border-bottom-color:transparent;}
 [data-theme="dark"] .card{
   background:var(--white);
   border-color:var(--calm-border);
@@ -274,11 +280,6 @@
 [data-theme="dark"] .check-item.checked{
   background:rgba(var(--accent-rgb),.10);
 }
-[data-theme="dark"] .mobile-tabbar{
-  background:var(--glass-bg);
-  backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);
-  border-top-color:var(--glass-border);
-}
 [data-theme="dark"] .page-header{
   background:var(--glass-bg);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -334,12 +335,7 @@
   border-color:rgba(255,255,255,.08);
   color:var(--ink-m);
 }
-[data-theme="dark"] .hdr-sos{
-  background:var(--semantic-danger-bg);
-  border-color:var(--emer-border);
-}
 [data-theme="dark"] .hdr-back{
-  background:var(--accent-subtle);
   color:var(--text-primary);
 }
 [data-theme="dark"] .hdr-back:hover{
@@ -462,9 +458,6 @@
   background:rgba(0,0,0,.35);
 }
 [data-theme="dark"] .hdr-menu{
-  background:var(--glass-elevated);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-color:rgba(255,255,255,.06);
   box-shadow:0 4px 20px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .settings-panel{
@@ -474,7 +467,7 @@
   box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .logo{
-  color:rgba(255,238,226,.75);
+  color:var(--text-primary);
 }
 [data-theme="dark"] .guide-finder-btn{
   color:var(--ink-l);
@@ -791,35 +784,6 @@
 }
 
 /* ══════════════════════════════════════════
-   P0: SOS 버튼 pulse 애니메이션
-══════════════════════════════════════════ */
-@keyframes sosPulse{
-  0%{box-shadow:0 0 0 0 rgba(var(--danger-rgb),.35);}
-  70%{box-shadow:0 0 0 8px rgba(var(--danger-rgb),0);}
-  100%{box-shadow:0 0 0 0 rgba(var(--danger-rgb),0);}
-}
-.hdr-sos{
-  width:40px;height:40px;
-  border-radius:12px;
-  border:1.5px solid var(--emer-border);
-  background:var(--semantic-danger-bg);
-  color:var(--semantic-danger-strong);
-  font-size:10.5px;
-  animation:sosPulse 2.5s cubic-bezier(.4,0,.2,1) infinite;
-}
-.hdr-sos:hover{
-  background:var(--emer-bg-deep);
-  border-color:var(--semantic-danger-strong);
-  transform:scale(1.08);
-  box-shadow:0 2px 12px var(--sos-shadow);
-  animation:none;
-}
-[data-theme="dark"] .hdr-sos{
-  background:var(--emer-bg-deep);
-  border-color:var(--emer-border);
-}
-
-/* ══════════════════════════════════════════
    P0: "더 보기" 버튼
 ══════════════════════════════════════════ */
 .show-more-btn{
@@ -1109,10 +1073,6 @@
   }
   .emer-row--primary{
     border-width:2.5px;
-  }
-  .hdr-sos{
-    border-width:2px;
-    font-size:11px;
   }
 }
 

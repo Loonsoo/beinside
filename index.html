@@ -79,6 +79,9 @@
     // theme-color(media 두 개)를 실제 적용된 테마 바탕색에 맞춘다
     var m = document.querySelectorAll('meta[name="theme-color"]');
     for (var i = 0; i < m.length; i++) m[i].setAttribute('content', t === 'dark' ? '#171A13' : '#F2F1EC');
+    // 첫 화면 하늘: 접속 시각으로 한 번만 고른다 (새벽 0~5 · 아침 6~10 · 낮 11~16 · 저녁 17~23). 움직이지 않는다.
+    var h = new Date().getHours();
+    document.documentElement.setAttribute('data-sky', h < 6 ? 'dawn' : h < 11 ? 'morning' : h < 17 ? 'day' : 'evening');
   })();
   </script>
   <link rel="stylesheet" href="css/base.css">
@@ -91,6 +94,25 @@
   <meta name="naver-site-verification" content="naver4e49250f969f6005f45435e99a920006">
 </head>
 <body>
+<!-- 선 아이콘 (한 스타일, 1.6px 선). 이모지 대신 쓴다 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.8h2.6l1.3 4-1.9 1.3a11 11 0 0 0 6.3 6.3l1.3-1.9 4 1.3v2.6a2 2 0 0 1-2.2 2A15.8 15.8 0 0 1 4.6 6a2 2 0 0 1 2-2.2z"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4.5 6.5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H10l-4.2 3.2v-3.2h.7a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M19.5 14.6A7.8 7.8 0 0 1 9.4 4.5a7.8 7.8 0 1 0 10.1 10.1z"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M3.5 12h4l2-5 3.5 10 2-5h5.5"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M6 20.5V4m0 .5h10.5l-2 4 2 4H6"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-6.5 8 6.5M6.5 9.5V19.5h11V9.5"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4.5 4.5h6v6h-6zM13.5 4.5h6v6h-6zM4.5 13.5h6v6h-6zM13.5 13.5h6v6h-6z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M10.5 4.5a6 6 0 1 1 0 12 6 6 0 0 1 0-12zM15 15l4.5 4.5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M12 4.5a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zM5 19.5c.8-3.4 3.6-5.5 7-5.5s6.2 2.1 7 5.5"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><path d="M12 9a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM12 3.5v2.5M12 18v2.5M3.5 12H6M18 12h2.5M6 6l1.8 1.8M16.2 16.2L18 18M6 18l1.8-1.8M16.2 7.8L18 6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M5 5.5A1.5 1.5 0 0 1 6.5 4H18v14H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H18"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V4m0 0L8 8m4-4l4 4M5 12v6.5a1.5 1.5 0 0 0 1.5 1.5h11a1.5 1.5 0 0 0 1.5-1.5V12"/></symbol>
+  </defs>
+</svg>
 <button id="quick-exit" class="quick-exit-btn" type="button" hidden onclick="quickExit()" aria-label="빨리 나가기, 네이버 첫 화면으로 바뀌어요">나가기</button>
 <!-- 스킵 네비게이션 (접근성) -->
 <a href="#hero" class="skip-nav">본문으로 건너뛰기</a>
@@ -100,33 +122,26 @@
 
 <div id="scroll-bar"></div>
 
+<!-- 헤더: 한국어 고정(i18n 없음). 긴급 진입점은 하단 위기 도크 하나로 모은다(헤더 SOS 없음). -->
 <header>
   <div class="hdr-left">
-    <button class="hdr-back" id="hdr-back" onclick="goHome()" aria-label="홈으로 돌아가기">←</button>
+    <button class="hdr-back" id="hdr-back" type="button" onclick="goHome()" aria-label="홈으로 돌아가기"><svg class="hdr-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <!-- 프로필 칩: 새 홈에서 숨김(css). 프로필은 메뉴에서 연다. profiles.js가 이 요소를 그린다 -->
     <div id="prof-chip" class="prof-chip" onclick="openProfPanel()" title="프로필" aria-label="프로필 패널 열기">
       <div class="prof-avatar" id="hdr-avatar"><span id="hdr-avatar-em">🌱</span></div>
       <div class="prof-info" id="hdr-info">
-        <span class="prof-add" data-i18n="header.profileAdd">프로필 추가</span>
+        <span class="prof-add">프로필 추가</span>
       </div>
     </div>
+    <button class="logo" type="button" onclick="goHome()" aria-label="BeInside 홈으로">BeInside</button>
   </div>
-  <button class="logo" onclick="showPage('home');setMTab('home')" title="메인으로 돌아가기" style="cursor:pointer;" aria-label="BeInside 홈으로"><span style="font-size:20px;line-height:1;">🌻</span>BeInside</button>
   <div class="hdr-right">
-    <button class="hdr-search-btn" onclick="openSearch()" aria-label="검색" data-i18n="header.search" data-i18n-attr="aria-label">🔍</button>
-    <button class="hdr-sos" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움" data-i18n="header.emergency" data-i18n-attr="aria-label">SOS</button>
-    <button class="menu-btn" onclick="toggleHeaderMenu()" aria-label="메뉴 열기">
-      <span></span><span></span><span></span>
+    <button class="menu-btn" id="menu-btn" type="button" onclick="toggleHeaderMenu()" aria-expanded="false" aria-controls="hdr-menu">
+      <span class="menu-btn-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="menu-btn-label">메뉴</span>
     </button>
   </div>
 </header>
-
-<!-- 위기 연결 바: 모든 화면 상단. 번호는 js/helplines.js와 같아야 함 (tests/safety.test.js 검사) -->
-<div class="crisis-bar" role="region" aria-label="긴급 연락">
-  <span class="crisis-bar-label">지금 위험하다면</span>
-  <a href="tel:109" class="crisis-bar-link" data-umami-event="crisis-bar" data-umami-event-type="call-109">109 전화<span class="sr-only">, 자살예방상담전화, 무료 24시간</span></a>
-  <a href="sms:109" class="crisis-bar-link" data-umami-event="crisis-bar" data-umami-event-type="sms-109">109 문자<span class="sr-only">, 자살예방상담전화, 무료 24시간</span></a>
-  <a href="tel:119" class="crisis-bar-link crisis-bar-link--urgent" data-umami-event="crisis-bar" data-umami-event-type="call-119">119<span class="sr-only">, 구급차와 응급 출동</span></a>
-</div>
 
 <!-- ── 검색 모달 ── -->
 <div class="search-overlay" id="search-overlay" onclick="closeSearch()"></div>
@@ -138,22 +153,43 @@
   <div id="search-results" class="search-results"></div>
 </div>
 
-<!-- ── 헤더 드롭다운 메뉴 ── -->
+<!-- ── 헤더 메뉴 (한국어 고정) ──
+     탭바를 없앤 뒤 옛 페이지(URL 그대로)는 여기와 홈의 "다른 상황 보기"에서 연다. 공유도 여기로 옮겼다. -->
 <div class="hdr-menu-overlay" id="hdr-menu-overlay" onclick="closeHeaderMenu()"></div>
-<div class="hdr-menu" id="hdr-menu" role="menu" aria-label="메뉴">
-  <button class="hdr-menu-item" onclick="closeHeaderMenu();setTimeout(openSearch,150)" role="menuitem">
-    <span class="hdr-menu-icon">🔍</span>
-    <span>검색</span>
-  </button>
-  <button class="hdr-menu-item" onclick="closeHeaderMenu();setTimeout(openSourceDrawer,150)" role="menuitem">
-    <span class="hdr-menu-icon">📚</span>
-    <span>출처</span>
-  </button>
-  <button class="hdr-menu-item" onclick="closeHeaderMenu();setTimeout(openSettings,150)" role="menuitem">
-    <span class="hdr-menu-icon">⚙️</span>
-    <span>설정</span>
-  </button>
-</div>
+<nav class="hdr-menu" id="hdr-menu" aria-label="전체 메뉴" hidden>
+  <div class="hdr-menu-list">
+    <button class="hdr-menu-item" type="button" data-menu-go="home"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-home"/></svg><span>첫 화면</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-other><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-grid"/></svg><span>다른 상황 모두 보기</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-go="emergency"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg><span>도움 번호와 응급처치</span></button>
+  </div>
+  <p class="hdr-menu-h" id="hdr-menu-h-guides">가이드</p>
+  <div class="hdr-menu-chips" role="group" aria-labelledby="hdr-menu-h-guides">
+    <button class="hdr-menu-chip" type="button" data-menu-go="birth">출산 후 회복</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="postpartum">산후 마음</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="growth">아이 성장</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="sp">혼자 아이 키우기</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="dad">아빠 가이드</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="sleep">잠을 못 잘 때</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="emotion">감정 돌봄</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="mental">연령별 마음 돌봄</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="relation">관계가 힘들 때</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="teen">청소년·청년</button>
+    <button class="hdr-menu-chip" type="button" data-menu-go="journal">기록</button>
+  </div>
+  <p class="hdr-menu-h" id="hdr-menu-h-tools">도구</p>
+  <div class="hdr-menu-list" role="group" aria-labelledby="hdr-menu-h-tools">
+    <button class="hdr-menu-item" type="button" data-menu-act="search"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><span>검색</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-act="profile"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>아이 프로필</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-act="settings"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-gear"/></svg><span>설정 (화면 모드 · 글씨 크기)</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-act="source"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-book"/></svg><span>통계 출처</span></button>
+  </div>
+  <p class="hdr-menu-h" id="hdr-menu-h-share">BeInside 알리기</p>
+  <div class="hdr-menu-list" role="group" aria-labelledby="hdr-menu-h-share">
+    <button class="hdr-menu-item" type="button" data-menu-act="share-kakao"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg><span>카카오톡으로 보내기</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-act="share-url"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-link"/></svg><span>링크 복사</span></button>
+    <button class="hdr-menu-item" type="button" data-menu-act="share-native"><svg class="hdr-ico" aria-hidden="true" focusable="false"><use href="#i-share"/></svg><span>다른 앱으로 보내기</span></button>
+  </div>
+</nav>
 
 <!-- ── 설정 패널 ── -->
 <div class="settings-overlay" id="settings-overlay" onclick="closeSettings()"></div>
@@ -274,75 +310,169 @@
   <div class="main-col">
 
     <!-- ══════════════ HOME / HERO ══════════════ -->
-    <section class="hero" id="hero">
-      <div class="hero-glow"></div>
+    <section class="hero hero--pp" id="hero">
 
+      <!-- ══ 산후 동반자 홈: 혼자 돌보는 첫 12개월 ══
+           날짜가 없으면 랜딩 "새벽 한 장"(reports/design/2026-09-landing-direction.md 시안 1),
+           날짜가 있으면 시안 B "열두 달 시간 띠" 대시보드. js/pp-home.js가 둘 중 하나만 보여 준다.
+           한국어 고정(i18n 없음). 새 저장 상태 없음(날짜 하나만, 이 기기에만). -->
+      <div class="pp-home" id="pp-home" data-view="landing">
 
-      <!-- ══ 산후 동반자 홈: 혼자 돌보는 첫 12개월 (reports/2026-09-direction-plan.md 2단계) ══ -->
-      <div class="pp-home" id="pp-home">
-        <h1 class="pp-title">혼자 돌보는 첫 12개월</h1>
-        <p class="pp-sub">새벽에도, 혼자여도. 지금 필요한 것부터 볼 수 있어요.</p>
-
-        <div class="pp-card" id="pp-age" aria-live="polite"></div>
-
-        <div class="pp-card">
-          <h2 class="pp-card-title">오늘 나는…</h2>
-          <div class="pp-mood" role="group" aria-label="오늘 기분 고르기">
-            <button type="button" class="pp-mood-btn" data-pp-mood="ok" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">🙂</span><span>괜찮아요</span></button>
-            <button type="button" class="pp-mood-btn" data-pp-mood="holding" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">😐</span><span>버티는 중</span></button>
-            <button type="button" class="pp-mood-btn" data-pp-mood="hard" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">😢</span><span>많이 힘들어요</span></button>
+        <!-- ─── 첫 방문: 랜딩 ─── -->
+        <div class="pp-landing" id="pp-landing">
+          <div class="pp-l-sky">
+            <svg class="pp-l-orb" viewBox="0 0 60 60" aria-hidden="true" focusable="false">
+              <path class="pp-orb-moon" d="M38 12a17 17 0 1 0 12 26A14 14 0 0 1 38 12z"/>
+              <circle class="pp-orb-sun" cx="30" cy="30" r="15"/>
+            </svg>
+            <h1 class="pp-l-line" id="pp-l-title" tabindex="-1">혼자라고 느낄 때,<br>가장 먼저 닿는 곳.</h1>
+            <svg class="pp-l-horizon" viewBox="0 0 390 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+              <path class="pp-l-ground-fill" d="M0 24 C 46 16, 92 13, 142 19 S 238 35, 292 26 S 360 13, 390 19 V48 H0 Z"/>
+              <path class="pp-l-ground-line" d="M0 24 C 46 16, 92 13, 142 19 S 238 35, 292 26 S 360 13, 390 19"/>
+            </svg>
           </div>
-          <div class="pp-mood-result" id="pp-mood-result" aria-live="polite"></div>
-        </div>
 
-        <button type="button" class="pp-row" id="pp-check-link" data-umami-event="pp-check-open">
-          <span class="pp-row-icon" aria-hidden="true">🌸</span>
-          <span class="pp-row-text"><strong>마음 신호 확인</strong><span>2분 · 7가지 질문 · 진단이 아니라 도움받을 때인지 알아봐요</span></span>
-          <span class="pp-row-arrow" aria-hidden="true">›</span>
-        </button>
-
-        <details class="pp-details" id="pp-redflags">
-          <summary><span aria-hidden="true">🚨</span> 바로 연락해야 하는 신호</summary>
-          <div class="pp-details-body">
-            <p class="pp-flag-head">119 또는 응급실, 지금 바로</p>
-            <ul class="pp-list" role="list">
-              <li>나나 아기를 해치려는 마음이 들거나, 그 생각이 옳게 느껴지거나, 멈출 수 없을 것 같을 때</li>
-              <li>죽을 방법을 정했거나 준비했을 때, 이미 자해했거나 약을 많이 먹었을 때</li>
-              <li>아기와 함께 사라지는 게 낫다는 생각이 들 때</li>
-              <li>다음 중 <strong class="pp-inline">하나라도</strong> 있을 때: 없는 소리가 들리거나 없는 것이 보임 / 사실이 아닌 강한 확신(누군가 아기를 해치려 한다 등) / 며칠째 거의 못 자고 혼란스러움 / 잠을 거의 안 자도 피곤하지 않고, 들뜨거나 말·생각이 빨라짐 <span class="pp-note">(산후 정신증 신호일 수 있어요. 드물지만 빨리 치료할수록 좋은 응급 상태예요. 본인보다 주변 사람이 먼저 알아채기도 하니, 가족이 이 목록을 본다면 본인이 괜찮다고 해도 119에 전화해 주세요)</span></li>
-              <li>38℃ 이상 열, 한 시간에 생리대를 하나 넘게 적시는 출혈, 가슴 통증이나 숨이 참, 심한 두통이나 앞이 흐려 보일 때, 경련이나 의식을 잃을 때, 한쪽 다리가 붓고 아프고 붉을 때</li>
-            </ul>
-            <a class="pp-call pp-call--urgent" href="tel:119" data-umami-event="pp-connect" data-umami-event-type="call-119"><span aria-hidden="true">📞 </span>119에 전화하기 <span>구급차와 응급 출동</span></a>
-            <p class="pp-flag-head">109, 지금 (전화 또는 문자)</p>
-            <ul class="pp-list" role="list"><li>사라지고 싶거나 죽고 싶다는 생각이 들 때</li></ul>
-            <a class="pp-call pp-call--primary" href="tel:109" data-umami-event="pp-connect" data-umami-event-type="call-109"><span aria-hidden="true">📞 </span>109에 전화하기 <span>무료 · 24시간</span></a>
-            <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>
-            <a class="pp-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><span aria-hidden="true">💬 </span>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>
-            <p class="pp-script">방법까지 생각했거나 멈출 수 없을 것 같으면 위의 <a class="tel-inline" href="tel:119">119</a>에 전화해 주세요.</p>
-            <p class="pp-flag-head">1577-0199 또는 보건소, 이번 주에</p>
-            <ul class="pp-list" role="list"><li>우울하거나 아무것도 즐겁지 않은 날이 2주 넘게 이어질 때</li><li>원하지 않는데 아기가 다치는 장면이 자꾸 떠올라 괴롭거나, 그 생각 때문에 아기 목욕·칼 같은 것을 피하게 될 때 <span class="pp-note">(많은 부모가 겪고, 그 생각대로 행동하는 것과는 달라요. 상담이나 치료를 받으면 줄어드는 경우가 많아요)</span></li></ul>
-            <a class="pp-call pp-call--stack" href="tel:15770199" data-umami-event="pp-connect" data-umami-event-type="call-15770199"><span class="pp-call-name"><span aria-hidden="true">📞 </span>1577-0199 전화하기</span> <span>24시간 · 상담 무료(통화료는 들 수 있어요)</span></a>
+          <div class="pp-l-ground">
+            <p class="pp-l-lead">출산 후 첫 12개월, 아이를 혼자 돌보는 시간이 긴 사람을 위한 안내예요.</p>
+            <button type="button" class="pp-l-cta" id="pp-date-open" aria-expanded="false" aria-controls="pp-date-panel">태어난 날 넣고 지금 시기 보기</button>
+            <div class="pp-date-panel" id="pp-date-panel" hidden>
+              <form class="pp-age-form" id="pp-age-form">
+                <label class="pp-date-label" for="pp-birth-input">아기가 태어난 날</label>
+                <div class="pp-date-row">
+                  <input type="date" id="pp-birth-input" class="pp-date" required>
+                  <button type="submit" class="pp-btn">이 시기 보기</button>
+                </div>
+                <p class="pp-date-note">넣지 않아도 아래 내용은 모두 볼 수 있어요.</p>
+              </form>
+            </div>
+            <div class="pp-l-links">
+              <button type="button" class="pp-l-link" id="pp-l-browse" aria-controls="pp-l-night">날짜 없이 둘러보기</button>
+              <button type="button" class="pp-l-link pp-l-link--strong" id="pp-l-hard" aria-expanded="false" aria-controls="pp-l-reply">지금 많이 힘들어요</button>
+            </div>
+            <!-- "지금 많이 힘들어요" 응답: 109 전화·문자가 가장 먼저 (js/pp-home.js PP_MOOD_REPLY.hard) -->
+            <div class="pp-l-reply" id="pp-l-reply" tabindex="-1" hidden></div>
+            <p class="pp-privacy">아기가 태어난 날은 이 휴대폰에만 저장돼요. 인터넷 방문 기록과 통화·문자 기록은 휴대폰에 남아요.</p>
           </div>
-        </details>
 
-        <details class="pp-details" id="pp-night">
-          <summary><span aria-hidden="true">🌙</span> 새벽에 할 수 있는 것 3가지</summary>
-          <div class="pp-details-body">
-            <ol class="pp-list pp-list--num" role="list">
+          <section class="pp-l-sec" aria-labelledby="pp-l-s2t">
+            <h2 class="pp-l-h" id="pp-l-s2t">혼자 돌보는 첫 12개월</h2>
+            <p class="pp-l-p">날짜를 넣으면 지금 몇 주째인지, 이 시기에 흔한 일과 할 일을 세 줄로 보여 드려요.</p>
+            <div class="pp-l-preview" aria-hidden="true">
+              <ol class="pp-band"><li>첫 2주</li><li>3~6주</li><li>6주~3개월</li><li>3~12개월</li></ol>
+            </div>
+          </section>
+
+          <section class="pp-l-sec" id="pp-l-night" tabindex="-1" aria-labelledby="pp-l-s3t">
+            <h2 class="pp-l-h" id="pp-l-s3t">새벽에 할 수 있는 것 3가지</h2>
+            <ol class="pp-l-num" role="list">
               <li><strong>아기가 계속 울고 나도 한계라면</strong> 아기를 아기 침대에 등을 대고 눕혀요. 방을 나와 5~10분 숨을 고르고, 다시 가서 살펴보세요. 안전한 곳에서 우는 건 괜찮아요. 아기를 흔들지 마세요. 평소와 다르게 울거나 열이 나면(3개월 미만은 38℃ 이상) 바로 진료를 받아요.</li>
               <li><strong>몸부터 챙기기</strong> 물 한 잔 마시고, 4초 들이쉬고 6초 내쉬기를 다섯 번 해 보세요.</li>
               <li><strong>말할 사람이 없다면</strong> 109에 문자를 보내도 돼요. "잠을 못 자서 너무 힘들어요"처럼 짧게 써도 괜찮아요.</li>
             </ol>
-            <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>
-            <a class="pp-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><span aria-hidden="true">💬 </span>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>
+            <div class="pp-l-calls">
+              <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109에 문자 보내기</a>
+              <a class="pp-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>
+            </div>
+          </section>
+
+          <section class="pp-l-sec" id="pp-l-help" aria-labelledby="pp-l-help-t">
+            <h2 class="pp-l-h-sans" id="pp-l-help-t">도움이 필요할 때</h2>
+            <p class="pp-l-p">죽고 싶은 생각이 들면 <strong>109</strong>, 나나 아기가 지금 위험하면 <a class="tel-inline" href="tel:119">119<span class="sr-only">, 구급차와 응급 출동</span></a>예요. 급하지 않아도 이야기할 곳이 있어요.</p>
+            <div class="pp-109">
+              <p class="pp-109-name"><strong>109 자살예방상담전화</strong> <span>무료 · 24시간</span></p>
+              <div class="pp-109-row">
+                <a class="pp-call pp-call--primary" href="tel:109" data-umami-event="pp-connect" data-umami-event-type="call-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109에 전화하기</a>
+                <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109에 문자 보내기</a>
+              </div>
+            </div>
+            <a class="pp-call pp-call--stack" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><span class="pp-call-name"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>카카오톡 마들랜</span> <span>109 SNS 상담 채널 · 글로 상담해요<span class="sr-only"> (새 창)</span></span></a>
+            <a class="pp-call pp-call--stack" href="tel:15770199" data-umami-event="pp-connect" data-umami-event-type="call-15770199"><span class="pp-call-name"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>1577-0199 정신건강위기상담전화</span> <span>24시간 · 상담 무료(통화료는 들 수 있어요)</span></a>
+            <p class="pp-script">처음엔 <strong>"아기가 태어나고 요즘 많이 힘들어요"</strong>라고만 해도 돼요.</p>
+          </section>
+
+          <div class="pp-l-sec pp-l-end">
+            <button type="button" class="pp-l-cta" id="pp-date-again">태어난 날 넣고 지금 시기 보기</button>
+            <button type="button" class="pp-tile pp-tile--wide pp-tile--clay pp-other-toggle" aria-expanded="false" aria-controls="home-other">
+              <span class="pp-tile-t pp-other-label">다른 상황 보기</span><span class="pp-tile-s">아이 성장 · 내 마음 · 생활</span>
+            </button>
           </div>
-        </details>
+        </div>
 
-        <button type="button" class="pp-other-toggle" id="pp-other-toggle" aria-expanded="false" aria-controls="home-other">
-          <span class="pp-other-label">다른 상황 보기</span> <span>아이 성장 · 내 마음 · 생활</span>
-        </button>
+        <!-- ─── 날짜를 넣은 뒤: 시안 B "열두 달 시간 띠" ─── -->
+        <div class="pp-dash" id="pp-dash" hidden>
+          <div class="pp-age" id="pp-age" aria-live="polite"></div>
+
+          <h2 class="pp-h2" id="pp-mood-h">오늘 나는</h2>
+          <div class="pp-mood" role="group" aria-labelledby="pp-mood-h">
+            <button type="button" class="pp-mood-btn" data-pp-mood="ok" aria-pressed="false"><svg class="pp-mood-ico" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="11"/></svg><span>괜찮아요</span></button>
+            <button type="button" class="pp-mood-btn" data-pp-mood="holding" aria-pressed="false"><svg class="pp-mood-ico" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M5 17c0-6 4-11 11-11s11 3 11 9-3 4-6 7-6 5-10 4-6-3-6-9z"/></svg><span>버티는 중</span></button>
+            <button type="button" class="pp-mood-btn" data-pp-mood="hard" aria-pressed="false"><svg class="pp-mood-ico" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path d="M6 11l6-5 5 3 7-2 2 7-3 5 2 6-7 2-5-3-6 2-2-6 3-4z"/></svg><span>많이 힘들어요</span></button>
+          </div>
+          <div class="pp-mood-result" id="pp-mood-result" aria-live="polite"></div>
+
+          <div class="pp-grid">
+            <button type="button" class="pp-tile" id="pp-check-link" data-umami-event="pp-check-open">
+              <svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-signal"/></svg>
+              <span class="pp-tile-t">마음 신호 확인</span><span class="pp-tile-s">2분 · 7가지 질문 · 진단 아님</span>
+            </button>
+
+            <details class="pp-details" id="pp-night">
+              <summary><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-moon"/></svg><span class="pp-tile-t">새벽에 할 수 있는 것 3가지</span><span class="pp-tile-s">울음이 안 멈출 때 · 몸 · 말할 사람</span></summary>
+              <div class="pp-details-body">
+                <ol class="pp-list pp-list--num" role="list">
+                  <li><strong>아기가 계속 울고 나도 한계라면</strong> 아기를 아기 침대에 등을 대고 눕혀요. 방을 나와 5~10분 숨을 고르고, 다시 가서 살펴보세요. 안전한 곳에서 우는 건 괜찮아요. 아기를 흔들지 마세요. 평소와 다르게 울거나 열이 나면(3개월 미만은 38℃ 이상) 바로 진료를 받아요.</li>
+                  <li><strong>몸부터 챙기기</strong> 물 한 잔 마시고, 4초 들이쉬고 6초 내쉬기를 다섯 번 해 보세요.</li>
+                  <li><strong>말할 사람이 없다면</strong> 109에 문자를 보내도 돼요. "잠을 못 자서 너무 힘들어요"처럼 짧게 써도 괜찮아요.</li>
+                </ol>
+                <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109에 문자 보내기</a>
+                <a class="pp-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>
+              </div>
+            </details>
+
+            <details class="pp-details" id="pp-redflags">
+              <summary><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-flag"/></svg><span class="pp-tile-t">바로 연락해야 하는 신호</span></summary>
+              <div class="pp-details-body">
+                <p class="pp-flag-head">119 또는 응급실, 지금 바로</p>
+                <ul class="pp-list" role="list">
+                  <li>나나 아기를 해치려는 마음이 들거나, 그 생각이 옳게 느껴지거나, 멈출 수 없을 것 같을 때</li>
+                  <li>죽을 방법을 정했거나 준비했을 때, 이미 자해했거나 약을 많이 먹었을 때</li>
+                  <li>아기와 함께 사라지는 게 낫다는 생각이 들 때</li>
+                  <li>다음 중 <strong class="pp-inline">하나라도</strong> 있을 때: 없는 소리가 들리거나 없는 것이 보임 / 사실이 아닌 강한 확신(누군가 아기를 해치려 한다 등) / 며칠째 거의 못 자고 혼란스러움 / 잠을 거의 안 자도 피곤하지 않고, 들뜨거나 말·생각이 빨라짐 <span class="pp-note">(산후 정신증 신호일 수 있어요. 드물지만 빨리 치료할수록 좋은 응급 상태예요. 본인보다 주변 사람이 먼저 알아채기도 하니, 가족이 이 목록을 본다면 본인이 괜찮다고 해도 119에 전화해 주세요)</span></li>
+                  <li>38℃ 이상 열, 한 시간에 생리대를 하나 넘게 적시는 출혈, 가슴 통증이나 숨이 참, 심한 두통이나 앞이 흐려 보일 때, 경련이나 의식을 잃을 때, 한쪽 다리가 붓고 아프고 붉을 때</li>
+                </ul>
+                <a class="pp-call pp-call--urgent" href="tel:119" data-umami-event="pp-connect" data-umami-event-type="call-119"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>119에 전화하기 <span>구급차와 응급 출동</span></a>
+                <p class="pp-flag-head">109, 지금 (전화 또는 문자)</p>
+                <ul class="pp-list" role="list"><li>사라지고 싶거나 죽고 싶다는 생각이 들 때</li></ul>
+                <a class="pp-call pp-call--primary" href="tel:109" data-umami-event="pp-connect" data-umami-event-type="call-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109에 전화하기 <span>무료 · 24시간</span></a>
+                <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109에 문자 보내기</a>
+                <a class="pp-call" href="https://pf.kakao.com/_DAxbYG" target="_blank" rel="noopener noreferrer" data-umami-event="pp-connect" data-umami-event-type="madlan"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>카카오톡 마들랜 상담 <span>109 글 상담</span><span class="sr-only"> (새 창)</span></a>
+                <p class="pp-script">방법까지 생각했거나 멈출 수 없을 것 같으면 위의 <a class="tel-inline" href="tel:119">119</a>에 전화해 주세요.</p>
+                <p class="pp-flag-head">1577-0199 또는 보건소, 이번 주에</p>
+                <ul class="pp-list" role="list"><li>우울하거나 아무것도 즐겁지 않은 날이 2주 넘게 이어질 때</li><li>원하지 않는데 아기가 다치는 장면이 자꾸 떠올라 괴롭거나, 그 생각 때문에 아기 목욕·칼 같은 것을 피하게 될 때 <span class="pp-note">(많은 부모가 겪고, 그 생각대로 행동하는 것과는 달라요. 상담이나 치료를 받으면 줄어드는 경우가 많아요)</span></li></ul>
+                <a class="pp-call pp-call--stack" href="tel:15770199" data-umami-event="pp-connect" data-umami-event-type="call-15770199"><span class="pp-call-name"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>1577-0199 전화하기</span> <span>24시간 · 상담 무료(통화료는 들 수 있어요)</span></a>
+              </div>
+            </details>
+
+            <button type="button" class="pp-tile pp-tile--wide pp-tile--clay pp-other-toggle" id="pp-other-toggle" aria-expanded="false" aria-controls="home-other">
+              <span class="pp-tile-t pp-other-label">다른 상황 보기</span><span class="pp-tile-s">아이 성장 · 내 마음 · 생활</span>
+            </button>
+          </div>
+
+          <p class="pp-privacy">아기가 태어난 날은 이 휴대폰에만 저장돼요. 인터넷 방문 기록과 통화·문자 기록은 휴대폰에 남아요.</p>
+          <details class="pp-erase" id="pp-erase">
+            <summary>기록 지우는 방법</summary>
+            <ol class="pp-list pp-list--num" role="list">
+              <li><strong>아기가 태어난 날</strong> 위 시기 카드의 "날짜 지우기"를 누르면 이 휴대폰에서 지워져요.</li>
+              <li><strong>인터넷 방문 기록</strong> 쓰는 브라우저의 방문 기록 메뉴에서 지울 수 있어요.</li>
+              <li><strong>통화·문자 기록</strong> 전화 앱의 최근 기록과 메시지 앱에서 지울 수 있어요.</li>
+              <li><strong>카카오톡 상담</strong> 마들랜 상담 대화는 카카오톡에 남아요.</li>
+              <li><strong>통신사 내역</strong> 통신사 통화 내역에는 남을 수 있어요.</li>
+              <li><strong>지운 것이 눈에 띌까 걱정된다면</strong> 기록을 지운 것이 오히려 눈에 띌 수 있는 상황이라면, 1366에 먼저 상의해 보세요.</li>
+            </ol>
+            <a class="pp-call pp-call--stack" href="tel:1366" data-umami-event="pp-connect" data-umami-event-type="call-1366"><span class="pp-call-name"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>1366 여성긴급전화</span> <span>가정폭력·성폭력 · 24시간</span></a>
+          </details>
+        </div>
       </div>
-
       <!-- 기존 홈 (다른 상황) — URL과 가이드는 그대로, 링크 하나 뒤로 이동 -->
       <div class="home-other" id="home-other" hidden>
       <h2 class="home-other-title" data-i18n="home.title">지금, 어떤 상황이세요?</h2>
@@ -1288,7 +1418,7 @@
     </div>
 
     <footer>
-      <div class="footer-logo">🌻 BeInside</div>
+      <div class="footer-logo">BeInside</div>
       <div class="footer-tagline">조용히, 나만을 위한 공간</div>
       <div class="footer-divider"></div>
       <div class="footer-disclaimer">
@@ -1303,24 +1433,20 @@
   </div><!-- /main-col -->
 </main><!-- /page-wrap -->
 
-<!-- ── 모바일 하단 탭바 (5탭) ── -->
-<nav class="mobile-tabbar" id="mobile-tabbar">
-  <button class="mtab active" id="mtab-home" onclick="showPage('home');setMTab('home')" aria-label="홈">
-    <span>🏠</span><span data-i18n="tab.home">홈</span>
-  </button>
-  <button class="mtab" id="mtab-growth" onclick="showPage('growth');setMTab('growth')" aria-label="성장 가이드">
-    <span>👶</span><span data-i18n="tab.growth">성장</span>
-  </button>
-  <button class="mtab" id="mtab-mind" onclick="showPage('emotion');setMTab('mind')" aria-label="마음 돌봄">
-    <span>💜</span><span data-i18n="tab.mind">마음</span>
-  </button>
-  <button class="mtab" id="mtab-journal" onclick="showPage('journal');setMTab('journal')" aria-label="기록">
-    <span>📝</span><span data-i18n="tab.journal">기록</span>
-  </button>
-  <button class="mtab" id="mtab-emergency" onclick="showPage('emergency');setMTab('emergency')" aria-label="긴급 도움">
-    <span>🆘</span><span data-i18n="tab.emergency">긴급</span>
-  </button>
-</nav>
+<!-- ── 위기 도크: 모든 화면 하단 고정 ──
+     번호는 js/helplines.js와 같아야 한다 (tests/safety.test.js 검사).
+     감성 장치(명조·그라데이션·모션·반투명) 금지. 고딕 700, 번호 18px 이상, 버튼 높이 56px 이상.
+     한국어 고정(i18n 없음). 헤더 SOS·탭바 "긴급"을 대신하는 유일한 긴급 진입점. -->
+<div class="crisis-dock" id="crisis-dock" role="region" aria-label="긴급 연락">
+  <div class="crisis-dock-inner">
+    <p class="crisis-dock-label">지금 위험하다면</p>
+    <div class="crisis-dock-row">
+      <a href="tel:109" class="crisis-dock-btn crisis-dock-btn--call" data-umami-event="crisis-bar" data-umami-event-type="call-109"><svg class="crisis-dock-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>109 전화<span class="sr-only">, 자살예방상담전화, 무료 24시간</span></a>
+      <a href="sms:109" class="crisis-dock-btn" data-umami-event="crisis-bar" data-umami-event-type="sms-109"><svg class="crisis-dock-ico" aria-hidden="true" focusable="false"><use href="#i-msg"/></svg>109 문자<span class="sr-only">, 자살예방상담전화 문자 상담</span></a>
+      <a href="tel:119" class="crisis-dock-btn crisis-dock-btn--urgent" data-umami-event="crisis-bar" data-umami-event-type="call-119">119<span class="sr-only">, 구급차와 응급 출동</span></a>
+    </div>
+  </div>
+</div>
 
 <!-- ── 온보딩 오버레이 (첫 방문) ── -->
 <div class="onboard-overlay" id="onboard-overlay">
@@ -1406,24 +1532,7 @@
   </div>
 </div>
 
-<!-- ── 공유 플로팅 버튼 ── -->
-<button class="share-fab" id="share-fab" onclick="toggleShareMenu()" aria-label="공유하기">
-  <span class="share-fab-icon">↗</span>
-</button>
-<div class="share-menu" id="share-menu">
-  <button class="share-menu-item" onclick="shareKakao()">
-    <span class="share-item-icon" style="background:#FEE500;color:#3C1E1E;">K</span>
-    <span>카카오톡</span>
-  </button>
-  <button class="share-menu-item" onclick="shareURL()">
-    <span class="share-item-icon" style="background:var(--peach-p);color:var(--peach-d);">🔗</span>
-    <span>링크 복사</span>
-  </button>
-  <button class="share-menu-item" onclick="shareNative()">
-    <span class="share-item-icon" style="background:var(--warm);color:var(--ink);">📤</span>
-    <span>더보기</span>
-  </button>
-</div>
+<!-- 공유는 헤더 메뉴로 옮겼다 (떠 있는 공유 버튼 제거, reports/design/2026-09-direction.md D5) -->
 
 <!-- ── 가이드 파인더 모달 ── -->
 <div class="gf-overlay" id="gf-overlay" onclick="if(event.target===this)closeGuideFinder()">

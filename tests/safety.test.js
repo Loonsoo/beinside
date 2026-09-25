@@ -182,10 +182,54 @@ describe('청소년·학대 페이지 보호', () => {
 describe('위기 연결층', () => {
   const html = read('index.html');
 
-  it('모든 화면 상단 위기 바에 109 전화·문자와 119가 있음', () => {
-    const bar = html.match(/<div class="crisis-bar"[\s\S]*?<\/div>/);
-    assert.ok(bar, '위기 바가 없음');
-    for (const href of ['tel:109', 'sms:109', 'tel:119']) assert.ok(bar[0].includes(`href="${href}"`), href);
+  /* 위기 도크: 모든 화면 하단 고정 (reports/design/2026-09-direction.md §9, 상단 위기 바를 대체) */
+  const docks = html.match(/<div class="crisis-dock"[\s\S]*?<\/div>\s*<\/div>\s*<\/div>/g) || [];
+  const dock = docks[0] || '';
+  const css = read('css/base.css') + read('css/pages.css') + read('css/dark.css');
+  const rule = sel => {
+    const esc = sel.replace(/[.*+?^${}()|[\]\\-]/g, '\\$&');
+    return [...css.matchAll(new RegExp('(?:^|[}\\s,])' + esc + '\\s*\\{([^}]*)\\}', 'g'))].map(m => m[1]).join(';');
+  };
+
+  it('모든 화면의 위기 도크에 109 전화·109 문자·119가 있고, 각각 스크린리더 설명과 통계 속성이 있음', () => {
+    assert.equal(docks.length, 1, `위기 도크가 ${docks.length}개 (정확히 1개여야 함)`);
+    assert.match(dock, /role="region"[^>]*aria-label="긴급 연락"/);
+    for (const href of ['tel:109', 'sms:109', 'tel:119']) {
+      const a = dock.match(new RegExp(`<a[^>]*href="${href}"[^>]*>[\\s\\S]*?<\\/a>`));
+      assert.ok(a, `도크에 ${href} 없음`);
+      assert.match(a[0], /<span class="sr-only">[^<]{4,}<\/span>/, `${href}에 스크린리더 설명 없음`);
+      assert.match(a[0], /data-umami-event="crisis-bar"/, `${href}에 umami 속성 없음`);
+    }
+  });
+
+  it('위기 도크는 페이지 전환 영역(main) 밖에 있어 어느 화면에서도 숨겨지지 않음', () => {
+    const at = html.indexOf('<div class="crisis-dock"');
+    assert.ok(at > html.indexOf('</main>'), '도크가 <main> 안에 있음 (페이지 전환 때 함께 숨겨질 수 있음)');
+    assert.doesNotMatch(dock.slice(0, dock.indexOf('>')), /hidden|display\s*:\s*none/);
+    for (const f of fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.endsWith('.js'))) {
+      const src = read('js/' + f);
+      if (!src.includes('crisis-dock')) continue;
+      assert.equal(f, 'app.js', `${f}가 위기 도크를 건드림`);
+      const from = src.indexOf("getElementById('crisis-dock')");
+      const block = src.slice(from, src.indexOf('})();', from));
+      assert.doesNotMatch(block, /\.hidden\s*=|style\.display|classList\.(add|toggle)/, 'app.js가 도크를 숨길 수 있음');
+    }
+  });
+
+  it('위기 도크가 화면 아래에 고정되고, 버튼 56px 이상·번호 18px 이상·굵게, 본문이 가리지 않음', () => {
+    const d = rule('.crisis-dock');
+    assert.match(d, /position:\s*fixed/);
+    assert.match(d, /bottom:\s*0/);
+    assert.match(d, /safe-area-inset-bottom/);
+    const z = Number((d.match(/z-index:\s*(\d+)/) || [])[1]);
+    assert.ok(z >= 9000, `도크 z-index ${z}가 시트·모달보다 낮음`);
+    const b = rule('.crisis-dock-btn');
+    assert.ok(Number((b.match(/min-height:\s*(\d+)px/) || [])[1]) >= 56, '도크 버튼 높이 56px 미만');
+    const fs1 = b.match(/font-size:\s*(?:clamp\()?(\d+)px/);
+    assert.ok(fs1 && Number(fs1[1]) >= 18, '도크 번호 글자 18px 미만');
+    assert.match(b, /font-weight:\s*700/);
+    assert.doesNotMatch(d + b, /gradient|font-accent|Gowun|animation|backdrop-filter/, '도크에 감성 장치(그라데이션·명조·모션·반투명)가 있음');
+    assert.match(rule('body'), /padding-bottom:\s*calc\(var\(--dock-h\)/, '본문이 도크에 가려짐 (padding-bottom 없음)');
   });
 
   it('helplines.js 번호가 공식 번호와 일치', () => {
