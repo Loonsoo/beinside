@@ -1967,7 +1967,7 @@
   top: calc(108px + env(safe-area-inset-top, 0px)); /* 헤더 56 + 위기 바 44 아래 */
   right: 12px;
   z-index: 99999;
-  min-width: 52px; min-height: 44px;
+  min-width: 56px; min-height: 56px;
   padding: 8px 16px;
   background: var(--text-body); color: var(--surface-card);
   border: none; border-radius: 10px;
@@ -1976,14 +1976,15 @@
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  box-shadow: 0 2px 10px rgba(0,0,0,.18);
+  box-shadow: var(--shadow-md);
 }
 .quick-exit-btn[hidden] { display: none; }
 .quick-exit-btn:hover,
 .quick-exit-btn:focus-visible {
   background: var(--text-primary);
-  outline: 2px solid var(--surface-card);
+  outline: 3px solid var(--text-primary);
   outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--surface-card);
 }
 
 @media(max-width:640px) {
@@ -4943,7 +4944,7 @@ a:focus:not(:focus-visible){
    조용하지만 항상 보이게. 헤더 바로 아래, 스크롤과 함께 올라감. */
 .crisis-bar {
   display: flex; align-items: center; justify-content: center;
-  gap: 4px;
+  flex-wrap: wrap; gap: 4px; row-gap: 0;
   min-height: 44px;
   padding: 0 12px;
   background: var(--surface-card);
@@ -4973,13 +4974,13 @@ a:focus:not(:focus-visible){
 /* ── 체크 결과 안의 연결 버튼 ── */
 .check-connect { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
 .check-connect-btn {
-  display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px;
-  min-height: 48px; padding: 10px 16px;
+  display: block;
+  min-height: 56px; padding: 9px 16px;
   border-radius: 12px;
   background: var(--text-primary); color: var(--surface-card);
   font-size: 15px; font-weight: 700; text-decoration: none;
 }
-.check-connect-btn span { font-size: 13px; font-weight: 500; }
+.check-connect-btn span:not([aria-hidden]) { display: block; font-size: 13px; font-weight: 500; }
 .check-connect-btn--sub {
   background: var(--surface-card); color: var(--text-primary);
   border: 1px solid var(--border-hover);
@@ -4999,7 +5000,7 @@ a:focus:not(:focus-visible){
 /* 홈(.hero)의 일반 규칙(p 13.5px·지연 페이드·가운데 정렬·선택 금지)이 새 홈에 새지 않게 차단 */
 .hero .pp-home { text-align: left; align-self: center; }
 .pp-home p, .pp-home h1, .pp-home h2 { max-width: none; margin: 0; animation: none; }
-.hero .pp-home, .hero .pp-home * { -webkit-user-select: text; user-select: text; }
+.hero .pp-home, .hero .pp-home * { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 .pp-home {
   width: 100%; max-width: 640px;
   display: flex; flex-direction: column; gap: 12px;
@@ -5026,14 +5027,14 @@ a:focus:not(:focus-visible){
   font-size: 16px; font-weight: 700; color: var(--text-primary);
   margin-bottom: 8px; line-height: 1.5; word-break: keep-all;
 }
-.pp-home .pp-card-title strong { color: var(--accent-hover); }
-.pp-home .pp-card-sub { font-size: 14px; color: var(--text-body); line-height: 1.7; word-break: keep-all; }
+.pp-home .pp-card-title strong { color: var(--text-primary); font-weight: 800; }
+.pp-home .pp-card-sub { font-size: calc(14px + var(--text-scale, 0) * 2px); color: var(--text-body); line-height: 1.7; word-break: keep-all; }
 .pp-home .pp-stage-label { font-size: 13px; font-weight: 700; color: var(--text-body); margin-bottom: 6px; }
 
 .pp-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .pp-list li {
   position: relative; padding-left: 16px;
-  font-size: 15px; line-height: 1.7; color: var(--text-body); word-break: keep-all;
+  font-size: calc(15px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); word-break: keep-all;
 }
 .pp-list li::before { content: '·'; position: absolute; left: 3px; font-weight: 700; color: var(--text-primary); }
 .pp-list--num { counter-reset: pp; }
@@ -5046,7 +5047,7 @@ a:focus:not(:focus-visible){
 .pp-date {
   flex: 1; min-width: 160px; min-height: 48px;
   padding: 0 12px; border-radius: 10px;
-  border: 1px solid var(--border-hover);
+  border: 1px solid var(--text-secondary);
   background: var(--surface-elevated); color: var(--text-primary);
   font-family: inherit; font-size: 16px; /* 16px 미만이면 iOS가 확대함 */
 }
@@ -5072,26 +5073,27 @@ a:focus:not(:focus-visible){
   font-family: inherit; font-size: 24px; cursor: pointer;
   transition: transform .12s var(--ease), background var(--dur) var(--ease);
 }
-.pp-mood-btn span { font-size: 14px; font-weight: 600; word-break: keep-all; }
+.pp-mood-btn span:not(.pp-emoji) { font-size: 14px; font-weight: 600; word-break: keep-all; }
 .pp-mood-btn:active { transform: scale(.97); }
-.pp-mood-btn.on { background: var(--accent-subtle); border-color: var(--text-primary); }
+.pp-mood-btn.on { background: var(--accent-subtle); border: 2px solid var(--text-primary); }
+.pp-mood-btn.on span:not(.pp-emoji) { font-weight: 800; }
 .pp-mood-result:not(:empty) { margin-top: 12px; }
-.pp-home .pp-reply { font-size: 15px; line-height: 1.7; color: var(--text-body); word-break: keep-all; }
+.pp-home .pp-reply { font-size: calc(15px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); word-break: keep-all; }
 .pp-home .pp-reply strong { color: var(--text-primary); }
 
 .pp-connect { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
 .pp-call {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  display: flex; align-items: center; justify-content: flex-start; gap: 4px;
   min-height: 56px; padding: 0 16px; margin-top: 8px;
   border-radius: 12px; border: 1px solid var(--border-hover);
   background: var(--surface-elevated); color: var(--text-primary);
   font-size: 15px; font-weight: 700; text-decoration: none;
 }
 .pp-connect .pp-call { margin-top: 0; }
-.pp-call span { font-size: 13px; font-weight: 500; }
+.pp-call span:not([aria-hidden]) { margin-left: auto; font-size: 13px; font-weight: 500; }
 .pp-call--primary { background: var(--text-primary); color: var(--surface-card); border-color: var(--text-primary); }
 .pp-call--urgent { color: var(--semantic-danger-strong); border-color: var(--semantic-danger-strong); }
-.pp-home .pp-script { font-size: 14px; line-height: 1.7; color: var(--text-body); margin-top: 4px; word-break: keep-all; }
+.pp-home .pp-script { font-size: calc(14px + var(--text-scale, 0) * 2px); line-height: 1.7; color: var(--text-body); margin-top: 4px; word-break: keep-all; }
 .pp-home .pp-script a { color: var(--semantic-danger-strong); font-weight: 700; }
 
 .pp-row {
@@ -5119,7 +5121,7 @@ a:focus:not(:focus-visible){
   cursor: pointer; list-style: none;
 }
 .pp-details summary::-webkit-details-marker { display: none; }
-.pp-details summary::after { content: '›'; margin-left: auto; font-size: 22px; color: var(--text-body); transition: transform var(--dur) var(--ease); }
+.pp-details summary::after { content: '›' / ''; margin-left: auto; font-size: 22px; color: var(--text-body); transition: transform var(--dur) var(--ease); }
 .pp-details[open] summary::after { transform: rotate(90deg); }
 .pp-details-body { padding: 0 16px 16px; }
 .pp-home .pp-flag-head { font-size: 14px; font-weight: 700; color: var(--text-primary); margin: 12px 0 6px; }
@@ -5144,4 +5146,25 @@ a:focus:not(:focus-visible){
 }
 @media (prefers-reduced-motion: reduce) {
   .pp-mood-btn, .pp-details summary::after { transition: none; }
+}
+.pp-home .pp-list strong.pp-inline { display: inline; }
+
+/* 검수 반영: 다크모드 달력 아이콘, 누름 반응, 접기 상태 표시, "다른 방법" */
+[data-theme="dark"] .pp-date { color-scheme: dark; }
+.pp-call:active, .pp-row:active, .pp-btn:active, .pp-details summary:active,
+.pp-other-toggle:active, .check-connect-btn:active, .quick-exit-btn:active,
+.crisis-bar-link:active { transform: scale(.98); }
+.pp-other-toggle[aria-expanded="true"] { border-style: solid; }
+.pp-more { margin-top: 2px; }
+.pp-more summary {
+  display: flex; align-items: center; min-height: 44px; padding: 0 4px;
+  font-size: 14px; font-weight: 700; color: var(--text-body); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px; list-style: none;
+}
+.pp-more summary::-webkit-details-marker { display: none; }
+.pp-more[open] { display: flex; flex-direction: column; gap: 8px; }
+@media (prefers-reduced-motion: reduce) {
+  .pp-call:active, .pp-row:active, .pp-btn:active, .pp-details summary:active,
+  .pp-other-toggle:active, .check-connect-btn:active, .quick-exit-btn:active,
+  .crisis-bar-link:active { transform: none; }
 }

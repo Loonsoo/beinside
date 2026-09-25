@@ -603,6 +603,9 @@ document.addEventListener('keydown', e => {
 
   /* ── 편집 모드 진입/종료 ── */
   window.enterCardEdit = function() {
+    // 기존 홈 카드는 '다른 상황' 영역에 접혀 있으므로 먼저 펼친다
+    var other = document.getElementById('home-other');
+    if (other && other.hidden && typeof toggleHomeOther === 'function') toggleHomeOther();
     if (editMode) return;
     editMode = true;
     editModeAt = Date.now();

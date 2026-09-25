@@ -92,9 +92,9 @@ function checkConnectHTML(cls, isEmergency) {
   if (typeof HELPLINES === 'undefined') return '';
   if (isEmergency || cls === 'high') {
     return '<div class="check-connect">'
-      + '<a class="check-connect-btn" href="' + helplineTel('suicide') + '" data-umami-event="check-connect" data-umami-event-type="call-109">📞 109에 전화하기 <span>무료 · 24시간</span></a>'
-      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineSms('suicide') + '" data-umami-event="check-connect" data-umami-event-type="sms-109">💬 109에 문자 보내기</a>'
-      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199">📞 1577-0199 정신건강상담전화</a>'
+      + '<a class="check-connect-btn" href="' + helplineTel('suicide') + '" data-umami-event="check-connect" data-umami-event-type="call-109"><span aria-hidden="true">📞 </span>109에 전화하기 <span>무료 · 24시간</span></a>'
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineSms('suicide') + '" data-umami-event="check-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>'
+      + '<a class="check-connect-btn check-connect-btn--sub" href="' + helplineTel('mental') + '" data-umami-event="check-connect" data-umami-event-type="call-15770199"><span aria-hidden="true">📞 </span>1577-0199 정신건강위기상담전화</a>'
       + '<p class="check-connect-script">처음엔 <strong>"요즘 많이 힘들어서 연락했어요"</strong>라고만 해도 돼요. 지금 당장 위험하다면 <a href="tel:119">119</a>.</p>'
       + '</div>';
   }

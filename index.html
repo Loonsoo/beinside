@@ -114,9 +114,9 @@
 <!-- 위기 연결 바: 모든 화면 상단. 번호는 js/helplines.js와 같아야 함 (tests/safety.test.js 검사) -->
 <div class="crisis-bar" role="region" aria-label="긴급 연락">
   <span class="crisis-bar-label">지금 위험하다면</span>
-  <a href="tel:109" class="crisis-bar-link" aria-label="109 자살예방상담전화로 전화하기" data-umami-event="crisis-bar" data-umami-event-type="call-109">109 전화</a>
-  <a href="sms:109" class="crisis-bar-link" aria-label="109로 문자 상담하기" data-umami-event="crisis-bar" data-umami-event-type="sms-109">109 문자</a>
-  <a href="tel:119" class="crisis-bar-link crisis-bar-link--urgent" aria-label="119로 전화하기" data-umami-event="crisis-bar" data-umami-event-type="call-119">119</a>
+  <a href="tel:109" class="crisis-bar-link" data-umami-event="crisis-bar" data-umami-event-type="call-109">109 전화<span class="sr-only"> (자살예방상담전화)</span></a>
+  <a href="sms:109" class="crisis-bar-link" data-umami-event="crisis-bar" data-umami-event-type="sms-109">109 문자<span class="sr-only"> 상담</span></a>
+  <a href="tel:119" class="crisis-bar-link crisis-bar-link--urgent" data-umami-event="crisis-bar" data-umami-event-type="call-119">119<span class="sr-only"> 응급 전화</span></a>
 </div>
 
 <!-- ── 검색 모달 ── -->
@@ -290,9 +290,9 @@
         <div class="pp-card">
           <h2 class="pp-card-title">오늘 나는…</h2>
           <div class="pp-mood" role="group" aria-label="오늘 기분 고르기">
-            <button type="button" class="pp-mood-btn" data-pp-mood="ok" aria-pressed="false">🙂<span>괜찮아요</span></button>
-            <button type="button" class="pp-mood-btn" data-pp-mood="holding" aria-pressed="false">😐<span>버티는 중</span></button>
-            <button type="button" class="pp-mood-btn" data-pp-mood="hard" aria-pressed="false">😢<span>많이 힘들어요</span></button>
+            <button type="button" class="pp-mood-btn" data-pp-mood="ok" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">🙂</span><span>괜찮아요</span></button>
+            <button type="button" class="pp-mood-btn" data-pp-mood="holding" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">😐</span><span>버티는 중</span></button>
+            <button type="button" class="pp-mood-btn" data-pp-mood="hard" aria-pressed="false"><span class="pp-emoji" aria-hidden="true">😢</span><span>많이 힘들어요</span></button>
           </div>
           <div class="pp-mood-result" id="pp-mood-result" aria-live="polite"></div>
         </div>
@@ -307,33 +307,33 @@
           <summary><span aria-hidden="true">🚨</span> 바로 연락해야 하는 신호</summary>
           <div class="pp-details-body">
             <p class="pp-flag-head">119 또는 응급실, 지금 바로</p>
-            <ul class="pp-list">
+            <ul class="pp-list" role="list">
               <li>나나 아기를 해칠 것 같고, 멈출 수 없을 것 같을 때</li>
-              <li>없는 소리가 들리거나 이상한 확신이 들고, 거의 못 자고 혼란스러울 때 <span class="pp-note">(산후 정신병 신호일 수 있어요)</span></li>
-              <li>38℃ 이상 열, 한 시간에 생리대를 하나 넘게 적시는 출혈, 가슴 통증이나 숨이 참, 심한 두통이나 앞이 흐려 보일 때</li>
+              <li>다음 중 <strong class="pp-inline">하나라도</strong> 있을 때: 없는 소리가 들리거나 없는 것이 보임 / 사실이 아닌 강한 확신(누군가 아기를 해치려 한다 등) / 며칠째 거의 못 자고 혼란스러움 <span class="pp-note">(산후 정신병 신호일 수 있어요. 주변 사람이 먼저 알아채기도 해요)</span></li>
+              <li>38℃ 이상 열, 한 시간에 생리대를 하나 넘게 적시는 출혈, 가슴 통증이나 숨이 참, 심한 두통이나 앞이 흐려 보일 때, 경련이나 의식을 잃을 때, 한쪽 다리가 붓고 아프고 붉을 때</li>
             </ul>
-            <a class="pp-call pp-call--urgent" href="tel:119" data-umami-event="pp-connect" data-umami-event-type="call-119">📞 119에 전화하기</a>
+            <a class="pp-call pp-call--urgent" href="tel:119" data-umami-event="pp-connect" data-umami-event-type="call-119"><span aria-hidden="true">📞 </span>119에 전화하기</a>
             <p class="pp-flag-head">109, 오늘 바로 (전화 또는 문자)</p>
-            <ul class="pp-list"><li>사라지고 싶거나 죽고 싶다는 생각이 들 때</li></ul>
+            <ul class="pp-list" role="list"><li>사라지고 싶거나 죽고 싶다는 생각이 들 때</li></ul>
             <p class="pp-flag-head">1577-0199 또는 보건소, 이번 주에</p>
-            <ul class="pp-list"><li>우울하거나 아무것도 즐겁지 않은 날이 2주 넘게 이어질 때</li></ul>
+            <ul class="pp-list" role="list"><li>우울하거나 아무것도 즐겁지 않은 날이 2주 넘게 이어질 때</li><li>원하지 않는데 아기가 다치는 장면이 자꾸 떠올라 괴로울 때 <span class="pp-note">(많은 부모가 겪고, 그 생각대로 행동하는 것과는 달라요. 도움을 받으면 줄어들어요)</span></li></ul>
           </div>
         </details>
 
         <details class="pp-details" id="pp-night">
           <summary><span aria-hidden="true">🌙</span> 새벽에 할 수 있는 것 3가지</summary>
           <div class="pp-details-body">
-            <ol class="pp-list pp-list--num">
-              <li><strong>아기가 계속 울고 나도 한계라면</strong> 아기를 등을 대고 아기 침대에 눕힌 뒤, 방을 나와 5~10분 숨을 고르세요. 안전한 곳에서 우는 건 괜찮아요. 아기를 흔들지 마세요.</li>
+            <ol class="pp-list pp-list--num" role="list">
+              <li><strong>아기가 계속 울고 나도 한계라면</strong> 아기를 등을 대고 아기 침대에 눕힌 뒤, 방을 나와 5~10분 숨을 고른 뒤 다시 가서 살펴보세요. 안전한 곳에서 우는 건 괜찮아요. 아기를 흔들지 마세요. 평소와 다르게 울거나 열이 나면(3개월 미만은 38℃ 이상) 바로 진료를 받아요.</li>
               <li><strong>몸부터 챙기기</strong> 물 한 잔 마시고, 4초 들이쉬고 6초 내쉬기를 다섯 번 해 보세요.</li>
               <li><strong>말할 사람이 없다면</strong> 109에 문자를 보내도 돼요. "잠을 못 자서 너무 힘들어요"처럼 짧게 써도 괜찮아요.</li>
             </ol>
-            <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109">💬 109에 문자 보내기</a>
+            <a class="pp-call" href="sms:109" data-umami-event="pp-connect" data-umami-event-type="sms-109"><span aria-hidden="true">💬 </span>109에 문자 보내기</a>
           </div>
         </details>
 
         <button type="button" class="pp-other-toggle" id="pp-other-toggle" aria-expanded="false" aria-controls="home-other">
-          다른 상황 보기 <span>아이 성장 · 내 마음 · 생활</span>
+          <span class="pp-other-label">다른 상황 보기</span> <span>아이 성장 · 내 마음 · 생활</span>
         </button>
       </div>
 
@@ -906,12 +906,12 @@
         </a>
         <a href="tel:1577-0199" class="teen-sos-btn">
           <span class="teen-sos-num">1577-0199</span>
-          <span class="teen-sos-desc">정신건강 위기상담 — 무료, 24시간<br>비밀보장·기록 정책은 전화 시 확인</span>
+          <span class="teen-sos-desc">정신건강 위기상담 — 상담 무료(통화료는 들 수 있어), 24시간<br>비밀보장·기록 정책은 전화 시 확인</span>
         </a>
       </div>
       <!-- 기록 안내 (사실대로) -->
       <div class="teen-privacy-notice">
-        🔒 <strong>여기서 고른 감정은 창을 닫으면 지워져.</strong>
+        🔒 <strong>여기서 고른 감정은 이 탭을 닫으면 보통 지워져.</strong> 브라우저가 탭을 다시 열면 남아 있을 수 있어.
         하지만 브라우저 방문 기록이랑 전화 기록은 남을 수 있어.
         걱정되면 시크릿 모드로 보거나, 다 본 뒤 방문 기록을 지워.
         급하면 오른쪽 위 <strong>나가기</strong>를 눌러.
