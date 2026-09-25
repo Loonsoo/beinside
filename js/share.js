@@ -11,14 +11,14 @@
     Kakao.init(KAKAO_KEY);
   }
 
-  /* ── 메뉴 토글 ── */
+  /* ── 메뉴 토글 (떠 있는 공유 버튼은 없앴다. 공유는 헤더 메뉴에서 shareKakao/shareURL/shareNative를 직접 부른다) ── */
   window.toggleShareMenu = function() {
     const menu = document.getElementById('share-menu');
     const fab = document.getElementById('share-fab');
     if (!menu) return;
     menuOpen = !menuOpen;
     menu.classList.toggle('on', menuOpen);
-    fab.classList.toggle('on', menuOpen);
+    if (fab) fab.classList.toggle('on', menuOpen);
   };
 
   function closeMenu() {
@@ -60,34 +60,42 @@
         }]
       });
     } else {
-      // 카카오 SDK 미초기화 시 카카오톡 공유 URL 스킴으로 대체
-      const text = encodeURIComponent('BeInside — 혼자라고 느낄 때, 가장 먼저 닿는 곳\nhttps://beinside.kr');
-      window.open('https://sharer.kakao.com/talk/friends/picker/shorturl?app_key=&amp;url=' + encodeURIComponent('https://beinside.kr'), '_blank', 'width=480,height=600');
+      // 카카오 앱 키가 없으면 SDK 공유를 쓸 수 없다. 기기 공유 시트(카카오톡 포함)를 열고,
+      // 그것도 없으면 링크를 복사해 카카오톡에 붙여 넣도록 안내한다.
+      if (navigator.share) {
+        navigator.share({ title: 'BeInside — 혼자라고 느낄 때, 가장 먼저 닿는 곳', url: 'https://beinside.kr' })
+          .catch(function() { /* 사용자 취소 */ });
+      } else {
+        copyText('https://beinside.kr', '링크를 복사했어요. 카카오톡 대화창에 붙여 넣어 보내 주세요');
+      }
     }
   };
 
   /* ── 링크 복사 ── */
-  window.shareURL = function() {
-    closeMenu();
-    const url = 'https://beinside.kr';
+  function copyText(text, okMsg) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(url).then(function() {
-        showShareToast('링크가 복사되었어요');
+      navigator.clipboard.writeText(text).then(function() {
+        showShareToast(okMsg);
       }).catch(function() {
-        fallbackCopy(url);
+        fallbackCopy(text, okMsg);
       });
     } else {
-      fallbackCopy(url);
+      fallbackCopy(text, okMsg);
     }
+  }
+
+  window.shareURL = function() {
+    closeMenu();
+    copyText('https://beinside.kr', '링크가 복사되었어요');
   };
 
-  function fallbackCopy(text) {
+  function fallbackCopy(text, okMsg) {
     const ta = document.createElement('textarea');
     ta.value = text;
     ta.style.cssText = 'position:fixed;left:-9999px';
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand('copy'); showShareToast('링크가 복사되었어요'); }
+    try { document.execCommand('copy'); showShareToast(okMsg); }
     catch (e) { showShareToast('복사에 실패했어요'); }
     document.body.removeChild(ta);
   }

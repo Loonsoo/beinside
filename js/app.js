@@ -89,16 +89,11 @@ function showPage(id) {
     if (document.activeElement && document.activeElement.classList.contains('sit-card')) {
       document.activeElement.blur();
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: scrollMotion() });
     if (mainCol) mainCol.classList.remove('page-leaving');
 
-    // P3: 위기 후 팔로업 — 긴급 허브 방문 기록
-    if (id === 'emergency') {
-      try { sessionStorage.setItem('beinside_crisis_visit', '1'); } catch(e) {}
-    }
-    // 홈 복귀 시 팔로업 배너 표시 + 분기 리셋
+    // 홈 복귀 시 분기 리셋
     if (id === 'home') {
-      showFollowupBanner();
       // 분기 상태 리셋: 초기 State A로
       _activeBranch = null;
       var heroSections = document.getElementById('hero-sections');
@@ -251,7 +246,7 @@ function toggleToolkit(id) {
     panel.classList.add('on');
     const btn = document.querySelector(`.toolkit-btn[onclick*="${id}"]`);
     if (btn) btn.classList.add('on');
-    setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+    setTimeout(() => panel.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' }), 60);
   }
 }
 
@@ -294,7 +289,7 @@ function showEmoResult(key) {
      <div style="font-size:13px;color:var(--ink-m);margin:6px 0 10px;">${d.sub}</div>
      <div class="emo-result-action">${d.action}</div>
      <a href="tel:1388" class="emo-result-link">📞 지금 바로 1388에 연락하기</a>`;
-  setTimeout(() => res.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
+  setTimeout(() => res.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' }), 60);
 }
 
 /* ── 가이드 조회 ── */
@@ -319,7 +314,7 @@ function go() {
   if (md) md.style.display = 'block';
   setTimeout(() => {
     const r = document.getElementById('result');
-    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (r) r.scrollIntoView({ behavior: scrollMotion(), block: 'start' });
   }, 80);
 }
 
@@ -330,7 +325,7 @@ function qs(v, m) {
   go();
   setTimeout(() => {
     const r = document.getElementById('result');
-    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (r) r.scrollIntoView({ behavior: scrollMotion(), block: 'start' });
   }, 80);
 }
 
@@ -359,7 +354,7 @@ function toS(id) {
   if (id === 'hero') { goHome(); return; }
   if (id === 'guide-sec') { showPage('growth'); setMTab('growth'); return; }
   const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  if (el) el.scrollIntoView({ behavior: scrollMotion() });
 }
 
 /* ── 증상 체크 버튼 (출산 페이지) ── */
@@ -1133,7 +1128,7 @@ function toggleAccordion(el) {
     const inner = body.querySelector('.accordion-body-inner');
     body.style.maxHeight = (inner ? inner.scrollHeight + 32 : 400) + 'px';
     setTimeout(() => {
-      item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      item.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' });
     }, 200);
   }
 }
@@ -1226,7 +1221,7 @@ function showGuideFinderResult() {
           📞 109 자살예방상담전화 (무료·24시간)
         </a>
         <a href="tel:1577-0199" style="display:flex;align-items:center;gap:8px;color:var(--result-high-ink);font-size:14px;font-weight:700;text-decoration:none;margin-top:6px;">
-          📞 1577-0199 정신건강위기상담 (무료·24시간)
+          📞 1577-0199 정신건강위기상담 · 24시간 · 상담 무료(통화료는 들 수 있어요)
         </a>
       </div>`;
   }
@@ -1335,23 +1330,109 @@ function getRecommendedGuides(topic, duration, daily) {
    헤더 메뉴 + 설정 패널
 ══════════════════════════════════════════════════════ */
 
-/* ── 헤더 드롭다운 메뉴 ── */
+/* ── 헤더 메뉴 ──
+   탭바를 없앤 뒤 옛 페이지(URL 그대로)·도구·공유를 여기서 연다. 한국어 고정. */
 function toggleHeaderMenu() {
   const menu = document.getElementById('hdr-menu');
-  const overlay = document.getElementById('hdr-menu-overlay');
-  const isOpen = menu.classList.contains('on');
-  if (isOpen) {
-    closeHeaderMenu();
-  } else {
-    menu.classList.add('on');
-    overlay.classList.add('on');
-  }
+  if (!menu) return;
+  if (menu.classList.contains('on')) closeHeaderMenu();
+  else openHeaderMenu();
 }
 
-function closeHeaderMenu() {
-  document.getElementById('hdr-menu').classList.remove('on');
-  document.getElementById('hdr-menu-overlay').classList.remove('on');
+function openHeaderMenu() {
+  const menu = document.getElementById('hdr-menu');
+  const overlay = document.getElementById('hdr-menu-overlay');
+  const btn = document.getElementById('menu-btn');
+  if (!menu) return;
+  menu.hidden = false;
+  menu.classList.add('on');
+  if (overlay) overlay.classList.add('on');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+  menu.scrollTop = 0;
+  const first = menu.querySelector('button');
+  if (first) first.focus({ preventScroll: true });
 }
+
+function closeHeaderMenu(returnFocus) {
+  const menu = document.getElementById('hdr-menu');
+  const overlay = document.getElementById('hdr-menu-overlay');
+  const btn = document.getElementById('menu-btn');
+  if (!menu) return;
+  const wasOpen = menu.classList.contains('on');
+  menu.classList.remove('on');
+  menu.hidden = true;
+  if (overlay) overlay.classList.remove('on');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+  if (wasOpen && returnFocus !== false && btn && menu.contains(document.activeElement)) btn.focus({ preventScroll: true });
+}
+
+(function initHeaderMenu() {
+  const menu = document.getElementById('hdr-menu');
+  if (!menu) return;
+  const ACTS = {
+    search: () => typeof openSearch === 'function' && openSearch(),
+    profile: () => typeof openProfPanel === 'function' && openProfPanel(),
+    settings: () => typeof openSettings === 'function' && openSettings(),
+    source: () => typeof openSourceDrawer === 'function' && openSourceDrawer(),
+    'share-kakao': () => typeof shareKakao === 'function' && shareKakao(),
+    'share-url': () => typeof shareURL === 'function' && shareURL(),
+    'share-native': () => typeof shareNative === 'function' && shareNative(),
+  };
+  menu.addEventListener('click', function (e) {
+    const b = e.target.closest('button');
+    if (!b) return;
+    closeHeaderMenu(false);
+    if (b.dataset.menuGo) {
+      if (b.dataset.menuGo === 'home') goHome(); else showPage(b.dataset.menuGo);
+      return;
+    }
+    if (b.hasAttribute('data-menu-other')) {
+      if (curPage !== 'home') goHome();
+      setTimeout(function () { if (typeof ppSetOther === 'function') ppSetOther(true, true); }, curPage === 'home' ? 0 : 200);
+      return;
+    }
+    const act = ACTS[b.dataset.menuAct];
+    if (act) setTimeout(act, 120);
+  });
+})();
+
+/* ── 위기 도크 높이 → --dock-h (본문 padding-bottom, 아래쪽 시트·토스트 위치에 씀)
+   글씨 크기·safe-area에 따라 높이가 바뀌므로 실제 높이를 잰다 ── */
+(function initDockHeight() {
+  const dock = document.getElementById('crisis-dock');
+  if (!dock) return;
+  function apply() {
+    document.documentElement.style.setProperty('--dock-h', Math.ceil(dock.getBoundingClientRect().height) + 'px');
+  }
+  apply();
+  if (typeof ResizeObserver === 'function') new ResizeObserver(apply).observe(dock);
+  else window.addEventListener('resize', apply);
+})();
+
+/* ── 글 입력 중 키보드: html.kb-open ──
+   키보드가 올라오면 화면 아래 고정 요소는 키보드 뒤로 가거나(iOS·최근 안드로이드) 입력칸을 가린다.
+   도크를 키보드 위로 올리지 않고, 입력하는 동안만 CSS로 감춘다(자리 유지). 입력칸이 가리지 않는 것을 우선한다.
+   글 입력칸에 포커스가 있고, 보이는 화면이 120px 넘게 줄었을 때만 켠다(확대·축소 중에는 켜지 않음). */
+(function initKeyboardDock() {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const root = document.documentElement;
+  const NON_TEXT = /^(checkbox|radio|button|submit|reset|range|color|file|image|hidden)$/i;
+  function isTextField(el) {
+    if (!el) return false;
+    if (el.isContentEditable || el.tagName === 'TEXTAREA') return true;
+    return el.tagName === 'INPUT' && !NON_TEXT.test(el.type || 'text');
+  }
+  function update() {
+    const open = isTextField(document.activeElement)
+      && Math.abs(vv.scale - 1) < 0.01
+      && window.innerHeight - vv.height > 120;
+    root.classList.toggle('kb-open', open);
+  }
+  vv.addEventListener('resize', update, { passive: true });
+  document.addEventListener('focusin', update);
+  document.addEventListener('focusout', function () { setTimeout(update, 60); });
+})();
 
 /* ── 설정 패널 ── */
 function openSettings() {
@@ -1378,21 +1459,37 @@ function closeSettings() {
   document.body.style.overflow = '';
 }
 
-/* ── 테마 (라이트/다크) ── */
+/* ── 테마 (라이트/다크) ──
+   직접 고른 값(beinside_theme)이 있으면 그 값이 우선. 없으면 시스템 설정을 따르고, 시스템이 바뀌면 같이 바뀐다. */
 const THEME_KEY = 'beinside_theme';
+const THEME_MQ = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+function getSavedTheme() {
+  try {
+    var saved = localStorage.getItem(THEME_KEY);
+    return saved === 'light' || saved === 'dark' ? saved : null;
+  } catch (e) { return null; }
+}
 
 function getTheme() {
-  var saved = localStorage.getItem(THEME_KEY);
-  if (saved === 'light' || saved === 'dark') return saved;
-  return 'light';
+  return getSavedTheme() || (THEME_MQ && THEME_MQ.matches ? 'dark' : 'light');
+}
+
+/* theme-color: 직접 고른 테마면 두 meta 모두 지금 바탕색(--surface-base), 시스템을 따르면 index.html에 적힌 media별 기본값 */
+function applyThemeColor() {
+  var saved = getSavedTheme();
+  var bg = saved ? getComputedStyle(document.documentElement).getPropertyValue('--surface-base').trim() : '';
+  document.querySelectorAll('meta[name="theme-color"]').forEach(function(tc) {
+    if (!tc.dataset.base) tc.dataset.base = tc.getAttribute('content');
+    tc.setAttribute('content', bg || tc.dataset.base);
+  });
 }
 
 function setTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
-  localStorage.setItem(THEME_KEY, mode);
+  try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
   updateThemeToggleUI();
-  var tc = document.querySelector('meta[name="theme-color"]');
-  if (tc) tc.setAttribute('content', mode === 'dark' ? '#161B19' : '#D4795E');
+  applyThemeColor();
 }
 
 function updateThemeToggleUI() {
@@ -1402,10 +1499,20 @@ function updateThemeToggleUI() {
   });
 }
 
-// 초기 테마 적용
+// 초기 테마 적용 + 시스템 설정 변경 반영
 (function initTheme() {
-  var saved = getTheme();
-  document.documentElement.setAttribute('data-theme', saved);
+  document.documentElement.setAttribute('data-theme', getTheme());
+  applyThemeColor();
+  if (THEME_MQ) {
+    var onSystemChange = function() {
+      if (getSavedTheme()) return;
+      document.documentElement.setAttribute('data-theme', getTheme());
+      applyThemeColor();
+      updateThemeToggleUI();
+    };
+    if (THEME_MQ.addEventListener) THEME_MQ.addEventListener('change', onSystemChange);
+    else if (THEME_MQ.addListener) THEME_MQ.addListener(onSystemChange);
+  }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', updateThemeToggleUI);
   } else {
@@ -1459,7 +1566,7 @@ const PAGE_META = {
   sleep:      { title: '잠이 안 올 때 하면 안 되는 것 — 수면 가이드 — BeInside', desc: '새벽에 자꾸 깨는 이유, 불면증 자가진단, 수면 위생 체크리스트. 병원 가기 전에 확인해보세요.', keywords: '잠이 안 올 때, 새벽에 자꾸 깨는 이유, 불면증 자가진단, 수면 위생 체크리스트, 불면증 병원 안 가고' },
   postpartum: { title: '산후우울증 자가진단 무료 | 출산 후 눈물이 나는 이유 — BeInside', desc: '산후우울증 자가진단 테스트, 남편이 해야 할 것, 호르몬 변화 이해, 회복 로드맵. 출산 후 마음이 이상하다면.', keywords: '산후우울증 자가진단 무료, 산후우울증 남편 역할, 출산 후 눈물, 산후우울증 증상 체크, 산후 정신건강' },
   menopause:  { title: '갱년기 우울증 — 언제 시작되고 어떻게 대처할까 — BeInside', desc: '갱년기 시작 시기, 호르몬 변화와 우울, 빈 둥지 증후군 극복법, 전문 치료 안내.', keywords: '갱년기 언제 시작, 갱년기 우울증 증상, 빈 둥지 증후군, 갱년기 남편이 도와줄 것, 갱년기 치료' },
-  emergency:  { title: '무료 긴급 상담 전화번호 총정리 (24시간) — BeInside', desc: '119 응급, 109 자살예방, 1388 청소년, 1366 여성긴급, 1577-0199 정신건강 위기상담. 지금 바로 전화 연결.', keywords: '자살예방 전화번호 109, 무료 긴급 상담, 정신건강 위기상담 1577-0199, 1388 청소년 전화, 가정폭력 신고' },
+  emergency:  { title: '긴급 상담 전화번호 총정리 (24시간) — BeInside', desc: '119 응급, 109 자살예방, 1388 청소년, 1366 여성긴급, 1577-0199 정신건강 위기상담. 지금 바로 전화 연결.', keywords: '자살예방 전화번호 109, 긴급 상담 전화, 정신건강 위기상담 1577-0199, 1388 청소년 전화, 가정폭력 신고' },
   journal:    { title: '감정 기록 — 오늘 기분 어때요? — BeInside', desc: '하루 한 번, 감정을 기록하고 패턴을 발견하세요. 무료 무드 트래커.', keywords: '감정 기록, 감정 일기 앱, 무드 트래커 무료, 마음 일기, 감정 다이어리' },
   mental:        { title: '생애주기별 정신건강 위험 신호와 돌봄법 — BeInside', desc: '영아기~노년기 단계별 정신건강 위험 신호, 자가진단, 대처법. 통계 기반 가이드.', keywords: '정신건강 자가진단, 우울증 초기 증상, 생애주기별 정신건강, 정신건강 체크리스트' },
   multicultural: { title: '다문화 가정 양육·정신건강 가이드 (베트남어·중국어·영어) — BeInside', desc: '다문화 가정을 위한 다국어 양육 정보, 정신건강 가이드, 긴급상담 연결.', keywords: '다문화 가정 지원, 다국어 육아 가이드, 외국인 상담, multicultural family Korea, 이민자 가정 복지' },
@@ -1596,7 +1703,7 @@ function selectBranch(type) {
   var target = document.querySelector('[data-branch-section="' + type + '"]');
   if (target) {
     setTimeout(function() {
-      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      target.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' });
     }, 50);
   }
 
@@ -1649,32 +1756,6 @@ function showAllBranches() {
     }
   });
 })();
-
-/* ══════════════════════════════════════════
-   P3: 위기 후 팔로업 배너
-══════════════════════════════════════════ */
-function showFollowupBanner() {
-  try {
-    var visited = sessionStorage.getItem('beinside_crisis_visit');
-    var dismissed = sessionStorage.getItem('beinside_followup_dismissed');
-    var banner = document.getElementById('followup-banner');
-    if (visited && !dismissed && banner) {
-      banner.style.display = '';
-      banner.style.animation = 'up .5s .3s cubic-bezier(.22,1,.36,1) both';
-    }
-  } catch(e) {}
-}
-
-function closeFollowup() {
-  var banner = document.getElementById('followup-banner');
-  if (banner) {
-    banner.style.transition = 'opacity .3s, transform .3s';
-    banner.style.opacity = '0';
-    banner.style.transform = 'translateY(-8px)';
-    setTimeout(function() { banner.style.display = 'none'; }, 300);
-  }
-  try { sessionStorage.setItem('beinside_followup_dismissed', '1'); } catch(e) {}
-}
 
 /* ══════════════════════════════════════════
    P3: 스크린리더 알림

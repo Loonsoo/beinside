@@ -23,7 +23,7 @@ function getDashColor(name) {
 
 function categoryColor(cat) {
   if (cat === 'good')   return getDashColor('--amber')    || '#6BA885';
-  if (cat === 'normal') return getDashColor('--peach')    || '#D4795E';
+  if (cat === 'normal') return getDashColor('--peach')    || '#35604F';
   if (cat === 'bad')    return getDashColor('--sit-rose') || '#E09090';
   return '#ccc';
 }
@@ -168,7 +168,7 @@ function renderWeeklyChart(moods) {
 
   // Y축 라벨
   const yLabels = ['나쁨', '보통', '좋음'];
-  ctx.font = '11px "Noto Sans KR", sans-serif';
+  ctx.font = '11px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.textAlign = 'right';
   ctx.fillStyle = getDashColor('--ink-l') || '#9A9A9A';
   yLabels.forEach((label, i) => {
@@ -208,7 +208,7 @@ function renderWeeklyChart(moods) {
     // 곡선 그리기 (catmull-rom 스플라인)
     ctx.beginPath();
     drawSmoothLine(ctx, validPoints);
-    ctx.strokeStyle = getDashColor('--peach') || '#D4795E';
+    ctx.strokeStyle = getDashColor('--peach') || '#35604F';
     ctx.lineWidth = 2.5;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
@@ -247,7 +247,7 @@ function renderWeeklyChart(moods) {
 
   // X축 요일 라벨
   const dayNames = ['일','월','화','수','목','금','토'];
-  ctx.font = '11px "Noto Sans KR", sans-serif';
+  ctx.font = '11px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillStyle = getDashColor('--ink-m') || '#6B6B6B';
   data.forEach((d, i) => {
@@ -256,12 +256,12 @@ function renderWeeklyChart(moods) {
     const isToday = i === 6;
     if (isToday) {
       ctx.fillStyle = getDashColor('--peach-d') || '#C06A50';
-      ctx.font = 'bold 11px "Noto Sans KR", sans-serif';
+      ctx.font = 'bold 11px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
     }
     ctx.fillText(dayLabel, x, h - 8);
     if (isToday) {
       ctx.fillStyle = getDashColor('--ink-m') || '#6B6B6B';
-      ctx.font = '11px "Noto Sans KR", sans-serif';
+      ctx.font = '11px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
     }
   });
 }
@@ -341,7 +341,7 @@ function renderDonutChart(moods) {
       const labelR = (outerR + innerR) / 2;
       const lx = cx + Math.cos(midAngle) * labelR;
       const ly = cy + Math.sin(midAngle) * labelR;
-      ctx.font = 'bold 11px "Noto Sans KR", sans-serif';
+      ctx.font = 'bold 11px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = '#fff';
@@ -352,18 +352,18 @@ function renderDonutChart(moods) {
   });
 
   // 중앙 텍스트
-  ctx.font = 'bold 14px "Noto Sans KR", sans-serif';
+  ctx.font = 'bold 14px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = getDashColor('--ink') || '#3A3A3A';
   ctx.fillText(total + '일', cx, cy - 6);
-  ctx.font = '10px "Noto Sans KR", sans-serif';
+  ctx.font = '10px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.fillStyle = getDashColor('--ink-l') || '#9A9A9A';
   ctx.fillText('기록', cx, cy + 10);
 
   // 범례
   const legendY = size - 4;
-  ctx.font = '10px "Noto Sans KR", sans-serif';
+  ctx.font = '10px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.textBaseline = 'bottom';
   let lx = cx - 60;
   categories.forEach(cat => {
@@ -418,14 +418,14 @@ function renderHeatmap(moods) {
   const startY = 28;
 
   // 월 타이틀
-  ctx.font = 'bold 12px "Noto Sans KR", sans-serif';
+  ctx.font = 'bold 12px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillStyle = getDashColor('--ink') || '#3A3A3A';
   ctx.fillText((month + 1) + '월', w / 2, 16);
 
   // 요일 헤더
   const dayHeaders = ['일','월','화','수','목','금','토'];
-  ctx.font = '10px "Noto Sans KR", sans-serif';
+  ctx.font = '10px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
   ctx.fillStyle = getDashColor('--ink-l') || '#9A9A9A';
   ctx.textAlign = 'center';
   dayHeaders.forEach((d, i) => {
@@ -477,7 +477,7 @@ function renderHeatmap(moods) {
     }
 
     // 날짜 숫자
-    ctx.font = '9px "Noto Sans KR", sans-serif';
+    ctx.font = '9px "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillStyle = cat ? '#fff' : (getDashColor('--ink-m') || '#6B6B6B');

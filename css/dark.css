@@ -3,34 +3,10 @@
    "무겁지 않은 다크" — 순흑 금지, 따뜻한 다크 브라운
 ══════════════════════════════════════════════════ */
 
-/* ── 수동 라이트 모드 강제 (시스템 다크일 때도 라이트 유지) ── */
-[data-theme="light"]{
-  --surface-base:#F5F0EB;
-  --surface-card:#FAF7F4;
-  --surface-elevated:#FFFCF9;
-  --surface-section-care:#F2EDE7;
-  --surface-section-self:#EEEAF4;
-  --text-primary:#2C1E14;
-  --text-body:#4A3A30;
-  --text-secondary:#8A7A6A;
-  --text-muted:#B0A090;
-  --accent-primary:#D4795E;
-  --accent-hover:#C06A50;
-  --accent-subtle:#F0DDD4;
-  --accent-glow:rgba(212,121,94,.18);
-  --semantic-positive:#5A9A6A;
-  --semantic-positive-bg:#E8F0E8;
-  --semantic-caution:#B8923A;
-  --semantic-caution-bg:#F5EDD8;
-  --semantic-danger:#B85454;
-  --semantic-danger-bg:#F5E0E0;
-  --semantic-danger-strong:#9E3F3F;
-  --border-default:rgba(180,160,140,.12);
-  --border-hover:rgba(180,160,140,.25);
-  --shadow-sm:0 1px 3px rgba(44,30,20,.04);
-  --shadow-md:0 2px 8px rgba(44,30,20,.06);
-  --shadow-hover:0 6px 20px rgba(44,30,20,.10);
-}
+/* ── 라이트 모드 ──
+   라이트 토큰은 css/base.css :root 한 곳에서만 정의한다(시안 B "돌 회색 + 세이지").
+   data-theme="light"는 :root 값을 그대로 쓰므로 여기서 다시 적지 않는다. */
+[data-theme="light"]{ color-scheme:light; }
 
 /* ── 다크 모드 이미지/이모지 밝기 조절 ── */
 [data-theme="dark"] img:not(.no-dim),
@@ -41,38 +17,53 @@
 /* ── 다크 모드 토큰 (공통) ── */
 /* 수동 토글 + 시스템 설정 모두 지원 */
 [data-theme="dark"]{
-  /* 표면: "고요한 숲" — 극히 어두운 녹회색 */
-  /* 심리학: 녹색 = 안전감 + 회복 (Kaplan 1995, 주의력 회복 이론) */
-  --surface-base:#161B19;
-  --surface-card:#1F2623;
-  --surface-elevated:#283230;
-  --surface-section-care:#1A211E;
-  --surface-section-self:#1B1A22;
+  color-scheme:dark;
+  /* 새벽 팔레트 "이끼 그늘" (reports/design/2026-09-b-dawn-palette.md 대안 2)
+     순흑 아닌 이끼빛 먹색. 본문 휘도를 한 단계 낮춰 새벽 눈부심을 줄인다. */
+  --surface-raised:#20241B;
+  --surface-tint:#29321F;
+  --surface-clay:#2E291E;
+  --text-on-clay:#DCC9A8;
+  --accent-strong:#9AAD80;         /* 이끼 — base 7.26 / raised 6.52 */
+  --on-accent:#171A13;             /* accent-strong 위 7.26 */
+  --stroke-control:#71775F;        /* base 3.78 / raised 3.39 */
+  --line-subtle:#2B3024;
+  --danger-strong:#EC9B87;         /* 119 — base 8.05 / raised 7.22 */
+  --on-danger:#171A13;
 
-  /* 텍스트: 따뜻한 오프화이트 (차가운 배경 + 따뜻한 텍스트 = 균형) */
-  --text-primary:#E8E4DF;
-  --text-body:#C8C0B8;
-  --text-secondary:#8A8278;
-  --text-muted:#5A5448;
+  /* 표면 */
+  --surface-base:#171A13;
+  --surface-card:var(--surface-raised);
+  --surface-elevated:#272C21;
+  --surface-section-care:#1B1E16;
+  --surface-section-self:#1E1F18;
 
-  /* 브랜드: 채도 낮추고 밝기 올림 */
-  --accent-primary:#E8906A;
-  --accent-hover:#F0A080;
-  --accent-subtle:rgba(232,144,106,.12);
-  --accent-glow:rgba(232,144,106,.15);
+  /* 텍스트 */
+  --text-primary:#D1D5C3;          /* base 11.74 */
+  --text-body:#B9BEAA;             /* base 9.22 */
+  --text-secondary:#9BA08C;        /* base 6.54 / raised 5.87 / tint 4.97 */
+  --text-muted:#949985;            /* base 5.99 / raised 5.38 / tint 4.56 */
 
-  /* 의미: 다크에서 채도 낮추고 밝기 올림 */
-  --semantic-positive:#6AAA7A;
-  --semantic-positive-bg:rgba(106,170,122,.10);
-  --semantic-caution:#D0A850;
-  --semantic-caution-bg:rgba(208,168,80,.10);
-  --semantic-danger:#D07070;
-  --semantic-danger-bg:rgba(208,112,112,.10);
-  --semantic-danger-strong:#F0A8A8;
+  /* 브랜드: 이끼 */
+  --accent-primary:var(--accent-strong);
+  --accent-hover:#AABB92;          /* on-accent 8.57 */
+  --accent-subtle:var(--surface-tint);
+  --accent-glow:rgba(154,173,128,.15);
+  --accent-rgb:154,173,128;
+  --danger-rgb:236,155,135;
 
-  /* 보더: 녹색 기조의 미세한 밝은 보더 */
-  --border-default:rgba(180,200,190,.10);
-  --border-hover:rgba(180,200,190,.20);
+  /* 의미 */
+  --semantic-positive:#8FB896;
+  --semantic-positive-bg:rgba(143,184,150,.10);
+  --semantic-caution:#D4B46A;
+  --semantic-caution-bg:rgba(212,180,106,.10);
+  --semantic-danger:#E08E7C;
+  --semantic-danger-bg:rgba(236,155,135,.10);
+  --semantic-danger-strong:var(--danger-strong);
+
+  /* 보더: 이끼빛 미세 보더 */
+  --border-default:rgba(209,213,195,.10);
+  --border-hover:rgba(209,213,195,.20);
 
   /* 그림자: 다크에서는 보더로 깊이 표현 */
   --shadow-sm:0 1px 2px rgba(0,0,0,.15);
@@ -89,19 +80,19 @@
   --calm-border:var(--border-default);
   --calm-shadow:var(--shadow-sm);
   --calm-shadow-hover:var(--shadow-hover);
-  --calm-glow:rgba(232,144,106,.06);
+  --calm-glow:rgba(154,173,128,.06);
 
   --cream:var(--surface-base);
   --warm:var(--surface-section-care);
   --white:var(--surface-card);
-  --section-alt:#1A1F1D;
+  --section-alt:var(--surface-section-care);
 
   --bg-primary:var(--surface-base);
   --bg-elevated:var(--surface-card);
-  --bg-sunken:#121614;
+  --bg-sunken:#12150F;
 
   --peach:var(--accent-primary);
-  --peach-l:#C87A5A;
+  --peach-l:#7F9166;
   --peach-p:var(--accent-subtle);
   --peach-d:var(--accent-hover);
   --peach-glow:var(--accent-glow);
@@ -110,16 +101,17 @@
   --primary-d:var(--accent-hover);
   --primary-p:var(--accent-subtle);
 
-  --amber:#6AAA7A;
-  --rust:#8CCAA5;
+  --amber:#8FB896;
+  --rust:#A8C9AE;
 
   --ink:var(--text-primary);
   --ink-m:var(--text-body);
   --ink-l:var(--text-secondary);
 
   --line:var(--border-default);
-  --glass-bg:rgba(22,27,25,.88);
-  --glass-border:rgba(180,200,190,.05);
+  --glass-bg:rgba(23,26,19,.88);
+  --glass-border:rgba(209,213,195,.05);
+  --glass-elevated:rgba(39,44,33,.94);
   --glass-shadow:0 1px 4px rgba(0,0,0,.20);
 
   --lavender:#9A7AC8;
@@ -139,26 +131,32 @@
   --transition-d:#80C8C8;
   --transition-p:rgba(96,168,168,.10);
 
-  --disclaimer-bg:rgba(80,106,90,.15);
-  --disclaimer-border:rgba(80,106,90,.25);
-  --disclaimer-ink:#A0C0B0;
+  --disclaimer-bg:rgba(154,173,128,.08);
+  --disclaimer-border:rgba(154,173,128,.20);
+  --disclaimer-ink:var(--text-body);
 
-  --emer-bg:rgba(208,112,112,.10);
-  --emer-bg-deep:rgba(208,112,112,.15);
-  --emer-border:rgba(208,112,112,.30);
+  --emer-bg:rgba(236,155,135,.10);
+  --emer-bg-deep:rgba(236,155,135,.15);
+  --emer-border:rgba(236,155,135,.32);
 
-  --footer-bg:#121614;
-  --footer-bg-end:#161B19;
+  --footer-bg:#12150F;
+  --footer-bg-end:var(--surface-base);
 
-  --result-high:#D07070;
-  --result-high-ink:#F0A0A0;
+  --result-high:var(--semantic-danger);
+  --result-high-ink:var(--danger-strong);
   --result-mid:#D4A040;
   --result-mid-ink:#E0C070;
   --result-low:#60B080;
   --result-low-ink:#90D0A0;
 
-  --sos:rgba(208,112,112,.15);
-  --sos-shadow:rgba(208,112,112,.10);
+  --emer-119:var(--danger-strong);  /* raised 7.22 */
+  --emer-112:#E3A8A0;
+  --emer-109:#B9A3DA;
+  --emer-1388:#8FC4A0;
+  --emer-1366:#E2A3C4;
+  --emer-1577:#9DB8D6;
+  --sos:rgba(236,155,135,.15);
+  --sos-shadow:rgba(236,155,135,.10);
 
   /* SP 태그·불릿 다크모드 */
   --tag-rose:rgba(224,112,112,.16);
@@ -176,16 +174,22 @@
 
 /* prefers-color-scheme 제거: data-theme="light|dark"로 직접 관리 */
 
+/* 시간대 하늘 (새벽 "이끼 그늘"). 가장 밝은 점(지평선 빛)에서도 --text-primary 7.92 이상 */
+[data-theme="dark"][data-sky="dawn"]   {--sky-top:#10130D; --sky-mid:#161A12; --sky-low:#1F241A; --sky-glow:#2C3122;}
+[data-theme="dark"][data-sky="morning"]{--sky-top:#141811; --sky-mid:#1B2016; --sky-low:#262B1D; --sky-glow:#353625;}
+[data-theme="dark"][data-sky="day"]    {--sky-top:#181C14; --sky-mid:#1F241A; --sky-low:#283020; --sky-glow:#323A27;}
+[data-theme="dark"][data-sky="evening"]{--sky-top:#13140F; --sky-mid:#1B1C15; --sky-low:#28261C; --sky-glow:#36301F;}
+
 /* 다크 모드 컴포넌트 오버라이드 */
 [data-theme="dark"] body{
   background:var(--surface-base);
   color:var(--text-primary);
 }
 [data-theme="dark"] header{
-  background:rgba(22,27,25,.85);
-  backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
-  border-bottom-color:rgba(180,200,190,.04);
+  background:var(--surface-base);
+  border-bottom-color:var(--line-subtle);
 }
+[data-theme="dark"] body.pp-view-landing:not(.subpage) header{background:var(--sky-top);border-bottom-color:transparent;}
 [data-theme="dark"] .card{
   background:var(--white);
   border-color:var(--calm-border);
@@ -196,7 +200,7 @@
 }
 [data-theme="dark"] .card.cbg-a{background:linear-gradient(145deg,#2E2A22,#332E24);border-color:rgba(200,144,64,.12);}
 [data-theme="dark"] .card.cbg-s{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
-[data-theme="dark"] .card.cbg-p{background:linear-gradient(145deg,#222830,#242C36);border-color:rgba(232,144,106,.12);}
+[data-theme="dark"] .card.cbg-p{background:linear-gradient(145deg,#222830,#242C36);border-color:rgba(var(--accent-rgb),.12);}
 [data-theme="dark"] .card.cbg-sky{background:linear-gradient(145deg,#22272E,#242A32);border-color:rgba(108,160,200,.12);}
 [data-theme="dark"] .card.cbg-lavender{background:linear-gradient(145deg,#222E28,#243028);border-color:rgba(107,168,133,.12);}
 [data-theme="dark"] .card.cbg-alone{background:linear-gradient(135deg,#2E2428,#2C222A);border-color:rgba(220,140,160,.15);}
@@ -226,16 +230,16 @@
 
 @media (hover: hover) {
   [data-theme="dark"] .sit-card:hover{
-    border-color:rgba(232,144,106,.40);
+    border-color:rgba(var(--accent-rgb),.40);
     box-shadow:
       0 8px 24px rgba(0,0,0,.25),
-      0 0 20px rgba(232,144,106,.08);
+      0 0 20px rgba(var(--accent-rgb),.08);
   }
 }
 [data-theme="dark"] .sit-card:active,
 [data-theme="dark"] .sit-card.tap {
-  border-color:rgba(232,144,106,.60);
-  box-shadow: 0 0 14px rgba(232,144,106,.25);
+  border-color:rgba(var(--accent-rgb),.60);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb),.25);
 }
 [data-theme="dark"] .sit-card::before{
   background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.03) 0%, transparent 60%);
@@ -252,7 +256,7 @@
   background:none;
 }
 [data-theme="dark"] .modal{
-  background:rgba(42,42,46,.92);
+  background:var(--glass-elevated);
   backdrop-filter:blur(40px) saturate(1.4);
   border-color:rgba(255,255,255,.06);
   box-shadow:0 16px 48px rgba(0,0,0,.25);
@@ -268,21 +272,16 @@
   color:var(--ink);
 }
 [data-theme="dark"] .accordion-header:hover{
-  background:rgba(232,144,106,.06);
+  background:rgba(var(--accent-rgb),.06);
 }
 [data-theme="dark"] .check-item:hover{
-  background:rgba(232,144,106,.06);
+  background:rgba(var(--accent-rgb),.06);
 }
 [data-theme="dark"] .check-item.checked{
-  background:rgba(232,144,106,.10);
-}
-[data-theme="dark"] .mobile-tabbar{
-  background:rgba(28,28,30,.88);
-  backdrop-filter:blur(24px) saturate(1.4);-webkit-backdrop-filter:blur(24px) saturate(1.4);
-  border-top-color:rgba(255,255,255,.04);
+  background:rgba(var(--accent-rgb),.10);
 }
 [data-theme="dark"] .page-header{
-  background:rgba(28,28,30,.88);
+  background:var(--glass-bg);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 }
 [data-theme="dark"] .life-journey-intro{
@@ -302,8 +301,8 @@
   border-color:rgba(255,255,255,.06);
 }
 [data-theme="dark"] .summary-warn{
-  background:rgba(200,60,60,.12);
-  border-color:rgba(200,60,60,.20);
+  background:rgba(var(--danger-rgb),.12);
+  border-color:rgba(var(--danger-rgb),.20);
 }
 [data-theme="dark"] .toolkit-wrap{
   background:linear-gradient(135deg,#2A2520,#2E2822);
@@ -313,7 +312,7 @@
   border-bottom-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .source-drawer{
-  background:rgba(28,28,30,.96);
+  background:var(--glass-elevated);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
 }
 [data-theme="dark"] .help-card{
@@ -321,13 +320,13 @@
   border-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .prof-panel{
-  background:rgba(28,28,30,.92);
+  background:var(--glass-elevated);
   backdrop-filter:blur(40px) saturate(1.4);-webkit-backdrop-filter:blur(40px) saturate(1.4);
   border-color:rgba(255,255,255,.04);
   box-shadow:0 -4px 24px rgba(0,0,0,.20);
 }
 [data-theme="dark"] .gf-modal{
-  background:rgba(42,42,46,.92);
+  background:var(--glass-elevated);
   border-color:rgba(255,255,255,.06);
   box-shadow:0 12px 40px rgba(0,0,0,.25);
 }
@@ -336,16 +335,11 @@
   border-color:rgba(255,255,255,.08);
   color:var(--ink-m);
 }
-[data-theme="dark"] .hdr-sos{
-  background:rgba(200,60,60,.08);
-  border-color:rgba(200,60,60,.22);
-}
 [data-theme="dark"] .hdr-back{
-  background:rgba(232,144,106,.12);
   color:var(--text-primary);
 }
 [data-theme="dark"] .hdr-back:hover{
-  background:rgba(232,144,106,.25);
+  background:var(--accent-glow);
   color:var(--text-primary);
 }
 [data-theme="dark"] .content-hero{
@@ -373,8 +367,8 @@
 
 /* ── Independence (자립 가이드) 다크모드 ── */
 [data-theme="dark"] .indep-emergency{
-  background:rgba(232,144,106,.08);
-  border:1px solid rgba(232,144,106,.12);
+  background:rgba(var(--accent-rgb),.08);
+  border:1px solid rgba(var(--accent-rgb),.12);
 }
 [data-theme="dark"] .indep-stage{
   border-color:rgba(180,200,190,.10);
@@ -428,7 +422,7 @@
   color:var(--peach-d);
 }
 [data-theme="dark"] .sp-age-tab.on{
-  background:rgba(232,144,106,.15);
+  background:rgba(var(--accent-rgb),.15);
   border-color:var(--peach-d);
   color:var(--peach-d);
 }
@@ -443,8 +437,8 @@
   border-bottom-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .sp-script{
-  background:rgba(232,144,106,.08);
-  border-left-color:rgba(232,144,106,.40);
+  background:rgba(var(--accent-rgb),.08);
+  border-left-color:rgba(var(--accent-rgb),.40);
 }
 [data-theme="dark"] .sp-warn{
   background:linear-gradient(135deg,#2E2820,#2A2418);
@@ -456,7 +450,7 @@
   color:#D0B070;
 }
 [data-theme="dark"] .search-modal{
-  background:rgba(42,42,46,.95);
+  background:var(--glass-elevated);
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
@@ -464,19 +458,16 @@
   background:rgba(0,0,0,.35);
 }
 [data-theme="dark"] .hdr-menu{
-  background:rgba(42,42,46,.92);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-color:rgba(255,255,255,.06);
   box-shadow:0 4px 20px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .settings-panel{
-  background:rgba(42,42,46,.94);
+  background:var(--glass-elevated);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-color:rgba(255,255,255,.04);
   box-shadow:0 8px 32px rgba(0,0,0,.25);
 }
 [data-theme="dark"] .logo{
-  color:rgba(255,238,226,.75);
+  color:var(--text-primary);
 }
 [data-theme="dark"] .guide-finder-btn{
   color:var(--ink-l);
@@ -508,7 +499,7 @@
   color:#7BC48A;
 }
 [data-theme="dark"] .toolkit-btn{
-  border-color:rgba(232,144,106,.25);
+  border-color:rgba(var(--accent-rgb),.25);
 }
 [data-theme="dark"] .toolkit-btn:hover,
 [data-theme="dark"] .toolkit-btn.on{
@@ -521,9 +512,9 @@
   border-color:rgba(200,100,70,.18);
 }
 [data-theme="dark"] .sym-yes{
-  background:rgba(200,60,60,.15);
+  background:rgba(var(--danger-rgb),.15);
   color:var(--dark-danger-text);
-  border-color:rgba(200,60,60,.30);
+  border-color:rgba(var(--danger-rgb),.30);
 }
 [data-theme="dark"] .sym-no{
   background:var(--warm);
@@ -532,7 +523,7 @@
 }
 [data-theme="dark"] .symptom-result{
   background:linear-gradient(135deg,#3A2228,#2E1A1E);
-  border-color:rgba(200,60,60,.25);
+  border-color:rgba(var(--danger-rgb),.25);
   color:var(--dark-danger-soft);
 }
 [data-theme="dark"] .birth-header{
@@ -553,7 +544,7 @@
   color:var(--peach-d);
 }
 [data-theme="dark"] .birth-tab.on{
-  background:rgba(232,144,106,.15);
+  background:rgba(var(--accent-rgb),.15);
   border-color:var(--peach-d);
   color:var(--peach-d);
 }
@@ -584,7 +575,7 @@
 }
 [data-theme="dark"] .birth-alert{
   background:linear-gradient(135deg,#3A2228,#2E1A1E);
-  border-color:rgba(200,60,60,.25);
+  border-color:rgba(var(--danger-rgb),.25);
   color:var(--dark-danger-soft);
 }
 [data-theme="dark"] .birth-reality{
@@ -596,15 +587,15 @@
   border-color:rgba(176,123,172,.22);
 }
 [data-theme="dark"] .birth-intro-box{
-  background:linear-gradient(135deg,rgba(232,137,106,.10),rgba(180,120,60,.08));
-  border-color:rgba(232,137,106,.22);
+  background:linear-gradient(135deg,rgba(var(--accent-rgb),.10),rgba(180,120,60,.08));
+  border-color:rgba(var(--accent-rgb),.22);
 }
 [data-theme="dark"] .birth-alone-msg{
-  background:linear-gradient(135deg,rgba(232,137,106,.08),rgba(180,120,60,.06));
-  border-color:rgba(232,137,106,.18);
+  background:linear-gradient(135deg,rgba(var(--accent-rgb),.08),rgba(180,120,60,.06));
+  border-color:rgba(var(--accent-rgb),.18);
 }
 [data-theme="dark"] .birth-contacts{
-  background:rgba(232,137,106,.08);
+  background:rgba(var(--accent-rgb),.08);
 }
 [data-theme="dark"] .mood-section{
   background:transparent;
@@ -645,7 +636,7 @@
   color:var(--dark-warm-text);
 }
 [data-theme="dark"] .memo-item-del:hover{
-  background:rgba(200,60,60,.15);
+  background:rgba(var(--danger-rgb),.15);
   color:var(--dark-danger-text);
 }
 
@@ -681,8 +672,8 @@
   border-color:rgba(255,255,255,.08);
 }
 [data-theme="dark"] .ppd-q-item.critical{
-  background:rgba(200,40,40,.10);
-  border-color:rgba(200,40,40,.25);
+  background:rgba(var(--danger-rgb),.10);
+  border-color:rgba(var(--danger-rgb),.25);
 }
 
 /* ── 저장 버튼 ── */
@@ -692,7 +683,7 @@
 
 /* ── 삭제 호버 ── */
 [data-theme="dark"] .pi-btn.del:hover{
-  background:rgba(200,60,60,.15);
+  background:rgba(var(--danger-rgb),.15);
   color:var(--dark-danger-text);
 }
 
@@ -732,7 +723,7 @@
 }
 /* ── 응급처치 카드 다크모드 ── */
 [data-theme="dark"]{
-  --fa-risk-bg:rgba(200,60,60,.12);
+  --fa-risk-bg:rgba(var(--danger-rgb),.12);
   --fa-risk-ink:#E07070;
   --fa-tip-bg:rgba(60,140,90,.10);
   --fa-tip-ink:#6BC090;
@@ -742,7 +733,7 @@
 }
 [data-theme="dark"] .fa-item.fa-red{
   background:linear-gradient(135deg,#2E2222,#2C2020);
-  border-color:rgba(200,60,60,.18);
+  border-color:rgba(var(--danger-rgb),.18);
 }
 [data-theme="dark"] .fa-item.fa-amber{
   background:linear-gradient(135deg,#2E2820,#2C2618);
@@ -756,7 +747,7 @@
   color:var(--ink);
 }
 [data-theme="dark"] .urg-911{
-  background:rgba(200,60,60,.18);
+  background:rgba(var(--danger-rgb),.18);
   color:var(--dark-danger-text);
 }
 [data-theme="dark"] .urg-now{
@@ -793,34 +784,6 @@
 }
 
 /* ══════════════════════════════════════════
-   P0: SOS 버튼 pulse 애니메이션
-══════════════════════════════════════════ */
-@keyframes sosPulse{
-  0%{box-shadow:0 0 0 0 rgba(200,60,60,.35);}
-  70%{box-shadow:0 0 0 8px rgba(200,60,60,0);}
-  100%{box-shadow:0 0 0 0 rgba(200,60,60,0);}
-}
-.hdr-sos{
-  width:40px;height:40px;
-  border-radius:12px;
-  border:1.5px solid rgba(200,60,60,.35);
-  background:rgba(200,60,60,.10);
-  font-size:10.5px;
-  animation:sosPulse 2.5s cubic-bezier(.4,0,.2,1) infinite;
-}
-.hdr-sos:hover{
-  background:rgba(200,60,60,.18);
-  border-color:rgba(200,60,60,.55);
-  transform:scale(1.08);
-  box-shadow:0 2px 12px rgba(200,60,60,.22);
-  animation:none;
-}
-[data-theme="dark"] .hdr-sos{
-  background:rgba(200,60,60,.16);
-  border-color:rgba(200,60,60,.40);
-}
-
-/* ══════════════════════════════════════════
    P0: "더 보기" 버튼
 ══════════════════════════════════════════ */
 .show-more-btn{
@@ -829,7 +792,7 @@
   padding:12px 0;margin-top:4px;
   border:none;background:none;
   cursor:pointer;
-  font-family:'Noto Sans KR',sans-serif;
+  font-family:var(--font-sans);
   font-size:13px;font-weight:600;
   color:var(--ink-l);
   transition:color .2s,gap .2s;
@@ -957,8 +920,8 @@
   background:linear-gradient(135deg,var(--bg-elevated),rgba(107,168,133,.06));
 }
 .mood-section[data-mood="okay"]{
-  border-color:rgba(232,144,106,.25);
-  background:linear-gradient(135deg,var(--bg-elevated),rgba(232,144,106,.06));
+  border-color:rgba(var(--accent-rgb),.25);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(var(--accent-rgb),.06));
 }
 .mood-section[data-mood="soso"]{
   border-color:rgba(192,137,42,.20);
@@ -969,17 +932,17 @@
   background:linear-gradient(135deg,var(--bg-elevated),rgba(176,90,66,.05));
 }
 .mood-section[data-mood="veryhard"]{
-  border-color:rgba(200,60,60,.20);
-  background:linear-gradient(135deg,var(--bg-elevated),rgba(200,60,60,.05));
+  border-color:rgba(var(--danger-rgb),.20);
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(var(--danger-rgb),.05));
 }
 .mood-section{
   transition:background .4s cubic-bezier(.2,0,0,1),border-color .4s cubic-bezier(.2,0,0,1);
 }
 /* Ripple 효과 */
 @keyframes moodRipple{
-  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(232,144,106,.30);}
-  50%{transform:scale(1.06);box-shadow:0 0 0 8px rgba(232,144,106,0);}
-  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(232,144,106,0);}
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(var(--accent-rgb),.30);}
+  50%{transform:scale(1.06);box-shadow:0 0 0 8px rgba(var(--accent-rgb),0);}
+  100%{transform:scale(1);box-shadow:0 0 0 0 rgba(var(--accent-rgb),0);}
 }
 .mood-btn.mood-ripple{
   animation:moodRipple .4s cubic-bezier(.2,0,0,1);
@@ -1031,7 +994,7 @@
   background:linear-gradient(135deg,var(--bg-elevated),rgba(107,168,133,.10));
 }
 [data-theme="dark"] .mood-section[data-mood="okay"]{
-  background:linear-gradient(135deg,var(--bg-elevated),rgba(232,144,106,.10));
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(var(--accent-rgb),.10));
 }
 [data-theme="dark"] .mood-section[data-mood="soso"]{
   background:linear-gradient(135deg,var(--bg-elevated),rgba(192,137,42,.08));
@@ -1040,7 +1003,7 @@
   background:linear-gradient(135deg,var(--bg-elevated),rgba(176,90,66,.08));
 }
 [data-theme="dark"] .mood-section[data-mood="veryhard"]{
-  background:linear-gradient(135deg,var(--bg-elevated),rgba(200,60,60,.08));
+  background:linear-gradient(135deg,var(--bg-elevated),rgba(var(--danger-rgb),.08));
 }
 /* elevated card 깊이감 */
 [data-theme="dark"] .sit-card{
@@ -1052,7 +1015,7 @@
 }
 [data-theme="dark"] .mood-btn.selected{
   border-color:var(--peach);
-  background:rgba(232,144,106,.15);
+  background:rgba(var(--accent-rgb),.15);
 }
 
 /* ══════════════════════════════════════════
@@ -1062,7 +1025,7 @@
   position:absolute;
   top:-100px;left:50%;
   transform:translateX(-50%);
-  background:var(--peach-d);color:#fff;
+  background:var(--peach-d);color:var(--on-accent);
   padding:10px 24px;
   border-radius:0 0 12px 12px;
   font-size:13px;font-weight:700;
@@ -1085,54 +1048,6 @@
   clip:rect(0,0,0,0);
   white-space:nowrap;
   border:0;
-}
-
-/* ══════════════════════════════════════════
-   P3: 위기 후 팔로업 배너
-══════════════════════════════════════════ */
-.followup-banner{
-  width:100%;max-width:480px;
-  margin-bottom:var(--sp-2);
-}
-.followup-inner{
-  display:flex;align-items:flex-start;gap:12px;
-  background:linear-gradient(135deg,rgba(232,144,106,.08),rgba(107,168,133,.06));
-  border:1px solid rgba(232,144,106,.18);
-  border-radius:16px;
-  padding:var(--sp-2);
-  position:relative;
-}
-.followup-icon{
-  font-size:24px;flex-shrink:0;
-  margin-top:2px;
-}
-.followup-text{
-  flex:1;min-width:0;
-}
-.followup-text strong{
-  display:block;
-  font-size:14px;font-weight:700;color:var(--ink);
-  margin-bottom:4px;
-  letter-spacing:-.2px;
-}
-.followup-text span{
-  font-size:12.5px;color:var(--ink-m);
-  line-height:1.6;
-  word-break:keep-all;
-}
-.followup-close{
-  position:absolute;top:10px;right:12px;
-  background:none;border:none;
-  font-size:14px;color:var(--ink-l);
-  cursor:pointer;padding:4px;
-  line-height:1;
-  transition:color .2s;
-}
-.followup-close:hover{color:var(--ink);}
-
-[data-theme="dark"] .followup-inner{
-  background:linear-gradient(135deg,rgba(232,144,106,.10),rgba(107,168,133,.08));
-  border-color:rgba(255,255,255,.08);
 }
 
 /* ══════════════════════════════════════════
@@ -1159,10 +1074,6 @@
   .emer-row--primary{
     border-width:2.5px;
   }
-  .hdr-sos{
-    border-width:2px;
-    font-size:11px;
-  }
 }
 
 /* ══════════════════════════════════════════
@@ -1182,8 +1093,8 @@
   -webkit-appearance:none;appearance:none;
 }
 .mc-lang-btn.on{
-  border-color:var(--peach);background:rgba(232,144,106,.08);
-  box-shadow:0 2px 12px rgba(232,144,106,.15);
+  border-color:var(--peach);background:rgba(var(--accent-rgb),.08);
+  box-shadow:0 2px 12px rgba(var(--accent-rgb),.15);
 }
 .mc-lang-flag{font-size:24px;}
 .mc-lang-label{font-size:14px;font-weight:700;}
@@ -1235,7 +1146,7 @@
 
 /* dark mode */
 [data-theme="dark"] .mc-lang-btn{background:var(--white);border-color:rgba(255,255,255,.08);}
-[data-theme="dark"] .mc-lang-btn.on{background:rgba(232,144,106,.12);border-color:var(--peach);}
+[data-theme="dark"] .mc-lang-btn.on{background:rgba(var(--accent-rgb),.12);border-color:var(--peach);}
 [data-theme="dark"] .mc-emer-item,
 [data-theme="dark"] .mc-guide-card{background:var(--white);border-color:rgba(255,255,255,.06);}
 

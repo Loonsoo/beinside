@@ -226,3 +226,4 @@
 - 글꼴: **조합 1 — Pretendard(본문·버튼·숫자) + 고운바탕(감성 한 줄)** (`reports/design/2026-09-study-typography.md`, `mockups/2026-09-b-type-options.html`)
 - 보류: 첫 화면(랜딩) 구성. 운영자 요청 "좀 더 감각적이고 세련되게" → 랜딩 레퍼런스 스터디 후 시안 재작성.
 - 랜딩(첫 방문, 날짜 없음): **시안 1 "새벽 한 장"** (`reports/design/2026-09-landing-direction.md`, `mockups/2026-09-landing-options.html`). 날짜 입력 후는 B 대시보드. 문구는 전면 검토 후 확정(`reports/2026-09-copy-review.md`).
+- 문구(2026-09-25): `reports/2026-09-copy-review.md`의 필수 수정과 정신과 감수(§8 감수) 수정안 **승인**. **태그라인은 현행 유지**(대안 "혼자 돌볼 때, 먼저 열어 보는 곳." 반려) — 태그라인 관련 항목(§1)은 손대지 않는다.

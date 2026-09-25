@@ -4,86 +4,117 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BeInside — 오프라인</title>
+  <meta name="theme-color" content="#F2F1EC" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#171A13" media="(prefers-color-scheme: dark)">
+  <script>
+  /* 사이트에서 직접 고른 화면 모드가 있으면 따른다. 없으면 시스템 설정 */
+  (function(){
+    var s = null;
+    try { s = localStorage.getItem('beinside_theme'); } catch (e) {}
+    if (s === 'dark' || s === 'light') document.documentElement.setAttribute('data-theme', s);
+  })();
+  </script>
   <style>
+    /* 팔레트는 css/base.css(라이트)·css/dark.css(다크)와 같은 값. 이 페이지는 오프라인에서 단독으로 뜨므로 여기 다시 적는다.
+       대비(WCAG AA): 본문 13.27·9.15 / 보조 글자 5.56 이상 / 119 빨강 6.20 (다크: 11.74·6.54·7.22) */
+    :root{
+      --surface-base:#F2F1EC; --surface-raised:#FAFAF6;
+      --text-primary:#1E2925; --text-body:#36433E; --text-secondary:#56635E;
+      --stroke-control:#7C8A84; --accent-strong:#35604F; --on-accent:#FAFAF6; --danger-strong:#9E3F3F;
+      color-scheme:light;
+    }
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme="light"]){
+        --surface-base:#171A13; --surface-raised:#20241B;
+        --text-primary:#D1D5C3; --text-body:#B9BEAA; --text-secondary:#9BA08C;
+        --stroke-control:#71775F; --accent-strong:#9AAD80; --on-accent:#171A13; --danger-strong:#EC9B87;
+        color-scheme:dark;
+      }
+    }
+    :root[data-theme="dark"]{
+      --surface-base:#171A13; --surface-raised:#20241B;
+      --text-primary:#D1D5C3; --text-body:#B9BEAA; --text-secondary:#9BA08C;
+      --stroke-control:#71775F; --accent-strong:#9AAD80; --on-accent:#171A13; --danger-strong:#EC9B87;
+      color-scheme:dark;
+    }
     *{margin:0;padding:0;box-sizing:border-box;}
     body{
-      font-family:-apple-system,BlinkMacSystemFont,'Noto Sans KR',sans-serif;
-      background:#F7F3EE;color:#3A3A3A;
+      font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+      background:var(--surface-base);color:var(--text-body);
       min-height:100vh;display:flex;flex-direction:column;
       align-items:center;justify-content:center;
-      padding:32px 24px;text-align:center;
+      padding:32px 16px;text-align:center;
     }
-    .offline-icon{font-size:48px;margin-bottom:16px;}
-    h1{font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:-.3px;}
-    .sub{font-size:14px;color:#6B6B6B;line-height:1.7;margin-bottom:32px;max-width:360px;}
-    .emer-title{font-size:13px;font-weight:700;color:#6B6B6B;margin-bottom:16px;letter-spacing:-.2px;}
-    .emer-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:360px;}
+    h1{font-size:20px;font-weight:700;margin-bottom:8px;color:var(--text-primary);}
+    .sub{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:24px;max-width:360px;}
+    .emer-title{font-size:14px;font-weight:700;color:var(--text-secondary);margin-bottom:12px;}
+    .emer-list{list-style:none;display:flex;flex-direction:column;gap:8px;width:100%;max-width:360px;}
     .emer-link{
-      display:flex;align-items:center;gap:16px;
-      padding:16px 20px;
-      background:#FFFFFF;border:1.5px solid rgba(0,0,0,.06);
-      border-radius:16px;text-decoration:none;color:#3A3A3A;
-      box-shadow:0 2px 6px rgba(0,0,0,.05);
+      display:flex;align-items:center;gap:14px;
+      min-height:56px;padding:12px 16px;
+      background:var(--surface-raised);border:1.5px solid var(--stroke-control);
+      border-radius:14px;text-decoration:none;color:var(--text-primary);
     }
-    .emer-link:active{transform:scale(.97);}
-    .emer-num{font-size:22px;font-weight:800;min-width:80px;text-align:left;}
+    .emer-link--call{background:var(--accent-strong);border-color:var(--accent-strong);color:var(--on-accent);}
+    .emer-link--call .emer-desc{color:var(--on-accent);}
+    .emer-link--urgent{border:2px solid var(--danger-strong);}
+    .emer-link--urgent .emer-num{color:var(--danger-strong);}
+    .emer-link:focus-visible,.retry:focus-visible{outline:3px solid var(--text-primary);outline-offset:2px;}
+    .emer-num{font-size:20px;font-weight:700;min-width:92px;text-align:left;font-variant-numeric:tabular-nums;}
     .emer-info{flex:1;text-align:left;}
-    .emer-name{font-size:13px;font-weight:700;display:block;}
-    .emer-desc{font-size:11px;color:#9A9A9A;display:block;margin-top:2px;}
+    .emer-name{font-size:15px;font-weight:700;display:block;}
+    .emer-desc{font-size:14px;color:var(--text-secondary);display:block;margin-top:2px;line-height:1.45;}
     .retry{
-      margin-top:32px;padding:12px 24px;
-      background:#D4795E;color:#fff;border:none;border-radius:12px;
-      font-size:13px;font-weight:700;cursor:pointer;
-      font-family:inherit;
-    }
-    .retry:active{opacity:.8;}
-
-    @media(prefers-color-scheme:dark){
-      body{background:#1C1C1E;color:#F5F5F7;}
-      .sub{color:#A1A1A6;}
-      .emer-title{color:#A1A1A6;}
-      .emer-link{background:#2C2C2E;border-color:rgba(255,255,255,.06);color:#F5F5F7;}
-      .emer-desc{color:#636366;}
+      margin-top:24px;min-height:48px;padding:12px 24px;
+      background:transparent;color:var(--text-primary);
+      border:1.5px solid var(--stroke-control);border-radius:24px;
+      font-size:15px;font-weight:600;cursor:pointer;font-family:inherit;
     }
   </style>
 </head>
 <body>
-  <div class="offline-icon" role="img" aria-label="오프라인">📡</div>
   <h1>인터넷에 연결되지 않았어요</h1>
-  <p class="sub">하지만 긴급 전화는 인터넷 없이도 가능해요.<br>아래 번호를 누르면 바로 연결돼요.</p>
+  <p class="sub">전화와 문자는 인터넷 없이도 돼요.<br>아래 번호를 누르면 바로 연결돼요.</p>
 
-  <div class="emer-title">긴급 전화번호</div>
-  <div class="emer-list">
-    <a href="tel:119" class="emer-link">
-      <span class="emer-num" style="color:#C8302A;">119</span>
-      <div class="emer-info">
+  <h2 class="emer-title" id="emer-title">도움 번호</h2>
+  <ul class="emer-list" aria-labelledby="emer-title">
+    <li><a href="tel:109" class="emer-link emer-link--call">
+      <span class="emer-num">109 전화</span>
+      <span class="emer-info">
+        <span class="emer-name">자살예방상담전화</span>
+        <span class="emer-desc">무료 · 24시간. 상담사가 이야기를 들어요</span>
+      </span>
+    </a></li>
+    <li><a href="sms:109" class="emer-link">
+      <span class="emer-num">109 문자</span>
+      <span class="emer-info">
+        <span class="emer-name">자살예방상담전화 문자 상담</span>
+        <span class="emer-desc">말하기 어려우면 문자로 보내요</span>
+      </span>
+    </a></li>
+    <li><a href="tel:119" class="emer-link emer-link--urgent">
+      <span class="emer-num">119</span>
+      <span class="emer-info">
         <span class="emer-name">응급 · 구조</span>
-        <span class="emer-desc">신체 응급 · 구급차 요청. 무료, 24시간</span>
-      </div>
-    </a>
-    <a href="tel:112" class="emer-link">
-      <span class="emer-num" style="color:#A02020;">112</span>
-      <div class="emer-info">
+        <span class="emer-desc">구급차와 응급 출동. 24시간</span>
+      </span>
+    </a></li>
+    <li><a href="tel:112" class="emer-link">
+      <span class="emer-num">112</span>
+      <span class="emer-info">
         <span class="emer-name">학대 · 범죄 신고</span>
         <span class="emer-desc">아동학대 · 가정폭력 · 범죄 신고. 24시간</span>
-      </div>
-    </a>
-    <a href="tel:109" class="emer-link">
-      <span class="emer-num" style="color:#6A3A9A;">109</span>
-      <div class="emer-info">
-        <span class="emer-name">자살예방 상담전화</span>
-        <span class="emer-desc">무료, 24시간. 상담사가 이야기 들어줘요</span>
-      </div>
-    </a>
-    <a href="tel:1577-0199" class="emer-link">
-      <span class="emer-num" style="color:#2A5A9A;">1577-0199</span>
-      <div class="emer-info">
-        <span class="emer-name">정신건강 위기상담</span>
-        <span class="emer-desc">무료, 24시간</span>
-      </div>
-    </a>
-  </div>
+      </span>
+    </a></li>
+    <li><a href="tel:15770199" class="emer-link">
+      <span class="emer-num">1577-0199</span>
+      <span class="emer-info">
+        <span class="emer-name">정신건강위기상담전화</span>
+        <span class="emer-desc">24시간 · 상담 무료(통화료는 들 수 있어요)</span>
+      </span>
+    </a></li>
+  </ul>
 
-  <button class="retry" onclick="location.reload()">다시 연결 시도</button>
+  <button type="button" class="retry" onclick="location.reload()">다시 연결 시도</button>
 </body>
 </html>

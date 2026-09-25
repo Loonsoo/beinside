@@ -227,7 +227,7 @@ function _guideSituationDetail(container, data, cfg) {
     }
   }
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: scrollMotion() });
 }
 
 
@@ -559,7 +559,7 @@ function renderWorkplacePage(container) {
         '<div class="help-cards">'
         + '<a href="tel:109" class="help-card" aria-label="정신건강위기상담 109"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담</div><div class="help-card-desc">무료, 24시간. 직장 스트레스로 심각한 고통을 겪고 있다면</div></div></a>'
         + '<a href="tel:1350" class="help-card" aria-label="고용노동부 상담센터 1350"><div class="help-card-num">📞 1350</div><div class="help-card-info"><div class="help-card-name">고용노동부 상담센터</div><div class="help-card-desc">직장 내 괴롭힘·부당 대우 신고 및 상담</div></div></a>'
-        + '<a href="tel:15770199" class="help-card" aria-label="정신건강복지센터 1577-0199"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">무료, 24시간. 전문 심리 상담 연결</div></div></a>'
+        + '<a href="tel:15770199" class="help-card" aria-label="정신건강복지센터 1577-0199"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강복지센터</div><div class="help-card-desc">상담 무료(통화료는 들 수 있어요), 24시간. 전문 심리 상담 연결</div></div></a>'
         + '</div>'
         + '<div style="margin-top:14px;padding:12px 16px;background:var(--warm);border-radius:12px;font-size:12.5px;color:var(--ink-m);line-height:1.7;">'
         + '💼 <strong>EAP(근로자 지원 프로그램)</strong>가 회사에 있다면 무료로 전문 상담을 받을 수 있어요. 인사팀에 문의하거나, 사내 복지 페이지를 확인해 보세요.'
@@ -1088,7 +1088,7 @@ function renderSeniorPage(container) {
     + '<div class="step-label">📞 주요 연락처</div>'
     + '<div class="help-cards">'
     + '<a href="tel:109" class="help-card"><div class="help-card-num">📞 109</div><div class="help-card-info"><div class="help-card-name">자살예방상담전화</div><div class="help-card-desc">무료, 24시간. 삶이 힘들 때 언제든.</div></div></a>'
-    + '<a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담전화</div><div class="help-card-desc">무료, 24시간. 외로움, 우울 모두 상담 가능.</div></div></a>'
+    + '<a href="tel:15770199" class="help-card"><div class="help-card-num">📞 1577-0199</div><div class="help-card-info"><div class="help-card-name">정신건강위기상담전화</div><div class="help-card-desc">상담 무료(통화료는 들 수 있어요), 24시간. 외로움, 우울 모두 상담 가능.</div></div></a>'
     + '<a href="tel:15771389" class="help-card"><div class="help-card-num">📞 1577-1389</div><div class="help-card-info"><div class="help-card-name">노인보호전문기관</div><div class="help-card-desc">노인 학대 상담·신고. 경제적 학대도 상담 가능.</div></div></a>'
     + '<a href="tel:132" class="help-card"><div class="help-card-num">📞 132</div><div class="help-card-info"><div class="help-card-name">대한법률구조공단</div><div class="help-card-desc">재산·상속 무료 법률상담. 65세 이상 우선.</div></div></a>'
     + '<a href="tel:129" class="help-card"><div class="help-card-num">📞 129</div><div class="help-card-info"><div class="help-card-name">정부 복지상담센터</div><div class="help-card-desc">노인 복지 혜택 통합 안내. 무료.</div></div></a>'
