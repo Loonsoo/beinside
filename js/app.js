@@ -1391,8 +1391,10 @@ function setTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
   localStorage.setItem(THEME_KEY, mode);
   updateThemeToggleUI();
-  var tc = document.querySelector('meta[name="theme-color"]');
-  if (tc) tc.setAttribute('content', mode === 'dark' ? '#161B19' : '#D4795E');
+  // 사이트 테마가 시스템 설정과 다를 수 있어, media별 theme-color 두 개를 모두 현재 테마 바탕색으로 맞춘다
+  document.querySelectorAll('meta[name="theme-color"]').forEach(function(tc) {
+    tc.setAttribute('content', mode === 'dark' ? '#171A13' : '#F2F1EC');
+  });
 }
 
 function updateThemeToggleUI() {

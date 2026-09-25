@@ -98,7 +98,7 @@ function getAloneHTML(months){
     <div class="card-audience aud-child">🧒 본인 (아이·청소년·청년)</div>
     <h3>🫶 ${key==='child'?'많이 버텨온 너에게':key==='teen'?'스스로 견뎌온 너에게':'혼자 감당해온 너에게'}</h3>
     <div class="stat-badge" style="margin-bottom:14px;" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
-    <blockquote style="font-family:'Gowun Batang',serif;font-size:15px;color:var(--peach-d);line-height:1.85;font-style:italic;margin-bottom:18px;padding-left:16px;border-left:3px solid var(--peach);">${d.quote}</blockquote>
+    <blockquote style="font-family:var(--font-sans);font-size:15px;color:var(--peach-d);line-height:1.85;font-style:normal;margin-bottom:18px;padding-left:16px;border-left:3px solid var(--peach);">${d.quote}</blockquote>
     <div style="display:flex;flex-direction:column;gap:10px;">
       ${d.items.map(it=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border-radius:13px;border:1px solid rgba(232,137,106,.10);">
         <span style="font-size:20px;flex-shrink:0;margin-top:1px;">${it.icon}</span>

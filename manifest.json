@@ -4,8 +4,8 @@
   "description": "육아, 정신건강, 감정 돌봄, 한부모 가이드 — 판단 없이, 당신 편에서 안내합니다.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F5F0EB",
-  "theme_color": "#D4795E",
+  "background_color": "#F2F1EC",
+  "theme_color": "#F2F1EC",
   "orientation": "portrait",
   "lang": "ko",
   "icons": [

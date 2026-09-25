@@ -4,8 +4,8 @@
     - 폰트: cache-first (장기 캐시)
     - 배포 시 SW 파일 자체가 변경되면 브라우저가 자동 업데이트 */
 
-const CACHE_STATIC = 'beinside-static-v2';
-const CACHE_FONT   = 'beinside-font-v1';
+const CACHE_STATIC = 'beinside-static-v3';
+const CACHE_FONT   = 'beinside-font-v2';
 const OFFLINE_PAGE = '/offline.html';
 
 const PRECACHE = [
@@ -69,8 +69,10 @@ self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = e.request.url;
 
-  // 1) Google Fonts — cache-first (폰트는 거의 변하지 않음)
-  if (url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com')) {
+  // 1) 글꼴 — cache-first (폰트는 거의 변하지 않음)
+  //    Google Fonts(고운바탕) + jsDelivr(Pretendard, 버전 고정 경로만)
+  if (url.includes('fonts.googleapis.com') || url.includes('fonts.gstatic.com') ||
+      url.startsWith('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@')) {
     e.respondWith(
       caches.open(CACHE_FONT).then(cache =>
         cache.match(e.request).then(cached => {
