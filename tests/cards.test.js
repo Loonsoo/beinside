@@ -395,3 +395,24 @@ describe('정적 카드 페이지', () => {
     }
   });
 });
+
+describe('카드 임상 감수 고정 규칙', () => {
+  it('모든 카드는 어딘가에 119({{emergency}}) 연결이 있다', () => {
+    for (const c of CARDS) {
+      const all = texts(c).join('\n') + '\n' + (c.more || []).join(',');
+      assert.ok(all.includes('{{emergency}}') || (c.more || []).includes('emergency'), `${c.id}: 119 연결 없음`);
+    }
+  });
+  it('울음 카드의 첫 할 일은 흔들기 금지다', () => {
+    const c = CARDS.find(x => x.category === 'crying');
+    assert.ok(c, '울음 카드 없음');
+    assert.match(c.todo[0], /흔들/);
+  });
+  it('열 카드의 "지금 바로"에 3개월 미만 38℃ 기준이 있다', () => {
+    const c = CARDS.find(x => x.id === 'fever');
+    assert.ok(c, '열 카드 없음');
+    const now = [c.urgentLine || '', ...c.hospital.now].join('\n');
+    assert.match(now, /3개월/);
+    assert.match(now, /38/);
+  });
+});

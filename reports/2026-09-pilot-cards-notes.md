@@ -293,3 +293,61 @@
 4. 반영 뒤 `tests/cards.test.js`에 넣을 것을 권한다: 울음 카드 `todo[0]`에 흔들기 금지가 있는지, 모든 카드에 `{{emergency}}`가 있는지, `hospital.now`에 "3개월 미만"과 "38"이 있는지.
 
 검색 출처(이번 감수): [HealthyChildren – Fever: When to Call the Pediatrician](https://www.healthychildren.org/English/health-issues/conditions/fever/Pages/When-to-Call-the-Pediatrician.aspx) · [NHS England Digital – Terms and conditions](https://digital.nhs.uk/about-nhs-digital/terms-and-conditions) · [Open Government Licence v3](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) · [질병관리청 2025 심폐소생술 가이드라인 보도자료](https://www.kdca.go.kr/bbs/kdca/42/304937/download.do) · [의학신문 – 영아 심폐소생술 양손 가슴압박법 통합](https://www.bosa.co.kr/news/articleView.html?idxno=2268931) · [E-GEN 영아 기도폐쇄](https://www.e-gen.or.kr/egen/first_aid_basics.do?contentsno=20) · [서울대병원 소아응급 FAQ](https://www.snuh.org/reservation/meddept/EMP/childFaq.do) · [서울시 임신·출산 정보센터 영유아 응급상황](https://seoul-agi.seoul.go.kr/child-emergency-response) · [국가건강정보포털 응급상황정보](https://health.kdca.go.kr/healthinfo/biz/health/gnrlzHealthInfo/healthInfo/emgncySittnInfoMain.do)
+
+---
+
+## 감수 반영 (2026-09-27)
+
+- 대상: `js/data-cards.js` (세 카드 모두 `status: 'draft'` 유지). 커밋하지 않았다. `npm test` 102/102 통과.
+- 원칙: 감수의 "최종 문구 제안"을 글자 그대로 넣었다. 감수가 반려한 문장(울음 카드 N5 "흔들렸거나 떨어졌을 수 있고, 그 뒤…", 119 카드 "등 두드리기·가슴 밀기" 이름만 적은 질식 줄, "미리 한 번 봐 두세요")은 뺐다.
+- "소아과 확인 필요" 6줄(F3·F5·C3·C6·N5·R3)은 문장을 넣고 줄 끝에 `// 소아과 확인 필요` 주석을 달았다. 게시 전에 운영자가 확인하거나 뺀다.
+- 새 출처 5개는 모두 `use: 'link'`에 `// 원문 미확인` 주석을 달았다(이 세션도 원문을 열지 못했다). §4 원문 대조 조건은 그대로 남는다.
+
+### 필수 수정 17건
+
+| # | 수정 번호 | 반영 위치 | 비고 |
+|---|---|---|---|
+| 1 | F1 | `fever.summary` | "바로 진료" → "바로 응급실". `urgentLine`과 강도를 맞췄다 |
+| 2 | F2 | `fever.hospital.now` 발진 줄 | 붉은색·보라색, "색이 없어져도 아파 보이면 진료" 추가 |
+| 3 | F3 | `fever.hospital.now` 새 줄(발진 다음) | 숫구멍 팽창. `// 소아과 확인 필요` |
+| 4 | F5 | `fever.todo[0]` | "같은 체온계" 문장을 "생후 6개월 전 귀 체온계 부정확"으로 교체. `// 소아과 확인 필요` |
+| 5 | F7 | `fever.hospital.soon[2]` | 열 지속 기준 "하루(24시간)". 출처에 HealthyChildren(AAP) `link` 추가, `// 원문 미확인` |
+| 6 | C1 | `call-119.todo[4]~[7]` | 질식 줄을 4줄로 교체: 전화·스피커폰 / 기침하면 지켜보기 / 하지 말 것(손가락 더듬기, 돌 전 하임리히법) / 사전 교육. 처치 절차는 글로 쓰지 않았다 |
+| 7 | C2 | `call-119.todo[0]` | 반응 없고 숨 안 쉬면 119, 상담원이 가슴압박 안내 |
+| 8 | C3 | `call-119.hospital.now` 새 줄(삼킴 줄 다음) | 약·세제·버튼 전지·자석. 출처에 국가건강정보포털 응급상황정보 `link` 추가. `// 소아과 확인 필요` |
+| 9 | C4 | `call-119.hospital.now` 토 줄 | 초록색·피 섞인 구토 추가 |
+| 10 | C5 | `call-119.hospital.now` 머리 외상 줄 | "계속 토하거나" → "토하거나", 잘 깨지 않음·보챔, 숫구멍, 귀·코 분비물 추가 |
+| 11 | C6 | `call-119.hospital.soon[0]` | 높은 곳 낙상·혹·멍 → 오늘 안에 진료 + 하루 관찰. 출처에 서울대병원 소아응급 FAQ, 서울시 임신·출산 정보센터 `link` 추가. `// 소아과 확인 필요` |
+| 12 | C8 | `call-119.mom.problems[2]` | 전화 끊지 않기, 아기를 안고 갈 수 있을 때만 현관문 잠금 풀기 |
+| — | C12 (C1에 포함) | `call-119.sources` | 질병관리청 2025 심폐소생술 가이드라인 보도자료 `link` 추가, `// 원문 미확인`. E-GEN 영아 기도폐쇄 페이지의 개정 반영 여부 확인 필요를 주석에 적었다 |
+| 13 | 울음-1 흔들기 | `crying.todo[0]`, `crying.summary` | 흔들기 금지를 맨 앞으로, 결과(뇌 손상·사망) 명시. summary에 "절대" 추가. 기존 todo[3] 문장은 삭제 |
+| 14 | 울음-2 안전한 곳 | `crying.todo[1]`, `crying.mom.problems[0]` | 아기 침대 없으면 바닥의 단단하고 평평한 요, 주변에 베개·이불·인형 없음. "우는 것만으로 다치지 않아요" 추가 |
+| 15 | 울음-3 N5 교체 | `crying.hospital.now[5]`, `[6]` | 반려된 N5 삭제. "세게 흔들렸을 수 있어요 → 괜찮아 보여도 바로 119·응급실"로 교체. `// 소아과 확인 필요`. 낙상은 119 카드로 보내는 줄을 따로 뒀다. 신고 관련 안심 문구는 넣지 않았다 |
+| 16 | 울음-4 위기 연결 분리 | `crying.mom.problems[3]~[5]` | 한 줄 세 번호를 세 줄로: 해칠 것 같은 생각 → 먼저 눕히고 떠나기 → 109 / 이미 흔들었거나 다치게 했을 수 있음 → 119 / 2주 넘게 힘듦 → 1577-0199 |
+| 17 | R1·R2 | `crying.hospital.now[0]·[1]`, `[7]` | R1: 힘없는·날카로운 울음과 처짐·잘 깨지 않음을 두 줄로 나눔. R2: 초록색·피 구토, 피·젤리 같은 변, 배 부풂 추가 |
+
+### 같이 반영한 권장·승인 문구
+
+| 수정 번호 | 반영 위치 | 비고 |
+|---|---|---|
+| F4 | `fever.hospital.now` 새 줄 | 힘없는·날카로운 울음 (울음 카드와 같은 문장) |
+| F6 | `fever.what[2]` | 3개월 미만은 어디로 쟀든 38℃ 넘으면 바로 진료 |
+| F8 | `fever.todo[6]` | 해열제로 열이 내려도 "지금 바로" 신호가 있으면 진료 |
+| F9·F10·F11 | — | 승인. 그대로 |
+| C7 | `call-119.todo[3]` 끝 | 경련이 시작된 시각 봐 두기 |
+| C9·C10·C11 | — | 승인. 그대로 ("미리 한 번 봐 두세요"는 C1로 사라짐) |
+| R3 | `crying.hospital.soon[3]` | 만질 때 더 우는 곳, 사타구니·고환 부기. `// 소아과 확인 필요` |
+| R4 | `crying.hospital.soon[1]` | "잘 먹지 않거나" 유지 |
+| 울음-6 feel | `crying.mom.feel[1]` 끝 | "화가 나는 것과 아기를 해치는 행동은 달라요…" |
+| 울음-7 what | `crying.what[2]` | "흔한 모습", 3~5개월로 통일, 영아산통을 진단 추정처럼 읽히지 않게 |
+| 울음-7 more | `crying.more` | 렌더러가 109·119 고정 줄을 이미 붙이지만 감수 지시대로 지금은 그대로 둔다 |
+
+### 감수 문구와 다르게 쓴 곳 (1곳)
+
+- `crying.hospital.now[6]` 낙상 안내: 감수 문구는 `"바로 119를 불러야 할 때" 카드의 낙상 기준을 봐요`다. `tests/cards.test.js` "본문 문장에는 전화번호를 숫자로 쓰지 않음" 규칙에 걸려서 119만 `{{emergency}}`로 썼다. 화면에 보이는 글자는 같지만 "119"가 `tel:` 링크가 된다. 렌더러가 카드 간 링크를 지원하면 이 줄을 카드 링크로 바꾼다.
+
+### 남은 일
+
+1. "소아과 확인 필요" 6줄: 소아청소년과·응급의학 전문가 확인. 불가능하면 더 보수적으로만 바꾸고 완화하지 않는다(감수 E-2).
+2. 감수 E-4가 권한 테스트 추가(울음 `todo[0]` 흔들기 금지, 모든 카드 `{{emergency}}`, 열 카드 `hospital.now`에 "3개월 미만"·"38")는 이번 범위 밖이라 넣지 않았다.
+3. §4 원문 대조, NHS 문구 정책(감수 D)은 운영자 결정이 남아 있다.
