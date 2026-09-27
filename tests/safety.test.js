@@ -579,3 +579,15 @@ describe('리디자인 검수 회귀', () => {
     assert.doesNotMatch(rule('.emer-row-desc'), /display:\s*none/, '모바일에서 긴급 번호 설명이 숨겨짐');
   });
 });
+
+describe('영아 안전 문구 회귀', () => {
+  const fs2 = require('node:fs'); const path2 = require('node:path');
+  const R = f => fs2.readFileSync(path2.join(__dirname, '..', f), 'utf-8');
+  it('영아 발열 안내에 해열제 제품명·용량이 없다', () => {
+    const src = R('js/render.js') + R('js/data.js') + R('index.html');
+    assert.doesNotMatch(src, /타이레놀|이부프로펜|체중 기준 용량/);
+  });
+  it('우는 아기 대처에 "흔들기"를 권하는 문장이 없다', () => {
+    assert.doesNotMatch(R('js/data.js'), /리듬감 있게 흔들/);
+  });
+});
