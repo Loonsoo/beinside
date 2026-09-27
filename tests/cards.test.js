@@ -22,7 +22,7 @@ function load() {
   vm.runInContext(read('js/helplines.js'), ctx);
   vm.runInContext(read('js/data-cards.js'), ctx);
   vm.runInContext(read('js/cards.js')
-    + '\n;this.api = { BI_CARDS, HELPLINES, CARD_CHIPS, CARD_DISCLAIMER, CARD_REPORT_EMAIL, cardHTML, cardsListed, cardCanShow };', ctx);
+    + '\n;this.api = { BI_CARDS, HELPLINES, CARD_CHIPS, CARD_FALLBACKS, CARD_DISCLAIMER, CARD_REPORT_EMAIL, cardHTML, cardsListed, cardCanShow };', ctx);
   return ctx.api;
 }
 
@@ -296,9 +296,58 @@ describe('첫 화면과 상황 칩', () => {
   it('칩 6개가 정해진 이름이고, 연결 대상이 모두 정해져 있음', () => {
     assert.deepEqual(Array.from(API.CARD_CHIPS, c => c.label), ['열이 나요', '안 그치고 울어요', '밤에 안 자요', '잘 안 먹어요', '바로 119', '엄마가 힘들어요']);
     for (const c of API.CARD_CHIPS) {
-      assert.ok(['emergency', 'night', 'growth', 'check'].includes(c.fallback), `${c.key}: fallback`);
+      assert.ok(API.CARD_FALLBACKS[c.fallback], `${c.key}: fallback "${c.fallback}"가 CARD_FALLBACKS에 없음`);
       if (c.card) assert.ok(CARDS.some(x => x.id === c.card), `${c.key}: 카드 ${c.card} 없음`);
     }
+  });
+
+  /* 카드가 게시되기 전 칩의 도착점 (js/cards.js CARD_FALLBACKS 주석과 같다)
+     fever → growth 응급처치 '고열 대처' / crying → growth 아빠 탭 '아기가 계속 울어요' /
+     sleep → growth '밤에 안 자요' 툴킷 / feeding → growth '신체 발달' / call119 → emergency '바로 119' 신호 /
+     mom → 산후 페이지 마음 신호 확인 */
+  it('칩 도착점이 정해진 섹션임 (페이지 맨 위가 아님)', () => {
+    const to = key => API.CARD_FALLBACKS[API.CARD_CHIPS.find(c => c.key === key).fallback];
+    const expected = {
+      fever:   { page: 'growth', acc: 'firstaid', focus: '[data-fa="fever"]' },
+      crying:  { page: 'growth', tab: 'dad', acc: 'dad-urgent', text: '울어요' },
+      sleep:   { page: 'growth', toolkit: 'toolkit-sleep', focus: '#toolkit-sleep' },
+      feeding: { page: 'growth', acc: 'body' },
+      call119: { page: 'emergency', focus: '#emer-119-signs' },
+      mom:     { page: 'postpartum', focus: '#postpartum-check-wrap' },
+    };
+    for (const [key, want] of Object.entries(expected)) {
+      const got = to(key);
+      for (const [k, v] of Object.entries(want)) assert.equal(got[k], v, `${key}.${k}`);
+      assert.ok(got.focus, `${key}: 포커스를 옮길 곳이 없음`);
+    }
+  });
+
+  it('"열이 나요" 칩은 emergency 페이지 최상단(신고 번호 목록)으로 가지 않고, 3개월 미만 38℃ 기준이 있는 곳으로 감', () => {
+    const fb = API.CARD_FALLBACKS[API.CARD_CHIPS.find(c => c.key === 'fever').fallback];
+    assert.notEqual(fb.page, 'emergency');
+    assert.ok(fb.focus && fb.acc, 'fever: 섹션을 펼치고 포커스를 옮겨야 함');
+    const render = read('js/render.js');
+    const at = render.indexOf('data-fa="fever"');
+    assert.ok(at !== -1, 'render.js 고열 대처에 data-fa="fever" 없음');
+    const item = render.slice(at, render.indexOf('</div>\n', render.indexOf('</ul>', at)));
+    assert.match(item, /3개월 미만 38℃ 이상 → 즉시 응급실/);
+    assert.match(render, /accSection\('🩺','응급처치 가이드'[^\n]*'firstaid'\)/);
+  });
+
+  it('칩이 펼치는 아코디언 키가 render.js에 있음', () => {
+    const render = read('js/render.js');
+    for (const fb of Object.values(API.CARD_FALLBACKS)) {
+      if (fb.acc) assert.ok(render.includes(`'${fb.acc}')`), `render.js에 accSection 키 '${fb.acc}' 없음`);
+    }
+  });
+
+  it('"바로 119" 도착점에 119 버튼과 3개월 미만 38℃ 기준이 있음', () => {
+    const at = html.indexOf('id="emer-119-signs"');
+    assert.ok(at !== -1);
+    const block = html.slice(at, html.indexOf('</section>', at));
+    assert.match(block, /href="tel:119"/);
+    assert.match(block, /3개월 미만[^<]*38℃/);
+    assert.ok(block.indexOf('tel:119') < block.indexOf('<ul'), '119 버튼이 신호 목록보다 먼저');
   });
 
   it('랜딩과 대시보드에 칩 자리가 있고, 스크립트가 app.js보다 먼저 로드됨', () => {

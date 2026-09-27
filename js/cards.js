@@ -21,22 +21,33 @@ const CARD_FIND = {
 };
 
 /* 상황 칩 (첫 화면 랜딩·대시보드). card가 게시(published)돼 있으면 카드로 가고, 아니면 fallback으로 간다.
-   fallback 연결 대상 — 카드가 게시되기 전 임시 연결:
-   - fever   '열이 나요'        → 옛 emergency 페이지(응급처치 '고열 대처'에 월령별 기준)
-   - crying  '안 그치고 울어요'  → 첫 화면 '새벽에 할 수 있는 것 3가지'(검수된 울음 문장).
-                                  랜딩은 #pp-l-night로 이동, 대시보드는 #pp-night를 펼친다
-   - sleep   '밤에 안 자요'      → 옛 growth 성장 가이드(월령별 수면). 태어난 날이 있으면 그 월령으로 연다
-   - feeding '잘 안 먹어요'      → 옛 growth 성장 가이드(월령별 수유). 태어난 날이 있으면 그 월령으로 연다
-   - call119 '바로 119'          → 옛 emergency 페이지(119 버튼·응급처치)
-   - mom     '엄마가 힘들어요'   → 마음 신호 확인(산후 페이지 체크, js/pp-home.js ppOpenCheck) */
+   fallback은 CARD_FALLBACKS의 키. 카드가 게시되기 전 임시 연결이라, 칩을 누른 사람이 기대하는 정보가
+   바로 보이는 섹션까지 내려가서 펼치고 포커스를 옮긴다. 페이지 맨 위에 떨어뜨리지 않는다. */
 const CARD_CHIPS = [
-  { key: 'fever',   label: '열이 나요',        card: 'fever',    fallback: 'emergency' },
-  { key: 'crying',  label: '안 그치고 울어요', card: 'crying',   fallback: 'night' },
-  { key: 'sleep',   label: '밤에 안 자요',     card: null,       fallback: 'growth' },
-  { key: 'feeding', label: '잘 안 먹어요',     card: null,       fallback: 'growth' },
-  { key: 'call119', label: '바로 119',         card: 'call-119', fallback: 'emergency', urgent: true },
+  { key: 'fever',   label: '열이 나요',        card: 'fever',    fallback: 'fever' },
+  { key: 'crying',  label: '안 그치고 울어요', card: 'crying',   fallback: 'crying' },
+  { key: 'sleep',   label: '밤에 안 자요',     card: null,       fallback: 'sleep' },
+  { key: 'feeding', label: '잘 안 먹어요',     card: null,       fallback: 'feeding' },
+  { key: 'call119', label: '바로 119',         card: 'call-119', fallback: 'call119', urgent: true },
   { key: 'mom',     label: '엄마가 힘들어요',  card: null,       fallback: 'check' },
 ];
+
+/* fallback 도착점. growth는 태어난 날이 있으면 그 월령, 없으면 신생아로 연다.
+   - fever   '열이 나요'        → growth 월령 가이드 › '응급처치 가이드' 펼침 › '고열 대처'(3개월 미만 38℃ 이상 즉시 응급실)
+                                  (옛 emergency 페이지 최상단은 112·119 신고 번호 목록이라 열 정보를 찾는 사람에게 맞지 않았다)
+   - crying  '안 그치고 울어요'  → growth 월령 가이드 › 아빠 가이드 탭(0~12개월) › '지금 급한 상황' 펼침 › '아기가 계속 울어요'
+   - sleep   '밤에 안 자요'      → growth › '아이가 밤에 안 자요' 툴킷 펼침(0~12개월 수면 단계)
+   - feeding '잘 안 먹어요'      → growth 월령 가이드 › '신체 발달 & 의학 체크' 펼침(월령별 수유·이유식)
+   - call119 '바로 119'          → emergency › '아기에게 이런 일이 있으면 바로 119'(119 버튼 + 신호 목록)
+   - check   '엄마가 힘들어요'   → 마음 신호 확인(산후 페이지 체크 펼침, js/pp-home.js ppOpenCheck) */
+const CARD_FALLBACKS = {
+  fever:   { page: 'growth', acc: 'firstaid', focus: '[data-fa="fever"]' },
+  crying:  { page: 'growth', tab: 'dad', acc: 'dad-urgent', focus: '.dad-toolkit-block', text: '울어요' },
+  sleep:   { page: 'growth', toolkit: 'toolkit-sleep', pill: 'sleep-infant', focus: '#toolkit-sleep' },
+  feeding: { page: 'growth', acc: 'body', focus: '[data-acc="body"] .acc-header' },
+  call119: { page: 'emergency', focus: '#emer-119-signs' },
+  check:   { page: 'postpartum', focus: '#postpartum-check-wrap' },
+};
 
 /* 페이지를 연 주소에 ?preview=1이 있었는지. 앱 안에서 페이지를 옮겨도 이 세션 동안 유지한다 */
 const CARD_PREVIEW = typeof location !== 'undefined' && /[?&]preview=1(?:&|$)/.test(location.search);
@@ -318,6 +329,41 @@ function cardBirthMonths() {
   return days < 0 ? 0 : Math.min(12, Math.floor(days / 30.44));
 }
 
+/* fallback 도착점 안에서 포커스를 옮길 요소 */
+function cardFallbackTarget(fb) {
+  const list = Array.prototype.slice.call(document.querySelectorAll(fb.focus));
+  const hit = fb.text ? list.filter(function (el) { return el.textContent.indexOf(fb.text) !== -1; })[0] : list[0];
+  return hit || null;
+}
+
+/* 펼치고, 내려가고, 포커스를 옮긴다 */
+function cardFallbackReveal(fb) {
+  if (fb.page === 'growth' && typeof switchGuideTab === 'function') {
+    switchGuideTab(fb.tab || 'child'); /* 앞서 아빠 탭을 열었어도 월령 가이드로 돌려놓는다 */
+    if (fb.tab === 'dad' && typeof renderDadContent === 'function') renderDadContent('infant');
+  }
+  if (fb.toolkit) {
+    const panel = document.getElementById(fb.toolkit);
+    /* toggleToolkit은 따로 스크롤까지 해서 여기서는 클래스만 켠다 */
+    document.querySelectorAll('.toolkit-panel.on, .toolkit-btn.on').forEach(function (el) { el.classList.remove('on'); });
+    if (panel) panel.classList.add('on');
+    const btn = document.querySelector('.toolkit-btn[onclick*="' + fb.toolkit + '"]');
+    if (btn) btn.classList.add('on');
+    const pill = fb.pill && panel && panel.querySelector('.age-pill');
+    if (pill && typeof switchAgePill === 'function') switchAgePill(pill, fb.toolkit, fb.pill);
+  }
+  if (fb.acc) {
+    const sec = document.querySelector((fb.tab === 'dad' ? '#dad-result ' : '#result ') + '[data-acc="' + fb.acc + '"]');
+    const head = sec && sec.querySelector('.acc-header');
+    if (head && typeof toggleAcc === 'function') toggleAcc(head, true);
+  }
+  const target = cardFallbackTarget(fb);
+  if (!target) return;
+  if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|SUMMARY)$/.test(target.tagName)) target.setAttribute('tabindex', '-1');
+  target.scrollIntoView({ behavior: typeof scrollMotion === 'function' ? scrollMotion() : 'auto', block: 'start' });
+  target.focus({ preventScroll: true });
+}
+
 function cardChip(key, from) {
   const chip = CARD_CHIPS.find(function (c) { return c.key === key; });
   if (!chip) return;
@@ -325,26 +371,18 @@ function cardChip(key, from) {
   cardTrack('chip_click', { chip: key, from: from, to: cardIsPublished(card) ? 'card' : chip.fallback });
   if (cardIsPublished(card)) { showCard(card.id); return; }
 
-  if (chip.fallback === 'emergency') { showPage('emergency'); if (typeof setMTab === 'function') setMTab('emergency'); return; }
-  if (chip.fallback === 'check') { if (typeof ppOpenCheck === 'function') ppOpenCheck(); return; }
-  if (chip.fallback === 'growth') {
+  const fb = CARD_FALLBACKS[chip.fallback];
+  if (!fb) return;
+  if (fb.page === 'postpartum') { if (typeof ppOpenCheck === 'function') ppOpenCheck(); return; }
+  const reveal = function () { cardFallbackReveal(fb); };
+  if (fb.page === 'growth') {
     const months = cardBirthMonths();
-    if (months !== null && typeof qs === 'function') qs(months, 'm');
-    else showPage('growth');
+    if (typeof qs === 'function') qs(months === null ? 0 : months, 'm', reveal);
+    if (typeof setMTab === 'function') setMTab('growth');
     return;
   }
-  if (chip.fallback === 'night') {
-    const night = document.getElementById('pp-night');
-    const dash = document.getElementById('pp-dash');
-    if (night && dash && !dash.hidden) {
-      night.open = true;
-      const s = night.querySelector('summary');
-      night.scrollIntoView({ behavior: typeof ppSmooth === 'function' ? ppSmooth() : 'auto', block: 'start' });
-      if (s) s.focus({ preventScroll: true });
-    } else if (typeof ppBrowse === 'function') {
-      ppBrowse();
-    }
-  }
+  if (typeof setMTab === 'function') setMTab(fb.page);
+  showPage(fb.page, reveal);
 }
 
 /* ── 한 번만 거는 위임 이벤트 (앱·정적 페이지 공통) ── */

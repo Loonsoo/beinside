@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "build:cards": "node scripts/build-cards.mjs",
-    "test": "node --test tests/*.test.js"
+    "test": "node --test tests/*.test.js",
+    "e2e": "node scripts/e2e.mjs"
   },
   "devDependencies": {
     "vite": "^8.0.2"

@@ -590,6 +590,7 @@
 .settings-close{
   background:none;border:none;cursor:pointer;
   font-size:18px;color:var(--ink-l);
+  min-width:44px;min-height:44px;
   padding:4px 8px;border-radius:8px;
   transition:background .15s;
 }
@@ -626,7 +627,7 @@
   padding:3px;
 }
 .theme-mode-btn{
-  width:36px;height:32px;border-radius:9px;
+  width:44px;height:44px;border-radius:9px;
   border:none;background:none;
   font-size:16px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
@@ -654,7 +655,7 @@
   padding:3px;
 }
 .text-scale-btn{
-  width:36px;height:32px;border-radius:9px;
+  width:44px;height:44px;border-radius:9px;
   border:none;background:none;
   font-family:var(--font-sans);
   font-weight:700;color:var(--text-body);
@@ -671,6 +672,7 @@
 
 /* 설정 액션 버튼 */
 .settings-action-btn{
+  min-height:44px;
   padding:8px 16px;
   background:var(--peach-p);
   border:1px solid rgba(var(--accent-rgb),.20);
@@ -684,6 +686,12 @@
 .settings-action-btn:hover{
   background:var(--peach);color:var(--on-accent);
   border-color:var(--peach);
+}
+
+/* 알림 켜기 체크박스: 누르는 영역 44px */
+.settings-toggle-wrap{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:44px;min-height:44px;
 }
 
 /* 설정 언어 선택 드롭다운 */
@@ -1607,6 +1615,21 @@
   font-size: 15px; font-weight: 700; color: var(--ink);
   margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
 }
+/* 아기 119 신호 (상황 칩 "바로 119"의 도착점) */
+.emer-119 {
+  margin: var(--sp-2) 16px 0; padding: 16px;
+  border: 1.5px solid var(--danger-strong); border-radius: 14px;
+  background: var(--surface-raised);
+}
+.emer-119:focus { outline: none; }
+.emer-119:focus-visible { outline: 3px solid var(--danger-strong); outline-offset: 2px; }
+.emer-119-t { font-size: calc(17px + var(--text-scale, 0) * 1px); font-weight: 700; color: var(--text-primary); line-height: 1.4; }
+.emer-119 .pp-call { margin-top: 10px; }
+.emer-119-list { margin-top: 12px; padding-left: 18px; list-style: disc; }
+.emer-119-list li { font-size: calc(15px + var(--text-scale, 0) * 1px); line-height: 1.6; color: var(--text-body); margin-bottom: 4px; }
+/* 상황 칩이 바로 펼친 곳: 포커스를 옮긴 자리를 보이게 */
+[data-fa="fever"]:focus, .dad-toolkit-block:focus, .toolkit-panel:focus { outline: none; }
+[data-fa="fever"]:focus-visible, .dad-toolkit-block:focus-visible, .toolkit-panel:focus-visible { outline: 3px solid var(--accent-strong); outline-offset: 2px; }
 
 /* ── birth-wrap 내 패딩 조정 (page-view 안에 있으므로) ── */
 #page-birth .birth-wrap { padding: 16px 28px 60px; }

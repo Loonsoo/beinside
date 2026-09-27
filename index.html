@@ -275,12 +275,12 @@
       <div class="settings-item-label">
         <span>🔔</span>
         <div>
-          <div class="settings-item-title">일일 감정 체크인</div>
-          <div class="settings-item-sub">매일 저녁 감정 기록 알림을 보내드려요</div>
+          <div class="settings-item-title">저녁 감정 기록 알림</div>
+          <div class="settings-item-sub">이 페이지가 열려 있을 때, 저녁 9시 이후 하루 한 번 알려 드려요. 앱이나 브라우저를 닫으면 알림이 오지 않아요.</div>
         </div>
       </div>
       <label class="settings-toggle-wrap" style="cursor:pointer;">
-        <input type="checkbox" id="checkin-toggle" onchange="toggleDailyCheckin(this.checked)" style="width:18px;height:18px;">
+        <input type="checkbox" id="checkin-toggle" onchange="toggleDailyCheckin(this.checked)" style="width:18px;height:18px;" aria-label="저녁 감정 기록 알림 켜기">
       </label>
     </div>
   </div>
@@ -1181,6 +1181,20 @@
           </a></li>
         </ul>
       </div>
+
+      <!-- 상황 칩 "바로 119"가 여기로 바로 내려온다 (js/cards.js CARD_FALLBACKS.call119). 문장은 아래 응급처치 가이드와 같은 기준 -->
+      <section class="emer-119" id="emer-119-signs" tabindex="-1" aria-labelledby="emer-119-t">
+        <h3 class="emer-119-t" id="emer-119-t">아기에게 이런 일이 있으면 바로 119</h3>
+        <a class="pp-call pp-call--urgent" href="tel:119" data-umami-event="emergency-call" data-umami-event-number="119"><svg class="pp-ico" aria-hidden="true" focusable="false"><use href="#i-phone"/></svg>119에 전화하기 <span>구급차 · 24시간</span></a>
+        <ul class="emer-119-list" role="list">
+          <li>불러도 반응이 없거나 숨을 제대로 쉬지 않아요</li>
+          <li>기침·울음소리 없이 얼굴이 파래져요 (목에 뭔가 걸림)</li>
+          <li>경련이 5분 넘게 이어져요</li>
+          <li>떨어지거나 부딪힌 뒤 의식을 잃었거나, 계속 토하거나, 귀·코에서 피가 나요</li>
+          <li>손바닥보다 넓은 화상이거나 얼굴·손·생식기 화상이에요</li>
+          <li>생후 3개월 미만인데 38℃ 이상 열이 나요 (바로 응급실, 갈 방법이 없으면 119)</li>
+        </ul>
+      </section>
 
       <div class="emer-firstaid-wrap">
         <div class="emer-firstaid-title">영유아 응급처치 가이드</div>

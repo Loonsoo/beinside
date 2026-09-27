@@ -11,7 +11,8 @@ const ALL_PAGES = ['growth', 'sp', 'birth', 'mental', 'teen', 'emergency', 'emot
 /* ── 페이지 전환 ── */
 const _pageRendered = {};  // 캐시: 한 번 렌더링된 페이지는 다시 렌더링하지 않음
 
-function showPage(id) {
+/* then: 페이지가 바뀌고 맨 위로 올린 뒤에 부른다 (상황 칩이 특정 섹션으로 내려갈 때) */
+function showPage(id, then) {
   // 애널리틱스: 홈 카드 클릭 추적
   if (curPage === 'home' && id !== 'home' && typeof umami !== 'undefined') {
     try { umami.track('home_card_click', { guide: id }); } catch(e) {}
@@ -114,6 +115,7 @@ function showPage(id) {
 
     // 스크린리더 알림
     announceToSR(id === 'home' ? '홈 화면' : id + ' 페이지로 이동했습니다');
+    if (typeof then === 'function') then();
   }, 120);
 }
 
@@ -298,12 +300,9 @@ function showEmoResult(key) {
   setTimeout(() => res.scrollIntoView({ behavior: scrollMotion(), block: 'nearest' }), 60);
 }
 
-/* ── 가이드 조회 ── */
-function go() {
-  // 성장 가이드 페이지로 이동 (아직 안 가있으면)
-  if (curPage !== 'growth') {
-    showPage('growth');
-  }
+/* ── 가이드 조회 ──
+   then: 결과를 그린 뒤 결과 머리 대신 다른 곳으로 옮길 때 (상황 칩) */
+function go(then) {
   const months = getMonths();
   if (months < 0) return;
   const d = getData(months);
@@ -318,21 +317,21 @@ function go() {
   if (dadTab) renderDadGuide();
   const md = document.getElementById('medical-disclaimer');
   if (md) md.style.display = 'block';
-  setTimeout(() => {
-    const r = document.getElementById('result');
-    if (r) r.scrollIntoView({ behavior: scrollMotion(), block: 'start' });
-  }, 80);
+  const finish = function () {
+    if (typeof then === 'function') { then(); return; }
+    const res = document.getElementById('result');
+    if (res) res.scrollIntoView({ behavior: scrollMotion(), block: 'start' });
+  };
+  // 다른 페이지에서 왔으면 페이지 전환(맨 위로 올림)이 끝난 뒤에 내려간다
+  if (curPage !== 'growth') showPage('growth', finish);
+  else setTimeout(finish, 80);
 }
 
 /* ── 빠른 이동 ── */
-function qs(v, m) {
+function qs(v, m, then) {
   setM(m);
   document.getElementById('ai').value = v;
-  go();
-  setTimeout(() => {
-    const r = document.getElementById('result');
-    if (r) r.scrollIntoView({ behavior: scrollMotion(), block: 'start' });
-  }, 80);
+  go(then);
 }
 
 /* ── 나이 찾기 토글 ── */
@@ -457,6 +456,8 @@ document.addEventListener('keydown', e => {
     closeSourceDrawer();
     closeModal();
     closeGuideFinder();
+    var prof = document.getElementById('prof-panel');
+    if (prof && prof.classList.contains('on') && typeof closeProfPanel === 'function') closeProfPanel();
   }
 });
 

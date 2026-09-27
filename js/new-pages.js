@@ -419,7 +419,7 @@ function renderPostpartumPage(container) {
     + '<div style="margin:20px 0;padding:14px 18px;background:linear-gradient(135deg,rgba(176,123,172,.08),rgba(212,160,176,.06));border:1px solid rgba(176,123,172,.15);border-radius:14px;">'
     + '<div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:6px;">출산 후 신체 회복이 궁금하다면</div>'
     + '<div style="font-size:12.5px;color:var(--ink-m);line-height:1.6;margin-bottom:10px;">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</div>'
-    + '<button onclick="showPage(\'birth\')" style="background:var(--peach-d);color:white;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">출산 후 회복 가이드 보기 →</button>'
+    + '<button type="button" onclick="showPage(\'birth\')" style="background:var(--peach-d);color:var(--on-accent);border:none;border-radius:10px;min-height:44px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">출산 후 회복 가이드 보기 →</button>'
     + '</div>';
 
   var checkWrap = container.querySelector('#' + checkWrapId);

@@ -189,7 +189,7 @@ function getFirstAidHTML(months){
           <li>침대 낙상 예방: 수면 중 침대 난간 꼭 올리기</li>
         </ul>
       </div>
-      <div class="fa-item fa-green">
+      <div class="fa-item fa-green" data-fa="fever" tabindex="-1">
         <div class="fa-item-head">
           <span class="fa-item-icon">🌡️</span>
           <span class="fa-item-title">고열 대처</span>
@@ -198,10 +198,9 @@ function getFirstAidHTML(months){
         <ul>
           <li>3개월 미만 38℃ 이상 → 즉시 응급실</li>
           <li>3~6개월 39℃ 이상 → 당일 소아과</li>
-          <li>6개월 이상 → 해열제 투여 후 경과 관찰</li>
-          <li>해열제: 아세트아미노펜(타이레놀계) or 이부프로펜 체중 기준 용량으로</li>
-          <li>미지근한 물 수건으로 이마·겨드랑이·사타구니 닦아주기 (알코올 금지)</li>
-          <li>수분 보충 (모유·분유·보리차) — 탈수 예방이 핵심</li>
+          <li>6개월 이상 → 잘 먹고 잘 노는지 보며 지켜보기. 해열제는 소아과나 약사에게 먼저 물어보기</li>
+                    <li>옷을 가볍게 입히고 방을 너무 덥지 않게 하기 (알코올로 닦지 않기)</li>
+          <li>모유나 분유를 평소보다 자주 먹이기 — 탈수 예방이 핵심 (6개월 전에는 물·보리차를 따로 주지 않기)</li>
         </ul>
       </div>
     </div>
@@ -274,10 +273,10 @@ function getData(months){
   const y=months/12;
 
   if(months<=1) return {stg:'신생아기',em:'🐣',qt:'세상에 막 도착한 생명. 이 아이의 모든 처음이 지금 시작됩니다.',g:['#2A5040','#4A8A68'],role:'부모',
-    brain:['<strong>시냅스 폭발적 형성</strong> — 출생 시 약 100억 개 뉴런, 초당 수백만 개 시냅스 연결 생성','<strong>청각 최우선 발달</strong> — 자궁에서부터 들어온 엄마 목소리를 인식·선호','시각 초점 20~25cm — 엄마 얼굴 거리가 딱 이 정도','원시반사 작동 — 파악·모로·흡착 반사가 생존을 지탱','REM 수면 70% — 활성 수면 중 뇌 회로가 집중 형성'],
+    brain:['<strong>시냅스 폭발적 형성</strong> — 출생 시 약 100억 개 뉴런, 초당 수백만 개 시냅스 연결 생성','<strong>청각 최우선 발달</strong> — 자궁에서부터 들어온 엄마 목소리를 인식·선호','시각 초점 20~25cm — 엄마 얼굴 거리가 딱 이 정도','원시반사 작동 — 파악·모로·흡착 반사가 생존을 지탱','활동 수면(REM) 비율이 성인보다 훨씬 높음 — 뇌 발달과 관련 있다고 알려짐'],
     emo:['<strong>기본 신뢰감의 씨앗</strong>(에릭슨) — 울면 안아주는 경험이 "세상은 안전하다"는 각인의 시작','불편·배고픔·통증을 울음으로만 표현 — 이 신호를 읽는 것이 첫 번째 정서 돌봄','엄마(주양육자) 목소리·심장 소리에 심박수 안정','기쁨·고통·놀람·혐오의 기본 감정 이미 존재'],
     body:['출생 평균 체중 3.2~3.4kg, 신장 50cm','수면 하루 16~18시간 (2~3시간 단위로 깸)','수유 24시간 8~12회 (2~3시간 간격)','황달 3~5일 최고조, 대부분 2주 내 자연 소실','배꼽 1~2주 내 탈락 — 마를 때까지 건조 유지'],
-    play:[{t:'목소리 자극',d:'엄마·아빠 목소리로 말 걸기, 자장가 — 청각 신경로와 정서 연결 강화'},{t:'눈 맞춤',d:'20~30cm 거리에서 얼굴 보여주기, 흑백 패턴 — 시각 피질 자극'},{t:'캥거루 케어',d:'피부 맞닿는 신체 접촉, 부드러운 마사지 — 옥시토신·세로토닌 분비'},{t:'배 엎어 두기',d:'하루 2~3회 잠깐씩 — 목·등 근육 발달의 시작'}],
+    play:[{t:'목소리 자극',d:'엄마·아빠 목소리로 말 걸기, 자장가 — 청각 신경로와 정서 연결 강화'},{t:'눈 맞춤',d:'20~30cm 거리에서 얼굴 보여주기, 흑백 패턴 — 시각 피질 자극'},{t:'캥거루 케어',d:'피부 맞닿는 신체 접촉, 부드러운 마사지 — 체온·호흡 안정과 애착에 도움'},{t:'배 엎어 두기',d:'하루 2~3회 잠깐씩 — 목·등 근육 발달의 시작'}],
     parent:[{e:'👂',t:'울음에 즉각 반응\n버릇 걱정 말고, 신뢰감이 먼저'},{e:'👁️',t:'눈 맞추며 대화\n감정을 언어로 번역해 주기'},{e:'🤲',t:'최대한 많이 안기\n신체 접촉이 뇌 발달의 기반'}],
     warn:['<strong>흔들기 절대 금지</strong> — 영아 흔들림 증후군(AHT), 뇌출혈·사망 위험','<strong>엎어 재우기 금지</strong> — 영아 돌연사(SIDS) 위험. 수면 시 반드시 등 대고 재우기','수면 중 주변 부드러운 물건(베개·인형) 제거 — 질식 위험','발열 38℃ 이상 즉시 소아과 내원'],
     mile:[{ck:'✓',tt:'1개월 체크',dc:'큰 소리에 눈 깜빡임, 밝은 빛 반응, 울음으로 의사 표현, 배 엎으면 잠깐 고개 들기'}]};
@@ -288,7 +287,7 @@ function getData(months){
     body:['수면 15~16시간, 밤 수면 4~6시간 연속 가능해지기 시작','목을 잠깐 가눌 수 있음 (배 엎어 둘 때)','체중 매주 약 150~200g 증가','2개월 — BCG·B형간염·폐렴구균·DTaP·폴리오·로타 예방접종 시작'],
     play:[{t:'모빌',d:'얼굴에서 30cm 높이 색깔 모빌 — 시각 추적 능력 훈련'},{t:'대화 주고받기',d:'아이 표정 흉내내기, 발화 후 기다렸다가 맞장구 — 대화 리듬'},{t:'배 엎드리기',d:'하루 3~5회 각 3분씩 — 목·등·어깨 근육 강화'},{t:'손 잡기',d:'손가락 쥐여주기 — 촉각 자극, 파악 반사 강화'}],
     parent:[{e:'😊',t:'표정 따라 하기\n거울 반응이 뇌 발달 촉진'},{e:'🗣️',t:'맞장구 대화\n아이 옹알이 후 기다렸다가 반응'},{e:'📅',t:'루틴 만들기\n수유-수면-각성 예측 가능한 리듬'}],
-    warn:['2개월까지 발열 38℃ 이상 — 응급 수준으로 즉시 병원','수면 중 TV·유튜브 소리 지속 노출 자제 — 수면 질 저하','방문자 과도한 자극 주의 — 감각 과부하','예방접종 후 24~48시간 발열 가능 — 해열제 준비'],
+    warn:['생후 3개월 미만 38℃ 이상 열 — 바로 진료(밤·휴일이면 응급실)','수면 중 TV·유튜브 소리 지속 노출 자제 — 수면 질 저하','방문자 과도한 자극 주의 — 감각 과부하','예방접종 후 24~48시간 발열 가능 — 해열제 준비'],
     mile:[{ck:'✓',tt:'3개월 체크',dc:'사회적 미소, 소리 방향 고개 돌리기, 딸랑이 반응, 배 엎으면 고개 들기, 옹알이'}]};
 
   if(months<=6) return {stg:'중기 영아기 (4~6개월)',em:'🌼',qt:'손이 닿는 모든 것이 배움입니다. 안전한 세상을 넓혀주세요.',g:['#2E5545','#508A6A'],role:'부모',
@@ -346,11 +345,11 @@ function getData(months){
     mile:[{ck:'✓',tt:'12세 체크',dc:'혼자 독서·숙제, 친구 2명 이상, 자기 감정 단어로 표현, 규칙 이해·준수'}]};
 
   if(y<=18) return {stg:'청소년기 (13~18세)',em:'🌊',qt:'폭풍 같은 사춘기. 아이가 나를 밀어낼수록, 멀리서 더 단단히 버텨주세요.',g:['#2A4050','#4A6A80'],role:'부모',
-    brain:['<strong>편도체 과활성</strong> — 감정 반응이 성인보다 30% 강하고 빠름 (뇌과학적 사실)','<strong>전두엽 미완성</strong> — 충동 조절·결과 예측·계획 능력 공사 중 (완성: 25세)','수면 주기 지연 — 생물학적으로 밤형으로 바뀜. 아침에 못 일어나는 것은 의지 문제 아님','보상 회로 민감화 — 위험 감수·자극 추구의 뇌과학적 이유'],
+    brain:['<strong>감정 반응이 앞서기 쉬움</strong> — 감정을 담당하는 뇌 영역이 조절 영역보다 먼저 성숙해 감정 반응이 강하고 빠르게 나타나기 쉬움','<strong>전두엽 미완성</strong> — 충동 조절·결과 예측·계획 능력 공사 중 (20대 중반까지 발달이 이어짐)','수면 주기 지연 — 생물학적으로 밤형으로 바뀜. 아침에 못 일어나는 것은 의지 문제 아님','보상 회로 민감화 — 위험 감수·자극 추구의 뇌과학적 이유'],
     emo:['<strong>정체성 탐색</strong>(에릭슨) — "나는 누구인가?" 이 시기의 핵심 과제','부모로부터 심리적 분리 욕구 극대화 — 갈등은 정상','동료 압력에 가장 취약 — 집단 소속이 생존 본능처럼 느껴짐','첫 로맨틱 감정, 성 정체성 탐색 시작'],
     body:['성장 급진 — 남아 연간 8~12cm 성장 가능','여드름·체취 변화 — 신체 수치심에 주의','<strong>수면 8~10시간 필수</strong> — 수면 부족 = 충동성↑ 학습 능력↓','여아 초경 평균 12~13세, 남아 성장 급진 11~12세부터'],
-    play:[{t:'자기 표현',d:'음악·그림·글쓰기·사진 — 정체성 탐색의 도구, 절대 폄하 금지'},{t:'운동',d:'규칙적 운동 — 도파민·세로토닌 자연 생성, 우울·불안 예방 최고 효과'},{t:'사회 참여',d:'봉사·동아리 — 소속감·가치관 형성·긍정적 또래 관계'},{t:'대화',d:'심판 없는 대화 — 좋아하는 취미·관심사 물어보기'}],
-    parent:[{e:'🤐',t:'충고보다 경청\n"그래서 어떻게 됐어?" 100배 낫다'},{e:'📵',t:'스마트폰 계약\n규칙을 함께 정하면 반발 감소'},{e:'🫂',t:'존재 자체로 사랑\n거절해도 사랑한다는 것 말로·행동으로'}],
+    play:[{t:'자기 표현',d:'음악·그림·글쓰기·사진 — 정체성 탐색의 도구, 절대 폄하 금지'},{t:'운동',d:'규칙적 운동 — 기분·수면에 도움, 우울·불안 완화에 도움이 된다는 근거가 있음'},{t:'사회 참여',d:'봉사·동아리 — 소속감·가치관 형성·긍정적 또래 관계'},{t:'대화',d:'심판 없는 대화 — 좋아하는 취미·관심사 물어보기'}],
+    parent:[{e:'🤐',t:'충고보다 경청\n"그래서 어떻게 됐어?"가 훨씬 낫다'},{e:'📵',t:'스마트폰 계약\n규칙을 함께 정하면 반발 감소'},{e:'🫂',t:'존재 자체로 사랑\n거절해도 사랑한다는 것 말로·행동으로'}],
     warn:['<strong>감시·통제 강화 → 역효과</strong> — 비밀이 더 많아지고 거리가 벌어짐','성적·외모·비교로 자존감 공격 — 이 시기 가장 치명적','수면 강제 박탈 — 생물학적 리듬 무시','정신 건강 이상 신호(우울·자해·자살 발언) 무시 절대 금지 — 즉시 전문 상담'],
     mile:[{ck:'✓',tt:'18세 체크',dc:'자기 가치관 있음, 스트레스 대처법 있음, 진로 방향 어느 정도 있음, 부모와 협상 가능'}]};
 
@@ -416,7 +415,7 @@ function getData(months){
       {title:'정서적 지지',text:'자주 방문·연락 — "바빠서 못 갔어"가 쌓이면 고립과 우울'},
       {title:'의료 결정 소통',text:'연명치료·임종 준비 — 평온할 때 가족과 미리 대화하기'},
       {title:'사별 슬픔 지지',text:'"힘내세요"보다 "많이 보고 싶으시죠" — 슬픔을 충분히 인정'},
-      {title:'보호자 번아웃',text:'주 돌봄자도 반드시 쉬어야 함 — 요양 서비스·가족 분담·지역 자원 적극 활용'}
+      {title:'보호자 번아웃',text:'주 돌봄자도 쉬는 시간이 필요함 — 요양 서비스·가족 분담·지역 자원 적극 활용'}
     ],
     health:[
       {title:'안전한 주거 환경',text:'욕실 손잡이·미끄럼 방지·밤 조명·문턱 제거 — 낙상 한 번이 인생을 바꿀 수 있음'},
@@ -426,18 +425,19 @@ function getData(months){
       {title:'정기 방문 진료',text:'3개월마다 단골 주치의 방문 — 이상을 조기에 포착'},
       {title:'마음 건강',text:'우울·불안이 2주 이상 지속되면 정신건강의학과 방문 — 노년 우울은 치료 가능'}
     ],
-    warn:['<strong>고립·외로움</strong> — 노년 우울·치매 가속의 가장 큰 요인','낙상 — 이 시기 낙상 후 회복 매우 어려움. 환경 개선이 최우선','가족이 모든 의사 결정 독점 — 어르신의 의견을 충분히 듣고 존중하기','재정·건강 정보 가족과 비공유 — 위기 시 대응 불가','노년 자살률 한국 최고 수준 — 우울 신호를 절대 가볍게 넘기지 않기'],
+    warn:['<strong>고립·외로움</strong> — 노년 우울·인지 저하의 주요 위험 요인 중 하나','낙상 — 이 시기 낙상 후 회복 매우 어려움. 환경 개선이 최우선','가족이 모든 의사 결정 독점 — 어르신의 의견을 충분히 듣고 존중하기','재정·건강 정보 가족과 비공유 — 위기 시 대응 불가','노년 자살률 한국 최고 수준 — 우울 신호를 절대 가볍게 넘기지 않기'],
     mile:[{ck:'✓',tt:'돌봄 체크포인트',dc:'안전한 주거 환경 확인, 정기 의료 방문, 가족 교류 주 1회 이상, 영양 상태 관찰, 복약 관리'}]};
 }
 
 
 /* ── 아코디언 토글 ── */
-function toggleAcc(btn) {
+function toggleAcc(btn, open) {
   const body = btn.nextElementSibling;
   if (!body) return;
-  const isOpen = body.classList.contains('open');
-  body.classList.toggle('open', !isOpen);
-  btn.classList.toggle('open', !isOpen);
+  const next = typeof open === 'boolean' ? open : !body.classList.contains('open');
+  body.classList.toggle('open', next);
+  btn.classList.toggle('open', next);
+  btn.setAttribute('aria-expanded', next ? 'true' : 'false');
 }
 
 /* ── HTML 태그 제거 (요약용) ── */
@@ -445,12 +445,13 @@ function stripTags(html) {
   return html ? html.replace(/<[^>]+>/g, '') : '';
 }
 
-/* ── 아코디언 섹션 빌더 ── */
-function accSection(icon, title, sub, bodyHTML, openByDefault) {
+/* ── 아코디언 섹션 빌더 ──
+   key: 상황 칩이 바로 펼칠 때 찾는 이름(data-acc). 없어도 된다 */
+function accSection(icon, title, sub, bodyHTML, openByDefault, key) {
   const openClass = openByDefault ? ' open' : '';
   const bodyStyle = openByDefault ? ' open' : '';
-  return `<div class="acc-section">
-    <button class="acc-header${openClass}" onclick="toggleAcc(this)">
+  return `<div class="acc-section"${key ? ` data-acc="${key}"` : ''}>
+    <button type="button" class="acc-header${openClass}" aria-expanded="${openByDefault ? 'true' : 'false'}" onclick="toggleAcc(this)">
       <span class="acc-h-icon">${icon}</span>
       <span class="acc-h-title">${title}</span>
       ${sub ? `<span class="acc-h-sub">${sub}</span>` : ''}
@@ -615,14 +616,14 @@ function render(d,months){
   const accHTML = `<div class="acc-container">
     ${accSection('🧠','뇌 &amp; 인지 발달', d.brain.length+'가지', brainBody, true)}
     ${accSection('💚','정서 &amp; 사회성 발달', d.emo.length+'가지', emoBody, false)}
-    ${accSection('🌱','신체 발달 &amp; 의학 체크', d.body.length+'가지', bodyBody, false)}
-    ${accSection('⚠️','주의사항', d.warn.length+'가지', warnBody, false)}
+    ${accSection('🌱','신체 발달 &amp; 의학 체크', d.body.length+'가지', bodyBody, false, 'body')}
+    ${accSection('⚠️','주의사항', d.warn.length+'가지', warnBody, false, 'warn')}
     ${accSection('🎯','추천 활동 &amp; 실천', d.play.length+'가지', playBody, false)}
     ${parentBody ? accSection('🫂','역할 &amp; 마음가짐', '', parentBody, false) : ''}
     ${accSection('✅','체크포인트', '', checkBody, false)}
     ${mentalBody ? accSection('🧘','정신건강 &amp; 마음 돌봄', '', mentalBody, false) : ''}
     ${aloneBody  ? accSection('🫶','혼자 자라는 아이에게', '', aloneBody, false) : ''}
-    ${firstAid   ? accSection('🩺','응급처치 가이드', '', firstAid, false) : ''}
+    ${firstAid   ? accSection('🩺','응급처치 가이드', '', firstAid, false, 'firstaid') : ''}
     ${accSection('📝','메모장', '', getMemoHTML(months), false)}
   </div>`;
 
@@ -670,7 +671,7 @@ function renderDadContent(key) {
   ).join('');
 
   const toolkitsHTML = d.toolkits.map(tk =>
-    `<div class="dad-toolkit-block">
+    `<div class="dad-toolkit-block" tabindex="-1">
       <div class="dad-toolkit-title">⚡ ${tk.title}</div>
       ${tk.steps.map((s,i)=>`<div class="dad-toolkit-step"><span class="dad-toolkit-step-num">${i+1}</span><span>${s}</span></div>`).join('')}
     </div>`
@@ -687,7 +688,7 @@ function renderDadContent(key) {
     <div class="acc-container">
       ${accSection('🎯','실천 액션 4가지','',`<div class="dad-toolkit-block">${actionsHTML}</div>`,true)}
       ${accSection('🧠','아빠 마음 돌봄','',`<div style="font-size:13.5px;color:var(--ink-m);line-height:1.8;padding:14px;background:rgba(232,137,106,.06);border-radius:12px;">${d.mental}</div>`,false)}
-      ${toolkitsHTML ? accSection('⚡','지금 급한 상황','',toolkitsHTML,false) : ''}
+      ${toolkitsHTML ? accSection('⚡','지금 급한 상황','',toolkitsHTML,false,'dad-urgent') : ''}
     </div>`;
 }
 
@@ -699,7 +700,7 @@ function renderMentalPageContent(key) {
   if (!d || !el) return;
 
   const hotlineMap = {
-    infant:    '109 (자살예방·산후우울 상담, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
+    infant:    '109 (자살예방상담전화, 무료·24시간) / 1644-6621 (한부모가족지원센터)',
     toddler:   '109 (자살예방상담전화, 무료·24시간) / 1577-0199 (정신건강위기상담전화, 정신건강복지센터 연결)',
     preschool: '109 / Wee센터 (학교 아동상담, 무료) / 아동상담치료센터',
     school:    '1388 (청소년전화) / Wee클래스 (학교 내 무료 상담) / 109',
@@ -820,7 +821,7 @@ function initBirth() {
         </div>
       </div>
       <div class="birth-contacts">
-        📞 <strong>도움이 되는 연락처</strong> — 산후우울증 상담 <strong>109</strong> / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
+        📞 <strong>도움이 되는 연락처</strong> — 자살예방상담전화 <strong>109</strong>(24시간) / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
       </div>
     `;
     stagesEl.appendChild(div);
