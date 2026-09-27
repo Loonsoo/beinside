@@ -58,17 +58,17 @@
   <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BeInside — 육아·정신건강·감정 돌봄 가이드</title>
-  <meta name="description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다. 24시간 긴급상담 연결.">
-  <meta name="keywords" content="육아 가이드, 아이 발달, 산후우울증, 정신건강, 번아웃, 한부모, 청소년 상담, 감정 돌봄, 긴급상담, BeInside">
+  <title>아기 첫 1년, 이럴 땐 이렇게 — BeInside</title>
+  <meta name="description" content="출산 후 첫 12개월 육아 참고서. 아기에게 생긴 일에 지금 할 일과 병원 갈 기준, 그때 엄마가 흔히 겪는 마음을 출처·확인 날짜와 함께 적어요.">
+  <meta name="keywords" content="신생아 열, 아기 열 응급실 기준, 아기 안 그치고 울어요, 아기 119, 첫 12개월 육아, 산후우울, BeInside">
   <meta name="author" content="BeInside">
   <meta name="theme-color" content="#F2F1EC" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#171A13" media="(prefers-color-scheme: dark)">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="BeInside — 조용히, 나만을 위한 공간">
-  <meta property="og:description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드, 청소년 상담 — 판단 없이, 당신 편에서 안내합니다.">
+  <meta property="og:title" content="아기 첫 1년, 이럴 땐 이렇게 — BeInside">
+  <meta property="og:description" content="출산 후 첫 12개월 육아 참고서. 아기에게 생긴 일에 지금 할 일과 병원 갈 기준, 그때 엄마가 흔히 겪는 마음을 출처·확인 날짜와 함께 적어요.">
   <meta property="og:url" content="https://beinside.kr">
   <meta property="og:image" content="https://beinside.kr/icons/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -79,8 +79,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BeInside — 조용히, 나만을 위한 공간">
-  <meta name="twitter:description" content="육아, 정신건강, 감정 돌봄, 한부모 가이드 — 판단 없이, 당신 편에서 안내합니다.">
+  <meta name="twitter:title" content="아기 첫 1년, 이럴 땐 이렇게 — BeInside">
+  <meta name="twitter:description" content="출산 후 첫 12개월 육아 참고서. 아기에게 생긴 일에 지금 할 일과 병원 갈 기준, 그때 엄마가 흔히 겪는 마음을 출처·확인 날짜와 함께 적어요.">
   <meta name="twitter:image" content="https://beinside.kr/icons/og-image.png">
 
   <!-- Canonical -->
@@ -360,7 +360,8 @@
               <path class="pp-orb-moon" d="M38 12a17 17 0 1 0 12 26A14 14 0 0 1 38 12z"/>
               <circle class="pp-orb-sun" cx="30" cy="30" r="15"/>
             </svg>
-            <h1 class="pp-l-line" id="pp-l-title" tabindex="-1">혼자라고 느낄 때,<br>가장 먼저 닿는 곳.</h1>
+            <h1 class="pp-l-line" id="pp-l-title" tabindex="-1">아기 첫 1년,<br>이럴 땐 이렇게.</h1>
+            <p class="pp-l-tag">혼자라고 느낄 때, 가장 먼저 닿는 곳.</p>
             <svg class="pp-l-horizon" viewBox="0 0 390 48" preserveAspectRatio="none" aria-hidden="true" focusable="false">
               <path class="pp-l-ground-fill" d="M0 24 C 46 16, 92 13, 142 19 S 238 35, 292 26 S 360 13, 390 19 V48 H0 Z"/>
               <path class="pp-l-ground-line" d="M0 24 C 46 16, 92 13, 142 19 S 238 35, 292 26 S 360 13, 390 19"/>
@@ -379,6 +380,11 @@
                 </div>
                 <p class="pp-date-note">넣지 않아도 아래 내용은 모두 볼 수 있어요.</p>
               </form>
+            </div>
+            <!-- 상황 칩: js/cards.js CARD_CHIPS가 그린다. 게시된 카드가 있으면 카드로, 없으면 옛 가이드로 (연결 대상은 CARD_CHIPS 주석) -->
+            <div class="bc-chips-wrap">
+              <p class="bc-chips-label" id="bc-chips-l">자주 찾는 상황</p>
+              <div class="bc-chips" role="group" aria-labelledby="bc-chips-l" data-bc-chips="landing"></div>
             </div>
             <div class="pp-l-links">
               <button type="button" class="pp-l-link" id="pp-l-browse" aria-controls="pp-l-night">날짜 없이 둘러보기</button>
@@ -436,6 +442,11 @@
         <!-- ─── 날짜를 넣은 뒤: 시안 B "열두 달 시간 띠" ─── -->
         <div class="pp-dash" id="pp-dash" hidden>
           <div class="pp-age" id="pp-age" aria-live="polite"></div>
+
+          <div class="bc-chips-wrap">
+            <p class="bc-chips-label" id="bc-chips-d">자주 찾는 상황</p>
+            <div class="bc-chips" role="group" aria-labelledby="bc-chips-d" data-bc-chips="dash"></div>
+          </div>
 
           <h2 class="pp-h2" id="pp-mood-h">오늘 나는</h2>
           <div class="pp-mood" role="group" aria-labelledby="pp-mood-h">
@@ -1331,6 +1342,11 @@
     </div>
 
     <!-- ── 노인 정서 돌봄 가이드 ── -->
+    <!-- 상황 카드 한 장 (js/cards.js). /cards/<id>, 초안은 /?card=<id>&preview=1 -->
+    <div class="page-view page-view--card" id="page-card" style="display:none">
+      <div class="bc-wrap" id="bc-root"></div>
+    </div>
+
     <div class="page-view" id="page-senior" style="display:none">
       <div id="senior-content"></div>
     </div>
@@ -1561,6 +1577,8 @@
 <script defer src="js/multicultural-page.js"></script>
 <script defer src="js/centers-ui.js"></script>
 <script defer src="js/new-pages.js"></script>
+<script defer src="js/data-cards.js"></script>
+<script defer src="js/cards.js"></script>
 <script defer src="js/app.js"></script>
 <script defer src="js/pp-home.js"></script>
 <script defer src="js/share.js"></script>
@@ -1577,7 +1595,7 @@
     "name": "BeInside",
     "alternateName": "비인사이드",
     "url": "https://beinside.kr",
-    "description": "육아, 정신건강, 감정 돌봄, 한부모 가이드 — 조용히, 나만을 위한 공간",
+    "description": "출산 후 첫 12개월 육아 참고서. 아기에게 생긴 일에 지금 할 일과 병원 갈 기준, 그때 엄마가 흔히 겪는 마음을 출처·확인 날짜와 함께 적어요.",
     "inLanguage": "ko",
     "potentialAction": {
       "@type": "SearchAction",
