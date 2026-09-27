@@ -31,6 +31,11 @@ function showPage(id) {
       document.body.classList.add('subpage');
     }
 
+    // 상황 카드 화면(page-card)은 ALL_PAGES 밖에서 따로 켠다 (경로가 /cards/<id>라서, js/cards.js)
+    var cardEl = document.getElementById('page-card');
+    if (cardEl) cardEl.style.display = id === 'card' ? '' : 'none';
+    if (id === 'card' && typeof renderCardPage === 'function') renderCardPage();
+
     if (id === 'home') {
       if (hero) hero.style.display = '';
       ALL_PAGES.forEach(function(p) {
@@ -74,11 +79,12 @@ function showPage(id) {
     if (typeof renderPageCenters === 'function') renderPageCenters(id);
 
     // URL History API 라우팅 (SEO)
-    var newPath = id === 'home' ? '/' : '/' + id;
-    if (location.pathname !== newPath) {
+    var newPath = id === 'home' ? '/' : (id === 'card' && typeof cardPath === 'function') ? cardPath() : '/' + id;
+    if (location.pathname + location.search !== newPath) {
       history.pushState({ page: id }, '', newPath);
     }
-    updatePageMeta(id);
+    if (id === 'card' && typeof cardUpdateMeta === 'function') cardUpdateMeta();
+    else updatePageMeta(id);
     updateQuickExit(id);
 
     // Umami 수동 페이지뷰 추적
@@ -1550,7 +1556,7 @@ function setTextScale(level) {
    SEO: 페이지별 동적 메타태그 + URL 라우팅
 ══════════════════════════════════════════════════════ */
 const PAGE_META = {
-  home:       { title: 'BeInside — 무료 정신건강·육아·감정 돌봄 가이드', desc: '번아웃 자가진단, 한부모 지원금 안내, 청소년 상담, 산후우울증 체크까지. 판단 없이, 근거 기반으로 안내합니다. 24시간 긴급상담 연결.', keywords: '무료 심리상담, 번아웃 자가진단, 한부모 지원금 2026, 산후우울증 자가진단, 청소년 상담 무료, 감정 조절, 긴급상담 109, BeInside' },
+  home:       { title: '아기 첫 1년, 이럴 땐 이렇게 — BeInside', desc: '출산 후 첫 12개월 육아 참고서. 아기에게 생긴 일에 지금 할 일과 병원 갈 기준, 그때 엄마가 흔히 겪는 마음을 출처·확인 날짜와 함께 적어요.', keywords: '신생아 열, 아기 열 응급실 기준, 아기 안 그치고 울어요, 아기 119, 첫 12개월 육아, 산후우울, BeInside' },
   growth:     { title: '우리 아이 발달 괜찮을까? 연령별 성장 체크리스트 — BeInside', desc: '0~18세 연령별 발달 기준과 체크리스트. 아이 성장이 불안할 때, 소아과 가기 전에 확인하세요.', keywords: '아이 발달 체크리스트, 영유아 발달 기준, 아이 성장 지연, 발달 단계별 기준, 소아 발달 검사' },
   sp:         { title: '한부모 지원금 2026 총정리 + 양육 가이드 — BeInside', desc: '한부모가정 지원금·양육비 청구·법률 지원 한눈에. 혼자 아이 키울 때 알아야 할 모든 것.', keywords: '한부모 지원금 2026, 한부모가정 혜택, 양육비 청구 방법, 한부모 복지 신청, 이혼 후 아이 양육' },
   birth:      { title: '출산 후 몸과 마음 회복 가이드 | 산후우울증 자가진단 — BeInside', desc: '산후 회복 로드맵, 산후우울증 자가진단, 산후조리 지원 제도. 출산 후 혼자 버티고 있다면.', keywords: '출산 후 회복, 산후조리 도우미, 산후우울증 증상, 산후 몸 회복 기간, 출산 후 우울' },
@@ -1620,7 +1626,10 @@ function updatePageMeta(id) {
     var path = location.pathname.replace(/^\//, '');
     // 하위 호환: 기존 해시 URL 지원
     if (!path && location.hash) path = location.hash.replace('#/', '');
-    if (path && ALL_PAGES.indexOf(path) !== -1) {
+    var cardId = typeof cardRouteId === 'function' ? cardRouteId() : null;
+    if (cardId) {
+      showCard(cardId);
+    } else if (path && ALL_PAGES.indexOf(path) !== -1) {
       showPage(path);
       setMTab(getTabForPage(path));
     } else {
@@ -1633,7 +1642,11 @@ function updatePageMeta(id) {
   var path = location.pathname.replace(/^\//, '');
   // 하위 호환: 기존 해시 URL도 처리
   if (!path && location.hash) path = location.hash.replace('#/', '');
-  if (path && ALL_PAGES.indexOf(path) !== -1) {
+  // 상황 카드: /cards/<id>(앱 안에서 옮긴 뒤 뒤로 가기) 또는 /?card=<id>(초안 미리보기·정적 페이지의 "앱에서 보기")
+  var cardId = typeof cardRouteId === 'function' ? cardRouteId() : null;
+  if (cardId) {
+    setTimeout(function() { showCard(cardId); }, 0);
+  } else if (path && ALL_PAGES.indexOf(path) !== -1) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         showPage(path);

@@ -150,4 +150,6 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <!-- cards:start (scripts/build-cards.mjs가 채운다. 손으로 고치지 않는다) -->
+  <!-- cards:end -->
 </urlset>

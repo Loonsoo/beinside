@@ -5145,3 +5145,149 @@ html.kb-open .crisis-dock { visibility: hidden; }
   .pp-grid > .pp-details > summary:active, .check-connect-btn:active, .quick-exit-btn:active { transform: scale(.98); }
 }
 @keyframes pp-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* ══════════════════════════════════════════════════
+   상황 카드 (육아 참고서) — js/cards.js, scripts/build-cards.mjs
+   색은 토큰만. 라이트 돌 회색·세이지 / 다크 이끼 그늘은 토큰이 바꾼다.
+   제목만 고운바탕, 나머지는 Pretendard. 빨강(--danger-strong)은 119·지금 바로 칸에만.
+══════════════════════════════════════════════════ */
+.pp-l-tag {
+  position: relative; max-width: 600px; margin: 10px auto 0;
+  font-family: var(--font-accent); font-weight: 400;
+  font-size: calc(16px + var(--text-scale, 0) * 1px); line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* 상황 칩 */
+.bc-chips-wrap { margin-top: 18px; }
+.pp-dash .bc-chips-wrap { margin-top: 20px; }
+.bc-chips-label { font-size: calc(14px + var(--text-scale, 0) * 1px); font-weight: 500; color: var(--text-secondary); }
+.bc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.bc-chip {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; box-sizing: border-box;
+  border-radius: 22px; border: 1.5px solid var(--stroke-control);
+  background: var(--surface-raised); color: var(--text-primary);
+  font-family: var(--font-sans); font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 600; line-height: 1.3;
+  cursor: pointer;
+}
+.bc-chip:hover { background: var(--surface-tint); }
+.bc-chip--urgent { color: var(--danger-strong); border: 2px solid var(--danger-strong); font-weight: 700; }
+.bc-chip:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+
+/* 카드 화면 */
+.page-view--card .bc-wrap { max-width: 640px; margin: 0 auto; padding: 16px 16px 32px; box-sizing: border-box; }
+.bc {
+  font-family: var(--font-sans);
+  font-size: calc(16px + var(--text-scale, 0) * 2px); line-height: 1.7;
+  color: var(--text-body);
+  word-break: keep-all; overflow-wrap: break-word;
+}
+.bc :where(h1, h2, h3, p, ul, ol, li) { margin: 0; padding: 0; }
+.bc :is(a, button):focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.bc-title:focus { outline: none; }
+
+.bc-draft {
+  margin-bottom: 12px; padding: 10px 14px; border-radius: 12px;
+  border-left: 3px solid var(--semantic-caution);
+  background: var(--semantic-caution-bg); color: var(--text-primary);
+  font-size: calc(14px + var(--text-scale, 0) * 1px); line-height: 1.6;
+}
+.bc-draft strong { margin-right: 6px; }
+
+.bc-urgent {
+  margin-bottom: 16px; padding: 14px 16px; border-radius: 16px;
+  border: 2px solid var(--danger-strong); background: var(--semantic-danger-bg);
+}
+.bc-urgent-t { font-weight: 600; color: var(--text-primary); }
+.bc-urgent .bc-call { margin-top: 10px; }
+
+.bc-kicker { font-size: calc(13px + var(--text-scale, 0) * 1px); font-weight: 500; color: var(--text-secondary); }
+.bc-title {
+  margin-top: 2px;
+  font-family: var(--font-accent); font-weight: 700;
+  font-size: calc(26px + var(--text-scale, 0) * 2px); line-height: 1.4; letter-spacing: -.01em;
+  color: var(--text-primary);
+}
+.bc-summary { margin-top: 6px; color: var(--text-body); }
+
+.bc-sec { margin-top: 14px; padding: 16px 18px; border-radius: 16px; background: var(--surface-raised); }
+.bc-h { font-size: calc(18px + var(--text-scale, 0) * 1px); font-weight: 700; line-height: 1.4; color: var(--text-primary); }
+.bc-h--small { font-size: calc(15px + var(--text-scale, 0) * 1px); }
+.bc-h3 { margin-top: 14px; font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700; line-height: 1.4; color: var(--text-primary); }
+.bc-now .bc-h3, .bc-soon .bc-h3 { margin-top: 0; }
+.bc-h3--now { color: var(--danger-strong); }
+
+.bc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.bc-list li { position: relative; padding-left: 16px; }
+.bc-list li::before {
+  content: ''; position: absolute; left: 2px; top: .72em;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent-strong);
+}
+.bc-list--num { counter-reset: bc; }
+.bc-list--num li { counter-increment: bc; padding-left: 32px; }
+.bc-list--num li::before {
+  content: counter(bc); left: 0; top: 2px; width: 24px; height: 24px;
+  background: var(--surface-tint); color: var(--text-primary);
+  font-size: 14px; font-weight: 700; line-height: 24px; text-align: center; font-variant-numeric: tabular-nums;
+}
+.bc-now .bc-list li::before { background: var(--danger-strong); }
+.bc-list--qa .bc-q { display: block; font-weight: 700; color: var(--text-primary); }
+.bc-list--qa .bc-a { display: block; }
+.bc-telnote { display: block; margin-top: 2px; font-size: calc(13px + var(--text-scale, 0) * 1px); line-height: 1.5; color: var(--text-secondary); }
+.bc-telnote b { color: var(--text-primary); }
+
+.bc-now { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--semantic-danger-bg); }
+.bc-soon { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: var(--surface-base); }
+.bc-note { margin-top: 8px; font-size: calc(14px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.bc-actions { display: grid; gap: 8px; margin-top: 12px; }
+
+.bc-call, .bc-link {
+  display: flex; flex-direction: column; justify-content: center; gap: 2px;
+  width: 100%; min-height: 48px; padding: 8px 16px; box-sizing: border-box;
+  border-radius: 12px; border: 1.5px solid var(--stroke-control);
+  background: var(--surface-raised); color: var(--text-primary);
+  text-decoration: none; line-height: 1.35;
+}
+.bc-call-main { display: inline-flex; align-items: center; gap: 6px; font-size: calc(16px + var(--text-scale, 0) * 1px); font-weight: 700; font-variant-numeric: tabular-nums; }
+.bc-call-main .pp-ico { width: 20px; height: 20px; }
+.bc-call-sub { padding-left: 26px; font-size: calc(14px + var(--text-scale, 0) * 1px); font-weight: 500; color: var(--text-secondary); }
+.bc-call--urgent { min-height: 56px; border: 2px solid var(--danger-strong); color: var(--danger-strong); }
+.bc-call--urgent .bc-call-main { font-size: calc(18px + var(--text-scale, 0) * 1px); }
+.bc-call--urgent .bc-call-sub { color: var(--text-body); }
+.bc-link-main { font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700; }
+.bc-link-sub { font-size: calc(13px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.bc-call:hover, .bc-link:hover { background: var(--surface-tint); }
+.bc-fixed { margin-top: 12px; font-size: calc(15px + var(--text-scale, 0) * 1px); }
+
+.bc-foot { margin-top: 20px; padding: 0 2px; font-size: calc(14px + var(--text-scale, 0) * 1px); }
+.bc-src { list-style: none; margin-top: 4px; }
+.bc-src li { line-height: 1.5; }
+.bc-src a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text-body); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--stroke-control); }
+.bc-src-date { font-size: calc(13px + var(--text-scale, 0) * 1px); color: var(--text-secondary); white-space: nowrap; }
+.bc-dates { margin-top: 8px; font-size: calc(13px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.bc-disclaimer {
+  margin-top: 10px; padding: 12px 14px; border-radius: 12px;
+  background: var(--surface-tint); color: var(--text-primary);
+  font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 500;
+}
+.bc-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.bc-tool {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 16px; box-sizing: border-box;
+  border-radius: 12px; border: 1.5px solid var(--stroke-control);
+  background: var(--surface-raised); color: var(--text-primary);
+  font-family: inherit; font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700;
+  text-decoration: none; cursor: pointer;
+}
+.bc-tool:hover { background: var(--surface-tint); }
+.bc-tool--wide { width: 100%; }
+.bc-share-msg:not(:empty) { margin-top: 8px; word-break: break-all; }
+.bc-app { margin-top: 12px; }
+.bc--missing .bc-summary { margin-top: 8px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bc-chip, .bc-call, .bc-link, .bc-tool { transition: background-color 150ms ease-out, transform 120ms ease; }
+  .bc-chip:active, .bc-call:active, .bc-link:active, .bc-tool:active { transform: scale(.98); }
+}
+/* 정적 카드 페이지(scripts/build-cards.mjs): 헤더 로고는 링크 */
+.bc-static a.logo { color: var(--text-primary); text-decoration: none; }

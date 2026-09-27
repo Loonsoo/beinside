@@ -59,6 +59,15 @@
         searchText: (m.title + ' ' + m.desc + ' ' + m.keywords + ' ' + synonymText).toLowerCase()
       });
     }
+    /* 상황 카드: 게시(published)된 카드만. 초안은 cardsListed()에서 빠진다 (js/cards.js) */
+    if (typeof cardsListed === 'function') {
+      cardsListed().forEach(function (c) {
+        _index.push({
+          id: c.id, card: true, icon: '📄', title: c.title, desc: c.summary,
+          searchText: (c.title + ' ' + c.summary).toLowerCase()
+        });
+      });
+    }
     return _index;
   }
 
@@ -99,7 +108,8 @@
     }
 
     el.innerHTML = results.map(function (r) {
-      return '<button class="search-result-item" onclick="closeSearch();showPage(\'' + r.id + '\')">'
+      var go = r.card ? 'showCard' : 'showPage';
+      return '<button class="search-result-item" onclick="closeSearch();' + go + '(\'' + r.id + '\')">'
         + '<span class="search-result-icon">' + r.icon + '</span>'
         + '<div class="search-result-text">'
         + '<strong>' + r.title + '</strong>'

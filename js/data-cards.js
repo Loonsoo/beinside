@@ -11,6 +11,9 @@
      예) '{{emergency}}에 전화해요' → '<a href="tel:119">119</a>에 전화해요'
    - "진료를 대신하지 않아요" 문구와 109·119 고정 줄은 렌더러가 모든 카드 하단에 붙인다.
    - 문장별 근거 대조표: reports/2026-09-pilot-cards-notes.md
+   - status: 'draft' | 'published'. draft는 목록·검색·칩·정적 빌드(scripts/build-cards.mjs)에서 빠지고,
+     ?preview=1 일 때만 "검토 중인 초안" 띠와 함께 보인다(js/cards.js).
+     '// 원문 미확인' 주석이 카드 안에 남아 있으면 published로 바꿀 수 없다(tests/cards.test.js).
 
    파일럿 3장 (2026-09-27): 출처 원문을 이 환경에서 열지 못했다(WebFetch·curl 모두 차단).
    URL 존재와 내용은 WebSearch 결과로만 확인했다 → 모든 출처에 '// 원문 미확인'.
@@ -22,6 +25,7 @@ const BI_CARDS = [
   /* ── 1. 아기가 열이 나요 ── */ // 원문 미확인 (출처 6곳 모두, notes §1 참고)
   {
     id: 'fever',
+    status: 'draft', // 원문 대조 전. 운영자가 notes 대조표를 확인하면 'published'
     title: '아기가 열이 나요',
     summary: '3개월 미만 38℃ 이상이면 바로 진료. 월령별 기준, 재는 법, 지켜볼 것.',
     category: 'sick',
@@ -85,6 +89,7 @@ const BI_CARDS = [
   /* ── 2. 바로 119를 불러야 할 때 ── */ // 원문 미확인 (출처 8곳 모두, notes §2 참고)
   {
     id: 'call-119',
+    status: 'draft', // 원문 대조 전. 운영자가 notes 대조표를 확인하면 'published'
     title: '바로 119를 불러야 할 때',
     summary: '돌 전 아기의 숨·얼굴색·경련·의식·낙상·질식 신호. 하나라도 보이면 바로 119.',
     category: 'sick',
@@ -150,6 +155,7 @@ const BI_CARDS = [
   /* ── 3. 아무리 달래도 안 그치고 울어요 ── */ // 원문 미확인 (출처 4곳 모두, notes §3 참고)
   {
     id: 'crying',
+    status: 'draft', // 원문 대조 전. 운영자가 notes 대조표를 확인하면 'published'
     title: '아무리 달래도 안 그치고 울어요',
     summary: '2개월 무렵 울음이 가장 많아요. 흔들지 말고, 화가 나면 눕히고 잠시 떨어져도 돼요.',
     category: 'crying',
