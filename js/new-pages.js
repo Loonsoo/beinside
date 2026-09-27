@@ -110,7 +110,7 @@ function _guideRecognition(data) {
 /* ── 아코디언 단일 아이템 ── */
 function _guideAccordion(title, html) {
   return '<div class="accordion-item">'
-    + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+    + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
     + '<span>' + title + '</span><span class="accordion-arrow"></span>'
     + '</div>'
     + '<div class="accordion-body"><div class="accordion-body-inner">'
@@ -491,7 +491,7 @@ function renderWorkplacePage(container) {
 
   var typesHTML = WORKPLACE_TYPES.map(function(t) {
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span style="font-size:20px">' + t.icon + '</span>'
       + '<span style="font-weight:700;font-size:14px;">' + esc(t.name) + '</span>'
       + '<span class="accordion-arrow"></span>'
@@ -531,7 +531,7 @@ function renderWorkplacePage(container) {
     + '<h1>직장에서 어려운 사람 대처 가이드</h1></div>'
     + '<p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>'
     + '</div>'
-    + '<div class="stat-badge"><strong>73.6%</strong>&nbsp;직장인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024)</div>'
+    + '<div class="stat-badge"><strong>73.6%</strong>&nbsp;성인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024 국민 정신건강 지식 및 태도 조사)</div>'
     + '<div class="step-section">'
     + '<div class="step-label">지금 이런 상황인가요?</div>'
     + '<div style="background:var(--warm);border-radius:14px;padding:16px 18px;">'
@@ -717,7 +717,7 @@ function renderElderPage(container) {
 
   var welfareHTML = d.welfare.items.map(function(w) {
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span>' + w.icon + ' ' + esc(w.name) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
@@ -735,7 +735,7 @@ function renderElderPage(container) {
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
     + '<div class="step-section">'
     + '<div class="step-label">어떤 상황이에요?</div>'
-    + '<p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 자가진단과 행동 가이드를 바로 확인할 수 있어요.</p>'
+    + '<p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 자가체크와 행동 가이드를 바로 확인할 수 있어요.</p>'
     + '<div class="accordion-group">'
     + d.situations.map(function(s) {
       return '<div class="accordion-item" data-sit-id="' + s.id + '">'
@@ -821,7 +821,7 @@ function _renderElderPracticalGuide(guides) {
     }).join('');
 
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span>' + g.icon + ' ' + esc(g.title) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
