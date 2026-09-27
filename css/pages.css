@@ -5314,3 +5314,18 @@ html.kb-open .crisis-dock { visibility: hidden; }
 }
 /* 정적 카드 페이지(scripts/build-cards.mjs): 헤더 로고는 링크 */
 .bc-static a.logo { color: var(--text-primary); text-decoration: none; }
+
+/* ══════════════════════════════════════════
+   터치 영역 44px 보정 (scripts/e2e.mjs 전면 점검에서 찾은 것)
+   옛 가이드 페이지의 탭·선택 버튼·예/아니요 버튼
+══════════════════════════════════════════ */
+.sit-btn, .sym-yes, .sym-no, .teen-age-btn, .jn-tab, .mental-tab { min-height: 44px; }
+.guide-accordion summary { min-height: 44px; box-sizing: border-box; }
+/* 한부모 연령 탭: 긴 이름이 칸을 밀어 가로로 넘치지 않게 */
+.sp-age-tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.sp-age-tab { min-width: 0; flex-wrap: wrap; overflow-wrap: anywhere; }
+
+/* 배경을 인라인으로 주지 않은 가이드 히어로(다문화·자립 등): 흰 글자가 바탕에 묻히지 않게 기본 배경 */
+.content-hero:not([style*="background"]) {
+  background: linear-gradient(135deg, var(--hero-guide-from), var(--hero-guide-to));
+}

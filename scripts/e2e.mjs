@@ -469,11 +469,27 @@ async function flowDockAndMenu(page, base, cfg) {
       assert(await visible(page, '#page-' + p), '#page-' + p + ' 안 보임');
       const txt = (await page.textContent('#page-' + p)).trim();
       assert(txt.length > 20, '내용이 비어 있음');
+      /* 흰 글자 히어로에 배경이 있는지 (배경 없이 흰 글자면 안 보인다) */
+      const bare = await page.$$eval('#page-' + p + ' .content-hero', els => els.filter(el => {
+        const cs = getComputedStyle(el);
+        return cs.backgroundImage === 'none' && /rgba\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor) && /255, 255, 255/.test(cs.color);
+      }).length);
+      assert(bare === 0, '배경 없는 흰 글자 제목 ' + bare + '개');
       const d = await dockOk(page);
       assert(d === true, '도크: ' + d);
     });
     await layoutChecks(page, cfg, '/' + p);
   }
+  await check(M, '/birth 증상 "예" 결과의 번호가 tel: 링크', cfg, async () => {
+    await page.goto(base + '/birth');
+    await page.waitForTimeout(450);
+    const yes = page.locator('#page-birth .sym-yes');
+    const n = await yes.count();
+    assert(n > 0, '증상 버튼 없음');
+    for (let i = 0; i < n; i++) await yes.nth(i).click();
+    const bad = await page.$$eval('#page-birth .symptom-result', rs => rs.filter(r => /(^|[^\d])(119|109)(?!\d)/.test(r.textContent) && !r.querySelector('a[href^="tel:"]')).length);
+    assert(bad === 0, '번호가 링크가 아닌 결과 ' + bad + '개');
+  });
   await check(M, '옛 URL에서 뒤로 가기', cfg, async () => {
     await page.goto(base + '/growth');
     await page.waitForTimeout(400);

@@ -722,7 +722,7 @@ function renderElderPage(container) {
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '<p style="font-size:13px;color:var(--ink-m);line-height:1.75;margin-bottom:10px;">' + esc(w.desc) + '</p>'
-      + '<a href="tel:' + w.contact.replace(/-/g, '') + '" style="display:inline-block;padding:8px 16px;background:var(--peach-p);color:var(--peach-d);border-radius:10px;font-size:12.5px;font-weight:600;text-decoration:none;">📞 ' + w.contact + ' 전화하기</a>'
+      + '<a href="tel:' + w.contact.replace(/-/g, '') + '" style="display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:8px 16px;background:var(--peach-p);color:var(--peach-d);border-radius:10px;font-size:12.5px;font-weight:600;text-decoration:none;">📞 ' + w.contact + ' 전화하기</a>'
       + '</div></div></div>';
   }).join('');
 

@@ -368,7 +368,10 @@ function showSymRes(btn, msg) {
   if (!item) return;
   const res = item.querySelector('.symptom-result');
   if (!res) return;
-  res.textContent = msg;
+  /* 문장 속 번호는 누르면 바로 걸리게 tel: 링크로 바꾼다 (번호 설명은 문장에 이미 있다) */
+  res.innerHTML = esc(msg).replace(/(^|[^\d-])(119|109|1577-0199|1366)(?![\d-])/g, function (m, pre, num) {
+    return pre + '<a class="tel-inline" href="tel:' + num.replace(/-/g, '') + '">' + num + '</a>';
+  });
   res.style.display = 'block';
 }
 function hideSymRes(btn) {
