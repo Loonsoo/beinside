@@ -141,26 +141,26 @@ function _guideActions(actions) {
 }
 
 /* ── 상황 선택 그리드 ── */
+/* 공통 콘텐츠 셸 (js/cards.js): 제목부는 .bc-head, 버튼에 이모지·인라인 스타일을 쓰지 않는다.
+   reports/design/2026-09-consistency-audit.md §3-(c) C-1·C-4 */
 function _guideSituationPicker(cfg) {
-  // cfg: { situations, containerId, buildFn, heroTitle, heroSub, heroIcon, heroGradient, extraButtons }
-  var heroStyle = cfg.heroGradient ? ' style="background:linear-gradient(135deg,' + cfg.heroGradient + ')"' : '';
+  // cfg: { situations, containerId, buildFn, heroTitle, heroSub, kicker, stepLabel, extraButtons }
   var btns = cfg.situations.map(function(s) {
-    return '<button class="emotion-btn" onclick="' + cfg.buildFn + '(document.getElementById(\'' + cfg.containerId + '\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '">'
-      + '<span class="emotion-btn-icon">' + s.icon + '</span>'
-      + '<div>'
-      + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
-      + (s.sub ? '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>' : '')
-      + '</div>'
+    return '<button class="emotion-btn" onclick="' + cfg.buildFn + '(document.getElementById(\'' + cfg.containerId + '\'),\'' + s.id + '\')">'
+      + '<span class="emotion-btn-text">'
+      + '<span class="emotion-btn-label">' + esc(s.label) + '</span>'
+      + (s.sub ? '<span class="emotion-btn-sub">' + esc(s.sub) + '</span>' : '')
+      + '</span>'
       + '</button>';
   }).join('');
+  var summary = String(cfg.heroSub || '').replace(/<br\s*\/?>/g, ' ');
+  var head = typeof cardHeadHTML === 'function'
+    ? cardHeadHTML({ id: cfg.containerId, kicker: '참고 가이드 · ' + (cfg.kicker || cfg.heroTitle), title: cfg.heroTitle, summary: summary })
+    : '<h1>' + esc(cfg.heroTitle) + '</h1>';
 
-  return '<div class="content-hero"' + heroStyle + '>'
-    + '<div class="content-hero-title"><span class="content-hero-icon">' + (cfg.heroIcon || '') + '</span>'
-    + '<h1>' + esc(cfg.heroTitle) + '</h1></div>'
-    + '<p>' + (cfg.heroSub || '') + '</p>'
-    + '</div>'
+  return '<div class="bc bc-guide-head">' + head + '</div>'
     + '<div class="step-section">'
-    + '<div class="step-label">' + esc(cfg.stepLabel || '어떤 상황이에요?') + '</div>'
+    + '<h2 class="step-label">' + esc(cfg.stepLabel || '어떤 상황이에요?') + '</h2>'
     + '<div class="emotion-grid">'
     + btns
     + (cfg.extraButtons || '')
@@ -181,43 +181,43 @@ function _guideSituationDetail(container, data, cfg) {
 
   var actionsHTML = '';
   if (Array.isArray(data.actions)) {
-    actionsHTML = _guideAccordion('✅ 지금 바로 할 수 있는 것', _guideActions(data.actions));
+    actionsHTML = _guideAccordion('지금 바로 할 수 있는 것', _guideActions(data.actions));
   } else if (data.actions) {
     // {immediate, week, longterm} 구조
     var parts = [];
-    if (data.actions.immediate) parts.push(_guideAccordion('⏸️ 오늘 당장 할 수 있는 것', _guideActions(data.actions.immediate)));
-    if (data.actions.week) parts.push(_guideAccordion('📅 이번 주에 시도해볼 것', _guideActions(data.actions.week)));
-    if (data.actions.longterm) parts.push(_guideAccordion('🔄 장기적으로', _guideActions(data.actions.longterm)));
+    if (data.actions.immediate) parts.push(_guideAccordion('오늘 당장 할 수 있는 것', _guideActions(data.actions.immediate)));
+    if (data.actions.week) parts.push(_guideAccordion('이번 주에 시도해볼 것', _guideActions(data.actions.week)));
+    if (data.actions.longterm) parts.push(_guideAccordion('장기적으로', _guideActions(data.actions.longterm)));
     actionsHTML = parts.join('');
   }
 
   var checkWrapId = cfg.checkId || ('check-wrap-' + Math.random().toString(36).substr(2, 6));
 
+  /* 도움 연결은 접지 않는다 (번호가 첫 화면 아래로 숨지 않게). 카드의 "더 도움이 필요하면"과 같은 모양 */
   var helpHTML = '';
   if (data.help && data.help.length) {
-    helpHTML = _guideAccordion('📞 도움 연결',
-      '<div class="help-cards">'
+    var helpId = cfg.containerId + '-more-t';
+    helpHTML = '<section class="bc bc-sec" aria-labelledby="' + helpId + '" data-bc-end>'
+      + '<h2 class="bc-h" id="' + helpId + '">더 도움이 필요하면</h2>'
+      + '<div class="bc-actions">'
       + data.help.map(function(h) {
-        return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
-          + '<div class="help-card-num">📞 ' + h.number + '</div>'
-          + '<div class="help-card-info">'
-          + '<div class="help-card-name">' + esc(h.name) + '</div>'
-          + '<div class="help-card-desc">' + esc(h.desc) + '</div>'
-          + '</div></a>';
+        return typeof cardCallHTML === 'function'
+          ? cardCallHTML({ number: h.number, name: h.name, desc: h.desc })
+          : '<a href="tel:' + h.number.replace(/-/g, '') + '">' + h.number + ' ' + esc(h.name) + '</a>';
       }).join('')
-      + '</div>');
+      + '</div></section>';
   }
 
   container.innerHTML =
     '<button class="page-back" onclick="' + cfg.renderFn + '(document.getElementById(\'' + cfg.containerId + '\'))">← 뒤로</button>'
-    + (data.recognition ? '<div class="step-section"><p style="font-size:13.5px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">' + esc(data.recognition) + '</p></div>' : '')
+    + (data.recognition ? '<div class="step-section"><p class="pp-guide-p">' + esc(data.recognition) + '</p></div>' : '')
     + '<div class="accordion-group">'
-    + (data.psychology ? _guideAccordion('🧠 왜 이런 감정이 드는 걸까?', '<p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">' + esc(data.psychology) + '</p>') : '')
-    + (techHTML ? _guideAccordion('💡 정신의학적 자기 돌봄법', techHTML) : '')
-    + (data.check ? _guideAccordion('🔍 상황 판단', '<div id="' + checkWrapId + '"></div>') : '')
+    + (data.psychology ? _guideAccordion('왜 이런 감정이 드는 걸까?', '<p class="pp-guide-p">' + esc(data.psychology) + '</p>') : '')
+    + (techHTML ? _guideAccordion('정신의학적 자기 돌봄법', techHTML) : '')
+    + (data.check ? _guideAccordion('상황 판단', '<div id="' + checkWrapId + '"></div>') : '')
     + actionsHTML
-    + helpHTML
-    + '</div>';
+    + '</div>'
+    + helpHTML;
 
   // 체크 툴 주입
   if (data.check) {
@@ -577,9 +577,8 @@ function renderRelationPage(container) {
     containerId: 'relation-content',
     buildFn: 'buildRelationDetail',
     heroTitle: '관계가 무너졌을 때',
+    kicker: '관계',
     heroSub: '이혼·가족 단절·고립감·이별 후 무너짐.<br>혼자 감당하지 않아도 돼요.',
-    heroIcon: '💔',
-    heroGradient: 'var(--relation-d),var(--relation)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -603,9 +602,8 @@ function renderTransitionPage(container) {
     containerId: 'transition-content',
     buildFn: 'buildTransitionDetail',
     heroTitle: '인생 전환기 가이드',
+    kicker: '전환기',
     heroSub: '삶의 방향이 흔들릴 때, 여기서부터 시작해 보세요.',
-    heroIcon: '🌀',
-    heroGradient: 'var(--transition-d),var(--transition-c)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -636,11 +634,10 @@ function renderEmotionPage(container) {
     containerId: 'emotion-content',
     buildFn: 'buildEmotionDetail',
     heroTitle: '감정 가이드',
+    kicker: '감정',
     heroSub: '감정을 어떻게 해야 할지 모르겠을 때,<br>여기서 잠깐 쉬어가도 돼요.',
-    heroIcon: '😔',
-    heroGradient: 'var(--lavender-d),var(--lavender)',
     stepLabel: '지금 어떤 느낌이에요?',
-    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))" aria-label="죽고 싶다는 생각이 들어요"><span class="emotion-btn-icon">🆘</span><span>죽고 싶다는 생각이 들어요</span></button>'
+    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))"><span class="emotion-btn-text"><span class="emotion-btn-label">죽고 싶다는 생각이 들어요</span></span></button>'
   });
 }
 
@@ -663,9 +660,8 @@ function renderSleepPage(container) {
     containerId: 'sleep-content',
     buildFn: 'buildSleepDetail',
     heroTitle: '잠을 못 자겠어요',
+    kicker: '수면',
     heroSub: '밤이 두렵고, 아침이 무겁고, 낮이 흐릿할 때.<br>수면은 회복할 수 있어요.',
-    heroIcon: '🛏️',
-    heroGradient: 'var(--hero-sleep-from),var(--hero-sleep-to)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -689,9 +685,8 @@ function renderGriefPage(container) {
     containerId: 'grief-content',
     buildFn: 'buildGriefDetail',
     heroTitle: '떠나보낸 사람을 위한 가이드',
+    kicker: '상실',
     heroSub: '사랑하는 사람을 보내는 건, 삶에서 가장 무거운 일이에요.<br>여기서 잠깐 쉬어가도 괜찮아요.',
-    heroIcon: '🕊️',
-    heroGradient: 'var(--hero-grief-from),var(--hero-grief-to)',
     stepLabel: '누구를 떠나보내셨나요?'
   });
 }

@@ -773,3 +773,42 @@ describe('옛 가이드 공통 셸 (1단계)', () => {
     assert.doesNotMatch(read('js/multicultural-page.js'), /guide-shell|bc-head/);
   });
 });
+
+/* ═══════ 10. 옛 가이드 겉모양 2단계 (감정·수면·관계·전환기·상실 — 공통 렌더러) ═══════ */
+describe('옛 가이드 공통 셸 (2단계: 상황 선택형 5개)', () => {
+  const html = read('index.html');
+  const np = read('js/new-pages.js');
+  const fn = name => np.slice(np.indexOf('function ' + name), np.indexOf('\nfunction ', np.indexOf('function ' + name) + 10));
+  const EMOJI = /\p{Extended_Pictographic}/u;
+  const IDS = ['emotion', 'sleep', 'relation', 'transition', 'grief'];
+
+  it('다섯 화면이 guide-shell이고 상황 선택 제목부가 cardHeadHTML', () => {
+    for (const id of IDS) assert.match(html, new RegExp(`class="page-view guide-shell" id="page-${id}"`), id);
+    const picker = fn('_guideSituationPicker');
+    assert.match(picker, /cardHeadHTML\(/);
+    assert.match(picker, /'참고 가이드 · '/);
+    assert.doesNotMatch(picker, /content-hero|linear-gradient|style=|emotion-btn-icon/);
+    assert.doesNotMatch(np, /heroIcon|heroGradient/);
+  });
+
+  it('상황 상세: 섹션 제목에 이모지가 없고 도움 연결은 펼친 .bc-call', () => {
+    const detail = fn('_guideSituationDetail');
+    for (const m of detail.matchAll(/_guideAccordion\('([^']*)'/g)) assert.doesNotMatch(m[1], EMOJI, `섹션 "${m[1]}"`);
+    assert.match(detail, /cardCallHTML\(\{ number: h\.number/);
+    assert.match(detail, /더 도움이 필요하면/);
+    assert.doesNotMatch(detail, /help-card|📞|style=/);
+  });
+
+  it('감정 화면의 "죽고 싶다는 생각이 들어요" 버튼이 남아 있고 위기 화면으로 간다', () => {
+    const emo = fn('renderEmotionPage');
+    assert.match(emo, /class="emotion-btn crisis" onclick="buildCrisisScreen\(/);
+    assert.match(emo, /죽고 싶다는 생각이 들어요/);
+  });
+
+  it('기관 목록: 번호 없는 기관이 tel:null 링크가 되지 않음', () => {
+    const cu = read('js/centers-ui.js');
+    assert.match(cu, /classList\.contains\('guide-shell'\)/);
+    assert.match(cu, /c\.phone\s*\n?\s*\? cardCallHTML/);
+    assert.match(cu, /filter\(function \(c\) \{ return c\.phone; \}\)/);
+  });
+});

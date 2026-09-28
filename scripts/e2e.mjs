@@ -528,7 +528,7 @@ async function flowDockAndMenu(page, base, cfg) {
       const d = await dockOk(page);
       assert(d === true, '도크: ' + d);
     });
-    if (['growth', 'birth', 'postpartum', 'emergency'].includes(p)) {
+    if (['growth', 'birth', 'postpartum', 'emergency', 'emotion', 'sleep', 'relation', 'transition', 'grief'].includes(p)) {
       await check(M, '/' + p + ' 공통 셸 제목부(고운바탕)·배경 없음', cfg, async () => {
         const r = await page.evaluate(id => {
           const t = document.querySelector('#page-' + id + ' .bc-head .bc-title');

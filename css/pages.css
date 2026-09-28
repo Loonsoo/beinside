@@ -5412,6 +5412,23 @@ html.kb-open .crisis-dock { visibility: hidden; }
 .page-view.guide-shell .lt-track .lt-node .lt-dot,
 .page-view.guide-shell .lt-track .lt-node:hover .lt-dot { background: var(--accent-strong); box-shadow: 0 0 0 2px var(--surface-tint); }
 
+/* 상황 선택 버튼 (감정·수면·관계·전환기·상실): 이모지 없이 글자만, 44px 이상 */
+.page-view.guide-shell .bc-guide-head + .step-section { margin-top: 16px; }
+.page-view.guide-shell .emotion-grid { gap: 8px; }
+.page-view.guide-shell .emotion-btn {
+  min-height: 56px; padding: 12px 16px; border: 1px solid var(--stroke-control); border-radius: 14px;
+  background: var(--surface-raised); color: var(--text-primary); transform: none;
+}
+.page-view.guide-shell .emotion-btn:hover { border-color: var(--accent-strong); background: var(--surface-tint); transform: none; }
+.page-view.guide-shell .emotion-btn:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.page-view.guide-shell .emotion-btn-text { display: flex; flex-direction: column; gap: 2px; }
+.page-view.guide-shell .emotion-btn-label { font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 600; line-height: 1.4; }
+.page-view.guide-shell .emotion-btn-sub { font-size: calc(13px + var(--text-scale, 0) * 1px); color: var(--text-secondary); line-height: 1.4; }
+.page-view.guide-shell .emotion-btn.crisis { grid-column: 1 / -1; border: 2px solid var(--danger-strong); background: var(--semantic-danger-bg); }
+.page-view.guide-shell .emotion-btn.crisis .emotion-btn-label { color: var(--danger-strong); font-weight: 700; }
+.page-view.guide-shell .technique-name { font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700; color: var(--text-primary); }
+.page-view.guide-shell .technique-desc { font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); line-height: 1.75; }
+
 /* 성장 가이드 월령 결과 머리 (.rhead): 데이터 그라데이션 대신 셸 제목부 */
 .page-view.guide-shell .rhead {
   display: block; padding: 4px 2px 0; margin-bottom: 14px; border-radius: 0;
@@ -5470,6 +5487,7 @@ html.kb-open .crisis-dock { visibility: hidden; }
 @media (max-width: 640px) {
   .page-view.guide-shell .bc-guide-head { padding: 16px 18px 8px; }
   .page-view.guide-shell .bc-sec { margin-left: 18px; margin-right: 18px; }
+  .page-view.guide-shell .accordion-group { padding-left: 18px; padding-right: 18px; }
   .page-view.guide-shell .emergency-list { padding-left: 18px; padding-right: 18px; }
   .page-view.guide-shell .emer-119 { margin-left: 18px; margin-right: 18px; }
   .page-view.guide-shell .emer-firstaid-wrap { padding-left: 18px; padding-right: 18px; }
