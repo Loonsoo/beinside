@@ -1621,6 +1621,8 @@
   border: 1.5px solid var(--danger-strong); border-radius: 14px;
   background: var(--surface-raised);
 }
+/* 긴급 페이지 제목 줄(sticky)이 제목을 덮지 않게 */
+.emer-119 { scroll-margin-top: 64px; }
 .emer-119:focus { outline: none; }
 .emer-119:focus-visible { outline: 3px solid var(--danger-strong); outline-offset: 2px; }
 .emer-119-t { font-size: calc(17px + var(--text-scale, 0) * 1px); font-weight: 700; color: var(--text-primary); line-height: 1.4; }

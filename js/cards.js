@@ -360,8 +360,19 @@ function cardFallbackReveal(fb) {
   const target = cardFallbackTarget(fb);
   if (!target) return;
   if (!target.hasAttribute('tabindex') && !/^(A|BUTTON|SUMMARY)$/.test(target.tagName)) target.setAttribute('tabindex', '-1');
-  target.scrollIntoView({ behavior: typeof scrollMotion === 'function' ? scrollMotion() : 'auto', block: 'start' });
   target.focus({ preventScroll: true });
+  const go = function () {
+    target.scrollIntoView({ behavior: typeof scrollMotion === 'function' ? scrollMotion() : 'auto', block: 'start' });
+  };
+  /* 방금 보인 결과·아코디언은 위로 떠오르는 애니메이션 중이라, 끝난 뒤 위치로 내려가야 제목이 헤더에 가리지 않는다 */
+  const moving = typeof document.getAnimations === 'function'
+    ? document.getAnimations().filter(function (a) { const t = a.effect && a.effect.target; return t && t.contains && t.contains(target); })
+    : [];
+  if (!moving.length) { go(); return; }
+  Promise.race([
+    Promise.all(moving.map(function (a) { return a.finished.catch(function () {}); })),
+    new Promise(function (r) { setTimeout(r, 900); }),
+  ]).then(go);
 }
 
 function cardChip(key, from) {

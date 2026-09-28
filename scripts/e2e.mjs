@@ -371,6 +371,15 @@ async function flowChips(page, base, cfg, from) {
       }, [want.focus, want.text || '']);
       assert(f === 'ok', '포커스: ' + f);
       assert(await inView(page, want.focus, want.text), '대상이 화면 밖');
+      /* 대상 윗부분(제목 자리)이 고정 헤더·제목 줄에 가려지지 않았는지 */
+      const cover = await page.evaluate(([s, t]) => {
+        const all = Array.from(document.querySelectorAll(s));
+        const el = t ? all.find(e => e.textContent.includes(t)) : all.find(e => e.getBoundingClientRect().height > 0);
+        const r = el.getBoundingClientRect();
+        const hit = document.elementFromPoint(r.left + Math.min(40, r.width / 2), r.top + 12);
+        return hit && (el.contains(hit) || hit.contains(el)) ? 'ok' : (hit && (hit.id || hit.className || hit.tagName));
+      }, [want.focus, want.text || '']);
+      assert(cover === 'ok', '대상 윗부분이 가려짐: ' + cover);
       assert(await page.evaluate(() => window.scrollY > 0), '페이지 맨 위에 멈춤');
       if (want.mustSee) assert(await inView(page, want.mustSee[0]), want.mustSee[0] + ' 화면 밖');
       if (want.alsoSee) assert(await inView(page, want.alsoSee), want.alsoSee + ' 화면 밖');
