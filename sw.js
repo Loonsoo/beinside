@@ -6,7 +6,7 @@
     - 그 밖의 같은 출처 파일(아이콘 등): 캐시 우선 + 백그라운드 갱신
     - 배포 시 SW 파일 자체가 변경되면 브라우저가 자동 업데이트. 자산 목록이 바뀌면 CACHE_STATIC 번호를 올린다 */
 
-const CACHE_STATIC = 'beinside-static-v7';
+const CACHE_STATIC = 'beinside-static-v8';
 const CACHE_FONT   = 'beinside-font-v2';
 const OFFLINE_PAGE = '/offline.html';
 
@@ -41,6 +41,7 @@ const PRECACHE = [
   '/js/vitals.js',
   '/js/data-guides-independence.js',
   '/js/data-cards.js',
+  '/js/data-summaries.js',
   '/js/cards.js',
   '/js/locales/ko.json',
   '/icons/icon-192.png',

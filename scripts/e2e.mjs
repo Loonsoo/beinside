@@ -106,10 +106,10 @@ async function path_(page) {
   return page.evaluate(() => location.pathname + location.search);
 }
 
-async function shot(page, cfg, name) {
+async function shot(page, cfg, name, fullPage) {
   fs.mkdirSync(SHOTS, { recursive: true });
   const file = path.join(SHOTS, (cfg.name.replace(/\s+/g, '-') + '_' + name).replace(/[^\w가-힣.-]/g, '_') + '.png');
-  await page.screenshot({ path: file }).catch(() => {});
+  await page.screenshot({ path: file, fullPage: !!fullPage }).catch(() => {});
 }
 
 /* 가로 넘침: 문서 폭이 화면 폭보다 넓으면 넘친 요소 몇 개를 알려 준다 */
@@ -339,60 +339,97 @@ async function flowDashboard(page, base, cfg) {
   });
 }
 
-/* 칩 도착점: js/cards.js CARD_FALLBACKS와 같다 */
-const CHIP_EXPECT = {
-  fever:   { path: '/growth', focus: '[data-fa="fever"]', open: () => !!document.querySelector('#result [data-acc="firstaid"] .acc-body.open'), mustSee: ['[data-fa="fever"]', '3개월 미만'] },
-  crying:  { path: '/growth', focus: '.dad-toolkit-block', text: '울어요', open: () => !!document.querySelector('#dad-result [data-acc="dad-urgent"] .acc-body.open') },
+/* 칩 도착점: 모두 카드 템플릿 화면(page-card). 게시 카드가 없으면 상황 요약 /?summary=<id> (js/cards.js CARD_CHIPS) */
+const CHIP_URGENT = { fever: true, call119: true };
+
+/* 요약 맨 아래 "자세한 안내"의 도착점: js/cards.js CARD_FALLBACKS와 같다 */
+const DETAIL_EXPECT = {
+  fever:   { path: '/growth', focus: '[data-fa="fever"]', open: () => !!document.querySelector('#result [data-acc="firstaid"] .acc-body.open') },
+  crying:  { path: '/', focus: '#pp-l-night', dashFocus: '#pp-night > summary', open: () => { const d = document.getElementById('pp-dash'); return !d || d.hidden || document.getElementById('pp-night').open; } },
   sleep:   { path: '/growth', focus: '#toolkit-sleep', open: () => document.getElementById('toolkit-sleep').classList.contains('on') && getComputedStyle(document.getElementById('sleep-infant')).display !== 'none' },
   feeding: { path: '/growth', focus: '[data-acc="body"] .acc-header', open: () => !!document.querySelector('#result [data-acc="body"] .acc-body.open') },
-  call119: { path: '/emergency', focus: '#emer-119-signs', open: () => true, mustSee: ['#emer-119-signs a[href="tel:119"]', ''], alsoSee: '#emer-119-signs li' },
+  call119: { path: '/emergency', focus: '#emer-119-signs', open: () => true, alsoSee: '#emer-119-signs a[href="tel:119"]' },
   mom:     { path: '/postpartum', focus: '.accordion-header', text: '자가 체크', open: () => { const w = document.getElementById('postpartum-check-wrap'); const h = w && w.closest('.accordion-item').querySelector('.accordion-header'); return !!h && h.getAttribute('aria-expanded') === 'true'; } },
 };
+
+/* 대상이 화면 안에 있고, 윗부분이 고정 헤더·제목 줄에 가려지지 않았는지 */
+async function focusedAndVisible(page, sel, text) {
+  const f = await page.evaluate(([s, t]) => {
+    const all = Array.from(document.querySelectorAll(s));
+    const el = t ? all.find(e => e.textContent.includes(t)) : all.find(e => e.getBoundingClientRect().height > 0);
+    if (!el) return 'no-target';
+    const a = document.activeElement;
+    return el === a || el.contains(a) ? 'ok' : 'focus=' + (a && (a.id || a.className || a.tagName));
+  }, [sel, text || '']);
+  assert(f === 'ok', '포커스: ' + f);
+  assert(await inView(page, sel, text), '대상이 화면 밖');
+  const cover = await page.evaluate(([s, t]) => {
+    const all = Array.from(document.querySelectorAll(s));
+    const el = t ? all.find(e => e.textContent.includes(t)) : all.find(e => e.getBoundingClientRect().height > 0);
+    const r = el.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + Math.min(40, r.width / 2), r.top + 12);
+    return hit && (el.contains(hit) || hit.contains(el)) ? 'ok' : (hit && (hit.id || hit.className || hit.tagName));
+  }, [sel, text || '']);
+  assert(cover === 'ok', '대상 윗부분이 가려짐: ' + cover);
+}
 
 async function flowChips(page, base, cfg, from) {
   const A = '상황 칩 (' + (from === 'landing' ? '랜딩' : '대시보드') + ')';
   for (const key of CHIPS) {
-    const want = CHIP_EXPECT[key];
     await openHome(page, base, from === 'dash' ? isoDaysAgo(45) : '');
-    await check(A, key + ' → ' + want.path + ' 해당 섹션 열림·포커스', cfg, async () => {
+    await check(A, key + ' → 상황 요약 화면(카드 템플릿)', cfg, async () => {
       await page.click('[data-bc-chip="' + key + '"][data-bc-from="' + from + '"]');
+      await page.waitForTimeout(300);
+      await settle(page);
+      assert((await path_(page)) === '/?summary=' + key, '경로 ' + await path_(page));
+      assert(await visible(page, '#page-card .bc--summary'), '요약 화면 안 보임');
+      const kicker = await page.textContent('#page-card .bc-kicker');
+      assert(kicker.includes('상황 요약 · 사이트 안내를 모은 것'), '라벨: ' + kicker);
+      await focusedAndVisible(page, '#page-card .bc-title');
+      const heads = await page.$$eval('#page-card .bc-sec > .bc-h', hs => hs.map(h => h.textContent.trim()));
+      assert(heads[0] === '무슨 일인지' && heads[1] === '지금 할 일' && heads[3] === '이때 엄마가 흔히 느끼는 것' && heads[4] === '더 도움이 필요하면', '칸 순서: ' + heads.join(' / '));
+      if (CHIP_URGENT[key]) assert(await inView(page, '#page-card .bc-urgent a[href="tel:119"]'), '맨 위 119 버튼이 첫 화면에 없음');
+      else assert(!(await visible(page, '#page-card .bc-urgent')), 'urgent가 아닌데 119 줄');
+      if (key === 'mom') assert(await visible(page, '#page-card [data-bc-go="check"]'), '마음 신호 확인 버튼 없음');
+      assert(await visible(page, '#page-card .bc-detail a[data-bc-go]'), '자세한 안내 버튼 없음');
+      assert(!(await visible(page, '#page-card [data-bc-share]')), '요약에 공유 버튼');
+      const robots = await page.getAttribute('meta[name="robots"]', 'content').catch(() => null);
+      assert(robots === 'noindex', 'noindex 아님: ' + robots);
+      const tels = await page.$$eval('#page-card a[href^="tel:"]', as => as.map(a => a.getAttribute('href')));
+      assert(tels.includes('tel:119') && tels.includes('tel:109'), 'tel: ' + tels.join(','));
+    });
+    if (from === 'landing') {
+      await shot(page, cfg, 'chip-' + key);
+      await shot(page, cfg, 'chip-' + key + '-full', true);
+      await layoutChecks(page, cfg, '상황 요약 ' + key);
+    }
+    await check(A, key + ' → 뒤로 가기로 첫 화면 복귀', cfg, async () => {
+      await page.goBack();
+      await page.waitForTimeout(400);
+      assert((await path_(page)) === '/', '경로 ' + await path_(page));
+      assert(await visible(page, from === 'dash' ? '#pp-dash' : '#pp-landing'), '첫 화면 안 보임');
+      const robots = await page.$('meta[name="robots"][data-bc]');
+      assert(!robots, '요약을 떠났는데 noindex가 남음');
+    });
+    /* 요약 맨 아래 "자세한 안내" → 옛 가이드 해당 섹션 */
+    await check(A, key + ' → 자세한 안내 → ' + DETAIL_EXPECT[key].path + ' 해당 섹션 열림·포커스', cfg, async () => {
+      const want = DETAIL_EXPECT[key];
+      await page.goto(base + '/?summary=' + key);
+      await page.waitForTimeout(400);
+      await page.click('#page-card .bc-detail a[data-bc-go]');
       await page.waitForTimeout(300);
       await settle(page);
       await page.waitForTimeout(200);
       await settle(page);
       assert((await path_(page)) === want.path, '경로 ' + await path_(page));
       assert(await page.evaluate(want.open), '섹션이 펼쳐지지 않음');
-      const f = await page.evaluate(([s, t]) => {
-        const all = Array.from(document.querySelectorAll(s));
-        const el = t ? all.find(e => e.textContent.includes(t)) : all.find(e => e.getBoundingClientRect().height > 0);
-        if (!el) return 'no-target';
-        const a = document.activeElement;
-        return el === a || el.contains(a) ? 'ok' : 'focus=' + (a && (a.id || a.className || a.tagName));
-      }, [want.focus, want.text || '']);
-      assert(f === 'ok', '포커스: ' + f);
-      assert(await inView(page, want.focus, want.text), '대상이 화면 밖');
-      /* 대상 윗부분(제목 자리)이 고정 헤더·제목 줄에 가려지지 않았는지 */
-      const cover = await page.evaluate(([s, t]) => {
-        const all = Array.from(document.querySelectorAll(s));
-        const el = t ? all.find(e => e.textContent.includes(t)) : all.find(e => e.getBoundingClientRect().height > 0);
-        const r = el.getBoundingClientRect();
-        const hit = document.elementFromPoint(r.left + Math.min(40, r.width / 2), r.top + 12);
-        return hit && (el.contains(hit) || hit.contains(el)) ? 'ok' : (hit && (hit.id || hit.className || hit.tagName));
-      }, [want.focus, want.text || '']);
-      assert(cover === 'ok', '대상 윗부분이 가려짐: ' + cover);
-      assert(await page.evaluate(() => window.scrollY > 0), '페이지 맨 위에 멈춤');
-      if (want.mustSee) assert(await inView(page, want.mustSee[0]), want.mustSee[0] + ' 화면 밖');
+      const onDash = await page.evaluate(() => { const d = document.getElementById('pp-dash'); return !!d && !d.hidden; });
+      await focusedAndVisible(page, onDash && want.dashFocus ? want.dashFocus : want.focus, want.text);
+      if (want.path !== '/') assert(await page.evaluate(() => window.scrollY > 0), '페이지 맨 위에 멈춤');
       if (want.alsoSee) assert(await inView(page, want.alsoSee), want.alsoSee + ' 화면 밖');
     });
-    if (from === 'landing') await shot(page, cfg, 'chip-' + key);
-    if (key === 'fever' && from === 'landing') await layoutChecks(page, cfg, '성장 가이드(열 칩 도착)');
-    if (key === 'call119' && from === 'landing') await layoutChecks(page, cfg, '긴급 페이지(119 칩 도착)');
-    await check(A, key + ' → 뒤로 가기로 첫 화면 복귀', cfg, async () => {
-      await page.goBack();
-      await page.waitForTimeout(400);
-      assert((await path_(page)) === '/', '경로 ' + await path_(page));
-      assert(await visible(page, from === 'dash' ? '#pp-dash' : '#pp-landing'), '첫 화면 안 보임');
-    });
+    if (from === 'landing' && key === 'fever') await layoutChecks(page, cfg, '성장 가이드(열 자세한 안내)');
+    if (from === 'landing' && key === 'call119') await layoutChecks(page, cfg, '긴급 페이지(119 자세한 안내)');
   }
 }
 
@@ -487,6 +524,21 @@ async function flowDockAndMenu(page, base, cfg) {
       const d = await dockOk(page);
       assert(d === true, '도크: ' + d);
     });
+    if (['growth', 'birth', 'postpartum', 'emergency'].includes(p)) {
+      await check(M, '/' + p + ' 공통 셸 제목부(고운바탕)·배경 없음', cfg, async () => {
+        const r = await page.evaluate(id => {
+          const t = document.querySelector('#page-' + id + ' .bc-head .bc-title');
+          if (!t) return 'bc-title 없음';
+          const head = t.closest('.bc-guide-head');
+          const cs = getComputedStyle(head);
+          if (!/Gowun Batang/.test(getComputedStyle(t).fontFamily)) return '제목 글꼴 ' + getComputedStyle(t).fontFamily;
+          if (cs.backgroundImage !== 'none') return '제목부 배경 ' + cs.backgroundImage;
+          return document.querySelector('#page-' + id + ' .content-hero') ? '옛 히어로가 남음' : true;
+        }, p);
+        return r;
+      });
+      await shot(page, cfg, 'guide-' + p, true);
+    }
     await layoutChecks(page, cfg, '/' + p);
   }
   await check(M, '/birth 증상 "예" 결과의 번호가 tel: 링크', cfg, async () => {

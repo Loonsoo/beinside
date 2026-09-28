@@ -72,7 +72,7 @@ function getMentalHTML(months){
   if(!d)return'';
   return`<div class="card full cbg-lavender">
     <div class="card-audience aud-all">👀 모두가 읽으면 좋아요</div>
-    <h3>🧘 정신건강 &amp; 마음 돌봄</h3>
+    <h3>정신건강 &amp; 마음 돌봄</h3>
     <div class="stat-badge" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
     <div style="background:var(--mental-risk-bg);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:12.5px;color:var(--mental-risk-ink);font-weight:600;">
       ⚠️ ${d.risk}
@@ -94,13 +94,13 @@ function getAloneHTML(months){
   const key=getAloneKey(months);
   if(!key)return'';
   const d=ALONE_DATA[key];
-  return`<div class="card full cbg-alone" style="border-radius:20px;padding:26px 28px;">
+  return`<div class="card full cbg-alone">
     <div class="card-audience aud-child">🧒 본인 (아이·청소년·청년)</div>
-    <h3>🫶 ${key==='child'?'많이 버텨온 너에게':key==='teen'?'스스로 견뎌온 너에게':'혼자 감당해온 너에게'}</h3>
+    <h3>${key==='child'?'많이 버텨온 너에게':key==='teen'?'스스로 견뎌온 너에게':'혼자 감당해온 너에게'}</h3>
     <div class="stat-badge" style="margin-bottom:14px;" title="출처: 보건복지부·국립정신건강센터 공식 통계 기반 | 자세한 출처는 하단 참고"><span class="sb-num">${d.stat.pct}</span>${d.stat.label} <span style="font-size:10px;opacity:0.7;margin-left:4px;">📎</span></div>
     <blockquote style="font-family:var(--font-sans);font-size:15px;color:var(--peach-d);line-height:1.85;font-style:normal;margin-bottom:18px;padding-left:16px;border-left:3px solid var(--peach);">${d.quote}</blockquote>
     <div style="display:flex;flex-direction:column;gap:10px;">
-      ${d.items.map(it=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border-radius:13px;border:1px solid rgba(232,137,106,.10);">
+      ${d.items.map(it=>`<div style="display:flex;align-items:flex-start;gap:12px;padding:13px 16px;background:var(--white);border-radius:13px;border:1px solid var(--line-subtle);">
         <span style="font-size:20px;flex-shrink:0;margin-top:1px;">${it.icon}</span>
         <div style="font-size:13px;color:var(--ink-m);line-height:1.7;">
           <strong style="display:block;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:3px;">${it.title}</strong>${it.text}
@@ -114,18 +114,17 @@ function getAloneHTML(months){
 /* ── 영유아 응급처치 ── */
 function getFirstAidHTML(months){
   if(months>36)return'';
-  return`<div class="card full cbg-emergency" style="border-radius:20px;padding:26px 28px;">
+  return`<div class="card full cbg-emergency">
     <div class="card-audience aud-parent">👨‍👩‍👧 부모·보호자 필독</div>
-    <h3>🚨 영유아 응급처치 가이드</h3>
+    <h3>영유아 응급처치 가이드</h3>
     <div style="background:var(--fa-risk-bg);border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:12.5px;color:var(--fa-risk-ink);font-weight:600;">
-      📞 응급상황 즉시 <strong>119</strong> 신고 — 전화 연결 유지하며 지시에 따르세요
+      응급상황 즉시 <a class="tel-inline" href="tel:119">119</a> 신고 — 전화 연결 유지하며 지시에 따르세요
     </div>
     <div class="firstaid-grid">
       <div class="fa-item fa-red">
         <div class="fa-item-head">
-          <span class="fa-item-icon">🫁</span>
           <span class="fa-item-title">영아 심폐소생술 (CPR)</span>
-          <span class="fa-urgency urg-911">즉시 119</span>
+          <span class="fa-urgency urg-911">즉시 <a class="tel-inline" href="tel:119">119</a></span>
         </div>
         <ol>
           <li>의식·호흡 확인 — 발바닥 자극, 반응 없으면 즉시 119</li>
@@ -136,9 +135,8 @@ function getFirstAidHTML(months){
       </div>
       <div class="fa-item fa-red">
         <div class="fa-item-head">
-          <span class="fa-item-icon">🍬</span>
           <span class="fa-item-title">기도 폐쇄 (이물질 걸림)</span>
-          <span class="fa-urgency urg-911">즉시 119</span>
+          <span class="fa-urgency urg-911">즉시 <a class="tel-inline" href="tel:119">119</a></span>
         </div>
         <ol>
           <li>울거나 기침하면 — 스스로 배출 가능. 기다리며 관찰</li>
@@ -150,7 +148,6 @@ function getFirstAidHTML(months){
       </div>
       <div class="fa-item fa-amber">
         <div class="fa-item-head">
-          <span class="fa-item-icon">🔥</span>
           <span class="fa-item-title">화상</span>
           <span class="fa-urgency urg-now">즉시 처치</span>
         </div>
@@ -164,21 +161,19 @@ function getFirstAidHTML(months){
       </div>
       <div class="fa-item fa-amber">
         <div class="fa-item-head">
-          <span class="fa-item-icon">💧</span>
           <span class="fa-item-title">열성경련</span>
           <span class="fa-urgency urg-now">침착하게 대응</span>
         </div>
         <ol>
           <li>안전한 곳에 옆으로 눕히기 (기도 확보)</li>
           <li>입 안에 아무것도 넣지 않기 (혀 깨문다는 건 미신)</li>
-          <li>5분 이상 지속되면 즉시 119</li>
+          <li>돌 전 아기이거나 처음 하는 경련이면 멈췄어도 바로 119. 5분 넘게 이어지면 즉시 119</li>
           <li>경련 중 억지로 몸 잡지 않기</li>
           <li>경련 후 체온 측정 — 38℃ 이상이면 병원</li>
         </ol>
       </div>
       <div class="fa-item fa-amber">
         <div class="fa-item-head">
-          <span class="fa-item-icon">🩹</span>
           <span class="fa-item-title">낙상·두부 외상</span>
           <span class="fa-urgency urg-now">주의 관찰</span>
         </div>
@@ -191,7 +186,6 @@ function getFirstAidHTML(months){
       </div>
       <div class="fa-item fa-green" data-fa="fever" tabindex="-1">
         <div class="fa-item-head">
-          <span class="fa-item-icon">🌡️</span>
           <span class="fa-item-title">고열 대처</span>
           <span class="fa-urgency urg-watch">단계적 대응</span>
         </div>
@@ -448,11 +442,11 @@ function stripTags(html) {
 /* ── 아코디언 섹션 빌더 ──
    key: 상황 칩이 바로 펼칠 때 찾는 이름(data-acc). 없어도 된다 */
 function accSection(icon, title, sub, bodyHTML, openByDefault, key) {
+  /* icon은 옛 호출과의 호환용. 섹션 제목에 이모지를 쓰지 않는다 (공통 콘텐츠 셸, 성장 가이드 전용) */
   const openClass = openByDefault ? ' open' : '';
   const bodyStyle = openByDefault ? ' open' : '';
   return `<div class="acc-section"${key ? ` data-acc="${key}"` : ''}>
     <button type="button" class="acc-header${openClass}" aria-expanded="${openByDefault ? 'true' : 'false'}" onclick="toggleAcc(this)">
-      <span class="acc-h-icon">${icon}</span>
       <span class="acc-h-title">${title}</span>
       ${sub ? `<span class="acc-h-sub">${sub}</span>` : ''}
       <span class="acc-arrow"></span>
@@ -555,17 +549,17 @@ function render(d,months){
 
   let famHTML='';
   if(isFamily&&d.fam){
-    famHTML=`<div class="card full cbg-p" style="animation:none"><h3>🫂 가족·보호자의 역할과 마음가짐</h3><div class="fgrid">${d.fam.map(f=>`<div class="fitem"><div class="ftitle">${f.title}</div><p>${f.text}</p></div>`).join('')}</div></div>`;
+    famHTML=`<div class="card full cbg-p" style="animation:none"><h3>가족·보호자의 역할과 마음가짐</h3><div class="fgrid">${d.fam.map(f=>`<div class="fitem"><div class="ftitle">${f.title}</div><p>${f.text}</p></div>`).join('')}</div></div>`;
   }
   let healthHTML='';
   if(isFamily&&d.health){
-    healthHTML=`<div class="card full cbg-sky" style="animation:none"><h3>💪 건강한 신체를 위한 실천 가이드</h3><div class="hgrid">${d.health.map(h=>`<div class="hitem"><div class="htitle">${h.title}</div><p>${h.text}</p></div>`).join('')}</div></div>`;
+    healthHTML=`<div class="card full cbg-sky" style="animation:none"><h3>건강한 신체를 위한 실천 가이드</h3><div class="hgrid">${d.health.map(h=>`<div class="hitem"><div class="htitle">${h.title}</div><p>${h.text}</p></div>`).join('')}</div></div>`;
   }
   let parentHTML='';
   if(!isFamily&&d.parent){
     const audLabel=months/12<=18?'👨‍👩‍👧 부모·보호자':'🙋 본인 (성인)';
     const audClass=months/12<=18?'aud-parent':'aud-self';
-    parentHTML=`<div class="card full cbg-s" style="animation:none"><div class="card-audience ${audClass}">${audLabel}</div><h3>👨‍👩‍👧 ${d.role}의 역할과 마음가짐</h3><div class="tgrid">${d.parent.map(p=>`<div class="tip"><span class="te">${p.e}</span><p>${p.t}</p></div>`).join('')}</div></div>`;
+    parentHTML=`<div class="card full cbg-s" style="animation:none"><div class="card-audience ${audClass}">${audLabel}</div><h3>${d.role}의 역할과 마음가짐</h3><div class="tgrid">${d.parent.map(p=>`<div class="tip"><span class="te">${p.e}</span><p>${p.t}</p></div>`).join('')}</div></div>`;
   }
 
   // ── 긍정-먼저 체크리스트 (가장 먼저 표시) ──
@@ -573,7 +567,7 @@ function render(d,months){
   const pcItems = buildPositiveChecklist(d, months);
   const positiveHTML = `
     <div class="positive-check" role="group" aria-label="잘 자라고 있어요 체크리스트">
-      <div class="positive-check-title">✅ 이것들을 하고 있다면 잘 자라고 있는 거예요</div>
+      <h2 class="bc-h positive-check-title">이것들을 하고 있다면 잘 자라고 있는 거예요</h2>
       <div class="pc-items" id="pc-items-${months}">
         ${pcItems.map(function(item, i) {
           return '<div class="pc-item" onclick="togglePC(this)" role="checkbox" aria-checked="false" tabindex="0">'
@@ -592,7 +586,7 @@ function render(d,months){
   const warnFirst = stripTags(d.warn[0] || '');
   const summaryHTML = `
     <div class="summary-panel">
-      <div class="summary-panel-title">✨ 이 시기 핵심 3가지</div>
+      <h2 class="bc-h summary-panel-title">이 시기 핵심 3가지</h2>
       <ol class="summary-list">
         <li><span class="sn">1</span><span>🧠 ${sum1}</span></li>
         <li><span class="sn">2</span><span>🌱 ${sum2}</span></li>
@@ -602,35 +596,38 @@ function render(d,months){
     </div>`;
 
   // ── 아코디언 섹션들 ──
-  const brainBody = `<div class="card" style="animation:none">${audKnow}<h3>🧠 뇌 &amp; 인지 발달</h3><ul>${d.brain.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const emoBody   = `<div class="card" style="animation:none">${audParent}<h3>💚 정서 &amp; 사회성 발달</h3><ul>${d.emo.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const bodyBody  = `<div class="card" style="animation:none">${audParent}<h3>🌱 신체 발달 &amp; 의학 체크</h3><ul>${d.body.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const warnBody  = `<div class="card cbg-a" style="animation:none">${audParent}<h3>⚠️ 이것만은 주의하세요</h3><ul>${d.warn.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
-  const playBody  = `<div class="card full" style="animation:none">${audParent}<h3>🎯 추천 활동 &amp; 실천</h3><div class="plist">${d.play.map(p=>`<div class="pitem"><span class="ptag">${p.t}</span><p>${p.d}</p></div>`).join('')}</div></div>`;
+  const brainBody = `<div class="card" style="animation:none">${audKnow}<h3>뇌 &amp; 인지 발달</h3><ul>${d.brain.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const emoBody   = `<div class="card" style="animation:none">${audParent}<h3>정서 &amp; 사회성 발달</h3><ul>${d.emo.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const bodyBody  = `<div class="card" style="animation:none">${audParent}<h3>신체 발달 &amp; 의학 체크</h3><ul>${d.body.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const warnBody  = `<div class="card cbg-a" style="animation:none">${audParent}<h3>이것만은 주의하세요</h3><ul>${d.warn.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+  const playBody  = `<div class="card full" style="animation:none">${audParent}<h3>추천 활동 &amp; 실천</h3><div class="plist">${d.play.map(p=>`<div class="pitem"><span class="ptag">${p.t}</span><p>${p.d}</p></div>`).join('')}</div></div>`;
   const parentBody= (parentHTML || famHTML || healthHTML) ? `<div class="grid">${parentHTML}${famHTML}${healthHTML}</div>` : '';
-  const checkBody = `<div class="card full cbg-s" style="animation:none">${audCheck}<h3>✅ 체크포인트</h3>${d.mile.map(m=>`<div class="stone"><span class="ck">${m.ck}</span><p><strong>${m.tt}</strong> ${m.dc}</p></div>`).join('')}</div>`;
+  const checkBody = `<div class="card full cbg-s" style="animation:none">${audCheck}<h3>체크포인트</h3>${d.mile.map(m=>`<div class="stone"><span class="ck">${m.ck}</span><p><strong>${m.tt}</strong> ${m.dc}</p></div>`).join('')}</div>`;
   const mentalBody= getMentalHTML(months);
   const aloneBody = getAloneHTML(months);
   const firstAid  = getFirstAidHTML(months);
 
   const accHTML = `<div class="acc-container">
-    ${accSection('🧠','뇌 &amp; 인지 발달', d.brain.length+'가지', brainBody, true)}
-    ${accSection('💚','정서 &amp; 사회성 발달', d.emo.length+'가지', emoBody, false)}
-    ${accSection('🌱','신체 발달 &amp; 의학 체크', d.body.length+'가지', bodyBody, false, 'body')}
-    ${accSection('⚠️','주의사항', d.warn.length+'가지', warnBody, false, 'warn')}
-    ${accSection('🎯','추천 활동 &amp; 실천', d.play.length+'가지', playBody, false)}
-    ${parentBody ? accSection('🫂','역할 &amp; 마음가짐', '', parentBody, false) : ''}
-    ${accSection('✅','체크포인트', '', checkBody, false)}
-    ${mentalBody ? accSection('🧘','정신건강 &amp; 마음 돌봄', '', mentalBody, false) : ''}
-    ${aloneBody  ? accSection('🫶','혼자 자라는 아이에게', '', aloneBody, false) : ''}
-    ${firstAid   ? accSection('🩺','응급처치 가이드', '', firstAid, false, 'firstaid') : ''}
-    ${accSection('📝','메모장', '', getMemoHTML(months), false)}
+    ${accSection('','뇌 &amp; 인지 발달', d.brain.length+'가지', brainBody, true)}
+    ${accSection('','정서 &amp; 사회성 발달', d.emo.length+'가지', emoBody, false)}
+    ${accSection('','신체 발달 &amp; 의학 체크', d.body.length+'가지', bodyBody, false, 'body')}
+    ${accSection('','주의사항', d.warn.length+'가지', warnBody, false, 'warn')}
+    ${accSection('','추천 활동 &amp; 실천', d.play.length+'가지', playBody, false)}
+    ${parentBody ? accSection('','역할 &amp; 마음가짐', '', parentBody, false) : ''}
+    ${accSection('','체크포인트', '', checkBody, false)}
+    ${mentalBody ? accSection('','정신건강 &amp; 마음 돌봄', '', mentalBody, false) : ''}
+    ${aloneBody  ? accSection('','혼자 자라는 아이에게', '', aloneBody, false) : ''}
+    ${firstAid   ? accSection('','응급처치 가이드', '', firstAid, false, 'firstaid') : ''}
+    ${accSection('','메모장', '', getMemoHTML(months), false)}
   </div>`;
 
   document.getElementById('result').innerHTML =
-    `<div class="rhead" style="background:linear-gradient(135deg,${d.g[0]} 0%,${d.g[1]} 100%);margin-bottom:14px;">
-      <div><div class="r-age">${numStr}<sub>${unitStr}</sub></div><div class="r-stg">${d.em}&nbsp;${d.stg}</div></div>
-      <div class="r-qt">"${d.qt}"</div>
+    `<div class="bc rhead" tabindex="-1">
+      <div class="bc-head">
+        <p class="bc-kicker">성장 가이드 · ${d.stg}</p>
+        <h2 class="bc-title r-age">${numStr}${unitStr}</h2>
+        <p class="bc-summary r-qt">${d.qt}</p>
+      </div>
     </div>
     ${positiveHTML}
     ${summaryHTML}
@@ -672,23 +669,23 @@ function renderDadContent(key) {
 
   const toolkitsHTML = d.toolkits.map(tk =>
     `<div class="dad-toolkit-block" tabindex="-1">
-      <div class="dad-toolkit-title">⚡ ${tk.title}</div>
+      <h3 class="bc-h3 dad-toolkit-title">${tk.title}</h3>
       ${tk.steps.map((s,i)=>`<div class="dad-toolkit-step"><span class="dad-toolkit-step-num">${i+1}</span><span>${s}</span></div>`).join('')}
     </div>`
   ).join('');
 
   el.innerHTML =
     `<div class="summary-panel" style="margin-bottom:16px;">
-      <div class="summary-panel-title">👨 아빠 역할 핵심 3가지 — ${d.label} (${d.sub})</div>
+      <h2 class="bc-h summary-panel-title">아빠 역할 핵심 3가지 — ${d.label} (${d.sub})</h2>
       <ol class="summary-list">
         ${d.summary.map((s,i)=>`<li><span class="sn">${i+1}</span><span>${s}</span></li>`).join('')}
       </ol>
       <div class="summary-warn">⚠️ ${d.warn}</div>
     </div>
     <div class="acc-container">
-      ${accSection('🎯','실천 액션 4가지','',`<div class="dad-toolkit-block">${actionsHTML}</div>`,true)}
-      ${accSection('🧠','아빠 마음 돌봄','',`<div style="font-size:13.5px;color:var(--ink-m);line-height:1.8;padding:14px;background:rgba(232,137,106,.06);border-radius:12px;">${d.mental}</div>`,false)}
-      ${toolkitsHTML ? accSection('⚡','지금 급한 상황','',toolkitsHTML,false,'dad-urgent') : ''}
+      ${accSection('','실천 액션 4가지','',`<div class="dad-toolkit-block">${actionsHTML}</div>`,true)}
+      ${accSection('','아빠 마음 돌봄','',`<p class="dad-mental">${d.mental}</p>`,false)}
+      ${toolkitsHTML ? accSection('','지금 급한 상황','',toolkitsHTML,false,'dad-urgent') : ''}
     </div>`;
 }
 
@@ -788,8 +785,8 @@ function initBirth() {
     div.innerHTML = `
       <div class="birth-header">
         <div class="birth-header-inner">
-          <div class="birth-alone-badge">🫶 혼자 감당하는 산모를 위한 가이드</div>
-          <h2>${stage.label} <span style="font-size:15px;font-weight:400;opacity:.8;">${stage.sub}</span></h2>
+          <p class="birth-alone-badge">혼자 감당하는 산모를 위한 가이드</p>
+          <h2 class="bc-h">${stage.label} <span class="birth-header-sub">${stage.sub}</span></h2>
           <p>${stage.desc}</p>
         </div>
       </div>
@@ -798,19 +795,19 @@ function initBirth() {
       </div>
       <div class="birth-grid">
         <div class="birth-card bc-warm full">
-          <h4>🚨 즉시 병원·응급실 가야 하는 상황</h4>
+          <h3 class="bc-h3 bc-h3--now">즉시 병원·응급실 가야 하는 상황</h3>
           ${stage.alert.map(a=>`<div class="birth-alert"><span class="birth-alert-icon">⚠️</span><span>${a}</span></div>`).join('')}
         </div>
         <div class="birth-card bc-rose full">
-          <h4>🩺 이 시기 신체 회복 & 건강 상식</h4>
+          <h3 class="bc-h3">이 시기 신체 회복 & 건강 상식</h3>
           <ul>${stage.body.map(b=>`<li>${b}</li>`).join('')}</ul>
         </div>
         <div class="birth-card bc-lavender full">
-          <h4>🧘 마음 건강 & 정신 돌봄</h4>
+          <h3 class="bc-h3">마음 건강 & 정신 돌봄</h3>
           <ul>${stage.mental.map(m=>`<li>${m}</li>`).join('')}</ul>
         </div>
         <div class="birth-card bc-mint full">
-          <h4>✅ 지금 해야 할 것들</h4>
+          <h3 class="bc-h3">지금 해야 할 것들</h3>
           ${stage.todo.map(t=>`
             <div class="birth-reality">
               <span class="birth-reality-icon">${t.icon}</span>
@@ -820,9 +817,14 @@ function initBirth() {
             </div>`).join('')}
         </div>
       </div>
-      <div class="birth-contacts">
-        📞 <strong>도움이 되는 연락처</strong> — 자살예방상담전화 <strong>109</strong>(24시간) / 한부모가족지원센터 <strong>1644-6621</strong> / 보건소 산모·신생아 방문서비스 (지역 보건소) / 복지로 <strong>www.bokjiro.go.kr</strong>
-      </div>
+      <section class="bc bc-sec birth-contacts" aria-label="도움이 되는 연락처">
+        <h3 class="bc-h3">도움이 되는 연락처</h3>
+        <div class="bc-actions">
+          ${typeof cardCallHTML === 'function' ? cardCallHTML('suicide') : ''}
+          <a class="bc-link" href="https://www.bokjiro.go.kr" target="_blank" rel="noopener noreferrer"><span class="bc-link-main">복지로</span><span class="bc-link-sub">www.bokjiro.go.kr<span class="sr-only"> (새 창)</span></span></a>
+        </div>
+        <p class="bc-note">보건소 산모·신생아 방문서비스는 사는 지역 보건소에 물어봐요.</p>
+      </section>
     `;
     stagesEl.appendChild(div);
   });

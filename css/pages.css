@@ -5331,3 +5331,149 @@ html.kb-open .crisis-dock { visibility: hidden; }
 .content-hero:not([style*="background"]) {
   background: linear-gradient(135deg, var(--hero-guide-from), var(--hero-guide-to));
 }
+
+/* ══════════════════════════════════════════
+   상황 요약 (js/data-summaries.js) — 카드와 같은 셸, 같은 클래스
+   빈 칸 한 줄, 월령 라벨, 사이트 안 이동 버튼, 맨 아래 "자세한 안내"
+══════════════════════════════════════════ */
+.bc-empty { margin-top: 8px; font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.bc-label { display: block; font-size: calc(13px + var(--text-scale, 0) * 1px); font-weight: 600; line-height: 1.5; color: var(--text-secondary); }
+.bc-actions--first + .bc-list { margin-top: 14px; }
+.bc-link--go { position: relative; padding-right: 40px; font-family: inherit; text-align: left; }
+.bc-link--go::after {
+  content: ''; position: absolute; right: 18px; top: 50%;
+  width: 8px; height: 8px; margin-top: -4px;
+  border-top: 2px solid var(--text-secondary); border-right: 2px solid var(--text-secondary);
+  transform: rotate(45deg);
+}
+.bc-places a { text-decoration-color: var(--stroke-control); }
+.bc-detail { margin-top: 16px; }
+.bc-tool--detail { flex-direction: column; align-items: flex-start; gap: 2px; min-height: 56px; padding: 8px 16px; }
+.bc-tool-sub { font-size: calc(13px + var(--text-scale, 0) * 1px); font-weight: 500; color: var(--text-secondary); }
+
+/* ══════════════════════════════════════════
+   옛 가이드 겉모양 1단계 (.guide-shell: 성장·출산·산후·긴급)
+   reports/design/2026-09-consistency-audit.md §3-(c) C-1~C-4
+   - 제목부는 .bc-head (고운바탕 제목 + Pretendard 부제), 배경·그라데이션 없음
+   - 섹션 제목은 .bc-h(18px)·.bc-h3(15px) 두 단계, 이모지 없음
+   - 번호 버튼은 .bc-call, 색은 토큰만. 청소년·다문화 페이지는 이 규칙을 받지 않는다(운영자 결정)
+   - .page-view.guide-shell 두 겹으로 옛 규칙([data-theme] 포함)보다 우선한다
+══════════════════════════════════════════ */
+.page-view.guide-shell .bc-guide-head { padding: 20px 24px 12px; }
+.page-view.guide-shell .bc-guide-head .bc-summary { color: var(--text-body); }
+.page-view.guide-shell :is(.bc-h, .bc-h3, .acc-h-title, .accordion-header, .step-label, .card h3, .fa-item-title) {
+  font-family: var(--font-sans); letter-spacing: 0; text-transform: none;
+}
+.page-view.guide-shell :is(.bc-h, .step-label, .acc-h-title, .accordion-header > span:first-child) {
+  font-size: calc(18px + var(--text-scale, 0) * 1px); font-weight: 700; line-height: 1.4; color: var(--text-primary);
+}
+.page-view.guide-shell :is(.bc-h3, .card h3, .fa-item-title) {
+  font-size: calc(15px + var(--text-scale, 0) * 1px); font-weight: 700; line-height: 1.4; color: var(--text-primary);
+}
+.page-view.guide-shell .bc-h3--now { color: var(--danger-strong); }
+.page-view.guide-shell .step-label { padding-bottom: 0; border-bottom: 0; margin-bottom: 10px; }
+.page-view.guide-shell .acc-h-sub { font-size: calc(13px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.page-view.guide-shell .card h3 { margin-bottom: 10px; }
+.page-view.guide-shell .bc-sec { margin: 14px 24px 0; }
+.page-view.guide-shell .bc-sec .bc-actions { margin-top: 12px; }
+.page-view.guide-shell .bc-note { margin-top: 8px; font-size: calc(14px + var(--text-scale, 0) * 1px); color: var(--text-secondary); }
+.page-view.guide-shell .bc :is(a, button):focus-visible,
+.page-view.guide-shell :is(.acc-header, .accordion-header, .bc-call, .bc-link):focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+.page-view.guide-shell .bc-title:focus, .page-view.guide-shell .rhead:focus, .page-view.guide-shell .emer-firstaid-wrap:focus { outline: none; }
+
+/* 표면: 옛 그라데이션·하드코딩 색 → 토큰 */
+.page-view.guide-shell :is(.toolkit-wrap, .summary-panel, .positive-check, .symptom-checker) {
+  background: var(--surface-raised); border: 1px solid var(--line-subtle); border-radius: 16px; padding: 16px 18px;
+}
+.page-view.guide-shell .card,
+.page-view.guide-shell .card:is(.cbg-a, .cbg-s, .cbg-p, .cbg-sky, .cbg-lavender, .cbg-alone, .cbg-emergency, .cbg-mint, .cbg-rose, .cbg-teal) {
+  background: var(--surface-raised); border: 1px solid var(--line-subtle); border-radius: 14px; padding: 16px 18px;
+}
+.page-view.guide-shell .card:hover { transform: none; box-shadow: var(--shadow-sm); border-top-color: var(--line-subtle); }
+.page-view.guide-shell .card.cbg-a { background: var(--semantic-caution-bg); }
+.page-view.guide-shell .fa-item { background: var(--surface-base); border: 1px solid var(--line-subtle); border-radius: 12px; padding: 12px 14px; }
+.page-view.guide-shell .fa-item.fa-red { background: var(--semantic-danger-bg); border-color: var(--danger-strong); }
+.page-view.guide-shell .fa-item.fa-amber { background: var(--semantic-caution-bg); border-color: var(--line-subtle); }
+.page-view.guide-shell .fa-item.fa-green { background: var(--semantic-positive-bg); border-color: var(--line-subtle); }
+.page-view.guide-shell .fa-item :is(ol, ul) li { font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); }
+.page-view.guide-shell .fa-urgency { font-size: calc(12px + var(--text-scale, 0) * 1px); background: var(--surface-raised); color: var(--text-primary); }
+.page-view.guide-shell .fa-urgency.urg-911 { color: var(--danger-strong); }
+.page-view.guide-shell .tk-normal { background: var(--semantic-positive-bg); border-left-color: var(--semantic-positive); }
+.page-view.guide-shell .tk-warn { background: var(--semantic-danger-bg); border-left-color: var(--danger-strong); color: var(--text-primary); }
+.page-view.guide-shell .tk-tip { background: var(--surface-base); border-left-color: var(--stroke-control); }
+.page-view.guide-shell .dad-toolkit-block { background: var(--surface-base); border-left-color: var(--stroke-control); }
+.page-view.guide-shell .dad-mental { margin: 0; padding: 14px; border-radius: 12px; background: var(--surface-base); color: var(--text-body); font-size: calc(15px + var(--text-scale, 0) * 1px); line-height: 1.75; }
+.page-view.guide-shell .acc-header:hover, .page-view.guide-shell .acc-header.open,
+.page-view.guide-shell .accordion-header:hover { background: var(--surface-tint); }
+.page-view.guide-shell .pc-item.checked { background: var(--semantic-positive-bg); }
+.page-view.guide-shell .pc-result.great { background: var(--semantic-positive-bg); color: var(--text-primary); }
+.page-view.guide-shell .pc-result.concern { background: var(--semantic-caution-bg); color: var(--text-primary); }
+.page-view.guide-shell .lt-track::before { background: var(--line-subtle); }
+.page-view.guide-shell .lt-track .lt-node .lt-dot,
+.page-view.guide-shell .lt-track .lt-node:hover .lt-dot { background: var(--accent-strong); box-shadow: 0 0 0 2px var(--surface-tint); }
+
+/* 성장 가이드 월령 결과 머리 (.rhead): 데이터 그라데이션 대신 셸 제목부 */
+.page-view.guide-shell .rhead {
+  display: block; padding: 4px 2px 0; margin-bottom: 14px; border-radius: 0;
+  background: none; box-shadow: none; color: var(--text-primary); overflow: visible;
+}
+.page-view.guide-shell .rhead::before, .page-view.guide-shell .rhead::after { display: none; }
+.page-view.guide-shell .rhead .r-age { margin: 2px 0 0; font-size: calc(26px + var(--text-scale, 0) * 2px); line-height: 1.4; letter-spacing: -.01em; }
+.page-view.guide-shell .rhead .r-qt { max-width: none; text-align: left; opacity: 1; font-size: calc(16px + var(--text-scale, 0) * 1px); line-height: 1.7; }
+
+/* 출산 가이드 */
+.page-view.guide-shell .birth-intro-sub { margin: 0 0 8px; }
+.page-view.guide-shell .birth-intro-box { background: var(--surface-raised); border: 1px solid var(--line-subtle); color: var(--text-body); }
+.page-view.guide-shell .birth-intro-box strong { color: var(--text-primary); }
+.page-view.guide-shell .birth-postpartum-link { background: var(--surface-raised); border: 0; }
+.page-view.guide-shell .birth-postpartum-link:hover { transform: none; box-shadow: none; }
+.page-view.guide-shell .birth-header { background: none; color: var(--text-primary); padding: 4px 2px 0; margin-bottom: 12px; border-radius: 0; }
+.page-view.guide-shell .birth-header::before { display: none; }
+.page-view.guide-shell .birth-header p { color: var(--text-body); opacity: 1; font-size: calc(15px + var(--text-scale, 0) * 1px); }
+.page-view.guide-shell .birth-header-sub { font-weight: 500; color: var(--text-secondary); font-size: calc(15px + var(--text-scale, 0) * 1px); }
+.page-view.guide-shell .birth-alone-badge { background: var(--surface-tint); border: 0; color: var(--text-primary); margin-bottom: 8px; }
+.page-view.guide-shell .birth-card,
+.page-view.guide-shell .birth-card:is(.bc-warm, .bc-rose, .bc-mint, .bc-sky, .bc-lavender) { background: var(--surface-raised); border: 1px solid var(--line-subtle); border-radius: 14px; padding: 16px 18px; }
+.page-view.guide-shell .birth-card.bc-warm { background: var(--semantic-danger-bg); }
+.page-view.guide-shell .birth-card:hover { transform: none; box-shadow: none; }
+.page-view.guide-shell .birth-card .bc-h3 { margin-bottom: 10px; }
+.page-view.guide-shell .birth-card ul li { font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); }
+.page-view.guide-shell .birth-alert { background: var(--surface-raised); border-color: var(--line-subtle); color: var(--text-primary); }
+.page-view.guide-shell .birth-alone-msg { background: var(--surface-raised); border-color: var(--line-subtle); color: var(--text-body); }
+.page-view.guide-shell .birth-reality { background: var(--surface-base); border-color: var(--line-subtle); }
+.page-view.guide-shell .birth-contacts { margin: 0; background: var(--surface-raised); border: 0; font-size: inherit; color: var(--text-body); }
+.page-view.guide-shell .symptom-result { background: var(--semantic-danger-bg); border-color: var(--danger-strong); color: var(--text-primary); }
+
+/* 산후 마음 가이드 */
+.page-view.guide-shell .stat-badge { background: var(--surface-raised); }
+.page-view.guide-shell .pp-guide-p { font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); line-height: 1.75; margin-bottom: 14px; }
+.page-view.guide-shell .pp-guide-sub { margin-bottom: 8px; }
+.page-view.guide-shell .pp-dist { margin-top: 10px; }
+.page-view.guide-shell .pp-dist p { margin: 2px 0 0; font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); line-height: 1.7; }
+.page-view.guide-shell .accordion-body .bc-list li { font-size: calc(15px + var(--text-scale, 0) * 1px); color: var(--text-body); }
+.page-view.guide-shell .pp-guide-more { margin-top: 20px; }
+.page-view.guide-shell .pp-guide-next { margin-bottom: 24px; }
+
+/* 긴급 도움: 번호 목록도 .bc-call (119만 --urgent 56px) */
+.page-view.guide-shell .emergency-list { display: grid; gap: 8px; margin: 0; padding: 4px 24px 8px; list-style: none; }
+.page-view.guide-shell .emer-alt-list { display: grid; gap: 8px; margin: 12px 0 0; padding: 0; list-style: none; }
+.page-view.guide-shell .emer-alt-channels { margin-top: 12px; }
+.page-view.guide-shell .emer-119 { margin: 14px 24px 0; padding: 16px 18px; border: 2px solid var(--danger-strong); border-radius: 16px; background: var(--semantic-danger-bg); }
+.page-view.guide-shell .emer-119 .bc-call { margin-top: 10px; }
+.page-view.guide-shell .emer-119-list { margin-top: 12px; padding-left: 0; list-style: none; }
+.page-view.guide-shell .emer-119-list li { font-size: calc(16px + var(--text-scale, 0) * 1px); color: var(--text-body); margin-bottom: 0; }
+.page-view.guide-shell .emer-119-list li::before { background: var(--danger-strong); }
+.page-view.guide-shell .emer-firstaid-wrap { margin-top: 20px; padding: 16px 24px 40px; border-top: 1px solid var(--line-subtle); scroll-margin-top: 64px; }
+.page-view.guide-shell .emer-firstaid-title { display: block; margin-bottom: 12px; }
+.page-view.guide-shell .centers-section--shell { margin-bottom: 24px; }
+
+@media (max-width: 640px) {
+  .page-view.guide-shell .bc-guide-head { padding: 16px 18px 8px; }
+  .page-view.guide-shell .bc-sec { margin-left: 18px; margin-right: 18px; }
+  .page-view.guide-shell .emergency-list { padding-left: 18px; padding-right: 18px; }
+  .page-view.guide-shell .emer-119 { margin-left: 18px; margin-right: 18px; }
+  .page-view.guide-shell .emer-firstaid-wrap { padding-left: 18px; padding-right: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-view.guide-shell :is(.acc-body, .accordion-body, .birth-stage.on) { animation: none; transition: none; }
+}

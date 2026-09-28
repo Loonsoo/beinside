@@ -85,7 +85,10 @@ function showPage(id, then) {
       history.pushState({ page: id }, '', newPath);
     }
     if (id === 'card' && typeof cardUpdateMeta === 'function') cardUpdateMeta();
-    else updatePageMeta(id);
+    else {
+      if (typeof cardClearMeta === 'function') cardClearMeta(); /* 상황 요약의 noindex를 걷는다 */
+      updatePageMeta(id);
+    }
     updateQuickExit(id);
 
     // Umami 수동 페이지뷰 추적

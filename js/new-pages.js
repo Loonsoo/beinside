@@ -365,62 +365,59 @@ function renderPostpartumPage(container) {
   if (!container || typeof POSTPARTUM_DATA === 'undefined') return;
   var d = POSTPARTUM_DATA;
   var checkWrapId = 'postpartum-check-wrap';
+  /* 공통 콘텐츠 셸 (js/cards.js): 제목부·번호 버튼·섹션 제목. 섹션 제목에 이모지를 쓰지 않는다 */
+  var head = typeof cardHeadHTML === 'function'
+    ? cardHeadHTML({ id: 'postpartum', kicker: '참고 가이드 · 산후 마음', title: d.intro.title, summary: d.intro.sub })
+    : '<h1>' + esc(d.intro.title) + '</h1>';
 
   var distHTML = d.science.distinctions.map(function(di) {
-    return '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">'
-      + '<span style="font-size:20px;flex-shrink:0;">' + di.icon + '</span>'
-      + '<div>'
-      + '<div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:2px;">' + esc(di.name) + '</div>'
-      + '<p style="font-size:12.5px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">' + esc(di.desc) + '</p>'
-      + '</div></div>';
+    return '<div class="pp-dist">'
+      + '<h3 class="bc-h3">' + esc(di.name) + '</h3>'
+      + '<p>' + esc(di.desc) + '</p>'
+      + '</div>';
   }).join('');
 
+  var helpHTML = '<div class="bc-actions">'
+    + d.help.map(function(h) {
+      return typeof cardCallHTML === 'function'
+        ? cardCallHTML({ number: h.number, name: h.name, desc: h.desc })
+        : '<a href="tel:' + h.number.replace(/-/g, '') + '">' + h.number + ' ' + esc(h.name) + '</a>';
+    }).join('')
+    + '</div>';
+
   container.innerHTML =
-    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">'
-    + '<div class="content-hero-title"><span class="content-hero-icon">🌸</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1></div>'
-    + '<p>' + esc(d.intro.sub) + '</p>'
-    + '</div>'
+    '<div class="bc bc-guide-head">' + head + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
     + _guideRecognition(d.recognition)
     + '<div class="accordion-group">'
-    + _guideAccordion('🧠 ' + esc(d.science.title),
-        '<p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;margin-bottom:16px;">' + esc(d.science.text) + '</p>'
-        + '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">베이비 블루스 vs 산후우울증 vs 산후 정신병</div>'
+    + _guideAccordion(esc(d.science.title),
+        '<p class="pp-guide-p">' + esc(d.science.text) + '</p>'
+        + '<h3 class="bc-h3 pp-guide-sub">베이비 블루스 vs 산후우울증 vs 산후 정신병</h3>'
         + distHTML)
-    + _guideAccordion('🔍 상황 판단 — 자가 체크', '<div id="' + checkWrapId + '"></div>')
-    + _guideAccordion('⏸️ 오늘 당장 할 수 있는 것', _guideActions(d.actions.immediate))
-    + _guideAccordion('📅 이번 주에 시도해볼 것', _guideActions(d.actions.week))
-    + _guideAccordion('🏥 전문적 도움 받기', _guideActions(d.actions.longterm))
-    + _guideAccordion('⚠️ ' + esc(d.riskFactors.title),
-        '<div style="background:var(--warm);border-radius:12px;padding:14px 16px;">'
-        + d.riskFactors.items.map(function(item) {
-          return '<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">'
-            + '<span style="flex-shrink:0;">•</span><span>' + esc(item) + '</span></div>';
-        }).join('')
-        + '<p style="font-size:12px;color:var(--ink-l);margin-top:10px;line-height:1.6;">해당 사항이 있다면, 산후우울 증상이 나타나기 전에 미리 전문가와 상담해 보는 것도 좋아요.</p>'
-        + '</div>')
-    + _guideAccordion('💑 ' + esc(d.partnerTip.title),
-        '<div style="background:var(--warm);border-radius:12px;padding:14px 16px;">'
-        + d.partnerTip.items.map(function(item) {
-          return '<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">'
-            + '<span style="flex-shrink:0;">💬</span><span>' + esc(item) + '</span></div>';
-        }).join('')
-        + '</div>')
-    + _guideAccordion('📞 도움 연결',
-        '<div class="help-cards">'
-        + d.help.map(function(h) {
-          return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
-            + '<div class="help-card-num">📞 ' + h.number + '</div>'
-            + '<div class="help-card-info"><div class="help-card-name">' + esc(h.name) + '</div><div class="help-card-desc">' + esc(h.desc) + '</div></div></a>';
-        }).join('')
-        + '</div>')
+    + _guideAccordion('상황 판단 — 자가 체크', '<div id="' + checkWrapId + '"></div>')
+    + _guideAccordion('오늘 당장 할 수 있는 것', _guideActions(d.actions.immediate))
+    + _guideAccordion('이번 주에 시도해볼 것', _guideActions(d.actions.week))
+    + _guideAccordion('전문적 도움 받기', _guideActions(d.actions.longterm))
+    + _guideAccordion(esc(d.riskFactors.title),
+        '<ul class="bc-list" role="list">'
+        + d.riskFactors.items.map(function(item) { return '<li>' + esc(item) + '</li>'; }).join('')
+        + '</ul>'
+        + '<p class="bc-note">해당 사항이 있다면, 산후우울 증상이 나타나기 전에 미리 전문가와 상담해 보는 것도 좋아요.</p>')
+    + _guideAccordion(esc(d.partnerTip.title),
+        '<ul class="bc-list" role="list">'
+        + d.partnerTip.items.map(function(item) { return '<li>' + esc(item) + '</li>'; }).join('')
+        + '</ul>')
     + '</div>'
-    + '<div style="margin:20px 0;padding:14px 18px;background:linear-gradient(135deg,rgba(176,123,172,.08),rgba(212,160,176,.06));border:1px solid rgba(176,123,172,.15);border-radius:14px;">'
-    + '<div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:6px;">출산 후 신체 회복이 궁금하다면</div>'
-    + '<div style="font-size:12.5px;color:var(--ink-m);line-height:1.6;margin-bottom:10px;">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</div>'
-    + '<button type="button" onclick="showPage(\'birth\')" style="background:var(--peach-d);color:var(--on-accent);border:none;border-radius:10px;min-height:44px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">출산 후 회복 가이드 보기 →</button>'
-    + '</div>';
+    /* 도움 연결은 접지 않는다 (번호가 첫 화면 아래로 숨지 않게). 카드의 "더 도움이 필요하면"과 같은 모양 */
+    + '<section class="bc bc-sec pp-guide-more" aria-labelledby="pp-guide-more-t" data-bc-end>'
+    + '<h2 class="bc-h" id="pp-guide-more-t">더 도움이 필요하면</h2>'
+    + helpHTML
+    + '</section>'
+    + '<section class="bc bc-sec pp-guide-next" aria-labelledby="pp-guide-next-t">'
+    + '<h2 class="bc-h" id="pp-guide-next-t">출산 후 신체 회복이 궁금하다면</h2>'
+    + '<div class="bc-actions"><a class="bc-link bc-link--go" href="/birth" data-bc-go="birth">'
+    + '<span class="bc-link-main">출산 후 회복 가이드 보기</span><span class="bc-link-sub">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</span></a></div>'
+    + '</section>';
 
   var checkWrap = container.querySelector('#' + checkWrapId);
   if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
