@@ -259,25 +259,25 @@ function ppSelectMood(mood) {
   ppTrack('pp_mood', { mood: mood });
 }
 
-/* 산후 페이지의 마음 신호 확인을 바로 펼쳐서 보여준다 */
+/* 산후 페이지의 마음 신호 확인을 바로 펼쳐서 보여준다.
+   페이지 전환(맨 위로 올림)이 끝난 뒤에 펼치고 내려가야 스크롤이 서로 덮지 않는다 */
 function ppOpenCheck() {
-  showPage('postpartum');
   if (typeof setMTab === 'function') setMTab('mind');
-  let tries = 0;
-  (function openWhenReady() {
-    const wrap = document.getElementById('postpartum-check-wrap');
-    const item = wrap && wrap.closest('.accordion-item');
-    const header = item && item.querySelector('.accordion-header');
-    if (header) {
-      if (header.getAttribute('aria-expanded') !== 'true') header.click();
-      setTimeout(() => {
+  showPage('postpartum', function () {
+    let tries = 0;
+    (function openWhenReady() {
+      const wrap = document.getElementById('postpartum-check-wrap');
+      const item = wrap && wrap.closest('.accordion-item');
+      const header = item && item.querySelector('.accordion-header');
+      if (header) {
+        if (header.getAttribute('aria-expanded') !== 'true') header.click();
         header.scrollIntoView({ behavior: ppSmooth(), block: 'start' });
         header.focus({ preventScroll: true });
-      }, 120);
-      return;
-    }
-    if (++tries < 20) setTimeout(openWhenReady, 100);
-  })();
+        return;
+      }
+      if (++tries < 20) setTimeout(openWhenReady, 100);
+    })();
+  });
 }
 
 /* "다른 상황 보기" 버튼은 랜딩 끝과 대시보드 타일 두 곳에 있다. 둘 다 같은 #home-other를 연다 */

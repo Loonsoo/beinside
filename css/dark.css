@@ -1023,6 +1023,7 @@
 ══════════════════════════════════════════ */
 .skip-nav{
   position:absolute;
+  display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;
   top:-100px;left:50%;
   transform:translateX(-50%);
   background:var(--peach-d);color:var(--on-accent);

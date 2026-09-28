@@ -110,7 +110,7 @@ function _guideRecognition(data) {
 /* ── 아코디언 단일 아이템 ── */
 function _guideAccordion(title, html) {
   return '<div class="accordion-item">'
-    + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+    + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
     + '<span>' + title + '</span><span class="accordion-arrow"></span>'
     + '</div>'
     + '<div class="accordion-body"><div class="accordion-body-inner">'
@@ -141,26 +141,26 @@ function _guideActions(actions) {
 }
 
 /* ── 상황 선택 그리드 ── */
+/* 공통 콘텐츠 셸 (js/cards.js): 제목부는 .bc-head, 버튼에 이모지·인라인 스타일을 쓰지 않는다.
+   reports/design/2026-09-consistency-audit.md §3-(c) C-1·C-4 */
 function _guideSituationPicker(cfg) {
-  // cfg: { situations, containerId, buildFn, heroTitle, heroSub, heroIcon, heroGradient, extraButtons }
-  var heroStyle = cfg.heroGradient ? ' style="background:linear-gradient(135deg,' + cfg.heroGradient + ')"' : '';
+  // cfg: { situations, containerId, buildFn, heroTitle, heroSub, kicker, stepLabel, extraButtons }
   var btns = cfg.situations.map(function(s) {
-    return '<button class="emotion-btn" onclick="' + cfg.buildFn + '(document.getElementById(\'' + cfg.containerId + '\'),\'' + s.id + '\')" aria-label="' + esc(s.label) + '">'
-      + '<span class="emotion-btn-icon">' + s.icon + '</span>'
-      + '<div>'
-      + '<div style="font-size:13.5px;font-weight:600;">' + esc(s.label) + '</div>'
-      + (s.sub ? '<div style="font-size:11.5px;color:var(--ink-l);">' + esc(s.sub) + '</div>' : '')
-      + '</div>'
+    return '<button class="emotion-btn" onclick="' + cfg.buildFn + '(document.getElementById(\'' + cfg.containerId + '\'),\'' + s.id + '\')">'
+      + '<span class="emotion-btn-text">'
+      + '<span class="emotion-btn-label">' + esc(s.label) + '</span>'
+      + (s.sub ? '<span class="emotion-btn-sub">' + esc(s.sub) + '</span>' : '')
+      + '</span>'
       + '</button>';
   }).join('');
+  var summary = String(cfg.heroSub || '').replace(/<br\s*\/?>/g, ' ');
+  var head = typeof cardHeadHTML === 'function'
+    ? cardHeadHTML({ id: cfg.containerId, kicker: '참고 가이드 · ' + (cfg.kicker || cfg.heroTitle), title: cfg.heroTitle, summary: summary })
+    : '<h1>' + esc(cfg.heroTitle) + '</h1>';
 
-  return '<div class="content-hero"' + heroStyle + '>'
-    + '<div class="content-hero-title"><span class="content-hero-icon">' + (cfg.heroIcon || '') + '</span>'
-    + '<h1>' + esc(cfg.heroTitle) + '</h1></div>'
-    + '<p>' + (cfg.heroSub || '') + '</p>'
-    + '</div>'
+  return '<div class="bc bc-guide-head">' + head + '</div>'
     + '<div class="step-section">'
-    + '<div class="step-label">' + esc(cfg.stepLabel || '어떤 상황이에요?') + '</div>'
+    + '<h2 class="step-label">' + esc(cfg.stepLabel || '어떤 상황이에요?') + '</h2>'
     + '<div class="emotion-grid">'
     + btns
     + (cfg.extraButtons || '')
@@ -181,43 +181,43 @@ function _guideSituationDetail(container, data, cfg) {
 
   var actionsHTML = '';
   if (Array.isArray(data.actions)) {
-    actionsHTML = _guideAccordion('✅ 지금 바로 할 수 있는 것', _guideActions(data.actions));
+    actionsHTML = _guideAccordion('지금 바로 할 수 있는 것', _guideActions(data.actions));
   } else if (data.actions) {
     // {immediate, week, longterm} 구조
     var parts = [];
-    if (data.actions.immediate) parts.push(_guideAccordion('⏸️ 오늘 당장 할 수 있는 것', _guideActions(data.actions.immediate)));
-    if (data.actions.week) parts.push(_guideAccordion('📅 이번 주에 시도해볼 것', _guideActions(data.actions.week)));
-    if (data.actions.longterm) parts.push(_guideAccordion('🔄 장기적으로', _guideActions(data.actions.longterm)));
+    if (data.actions.immediate) parts.push(_guideAccordion('오늘 당장 할 수 있는 것', _guideActions(data.actions.immediate)));
+    if (data.actions.week) parts.push(_guideAccordion('이번 주에 시도해볼 것', _guideActions(data.actions.week)));
+    if (data.actions.longterm) parts.push(_guideAccordion('장기적으로', _guideActions(data.actions.longterm)));
     actionsHTML = parts.join('');
   }
 
   var checkWrapId = cfg.checkId || ('check-wrap-' + Math.random().toString(36).substr(2, 6));
 
+  /* 도움 연결은 접지 않는다 (번호가 첫 화면 아래로 숨지 않게). 카드의 "더 도움이 필요하면"과 같은 모양 */
   var helpHTML = '';
   if (data.help && data.help.length) {
-    helpHTML = _guideAccordion('📞 도움 연결',
-      '<div class="help-cards">'
+    var helpId = cfg.containerId + '-more-t';
+    helpHTML = '<section class="bc bc-sec" aria-labelledby="' + helpId + '" data-bc-end>'
+      + '<h2 class="bc-h" id="' + helpId + '">더 도움이 필요하면</h2>'
+      + '<div class="bc-actions">'
       + data.help.map(function(h) {
-        return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
-          + '<div class="help-card-num">📞 ' + h.number + '</div>'
-          + '<div class="help-card-info">'
-          + '<div class="help-card-name">' + esc(h.name) + '</div>'
-          + '<div class="help-card-desc">' + esc(h.desc) + '</div>'
-          + '</div></a>';
+        return typeof cardCallHTML === 'function'
+          ? cardCallHTML({ number: h.number, name: h.name, desc: h.desc })
+          : '<a href="tel:' + h.number.replace(/-/g, '') + '">' + h.number + ' ' + esc(h.name) + '</a>';
       }).join('')
-      + '</div>');
+      + '</div></section>';
   }
 
   container.innerHTML =
     '<button class="page-back" onclick="' + cfg.renderFn + '(document.getElementById(\'' + cfg.containerId + '\'))">← 뒤로</button>'
-    + (data.recognition ? '<div class="step-section"><p style="font-size:13.5px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">' + esc(data.recognition) + '</p></div>' : '')
+    + (data.recognition ? '<div class="step-section"><p class="pp-guide-p">' + esc(data.recognition) + '</p></div>' : '')
     + '<div class="accordion-group">'
-    + (data.psychology ? _guideAccordion('🧠 왜 이런 감정이 드는 걸까?', '<p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;">' + esc(data.psychology) + '</p>') : '')
-    + (techHTML ? _guideAccordion('💡 정신의학적 자기 돌봄법', techHTML) : '')
-    + (data.check ? _guideAccordion('🔍 상황 판단', '<div id="' + checkWrapId + '"></div>') : '')
+    + (data.psychology ? _guideAccordion('왜 이런 감정이 드는 걸까?', '<p class="pp-guide-p">' + esc(data.psychology) + '</p>') : '')
+    + (techHTML ? _guideAccordion('정신의학적 자기 돌봄법', techHTML) : '')
+    + (data.check ? _guideAccordion('상황 판단', '<div id="' + checkWrapId + '"></div>') : '')
     + actionsHTML
-    + helpHTML
-    + '</div>';
+    + '</div>'
+    + helpHTML;
 
   // 체크 툴 주입
   if (data.check) {
@@ -365,62 +365,59 @@ function renderPostpartumPage(container) {
   if (!container || typeof POSTPARTUM_DATA === 'undefined') return;
   var d = POSTPARTUM_DATA;
   var checkWrapId = 'postpartum-check-wrap';
+  /* 공통 콘텐츠 셸 (js/cards.js): 제목부·번호 버튼·섹션 제목. 섹션 제목에 이모지를 쓰지 않는다 */
+  var head = typeof cardHeadHTML === 'function'
+    ? cardHeadHTML({ id: 'postpartum', kicker: '참고 가이드 · 산후 마음', title: d.intro.title, summary: d.intro.sub })
+    : '<h1>' + esc(d.intro.title) + '</h1>';
 
   var distHTML = d.science.distinctions.map(function(di) {
-    return '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;">'
-      + '<span style="font-size:20px;flex-shrink:0;">' + di.icon + '</span>'
-      + '<div>'
-      + '<div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:2px;">' + esc(di.name) + '</div>'
-      + '<p style="font-size:12.5px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">' + esc(di.desc) + '</p>'
-      + '</div></div>';
+    return '<div class="pp-dist">'
+      + '<h3 class="bc-h3">' + esc(di.name) + '</h3>'
+      + '<p>' + esc(di.desc) + '</p>'
+      + '</div>';
   }).join('');
 
+  var helpHTML = '<div class="bc-actions">'
+    + d.help.map(function(h) {
+      return typeof cardCallHTML === 'function'
+        ? cardCallHTML({ number: h.number, name: h.name, desc: h.desc })
+        : '<a href="tel:' + h.number.replace(/-/g, '') + '">' + h.number + ' ' + esc(h.name) + '</a>';
+    }).join('')
+    + '</div>';
+
   container.innerHTML =
-    '<div class="content-hero" style="background:linear-gradient(135deg,var(--hero-postpartum-from),var(--hero-postpartum-to))">'
-    + '<div class="content-hero-title"><span class="content-hero-icon">🌸</span>'
-    + '<h1>' + esc(d.intro.title) + '</h1></div>'
-    + '<p>' + esc(d.intro.sub) + '</p>'
-    + '</div>'
+    '<div class="bc bc-guide-head">' + head + '</div>'
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
     + _guideRecognition(d.recognition)
     + '<div class="accordion-group">'
-    + _guideAccordion('🧠 ' + esc(d.science.title),
-        '<p style="font-size:13px;color:var(--ink-m);line-height:1.8;word-break:keep-all;margin-bottom:16px;">' + esc(d.science.text) + '</p>'
-        + '<div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:10px;">베이비 블루스 vs 산후우울증 vs 산후 정신병</div>'
+    + _guideAccordion(esc(d.science.title),
+        '<p class="pp-guide-p">' + esc(d.science.text) + '</p>'
+        + '<h3 class="bc-h3 pp-guide-sub">베이비 블루스 vs 산후우울증 vs 산후 정신병</h3>'
         + distHTML)
-    + _guideAccordion('🔍 상황 판단 — 자가 체크', '<div id="' + checkWrapId + '"></div>')
-    + _guideAccordion('⏸️ 오늘 당장 할 수 있는 것', _guideActions(d.actions.immediate))
-    + _guideAccordion('📅 이번 주에 시도해볼 것', _guideActions(d.actions.week))
-    + _guideAccordion('🏥 전문적 도움 받기', _guideActions(d.actions.longterm))
-    + _guideAccordion('⚠️ ' + esc(d.riskFactors.title),
-        '<div style="background:var(--warm);border-radius:12px;padding:14px 16px;">'
-        + d.riskFactors.items.map(function(item) {
-          return '<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">'
-            + '<span style="flex-shrink:0;">•</span><span>' + esc(item) + '</span></div>';
-        }).join('')
-        + '<p style="font-size:12px;color:var(--ink-l);margin-top:10px;line-height:1.6;">해당 사항이 있다면, 산후우울 증상이 나타나기 전에 미리 전문가와 상담해 보는 것도 좋아요.</p>'
-        + '</div>')
-    + _guideAccordion('💑 ' + esc(d.partnerTip.title),
-        '<div style="background:var(--warm);border-radius:12px;padding:14px 16px;">'
-        + d.partnerTip.items.map(function(item) {
-          return '<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;font-size:13px;color:var(--ink-m);line-height:1.7;word-break:keep-all;">'
-            + '<span style="flex-shrink:0;">💬</span><span>' + esc(item) + '</span></div>';
-        }).join('')
-        + '</div>')
-    + _guideAccordion('📞 도움 연결',
-        '<div class="help-cards">'
-        + d.help.map(function(h) {
-          return '<a href="tel:' + h.number.replace(/-/g, '') + '" class="help-card" aria-label="' + esc(h.name) + ' ' + h.number + '">'
-            + '<div class="help-card-num">📞 ' + h.number + '</div>'
-            + '<div class="help-card-info"><div class="help-card-name">' + esc(h.name) + '</div><div class="help-card-desc">' + esc(h.desc) + '</div></div></a>';
-        }).join('')
-        + '</div>')
+    + _guideAccordion('상황 판단 — 자가 체크', '<div id="' + checkWrapId + '"></div>')
+    + _guideAccordion('오늘 당장 할 수 있는 것', _guideActions(d.actions.immediate))
+    + _guideAccordion('이번 주에 시도해볼 것', _guideActions(d.actions.week))
+    + _guideAccordion('전문적 도움 받기', _guideActions(d.actions.longterm))
+    + _guideAccordion(esc(d.riskFactors.title),
+        '<ul class="bc-list" role="list">'
+        + d.riskFactors.items.map(function(item) { return '<li>' + esc(item) + '</li>'; }).join('')
+        + '</ul>'
+        + '<p class="bc-note">해당 사항이 있다면, 산후우울 증상이 나타나기 전에 미리 전문가와 상담해 보는 것도 좋아요.</p>')
+    + _guideAccordion(esc(d.partnerTip.title),
+        '<ul class="bc-list" role="list">'
+        + d.partnerTip.items.map(function(item) { return '<li>' + esc(item) + '</li>'; }).join('')
+        + '</ul>')
     + '</div>'
-    + '<div style="margin:20px 0;padding:14px 18px;background:linear-gradient(135deg,rgba(176,123,172,.08),rgba(212,160,176,.06));border:1px solid rgba(176,123,172,.15);border-radius:14px;">'
-    + '<div style="font-size:13px;font-weight:700;color:var(--peach-d);margin-bottom:6px;">출산 후 신체 회복이 궁금하다면</div>'
-    + '<div style="font-size:12.5px;color:var(--ink-m);line-height:1.6;margin-bottom:10px;">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</div>'
-    + '<button onclick="showPage(\'birth\')" style="background:var(--peach-d);color:white;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;">출산 후 회복 가이드 보기 →</button>'
-    + '</div>';
+    /* 도움 연결은 접지 않는다 (번호가 첫 화면 아래로 숨지 않게). 카드의 "더 도움이 필요하면"과 같은 모양 */
+    + '<section class="bc bc-sec pp-guide-more" aria-labelledby="pp-guide-more-t" data-bc-end>'
+    + '<h2 class="bc-h" id="pp-guide-more-t">더 도움이 필요하면</h2>'
+    + helpHTML
+    + '</section>'
+    + '<section class="bc bc-sec pp-guide-next" aria-labelledby="pp-guide-next-t">'
+    + '<h2 class="bc-h" id="pp-guide-next-t">출산 후 신체 회복이 궁금하다면</h2>'
+    + '<div class="bc-actions"><a class="bc-link bc-link--go" href="/birth" data-bc-go="birth">'
+    + '<span class="bc-link-main">출산 후 회복 가이드 보기</span><span class="bc-link-sub">산후 몸 돌봄, 증상 체크, 단계별 회복 가이드</span></a></div>'
+    + '</section>';
 
   var checkWrap = container.querySelector('#' + checkWrapId);
   if (checkWrap && typeof renderCheckTool === 'function') renderCheckTool(checkWrap, d.check);
@@ -491,7 +488,7 @@ function renderWorkplacePage(container) {
 
   var typesHTML = WORKPLACE_TYPES.map(function(t) {
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span style="font-size:20px">' + t.icon + '</span>'
       + '<span style="font-weight:700;font-size:14px;">' + esc(t.name) + '</span>'
       + '<span class="accordion-arrow"></span>'
@@ -531,7 +528,7 @@ function renderWorkplacePage(container) {
     + '<h1>직장에서 어려운 사람 대처 가이드</h1></div>'
     + '<p>당신 탓이 아니에요. 정신분석학 관점의 이해와 실전 대처법</p>'
     + '</div>'
-    + '<div class="stat-badge"><strong>73.6%</strong>&nbsp;직장인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024)</div>'
+    + '<div class="stat-badge"><strong>73.6%</strong>&nbsp;성인이 지난 1년간 정신건강 문제를 경험 (국립정신건강센터, 2024 국민 정신건강 지식 및 태도 조사)</div>'
     + '<div class="step-section">'
     + '<div class="step-label">지금 이런 상황인가요?</div>'
     + '<div style="background:var(--warm);border-radius:14px;padding:16px 18px;">'
@@ -580,9 +577,8 @@ function renderRelationPage(container) {
     containerId: 'relation-content',
     buildFn: 'buildRelationDetail',
     heroTitle: '관계가 무너졌을 때',
+    kicker: '관계',
     heroSub: '이혼·가족 단절·고립감·이별 후 무너짐.<br>혼자 감당하지 않아도 돼요.',
-    heroIcon: '💔',
-    heroGradient: 'var(--relation-d),var(--relation)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -606,9 +602,8 @@ function renderTransitionPage(container) {
     containerId: 'transition-content',
     buildFn: 'buildTransitionDetail',
     heroTitle: '인생 전환기 가이드',
+    kicker: '전환기',
     heroSub: '삶의 방향이 흔들릴 때, 여기서부터 시작해 보세요.',
-    heroIcon: '🌀',
-    heroGradient: 'var(--transition-d),var(--transition-c)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -639,11 +634,10 @@ function renderEmotionPage(container) {
     containerId: 'emotion-content',
     buildFn: 'buildEmotionDetail',
     heroTitle: '감정 가이드',
+    kicker: '감정',
     heroSub: '감정을 어떻게 해야 할지 모르겠을 때,<br>여기서 잠깐 쉬어가도 돼요.',
-    heroIcon: '😔',
-    heroGradient: 'var(--lavender-d),var(--lavender)',
     stepLabel: '지금 어떤 느낌이에요?',
-    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))" aria-label="죽고 싶다는 생각이 들어요"><span class="emotion-btn-icon">🆘</span><span>죽고 싶다는 생각이 들어요</span></button>'
+    extraButtons: '<button class="emotion-btn crisis" onclick="buildCrisisScreen(document.getElementById(\'emotion-content\'))"><span class="emotion-btn-text"><span class="emotion-btn-label">죽고 싶다는 생각이 들어요</span></span></button>'
   });
 }
 
@@ -666,9 +660,8 @@ function renderSleepPage(container) {
     containerId: 'sleep-content',
     buildFn: 'buildSleepDetail',
     heroTitle: '잠을 못 자겠어요',
+    kicker: '수면',
     heroSub: '밤이 두렵고, 아침이 무겁고, 낮이 흐릿할 때.<br>수면은 회복할 수 있어요.',
-    heroIcon: '🛏️',
-    heroGradient: 'var(--hero-sleep-from),var(--hero-sleep-to)',
     stepLabel: '어떤 상황이에요?'
   });
 }
@@ -692,9 +685,8 @@ function renderGriefPage(container) {
     containerId: 'grief-content',
     buildFn: 'buildGriefDetail',
     heroTitle: '떠나보낸 사람을 위한 가이드',
+    kicker: '상실',
     heroSub: '사랑하는 사람을 보내는 건, 삶에서 가장 무거운 일이에요.<br>여기서 잠깐 쉬어가도 괜찮아요.',
-    heroIcon: '🕊️',
-    heroGradient: 'var(--hero-grief-from),var(--hero-grief-to)',
     stepLabel: '누구를 떠나보내셨나요?'
   });
 }
@@ -717,12 +709,12 @@ function renderElderPage(container) {
 
   var welfareHTML = d.welfare.items.map(function(w) {
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span>' + w.icon + ' ' + esc(w.name) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'
       + '<p style="font-size:13px;color:var(--ink-m);line-height:1.75;margin-bottom:10px;">' + esc(w.desc) + '</p>'
-      + '<a href="tel:' + w.contact.replace(/-/g, '') + '" style="display:inline-block;padding:8px 16px;background:var(--peach-p);color:var(--peach-d);border-radius:10px;font-size:12.5px;font-weight:600;text-decoration:none;">📞 ' + w.contact + ' 전화하기</a>'
+      + '<a href="tel:' + w.contact.replace(/-/g, '') + '" style="display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;padding:8px 16px;background:var(--peach-p);color:var(--peach-d);border-radius:10px;font-size:12.5px;font-weight:600;text-decoration:none;">📞 ' + w.contact + ' 전화하기</a>'
       + '</div></div></div>';
   }).join('');
 
@@ -735,7 +727,7 @@ function renderElderPage(container) {
     + '<div class="stat-badge"><strong>' + d.intro.stat.pct + '</strong>&nbsp;' + esc(d.intro.stat.label) + '</div>'
     + '<div class="step-section">'
     + '<div class="step-label">어떤 상황이에요?</div>'
-    + '<p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 자가진단과 행동 가이드를 바로 확인할 수 있어요.</p>'
+    + '<p style="font-size:12.5px;color:var(--ink-l);margin-bottom:14px;">해당하는 상황을 눌러보세요. 자가체크와 행동 가이드를 바로 확인할 수 있어요.</p>'
     + '<div class="accordion-group">'
     + d.situations.map(function(s) {
       return '<div class="accordion-item" data-sit-id="' + s.id + '">'
@@ -821,7 +813,7 @@ function _renderElderPracticalGuide(guides) {
     }).join('');
 
     return '<div class="accordion-item">'
-      + '<div class="accordion-header" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
+      + '<div class="accordion-header" role="button" onclick="toggleAccordion(this)" tabindex="0" aria-expanded="false">'
       + '<span>' + g.icon + ' ' + esc(g.title) + '</span><span class="accordion-arrow"></span>'
       + '</div>'
       + '<div class="accordion-body"><div class="accordion-body-inner">'

@@ -206,3 +206,16 @@ describe('접근성 기본 검사', () => {
     assert.ok(html.includes('width=device-width'), 'viewport meta 없음');
   });
 });
+
+/* ═══════ 사실과 다른 약속 문구 금지 ═══════ */
+describe('알림 약속 문구', () => {
+  const html = readFile('index.html');
+  it('저녁 알림은 "페이지가 열려 있을 때만"이라고 사실대로 씀 (js/notify.js는 백그라운드 푸시가 없다)', () => {
+    assert.doesNotMatch(html, /매일 저녁 감정 기록 알림을 보내드려요/);
+    const at = html.indexOf('id="checkin-toggle"');
+    assert.ok(at !== -1, '알림 토글 없음');
+    const item = html.slice(html.lastIndexOf('settings-item"', at), at);
+    assert.match(item, /열려 있을 때/);
+    assert.match(item, /닫으면 알림이 오지 않아요/);
+  });
+});

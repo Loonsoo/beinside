@@ -194,7 +194,7 @@ function renderMulticulturalPage(container) {
     </div>
 
     <div class="mc-footer">
-      <p>다문화가족지원센터 <a href="tel:1577-5432" style="color:var(--peach-d);font-weight:700;">1577-5432</a></p>
+      <p>다문화가족지원센터 <a class="tel-inline" href="tel:1577-5432" style="color:var(--peach-d);font-weight:700;">1577-5432</a></p>
       <p style="font-size:12px;color:var(--ink-l);margin-top:4px;">danuri.or.kr — 13개 언어 지원</p>
     </div>
   `;
