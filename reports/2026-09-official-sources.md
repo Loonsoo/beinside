@@ -316,3 +316,16 @@ URL 앞부분 `https://health.kdca.go.kr/healthinfo/biz/health/gnrlzHealthInfo/g
 - [WHO · Positive postnatal experience (2022)](https://www.who.int/publications/i/item/9789240045989)
 - [UNICEF Parenting · Baby fever](https://www.unicef.org/parenting/health/baby-fever) · [Newborn baby health](https://www.unicef.org/parenting/health/newborn-baby-health) · [UNICEF · Legal](https://www.unicef.org/legal)
 - [HealthyChildren · Fever: When to Call the Pediatrician](https://www.healthychildren.org/English/health-issues/conditions/fever/Pages/When-to-Call-the-Pediatrician.aspx) · [HealthyChildren · Terms of use](https://www.healthychildren.org/English/Pages/Terms-of-use.aspx)
+
+---
+
+## 부록: 국가건강정보포털 OpenAPI 명세 요약 (운영자 제공 가이드, 2026-09-28)
+
+- 문서: OpenAPI 활용 가이드 KDCA17-HEALTH-API01 v1.1 (Revised 2022-01-04), 서비스 ID `KDCA-HEALTH-HealthInfo`
+- 호출: `GET http://api.kdca.go.kr/api/provide/healthInfo?TOKEN=[서비스키(URL 인코딩)]&cntntsSn=[콘텐츠 일련번호]` — 오퍼레이션은 `view`(건강정보 상세정보 조회) 하나
+- 서비스키: 국가건강정보포털에서 콘텐츠별 신청 시 자동 발급. 인증은 서비스 Key 방식, 전송은 SSL 표기(실제 예시 URL은 http)
+- 응답 XML: `HEAD/CODE`(정상 S001), `MESSAGE`, `svc/CNTNTSSJ`(제목), `CNTNTS_SN`, `LCLASSN`, `cntntsClList/cntntsCl`(`CNTNTS_CL_NM` 항목명, `CNTNTSCLSN`, `CNTNTS_CL_CN` 본문 또는 이미지 URL)
+- 데이터 갱신 일 1회, 최대 30 tps, 최대 메시지 10KB
+- **수정일 필드 없음** → `scripts/kdca-fetch.mjs`가 항목 내용 해시로 변경을 감지
+- 에러코드: 3 데이터 없음, 20 접근 거부, 22 요청 한도 초과, 30 미등록 키, 31 활용기간 만료, 32 미등록 IP 등 (스크립트에 매핑)
+- 이용 조건(공공누리 유형·재가공 허용)은 가이드에 없음 → 포털 이용 안내에서 별도 확인 필요. 확인 전까지 원문은 `.cache/`에만 두고 카드에는 링크·확인일만.
