@@ -387,7 +387,11 @@ async function flowChips(page, base, cfg, from) {
       assert(kicker.includes('상황 요약 · 사이트 안내를 모은 것'), '라벨: ' + kicker);
       await focusedAndVisible(page, '#page-card .bc-title');
       const heads = await page.$$eval('#page-card .bc-sec > .bc-h', hs => hs.map(h => h.textContent.trim()));
-      assert(heads[0] === '무슨 일인지' && heads[1] === '지금 할 일' && heads[3] === '이때 엄마가 흔히 느끼는 것' && heads[4] === '더 도움이 필요하면', '칸 순서: ' + heads.join(' / '));
+      /* 빈 칸은 숨긴다. 보이는 칸은 정해진 순서여야 하고, "더 도움이 필요하면"은 항상 있다 */
+      const ORDER = ['무슨 일인지', '지금 할 일', '*병원', '이때 엄마가 흔히 느끼는 것', '더 도움이 필요하면', '이 요약에 모은 안내'];
+      const rank = h => { const i = ORDER.indexOf(h); return i !== -1 ? i : 2; };
+      const ranks = heads.map(rank);
+      assert(heads.includes('더 도움이 필요하면') && ranks.every((r, i) => i === 0 || ranks[i - 1] < r), '칸 순서: ' + heads.join(' / '));
       if (CHIP_URGENT[key]) assert(await inView(page, '#page-card .bc-urgent a[href="tel:119"]'), '맨 위 119 버튼이 첫 화면에 없음');
       else assert(!(await visible(page, '#page-card .bc-urgent')), 'urgent가 아닌데 119 줄');
       if (key === 'mom') assert(await visible(page, '#page-card [data-bc-go="check"]'), '마음 신호 확인 버튼 없음');

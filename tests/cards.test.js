@@ -647,9 +647,13 @@ describe('상황 요약', () => {
     for (const s of SUMS) {
       const html = API.summaryHTML(s);
       const names = SECTIONS.map(n => n || s.hospitalTitle || '병원 갈 때');
-      const pos = names.map(n => html.indexOf('>' + n + '<'));
-      pos.forEach((p, i) => assert.ok(p !== -1, `${s.id}: "${names[i]}" 칸 없음`));
-      for (let i = 1; i < pos.length; i++) assert.ok(pos[i - 1] < pos[i], `${s.id}: "${names[i - 1]}"이 "${names[i]}"보다 뒤`);
+      /* 요약은 모은 문장이 없는 칸을 숨긴다. 있는 칸끼리 순서만 지키고, 도움·모은 안내 칸은 항상 있다 */
+      const allPos = names.map(n => html.indexOf('>' + n + '<'));
+      assert.ok(allPos[4] !== -1 && allPos[5] !== -1, `${s.id}: 도움·모은 안내 칸 없음`);
+      assert.ok(!html.includes('bc-empty'), `${s.id}: 빈 칸 안내가 보임`);
+      const shown = allPos.map((p, i) => [p, names[i]]).filter(x => x[0] !== -1);
+      for (let i = 1; i < shown.length; i++) assert.ok(shown[i - 1][0] < shown[i][0], `${s.id}: "${shown[i - 1][1]}"이 "${shown[i][1]}"보다 뒤`);
+      const pos = allPos;
       const kicker = html.indexOf('상황 요약 · 사이트 안내를 모은 것');
       assert.ok(kicker !== -1 && kicker < html.indexOf('class="bc-title"'), `${s.id}: 제목 위 라벨`);
       assert.ok(html.includes('모은 날 ' + API.SUMMARY_COLLECTED), `${s.id}: 모은 날`);

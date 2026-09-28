@@ -391,16 +391,18 @@ function summaryHTML(s) {
   if (s.urgent && s.urgentLine) html += cardUrgentHTML(cardText(s.urgentLine), seen);
   html += cardHeadHTML({ id: sid, kicker: SUMMARY_KICKER, title: s.title, summary: SUMMARY_LEAD });
 
-  html += cardSecHTML(sid, 'what', '무슨 일인지', s.what && s.what.length ? cardListHTML(s.what, seen) : cardEmptyHTML());
+  /* 요약은 모은 문장이 없는 칸을 아예 보여주지 않는다 (빈 칸 안내 대신) */
+  if (s.what && s.what.length) html += cardSecHTML(sid, 'what', '무슨 일인지', cardListHTML(s.what, seen));
 
   const tools = s.todoTools && s.todoTools.length ? '<div class="bc-actions bc-actions--first">' + s.todoTools.map(cardGoHTML).join('') + '</div>' : '';
   const todo = s.todo && s.todo.length ? cardListHTML(s.todo, seen, true) : '';
-  html += cardSecHTML(sid, 'todo', '지금 할 일', (tools + todo) || cardEmptyHTML());
+  if (tools + todo) html += cardSecHTML(sid, 'todo', '지금 할 일', tools + todo);
 
   const hosp = cardHospitalHTML(h, seen, { find: false });
-  html += cardSecHTML(sid, 'hosp', s.hospitalTitle || '병원 갈 때', hosp || cardEmptyHTML());
+  if (hosp) html += cardSecHTML(sid, 'hosp', s.hospitalTitle || '병원 갈 때', hosp);
 
-  html += cardSecHTML(sid, 'mom', '이때 엄마가 흔히 느끼는 것', cardMomHTML(s.mom || {}, seen), { cls: 'bc-mom' });
+  const momHTML = cardMomHTML(s.mom || {}, seen);
+  if (momHTML && momHTML.indexOf('bc-empty') === -1) html += cardSecHTML(sid, 'mom', '이때 엄마가 흔히 느끼는 것', momHTML, { cls: 'bc-mom' });
   html += cardMoreHTML(sid, s.more);
   html += summaryFootHTML(s);
   if (s.detail) {
